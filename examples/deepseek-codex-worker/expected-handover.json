@@ -1,0 +1,19 @@
+{
+  "task_id": "example-normalize-title",
+  "base_revision": "controller-supplied-base-revision",
+  "result_revision": "controller-supplied-result-revision",
+  "changed_files": [
+    "src/title.ts",
+    "tests/title.test.ts"
+  ],
+  "checks": [
+    {
+      "command": "npm test -- tests/title.test.ts",
+      "exit_code": 0,
+      "observation": "Declared focused test completed successfully.",
+      "evidence_ref": "evidence/focused-test.txt"
+    }
+  ],
+  "known_limitations": [],
+  "stop_reason": "bounded_outcome_complete"
+}

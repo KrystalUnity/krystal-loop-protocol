@@ -1,0 +1,14 @@
+# Isolated KLP builder profile for the Codex CLI.
+model_provider = "deepseek"
+model = "deepseek-v4-flash"
+approval_policy = "never"
+sandbox_mode = "workspace-write"
+
+[model_providers.deepseek]
+name = "DeepSeek"
+base_url = "https://api.deepseek.com"
+env_key = "DEEPSEEK_API_KEY"
+wire_api = "responses"
+
+[sandbox_workspace_write]
+network_access = false
