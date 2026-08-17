@@ -191,3 +191,49 @@ verdict.json
 authorization header. `provider-response.json` retains request identifiers,
 model, usage when supplied, and final assistant content; reasoning fields are
 discarded. `verdict.json` is the parsed and validated final judgment.
+
+No output authorizes repair or another lifecycle action.
+
+## Failure Behavior
+
+The harness exits nonzero and does not create `verdict.json` when:
+
+- configuration or packet validation fails;
+- independence is required but provider families match;
+- the endpoint returns a non-2xx response;
+- the response does not contain final assistant content;
+- final content is not JSON;
+- the verdict does not satisfy the closed contract;
+- a pass verdict contains a blocking finding.
+
+A diagnostic may identify a missing field, HTTP status, or parse problem, but
+must not include the API key or authorization header.
+
+## Test Strategy
+
+Tests use `unittest` and a local `ThreadingHTTPServer`. They make no paid or
+external provider calls.
+
+Required tests prove:
+
+1. a valid sealed packet produces the three expected artifacts;
+2. the outbound request uses the configured model and packet;
+3. same-family review fails before any HTTP request;
+4. missing packet fields and oversized packets fail closed;
+5. non-2xx and malformed provider responses produce no verdict;
+6. schema-invalid verdicts and pass-with-blocker contradictions fail closed;
+7. output artifacts and diagnostics do not contain the API key;
+8. worker launcher and TOML example paths are portable.
+
+## Acceptance Criteria
+
+- A reader can configure a DeepSeek Flash Codex worker without copying any KU
+  infrastructure.
+- The worker remains bounded by assignment, workspace, and standing
+  instructions.
+- A different-family OpenAI-compatible critic can review one sealed artifact
+  without repository or tool access.
+- Same-family review cannot be labeled independent by the harness.
+- All critic tests pass locally without external egress.
+- Public-marker, relative-link, whitespace, and secret scans pass.
+- Root documentation links the runnable examples and preserves human authority.
