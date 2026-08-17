@@ -38,6 +38,36 @@ Critics must start from fresh read-only context containing the task contract,
 exact artifact revision, check results, direct evidence, and unresolved prior
 findings. A critic must not edit the artifact it reviews.
 
+## Runnable Worker and Critic Path
+
+The repository includes a concrete endpoint-backed example while keeping the
+control layer provider-neutral:
+
+1. Copy and review
+   [`assignment.example.md`](examples/deepseek-codex-worker/assignment.example.md).
+2. Export `DEEPSEEK_API_KEY` in the current shell and launch the bounded worker
+   with
+   [`run.sh`](examples/deepseek-codex-worker/run.sh).
+3. Independently run the declared checks and record the exact result revision.
+4. Build and redact a sealed packet from
+   [`review-packet.example.json`](examples/openai-compatible-critic/review-packet.example.json).
+5. Configure a different provider family and run
+   [`critic.py`](examples/openai-compatible-critic/critic.py) with
+   `--require-independent`.
+6. Validate the critic artifacts and present the evidence to the human
+   decision-maker.
+
+The worker configuration points Codex at DeepSeek's OpenAI-compatible endpoint,
+but the endpoint is only the inference engine. The assignment, sandbox,
+deterministic checks, sealed evidence, critic separation, and human authority
+remain outside the model. The critic harness likewise accepts any compatible
+`/chat/completions` endpoint through environment variables; it makes one
+request and performs no retry, repair, merge, push, or deployment.
+
+Do not feed a repository, credentials, private logs, or unreviewed context to
+the critic. The controller owns packet construction and redaction. A valid
+`verdict.json` is evidence, not permission.
+
 ## Minimum Record Shape
 
 Record formats may vary, but an agent must be able to recover these fields:

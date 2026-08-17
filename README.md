@@ -68,12 +68,35 @@ KLP does not require a special model, database, vector store, or message bus.
 You can start with Git and Markdown files, then add durable coordination when
 the project needs it.
 
+## Run a Worker and Critic
+
+The included examples demonstrate one complete bounded path:
+
+```text
+DeepSeek Flash worker
+  -> exact revision and deterministic checks
+  -> redacted, sealed review packet
+  -> different-family read-only critic
+  -> human decision
+```
+
+Start with the [DeepSeek Codex worker](examples/deepseek-codex-worker/README.md),
+then use the
+[OpenAI-compatible critic harness](examples/openai-compatible-critic/README.md).
+The worker launcher uses an isolated Codex profile and a reviewed assignment.
+The critic makes one request, validates its structured verdict locally, and
+cannot edit or authorize any action. The examples do not automatically connect
+worker output to critic input; the controller must inspect and redact the
+review packet first.
+
 ## Read Next
 
 - [KLP Core protocol](PROTOCOL.md)
 - [Instructions for AI agents and orchestrators](AI_AGENT_INTEGRATION.md)
 - [Optional runtime profiles](RUNTIME_PROFILES.md)
 - [Safety and limits](SAFETY_AND_LIMITS.md)
+- [DeepSeek Codex worker example](examples/deepseek-codex-worker/README.md)
+- [OpenAI-compatible critic example](examples/openai-compatible-critic/README.md)
 - [Hermes Kanban adapter example](adapters/hermes-kanban.md)
 
 ## What KLP Is Not
@@ -90,9 +113,10 @@ and working across many changes.
 
 ## Project Status
 
-This repository is an early documentation-first reference draft. Portable
-schemas, executable fixtures, and a synthetic fail-review-repair example are
-planned before a stable KLP Core release.
+This repository is an early reference release. It includes a portable worker
+launcher, a sealed-packet critic harness, local fake-provider tests, and example
+contracts. A complete synthetic fail-review-repair fixture is still planned
+before a stable KLP Core release.
 
 ## License
 
