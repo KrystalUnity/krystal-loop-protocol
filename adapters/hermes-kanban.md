@@ -16,15 +16,16 @@ before configuring exact commands or options.
 | KLP concept | Hermes Kanban concept |
 | --- | --- |
 | Project or mission boundary | Kanban board |
-| Human-approved task contract | Root task body and reviewed metadata |
+| Authorized, versioned task contract | Root task body and reviewed metadata |
 | Work unit | Child task |
 | Worker identity | Named Hermes profile or assignee |
 | Bounded workspace | Task workspace or Git worktree |
 | Dependency | Linked parent or prerequisite task |
 | Active ownership | Atomic task claim plus heartbeat |
 | Worker handover | Completion summary, comments, and evidence references |
-| Blocked or material change | Blocked task with a specific reason and human comment |
+| Blocked or material change | Blocked task with a specific reason and authority request |
 | Independent critic | Dependent verifier task assigned to another profile |
+| Finding disposition | Coordinator comment with direct evidence references |
 | Integration owner | Synthesizer task or designated orchestrator profile |
 | Final evidence receipt | Root completion summary plus retained evidence references |
 
@@ -38,9 +39,9 @@ reviewed root task
 ```
 
 The verifier must depend on all relevant worker tasks. The synthesizer depends
-on the verifier and treats the combined result as a new artifact. Completing
-the synthesizer means the package is ready for human consideration, not that it
-may be merged or deployed.
+on the verifier and treats the combined result as a new artifact. It may close
+a bounded run when no blocking finding or consequential action remains. Board
+completion does not itself authorize merge or deployment.
 
 ## Worker Instructions
 
@@ -52,6 +53,7 @@ Each dispatched worker should receive:
 - required checks and evidence;
 - forbidden actions and side effects;
 - round, time, and cost limits;
+- the coordinator's delegated decisions and authority boundary;
 - the stop conditions from KLP Core.
 
 Use Kanban comments and completion summaries for short facts and durable
@@ -80,10 +82,11 @@ not an assignment, verdict, or approval.
 
 Before calling a Hermes board KLP-compatible, confirm:
 
-- the root task reflects a human-reviewed contract;
+- the root task preserves an authorized contract identity and delegation;
 - workers use separate identities and bounded workspaces;
 - heartbeats and retry limits are configured;
 - exact artifact revisions appear in handovers and critic requests;
+- every critic finding has an evidence-backed disposition;
 - a separate verifier is gated on all relevant workers;
 - the synthesizer re-checks the combined artifact;
 - blocking and material-change states stop automatic progression;

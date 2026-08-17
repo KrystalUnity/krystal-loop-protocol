@@ -19,6 +19,9 @@ PASS_VERDICTS = {"PASS", "PASS_WITH_NONBLOCKING_FINDINGS"}
 PACKET_REQUIRED = (
     "protocol",
     "task_id",
+    "contract_id",
+    "contract_revision",
+    "contract_hash",
     "objective",
     "commitments",
     "worker_provider_family",
@@ -101,6 +104,8 @@ def validate_packet(packet: dict[str, Any], size: int) -> None:
     for name in (
         "protocol",
         "task_id",
+        "contract_id",
+        "contract_hash",
         "objective",
         "worker_provider_family",
         "base_revision",
@@ -108,6 +113,14 @@ def validate_packet(packet: dict[str, Any], size: int) -> None:
         "artifact_diff",
     ):
         require_nonempty_string(packet[name], name)
+
+    contract_revision = packet["contract_revision"]
+    if (
+        not isinstance(contract_revision, int)
+        or isinstance(contract_revision, bool)
+        or contract_revision < 1
+    ):
+        raise HarnessError("packet field contract_revision must be a positive integer")
 
     commitments = packet["commitments"]
     if not isinstance(commitments, list) or not commitments:

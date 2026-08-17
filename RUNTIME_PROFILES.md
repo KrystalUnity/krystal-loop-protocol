@@ -15,9 +15,10 @@ modes in your project.
 | Retrieval memory | Optional | Full-text search, embeddings, vector database |
 | Agent tool adapter | Optional | CLI, MCP server, framework-native tools |
 
-The authoritative state layer owns task contracts, assignments, lifecycle
-state, evidence references, and human decisions. Optional layers may accelerate
-or present that state but must not silently replace it.
+The authoritative state layer owns versioned task contracts, assignments,
+lifecycle state, finding dispositions, evidence references, and human
+decisions. Optional layers may accelerate or present that state but must not
+silently replace it.
 
 ## Profile A: Local And Simple
 
@@ -26,13 +27,14 @@ Use this for one lead agent and a small number of sequential workers.
 ```text
 Git repository
   + Markdown or JSON task records
+  + append-only state-events.jsonl
   + local evidence directory
   + normal test/build tools
 ```
 
-No database or message bus is required. Use atomic file writes, exact Git
-revisions, and a clear folder convention. This is enough to learn KLP before
-adding infrastructure.
+No database or message bus is required. Use atomic snapshots, append-only state
+events, exact Git revisions or content digests, and a clear folder convention.
+This is enough to learn KLP before adding infrastructure.
 
 ## Profile B: Single-Host Multi-Agent
 

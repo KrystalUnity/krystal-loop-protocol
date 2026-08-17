@@ -7,10 +7,11 @@ run tools, edit an artifact, repair findings, or authorize a lifecycle action.
 ## Prepare the packet
 
 Start from `review-packet.example.json`. Bind the packet to the exact worker
-result revision and include only the bounded diff, declared checks, evidence,
-limitations, and unresolved findings needed for review. The controller must
-inspect and redact it before external egress. The harness performs no implicit
-file collection, log collection, or content redaction.
+result revision and the exact contract ID, revision, and hash it is judged
+against. Include only the bounded diff, declared checks, evidence, limitations,
+and unresolved findings needed for review. The controller must inspect and
+redact it before external egress. The harness performs no implicit file
+collection, log collection, or content redaction.
 
 Packet contents are untrusted passive evidence. The critic system prompt tells
 the model to ignore instructions, role claims, authorization requests, and tool

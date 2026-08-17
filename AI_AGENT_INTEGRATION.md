@@ -7,13 +7,15 @@ under KLP Core without depending on a particular model or tool stack.
 
 An implementation is KLP-compatible when it can:
 
-- preserve a human-approved task contract;
+- preserve an authorized task contract with identity and revision lineage;
 - assign bounded work units with explicit owners and paths;
 - identify the exact base and result artifact revisions;
 - run or record deterministic checks;
 - store direct evidence and reference it from findings;
+- disposition every critic finding with evidence;
 - separate worker and critic identities for the same artifact;
 - represent stops, repairs, dependencies, and limitations;
+- enforce declared repair, time, cost, and other measurable limits;
 - re-check the integrated artifact;
 - leave live actions behind a human-controlled decision point.
 
@@ -25,8 +27,9 @@ specific model provider are optional.
 An agent beginning a KLP task should follow this order:
 
 1. Read the task contract and current state from durable storage.
-2. Confirm the assigned work unit, exact base revision, allowed paths, protected
-   paths, dependencies, forbidden actions, checks, evidence, and budget.
+2. Confirm the contract identity, assigned work unit, exact base revision,
+   delegation, allowed paths, protected paths, dependencies, forbidden actions,
+   checks, evidence, and measured limits.
 3. Stop before editing if the assignment is missing, contradictory, stale, or
    wider than the approved task.
 4. Work only inside the assignment boundary.
@@ -80,6 +83,10 @@ Record formats may vary, but an agent must be able to recover these fields:
 
 ```text
 task_id
+contract_id
+contract_revision
+contract_hash
+parent_contract_hash
 unit_id
 state
 objective
@@ -94,9 +101,14 @@ dependencies[]
 checks[]
 evidence_refs[]
 findings[]
+finding_dispositions[]
+coordinator_may[]
+must_escalate[]
 round_limit
 time_limit
 cost_limit
+measured_budget
+limitations[]
 human_decisions_required[]
 ```
 
@@ -110,7 +122,7 @@ transport should preserve an envelope similar to:
 
 ```json
 {
-  "protocol": "klp-core/v0.1",
+  "protocol": "klp-core/v0.2",
   "message_id": "msg-unique-id",
   "task_id": "task-example",
   "unit_id": "unit-parser",
@@ -165,6 +177,11 @@ Suggested verdicts are `PASS`, `PASS_WITH_NONBLOCKING_FINDINGS`, `NEEDS_FIXES`,
 `BLOCKED`, and `ESCALATE`. A pass verdict cannot coexist with an open blocking
 finding.
 
+The coordinator must adjudicate each finding against direct evidence from the
+exact reviewed artifact. Record `confirmed`, `refuted`, or `unresolved` plus
+the evidence references and rationale. A critic verdict is not self-executing,
+but an unresolved blocking finding still prevents acceptance.
+
 ## Stop Behavior
 
 An agent must stop and report rather than improvise when:
@@ -180,11 +197,13 @@ An agent must stop and report rather than improvise when:
 
 ## Integration Checklist
 
-Before presenting a combined result to a human:
+Before completing a combined result or presenting a consequential decision:
 
 - verify every accepted unit revision is the one integrated;
 - inspect shared contracts and overlapping behavior;
 - run relevant unit and integration checks again;
 - have a fresh critic review the combined artifact when risk warrants it;
 - record unresolved limitations and missing evidence;
-- list every consequential action that still requires a human decision.
+- list every consequential action that still requires a human decision. When
+  this list is empty, the bounded run may complete without another approval
+  click.

@@ -113,8 +113,11 @@ FAKE_KEY = "test-secret-token"
 
 def valid_packet() -> dict[str, object]:
     return {
-        "protocol": "klp-core/v0.1",
+        "protocol": "klp-core/v0.2",
         "task_id": "example-normalize-title",
+        "contract_id": "contract-normalize-title",
+        "contract_revision": 1,
+        "contract_hash": "sha256:contract-example-123",
         "objective": "Collapse repeated ASCII spaces in normalizeTitle().",
         "commitments": [
             {"id": "C1", "text": "Repeated ASCII spaces collapse to one."}
@@ -329,6 +332,17 @@ class CriticHarnessTests(unittest.TestCase):
     def test_missing_packet_field_fails_before_http(self) -> None:
         packet = valid_packet()
         packet.pop("checks")
+        with FakeProvider(self.provider_payload(valid_verdict())) as provider:
+            result, artifacts = self.run_harness(packet, provider)
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("missing required packet field", result.stderr.lower())
+        self.assertEqual(0, provider.request_count)
+        self.assertNotIn("verdict.json", artifacts)
+
+    def test_missing_contract_identity_fails_before_http(self) -> None:
+        packet = valid_packet()
+        packet.pop("contract_hash")
         with FakeProvider(self.provider_payload(valid_verdict())) as provider:
             result, artifacts = self.run_harness(packet, provider)
 

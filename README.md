@@ -25,12 +25,12 @@ build with multiple AI agents without handing them control of the project.
    before asking another model what it thinks.
 5. **Critique it.** A fresh, read-only critic reviews the exact revision against
    the original task and direct evidence.
-6. **Repair it.** Fix blocking findings within a declared time, cost, and round
-   limit. Stop when the scope changes.
+6. **Adjudicate and repair it.** Confirm or refute each critic finding with
+   direct evidence, then fix confirmed blockers within declared limits.
 7. **Integrate it.** Treat the combined system as a new artifact and check it
    again.
-8. **Decide it.** A person decides whether anything is merged, released,
-   deployed, purchased, or activated.
+8. **Govern it.** The loop completes automatically inside its delegation. A
+   person decides only material changes and consequential actions.
 
 ## What This Prevents
 
@@ -39,6 +39,7 @@ build with multiple AI agents without handing them control of the project.
 | Two agents edit the same shared file. | Give each worker an explicit file and action boundary. |
 | A worker says its own work is complete. | Separate factual handover from independent acceptance. |
 | A critic reviews an outdated build. | Bind every verdict to an exact artifact revision. |
+| A critic confidently reports a false problem. | Confirm or refute every finding with direct evidence. |
 | Agents keep looping without improvement. | Stop on repeated findings, exhausted budgets, or a plateau. |
 | Unit changes pass but break when combined. | Review integration as a new artifact. |
 | A test or agent message is treated as permission to deploy. | Keep live actions behind an explicit human decision. |
@@ -51,6 +52,7 @@ Give this to the lead agent before a multi-agent build:
 Work under Krystal Loop Protocol Core.
 
 Before changing files, write a bounded task contract containing:
+- its ID, revision, parent identity, and coordinator delegation;
 - the exact outcome;
 - allowed and protected paths;
 - forbidden actions and live side effects;
@@ -60,10 +62,11 @@ Before changing files, write a bounded task contract containing:
 
 Split the task into independently judgeable work units. Workers must return
 factual handovers tied to exact revisions and must not certify their own work.
-Run deterministic checks before independent, read-only criticism. Treat the
-integrated result as a new artifact. Never interpret an agent result, message,
-test, or receipt as permission to merge, deploy, spend, contact customers, or
-change a live system.
+Run deterministic checks before independent, read-only criticism. Confirm,
+refute, or leave each critic finding unresolved using direct evidence. Treat
+the integrated result as a new artifact. Normal repair rounds may proceed under
+the recorded delegation; material changes and consequential actions stop at
+the authority boundary.
 ```
 
 KLP does not require a special model, database, vector store, or message bus.
@@ -79,7 +82,8 @@ DeepSeek Flash worker
   -> exact revision and deterministic checks
   -> controller-redacted, sealed review packet
   -> different-family read-only critic
-  -> human decision
+  -> evidence-backed finding dispositions
+  -> bounded repair or integration
 ```
 
 Start with the [DeepSeek Codex worker](examples/deepseek-codex-worker/README.md),
@@ -91,6 +95,23 @@ cannot edit or authorize any action. The examples do not automatically connect
 worker output to critic input; the controller must inspect and redact the
 review packet first.
 
+## Run the Offline Lifecycle Proof
+
+The [fail-review-repair fixture](examples/fail-review-repair/README.md) proves a
+complete bounded lifecycle without provider egress or model spend:
+
+```bash
+output="$(mktemp -d)/klp-fixture"
+python3 examples/fail-review-repair/run_fixture.py --out-dir "$output"
+python3 -m json.tool "$output/final-receipt.json"
+```
+
+It creates a temporary Git project, records a deliberately incomplete worker
+revision, captures a failed check, runs the sealed critic harness against a
+loopback fake provider, confirms one real finding, refutes one false finding,
+applies one authorized repair, and re-checks the integrated artifact. A second
+test proves a zero-round repair budget stops instead of overrunning authority.
+
 ## Read Next
 
 - [KLP Core protocol](PROTOCOL.md)
@@ -99,6 +120,7 @@ review packet first.
 - [Safety and limits](SAFETY_AND_LIMITS.md)
 - [DeepSeek Codex worker example](examples/deepseek-codex-worker/README.md)
 - [OpenAI-compatible critic example](examples/openai-compatible-critic/README.md)
+- [Offline fail-review-repair fixture](examples/fail-review-repair/README.md)
 - [Hermes Kanban adapter example](adapters/hermes-kanban.md)
 
 ## What KLP Is Not
@@ -115,10 +137,11 @@ and working across many changes.
 
 ## Project Status
 
-This repository is an early reference release. It includes a portable worker
-launcher, a sealed-packet critic harness, local fake-provider tests, and example
-contracts. A complete synthetic fail-review-repair fixture is still planned
-before a stable KLP Core release.
+KLP Core v0.2 is a provisional public profile. This repository includes a
+portable worker launcher, a sealed-packet critic harness, local fake-provider
+tests, example contracts, and a reproducible offline fail-review-repair
+fixture. The fixture proves protocol mechanics; it does not certify model
+quality, production safety, or a particular agent framework.
 
 ## License
 

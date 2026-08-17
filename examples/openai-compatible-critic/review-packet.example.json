@@ -1,6 +1,9 @@
 {
-  "protocol": "klp-core/v0.1",
+  "protocol": "klp-core/v0.2",
   "task_id": "example-normalize-title",
+  "contract_id": "contract-normalize-title",
+  "contract_revision": 1,
+  "contract_hash": "sha256:contract-example-123",
   "objective": "Collapse repeated ASCII spaces in normalizeTitle().",
   "commitments": [
     {

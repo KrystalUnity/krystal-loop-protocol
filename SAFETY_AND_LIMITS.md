@@ -19,6 +19,13 @@ itself authorize:
 Projects may approve some of these actions through their own human-controlled
 process. KLP records the boundary; it does not replace that process.
 
+A coordinator may run assigned work, checks, criticism, evidence adjudication,
+and bounded repairs without asking a person to approve each round when the task
+contract or standing policy explicitly delegates those operations. Repeated
+human approval is required only when recorded authority is absent or the work
+reaches a material change, exhausted limit, safety stop, or consequential
+action boundary.
+
 ## Data Handling
 
 Task records and agent messages should contain the minimum information needed
@@ -34,6 +41,10 @@ services.
 Independent criticism reduces correlated blind spots but does not prove
 correctness. Critics can misunderstand requirements, miss defects, hallucinate
 findings, or overvalue persuasive presentation.
+
+A coordinator must not accept or dismiss a finding solely because of the
+critic's confidence. Confirm or refute it with direct evidence from the exact
+reviewed artifact when practical; otherwise record it as unresolved.
 
 Provider-family labels are declarations supplied by the controller, not
 cryptographic proof of model lineage. Different-family checks prevent accidental
@@ -53,9 +64,10 @@ Agents should stop when work requires a new file boundary, dependency,
 architecture, side effect, acceptance criterion, or authority level. That is a
 material change, even when the proposed change appears useful.
 
-Set round, time, and cost ceilings before dispatch. Repeated blocking findings
-or no measurable evidence improvement should trigger a plateau rather than an
-unbounded agent loop.
+Set round, time, cost, and any task-specific size ceilings before dispatch, then
+record the measured values rather than agent estimates. Repeated blocking
+findings or no measurable evidence improvement should trigger a plateau rather
+than an unbounded agent loop.
 
 ## Infrastructure Limits
 
