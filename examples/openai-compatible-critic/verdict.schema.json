@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KLP Critic Verdict",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "reviewed_revision",
+    "critic_provider_family",
+    "critic_model",
+    "verdict",
+    "summary",
+    "findings",
+    "limitations"
+  ],
+  "properties": {
+    "reviewed_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "critic_provider_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "critic_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "PASS_WITH_NONBLOCKING_FINDINGS",
+        "NEEDS_FIXES",
+        "BLOCKED",
+        "ESCALATE"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "finding_id",
+          "severity",
+          "blocking",
+          "commitment",
+          "observed",
+          "expected",
+          "evidence_refs",
+          "repair_acceptance"
+        ],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "important", "minor"]
+          },
+          "blocking": {
+            "type": "boolean"
+          },
+          "commitment": {
+            "type": "string",
+            "minLength": 1
+          },
+          "observed": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "repair_acceptance": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

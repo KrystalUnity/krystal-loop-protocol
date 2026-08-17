@@ -1,0 +1,36 @@
+{
+  "protocol": "klp-core/v0.1",
+  "task_id": "example-normalize-title",
+  "objective": "Collapse repeated ASCII spaces in normalizeTitle().",
+  "commitments": [
+    {
+      "id": "C1",
+      "text": "Repeated ASCII spaces collapse to one."
+    }
+  ],
+  "worker_provider_family": "deepseek",
+  "base_revision": "base-abc123",
+  "result_revision": "result-def456",
+  "changed_files": [
+    "src/title.ts",
+    "tests/title.test.ts"
+  ],
+  "artifact_diff": "diff --git a/src/title.ts b/src/title.ts\n--- a/src/title.ts\n+++ b/src/title.ts\n@@ -1 +1 @@\n-return value;\n+return value.replace(/ +/g, ' ');",
+  "checks": [
+    {
+      "name": "focused-test",
+      "command": "npm test -- tests/title.test.ts",
+      "status": "passed",
+      "evidence_ref": "E1"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "kind": "test-output",
+      "content": "1 test passed"
+    }
+  ],
+  "known_limitations": [],
+  "unresolved_findings": []
+}
