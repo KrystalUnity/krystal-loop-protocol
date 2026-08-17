@@ -120,5 +120,11 @@ before a stable KLP Core release.
 
 ## License
 
-Krystal Loop Protocol is licensed under the
-[GNU Affero General Public License v3.0 only](LICENSE) (`AGPL-3.0-only`).
+Krystal Loop Protocol uses split licensing:
+
+- software, scripts, schemas, configuration examples, and tests are licensed
+  under [Apache License 2.0](LICENSE-APACHE-2.0) (`Apache-2.0`);
+- protocol and documentation text are licensed under
+  [Creative Commons Attribution 4.0](LICENSE-CC-BY-4.0) (`CC-BY-4.0`).
+
+See the [licensing map](LICENSE) for the file-level boundary.
