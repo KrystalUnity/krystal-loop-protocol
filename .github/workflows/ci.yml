@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run offline worker and critic tests
+        run: python3 examples/openai-compatible-critic/tests/test_critic.py -v
+      - name: Check launcher syntax
+        run: bash -n examples/deepseek-codex-worker/run.sh
+      - name: Check critic syntax
+        run: python3 -m py_compile examples/openai-compatible-critic/critic.py
+      - name: Validate JSON examples
+        run: |
+          python3 -m json.tool examples/openai-compatible-critic/review-packet.example.json >/dev/null
+          python3 -m json.tool examples/openai-compatible-critic/verdict.schema.json >/dev/null
+          python3 -m json.tool examples/deepseek-codex-worker/expected-handover.json >/dev/null

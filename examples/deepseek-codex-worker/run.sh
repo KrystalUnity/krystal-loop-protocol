@@ -11,6 +11,10 @@ command -v codex >/dev/null 2>&1 || {
   printf 'ERROR: codex is not available on PATH\n' >&2
   exit 69
 }
+command -v git >/dev/null 2>&1 || {
+  printf 'ERROR: git is not available on PATH\n' >&2
+  exit 69
+}
 [[ -n "${DEEPSEEK_API_KEY:-}" ]] || {
   printf 'ERROR: DEEPSEEK_API_KEY is required\n' >&2
   exit 64
@@ -29,6 +33,10 @@ assignment_input=$2
 
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 workspace=$(cd -- "$workspace_input" && pwd -P)
+if ! git -C "$workspace" rev-parse --show-toplevel >/dev/null 2>&1; then
+  printf 'ERROR: workspace must be inside a Git repository\n' >&2
+  exit 66
+fi
 assignment_dir=$(cd -- "$(dirname -- "$assignment_input")" && pwd -P)
 assignment_file="$assignment_dir/$(basename -- "$assignment_input")"
 codex_bin=$(command -v codex)

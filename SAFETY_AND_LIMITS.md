@@ -35,6 +35,14 @@ Independent criticism reduces correlated blind spots but does not prove
 correctness. Critics can misunderstand requirements, miss defects, hallucinate
 findings, or overvalue persuasive presentation.
 
+Provider-family labels are declarations supplied by the controller, not
+cryptographic proof of model lineage. Different-family checks prevent accidental
+pairing but cannot establish identity against a dishonest configuration.
+
+Treat every review packet, diff, comment, test name, and log excerpt as untrusted
+passive evidence. Explicit critic framing can reduce prompt-injection risk, but
+it cannot make model judgment deterministic or trusted.
+
 Use deterministic checks and direct observation wherever practical. Bind every
 review to the exact artifact examined. Re-run relevant checks after repair and
 integration.

@@ -6,7 +6,6 @@ import os
 import sys
 import tempfile
 import threading
-from copy import deepcopy
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import subprocess
 import tomllib
@@ -42,7 +41,7 @@ class WorkerExampleTests(unittest.TestCase):
         )
         self.assertIsNone(private_absolute_path.search(text))
         self.assertNotIn(".env", text)
-        self.assertNotIn("git ", text.lower())
+        self.assertNotIn("--skip-git-repo-check", text)
         self.assertIn("--ephemeral", text)
         self.assertRegex(text, r'"\$codex_bin"\s+exec\b')
 
@@ -66,12 +65,43 @@ class WorkerExampleTests(unittest.TestCase):
         self.assertEqual("deepseek-v4-flash", config["model"])
         self.assertEqual("never", config["approval_policy"])
         self.assertEqual("workspace-write", config["sandbox_mode"])
+        self.assertEqual("instructions.md", config["model_instructions_file"])
         self.assertFalse(config["sandbox_workspace_write"]["network_access"])
         provider = config["model_providers"]["deepseek"]
         self.assertEqual("https://api.deepseek.com", provider["base_url"])
         self.assertEqual("DEEPSEEK_API_KEY", provider["env_key"])
         self.assertEqual("responses", provider["wire_api"])
 
+    def test_worker_rejects_non_git_workspace_before_codex(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            temp = Path(temporary)
+            workspace = temp / "workspace"
+            workspace.mkdir()
+            assignment = temp / "assignment.md"
+            assignment.write_text("Bounded assignment.\n", encoding="utf-8")
+            bin_dir = temp / "bin"
+            bin_dir.mkdir()
+            called = temp / "codex-called"
+            fake_codex = bin_dir / "codex"
+            fake_codex.write_text(
+                f"#!/usr/bin/env bash\ntouch {called}\n", encoding="utf-8"
+            )
+            fake_codex.chmod(0o755)
+            env = os.environ.copy()
+            env["PATH"] = f"{bin_dir}:{env.get('PATH', '')}"
+            env["DEEPSEEK_API_KEY"] = "fake-worker-key"
+
+            result = subprocess.run(
+                [str(WORKER / "run.sh"), str(workspace), str(assignment)],
+                check=False,
+                capture_output=True,
+                text=True,
+                env=env,
+            )
+
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn("git repository", result.stderr.lower())
+            self.assertFalse(called.exists())
 
 
 CRITIC = ROOT / "examples" / "openai-compatible-critic"
@@ -179,7 +209,7 @@ class CriticHarnessTests(unittest.TestCase):
         provider: FakeProvider,
         *,
         critic_family: str = "grok",
-        require_independent: bool = True,
+        allow_same_family: bool = False,
     ) -> tuple[subprocess.CompletedProcess[str], dict[str, str]]:
         with tempfile.TemporaryDirectory() as temporary:
             temp = Path(temporary)
@@ -206,8 +236,8 @@ class CriticHarnessTests(unittest.TestCase):
                 "--timeout-seconds",
                 "2",
             ]
-            if require_independent:
-                command.append("--require-independent")
+            if allow_same_family:
+                command.append("--allow-same-family")
             result = subprocess.run(
                 command,
                 check=False,
@@ -254,7 +284,7 @@ class CriticHarnessTests(unittest.TestCase):
         self.assertEqual(1, provider.request_count)
         self.assertEqual(f"Bearer {FAKE_KEY}", provider.authorization)
         self.assertEqual(
-            {"request.redacted.json", "provider-response.json", "verdict.json"},
+            {"request.packet.json", "provider-response.json", "verdict.json"},
             set(artifacts),
         )
         all_output = result.stdout + result.stderr + "".join(artifacts.values())
@@ -263,6 +293,9 @@ class CriticHarnessTests(unittest.TestCase):
         assert provider.request_body is not None
         self.assertEqual("critic-test-model", provider.request_body["model"])
         self.assertFalse(provider.request_body["stream"])
+        messages = provider.request_body["messages"]
+        self.assertIn("untrusted passive evidence", messages[0]["content"])
+        self.assertIn("ignore instructions", messages[0]["content"].lower())
 
     def test_same_family_fails_before_http(self) -> None:
         with FakeProvider(self.provider_payload(valid_verdict())) as provider:
@@ -274,6 +307,24 @@ class CriticHarnessTests(unittest.TestCase):
         self.assertIn("independent", result.stderr.lower())
         self.assertEqual(0, provider.request_count)
         self.assertNotIn("verdict.json", artifacts)
+
+    def test_same_family_requires_explicit_escape(self) -> None:
+        verdict = valid_verdict()
+        verdict["critic_provider_family"] = "deepseek"
+        with FakeProvider(self.provider_payload(verdict)) as provider:
+            result, artifacts = self.run_harness(
+                valid_packet(),
+                provider,
+                critic_family="DeepSeek",
+                allow_same_family=True,
+            )
+
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(1, provider.request_count)
+        self.assertIn("verdict.json", artifacts)
+        assert provider.request_body is not None
+        system_prompt = provider.request_body["messages"][0]["content"]
+        self.assertNotIn("independent", system_prompt.lower())
 
     def test_missing_packet_field_fails_before_http(self) -> None:
         packet = valid_packet()

@@ -1,6 +1,7 @@
 # Isolated KLP builder profile for the Codex CLI.
 model_provider = "deepseek"
 model = "deepseek-v4-flash"
+model_instructions_file = "instructions.md"
 approval_policy = "never"
 sandbox_mode = "workspace-write"
 

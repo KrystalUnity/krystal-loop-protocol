@@ -52,21 +52,27 @@ control layer provider-neutral:
 4. Build and redact a sealed packet from
    [`review-packet.example.json`](examples/openai-compatible-critic/review-packet.example.json).
 5. Configure a different provider family and run
-   [`critic.py`](examples/openai-compatible-critic/critic.py) with
-   `--require-independent`.
+   [`critic.py`](examples/openai-compatible-critic/critic.py). Same-family
+   review requires the explicit `--allow-same-family` escape and is not
+   independent.
 6. Validate the critic artifacts and present the evidence to the human
    decision-maker.
 
 The worker configuration points Codex at DeepSeek's OpenAI-compatible endpoint,
-but the endpoint is only the inference engine. The assignment, sandbox,
-deterministic checks, sealed evidence, critic separation, and human authority
-remain outside the model. The critic harness likewise accepts any compatible
-`/chat/completions` endpoint through environment variables; it makes one
-request and performs no retry, repair, merge, push, or deployment.
+but the endpoint is only the inference engine. The assignment, workspace
+sandbox, deterministic checks, sealed evidence, critic separation, and human
+authority remain outside the model. A workspace sandbox does not enforce an
+assignment's per-file allow-list; the controller must inspect the changed-file
+set and exact diff.
 
-Do not feed a repository, credentials, private logs, or unreviewed context to
-the critic. The controller owns packet construction and redaction. A valid
-`verdict.json` is evidence, not permission.
+The critic harness accepts any compatible `/chat/completions` endpoint through
+environment variables. It makes one request and performs no retry, repair,
+merge, push, or deployment. Different-family review is the default, but family
+labels are controller declarations rather than identity attestation.
+
+Do not feed credentials, private logs, or unreviewed context to the critic. The
+controller owns packet construction and redaction. Packet contents remain
+untrusted evidence, and a valid `verdict.json` is evidence, not permission.
 
 ## Minimum Record Shape
 

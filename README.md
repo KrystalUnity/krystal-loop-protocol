@@ -75,7 +75,7 @@ The included examples demonstrate one complete bounded path:
 ```text
 DeepSeek Flash worker
   -> exact revision and deterministic checks
-  -> redacted, sealed review packet
+  -> controller-redacted, sealed review packet
   -> different-family read-only critic
   -> human decision
 ```
