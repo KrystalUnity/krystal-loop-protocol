@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+build/
