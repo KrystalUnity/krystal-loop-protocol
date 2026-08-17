@@ -93,3 +93,8 @@ and working across many changes.
 This repository is an early documentation-first reference draft. Portable
 schemas, executable fixtures, and a synthetic fail-review-repair example are
 planned before a stable KLP Core release.
+
+## License
+
+Krystal Loop Protocol is licensed under the
+[GNU Affero General Public License v3.0 only](LICENSE) (`AGPL-3.0-only`).
