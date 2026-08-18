@@ -1,6 +1,6 @@
 # Krystal Loop Protocol
 
-![Krystal Loop Protocol: hard-working agents, big-brain control, no chaos](assets/krystal-loop-protocol-banner.png)
+![Krystal Loop Protocol](assets/krystal-loop-protocol-banner.jpg)
 
 Use fast AI agents for the grunt work. Use a lead agent and real checks to keep
 the project coherent, working, and under your control.
