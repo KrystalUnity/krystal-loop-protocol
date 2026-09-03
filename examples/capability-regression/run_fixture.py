@@ -284,6 +284,40 @@ class ElapsedBudgetGate:
         )
         return True
 
+    def stop_after_operation(
+        self,
+        *,
+        result_revision: str | None,
+        integration_revision: str | None,
+        before: str,
+        after: str,
+        evidence_refs: list[str],
+        repair_rounds_used: int,
+        supporting_evidence_refs: list[str],
+        intermediate: str | None = None,
+    ) -> bool:
+        if before == "passed" and after == "passed":
+            disposition = "preserved"
+        elif after == "failed":
+            disposition = "degraded"
+        else:
+            disposition = "unproven"
+        capability: dict[str, object] = {
+            "before": before,
+            "after": after,
+            "disposition": disposition,
+            "evidence_refs": evidence_refs,
+        }
+        if intermediate is not None:
+            capability["intermediate"] = intermediate
+        return self.stop_if_exhausted(
+            result_revision=result_revision,
+            integration_revision=integration_revision,
+            capability_report={"adaptive-choice": capability},
+            repair_rounds_used=repair_rounds_used,
+            supporting_evidence_refs=supporting_evidence_refs,
+        )
+
 
 class FakeCriticProvider:
     def __init__(self, verdict: dict[str, object]) -> None:
@@ -865,11 +899,26 @@ def execute(
             None if baseline_probe_mode == "normal" else baseline_probe_mode
         ),
     )
-    if baseline["result"] != "passed":
+    baseline_result = str(baseline["result"])
+    if elapsed_budget.stop_after_operation(
+        result_revision=None,
+        integration_revision=None,
+        before=baseline_result,
+        after="not_run",
+        evidence_refs=["evidence/capability-baseline.json"],
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "mission.snapshot.json",
+            "task.snapshot.json",
+            "mission-binding-report.json",
+        ],
+    ):
+        return 3
+    if baseline_result != "passed":
         reason = str(
             baseline.get(
                 "identity_error",
-                f"accepted baseline probe result was {baseline['result']}",
+                f"accepted baseline probe result was {baseline_result}",
             )
         )
         ledger.append(
@@ -887,7 +936,7 @@ def execute(
             integration_revision=None,
             capability_report={
                 "adaptive-choice": {
-                    "before": baseline["result"],
+                    "before": baseline_result,
                     "after": "not_run",
                     "disposition": "unproven",
                     "reason": reason,
@@ -912,26 +961,6 @@ def execute(
         )
         return 4
 
-    if elapsed_budget.stop_if_exhausted(
-        result_revision=None,
-        integration_revision=None,
-        capability_report={
-            "adaptive-choice": {
-                "before": "passed",
-                "after": "not_run",
-                "disposition": "unproven",
-                "evidence_refs": ["evidence/capability-baseline.json"],
-            }
-        },
-        repair_rounds_used=0,
-        supporting_evidence_refs=[
-            "mission.snapshot.json",
-            "task.snapshot.json",
-            "mission-binding-report.json",
-        ],
-    ):
-        return 3
-
     ledger.append(
         "assigned",
         actor="execution-coordinator",
@@ -947,7 +976,18 @@ def execute(
     (workspace / "chooser.py").write_text(fixed_chooser(), encoding="utf-8")
     worker_revision = commit(workspace, "fixture: replace adaptive choice with fixed policy")
     worker_check = output / "evidence" / "worker-check.txt"
-    if not run_task_check(workspace, worker_check):
+    worker_check_passed = run_task_check(workspace, worker_check)
+    if elapsed_budget.stop_after_operation(
+        result_revision=worker_revision,
+        integration_revision=None,
+        before="passed",
+        after="not_run",
+        evidence_refs=["evidence/capability-baseline.json"],
+        repair_rounds_used=0,
+        supporting_evidence_refs=["evidence/worker-check.txt"],
+    ):
+        return 3
+    if not worker_check_passed:
         raise FixtureError("fixed-policy worker revision did not pass the declared task check")
     ledger.append(
         "mechanical_check",
@@ -967,24 +1007,6 @@ def execute(
             ),
         },
     )
-    if elapsed_budget.stop_if_exhausted(
-        result_revision=worker_revision,
-        integration_revision=None,
-        capability_report={
-            "adaptive-choice": {
-                "before": "passed",
-                "after": "not_run",
-                "disposition": "unproven",
-                "evidence_refs": ["evidence/capability-baseline.json"],
-            }
-        },
-        repair_rounds_used=0,
-        supporting_evidence_refs=[
-            "evidence/worker-check.txt",
-            "evidence/restriction-candidate.json",
-        ],
-    ):
-        return 3
     ledger.append(
         "critic_review",
         actor="execution-coordinator",
@@ -1004,19 +1026,12 @@ def execute(
         ),
         verdict=provider_verdict(worker_revision),
     )
-    if first_verdict.get("verdict") != "PASS":
-        raise FixtureError("first scripted critic did not return PASS")
-    if elapsed_budget.stop_if_exhausted(
+    if elapsed_budget.stop_after_operation(
         result_revision=worker_revision,
         integration_revision=None,
-        capability_report={
-            "adaptive-choice": {
-                "before": "passed",
-                "after": "not_run",
-                "disposition": "unproven",
-                "evidence_refs": ["evidence/capability-baseline.json"],
-            }
-        },
+        before="passed",
+        after="not_run",
+        evidence_refs=["evidence/capability-baseline.json"],
         repair_rounds_used=0,
         supporting_evidence_refs=[
             "evidence/worker-check.txt",
@@ -1025,6 +1040,8 @@ def execute(
         ],
     ):
         return 3
+    if first_verdict.get("verdict") != "PASS":
+        raise FixtureError("first scripted critic did not return PASS")
     ledger.append(
         "accepted_unit",
         actor="execution-coordinator",
@@ -1052,7 +1069,25 @@ def execute(
         baseline_revision=baseline_revision,
         force_result="inconclusive" if probe_mode == "inconclusive" else None,
     )
-    if first_capability["result"] == "inconclusive":
+    first_capability_result = str(first_capability["result"])
+    if elapsed_budget.stop_after_operation(
+        result_revision=worker_revision,
+        integration_revision=integration_one,
+        before="passed",
+        after=first_capability_result,
+        evidence_refs=[
+            "evidence/capability-baseline.json",
+            "evidence/capability-after-integration-1.json",
+        ],
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "critic-round-1/verdict.json",
+            "review-packet-round-1.json",
+        ],
+    ):
+        return 3
+    if first_capability_result == "inconclusive":
         ledger.append(
             "capability_unproven",
             actor="capability-auditor",
@@ -1096,7 +1131,7 @@ def execute(
             ],
         )
         return 4
-    if first_capability["result"] != "failed":
+    if first_capability_result != "failed":
         raise FixtureError("fixed-policy integration did not trigger capability regression")
     ledger.append(
         "capability_regression",
@@ -1124,19 +1159,6 @@ def execute(
             ],
         }
     }
-    if elapsed_budget.stop_if_exhausted(
-        result_revision=worker_revision,
-        integration_revision=integration_one,
-        capability_report=degraded_capability_report,
-        repair_rounds_used=0,
-        supporting_evidence_refs=[
-            "evidence/worker-check.txt",
-            "critic-round-1/verdict.json",
-            "evidence/restriction-disposition-1.json",
-            "review-packet-round-1.json",
-        ],
-    ):
-        return 3
     if repair_round_limit == 0:
         ledger.append(
             "budget_exhausted",
@@ -1187,18 +1209,16 @@ def execute(
     (workspace / "chooser.py").write_text(adaptive_chooser(), encoding="utf-8")
     repaired_revision = commit(workspace, "fixture: restore input-dependent choice")
     repair_check = output / "evidence" / "repair-check.txt"
-    if not run_task_check(workspace, repair_check):
-        raise FixtureError("repair revision did not pass the declared task check")
-    ledger.append(
-        "mechanical_check",
-        actor="verifier",
-        reason="The declared task-level test passed after the bounded repair.",
-        artifact_revision=repaired_revision,
-    )
-    if elapsed_budget.stop_if_exhausted(
+    repair_check_passed = run_task_check(workspace, repair_check)
+    if elapsed_budget.stop_after_operation(
         result_revision=repaired_revision,
         integration_revision=integration_one,
-        capability_report=degraded_capability_report,
+        before="passed",
+        after="failed",
+        evidence_refs=[
+            "evidence/capability-baseline.json",
+            "evidence/capability-after-integration-1.json",
+        ],
         repair_rounds_used=1,
         supporting_evidence_refs=[
             "evidence/worker-check.txt",
@@ -1208,6 +1228,14 @@ def execute(
         ],
     ):
         return 3
+    if not repair_check_passed:
+        raise FixtureError("repair revision did not pass the declared task check")
+    ledger.append(
+        "mechanical_check",
+        actor="verifier",
+        reason="The declared task-level test passed after the bounded repair.",
+        artifact_revision=repaired_revision,
+    )
     ledger.append(
         "critic_review",
         actor="execution-coordinator",
@@ -1227,12 +1255,15 @@ def execute(
         ),
         verdict=provider_verdict(repaired_revision),
     )
-    if second_verdict.get("verdict") != "PASS":
-        raise FixtureError("second scripted critic did not return PASS")
-    if elapsed_budget.stop_if_exhausted(
+    if elapsed_budget.stop_after_operation(
         result_revision=repaired_revision,
         integration_revision=integration_one,
-        capability_report=degraded_capability_report,
+        before="passed",
+        after="failed",
+        evidence_refs=[
+            "evidence/capability-baseline.json",
+            "evidence/capability-after-integration-1.json",
+        ],
         repair_rounds_used=1,
         supporting_evidence_refs=[
             "evidence/worker-check.txt",
@@ -1244,6 +1275,8 @@ def execute(
         ],
     ):
         return 3
+    if second_verdict.get("verdict") != "PASS":
+        raise FixtureError("second scripted critic did not return PASS")
     ledger.append(
         "accepted_unit",
         actor="execution-coordinator",
@@ -1270,7 +1303,31 @@ def execute(
         expected_artifact_revision=integration_two,
         baseline_revision=baseline_revision,
     )
-    if second_capability["result"] != "passed":
+    second_capability_result = str(second_capability["result"])
+    if elapsed_budget.stop_after_operation(
+        result_revision=repaired_revision,
+        integration_revision=integration_two,
+        before="passed",
+        after=second_capability_result,
+        intermediate="failed",
+        evidence_refs=[
+            "evidence/capability-baseline.json",
+            "evidence/capability-after-integration-1.json",
+            "evidence/capability-after-integration-2.json",
+        ],
+        repair_rounds_used=1,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "evidence/repair-check.txt",
+            "critic-round-1/verdict.json",
+            "critic-round-2/verdict.json",
+            "evidence/restriction-disposition-1.json",
+            "review-packet-round-1.json",
+            "review-packet-round-2.json",
+        ],
+    ):
+        return 3
+    if second_capability_result != "passed":
         raise FixtureError("repaired integration did not preserve adaptive choice")
     write_json(
         output / "evidence" / "restriction-disposition-2.json",
@@ -1304,14 +1361,6 @@ def execute(
         "review-packet-round-1.json",
         "review-packet-round-2.json",
     ]
-    if elapsed_budget.stop_if_exhausted(
-        result_revision=repaired_revision,
-        integration_revision=integration_two,
-        capability_report=preserved_capability_report,
-        repair_rounds_used=1,
-        supporting_evidence_refs=completed_evidence_refs,
-    ):
-        return 3
     mission_check(
         output,
         "final-mission-check.json",

@@ -26,6 +26,15 @@ class FinalBoundaryClock:
         return 60.0001 if self.calls >= 10 else 0.0
 
 
+class BaselineOverrunClock:
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def __call__(self) -> float:
+        self.calls += 1
+        return 60.0001 if self.calls >= 3 else 0.0
+
+
 class CapabilityRegressionFixtureTests(unittest.TestCase):
     RECEIPT_KEYS = {
         "protocol",
@@ -296,6 +305,42 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
                     self.assertFalse(
                         (output / "evidence" / "worker-check.txt").exists()
                     )
+
+    def test_failed_baseline_overrun_takes_budget_precedence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "fixture-output"
+            clock = BaselineOverrunClock()
+            result = run_fixture.execute(
+                output,
+                None,
+                probe_mode="normal",
+                omit_capability_declaration=False,
+                baseline_probe_mode="failed",
+                mismatch_baseline_artifact_revision=False,
+                clock=clock,
+            )
+
+            self.assertEqual(3, result)
+            self.assertEqual(3, clock.calls)
+            states = self.assert_terminal_state(output, "budget_exhausted")
+            self.assertEqual(1, states.count("budget_exhausted"))
+            self.assertNotIn("capability_unproven", states)
+            self.assertNotIn("assigned", states)
+            self.assertNotIn("building", states)
+
+            receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
+            self.assertEqual("budget_exhausted", receipt["status"])
+            capability = receipt["capability_report"]["adaptive-choice"]
+            self.assertEqual("failed", capability["before"])
+            self.assertEqual("not_run", capability["after"])
+            self.assertEqual("unproven", capability["disposition"])
+            self.assertEqual(
+                ["evidence/capability-baseline.json"],
+                capability["evidence_refs"],
+            )
+            self.assertGreater(receipt["measured_budget"]["elapsed_seconds"], 60)
+            self.assertFalse((output / "evidence" / "worker-check.txt").exists())
 
     def test_mismatched_expected_artifact_revision_is_unproven(self) -> None:
         with self.fixture_output("--mismatch-baseline-artifact-revision") as (
