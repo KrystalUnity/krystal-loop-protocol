@@ -8,6 +8,8 @@
     "today": "Today the product selects different actions from the supplied signal.",
     "user_may_lose": "Users may lose adaptive decisions for supported signals."
   },
+  "proposed_mission_hash": "sha256:c624cf293f8aa9a0aa76cf0de6c28a4a75ab0baac05c570d609af0a66453930f",
+  "proposed_revision_reason": "Operator approved the fixed-choice mission amendment.",
   "protocol_version": "klp-core/v0.3",
   "request_id": "mission-amendment-fixed-choice",
   "requested_change": "Permit a fixed safe action for every signal.",
@@ -25,7 +27,8 @@
     ],
     "fields_changed": [
       "mission.critical_capabilities[0].required_behavior",
-      "mission.critical_capabilities[0].negative_control"
+      "mission.critical_capabilities[0].negative_control",
+      "mission.revision_reason"
     ],
     "rollback_implications": "Restore the prior mission revision and adaptive implementation.",
     "safety_impact": "A fixed action may be safer for some signals but less appropriate for others.",

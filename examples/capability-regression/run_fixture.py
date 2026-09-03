@@ -9,6 +9,7 @@ import os
 import subprocess
 import sys
 import threading
+import time
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -38,11 +39,19 @@ class FixtureError(Exception):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--repair-round-limit", type=int, default=1)
+    parser.add_argument("--repair-round-limit", type=int)
     parser.add_argument(
         "--probe-mode", choices=("normal", "inconclusive"), default="normal"
     )
     parser.add_argument("--omit-capability-declaration", action="store_true")
+    parser.add_argument(
+        "--baseline-probe-mode",
+        choices=("normal", "failed", "inconclusive"),
+        default="normal",
+    )
+    parser.add_argument(
+        "--mismatch-baseline-artifact-revision", action="store_true"
+    )
     return parser.parse_args()
 
 
@@ -59,18 +68,25 @@ def write_json(path: Path, value: object) -> None:
             temporary.unlink()
 
 
-def write_terminal_receipt(
-    output: Path,
+def build_receipt(
     *,
     status: str,
     mission_identity: dict[str, object],
     contract_identity: dict[str, object],
+    result_revision: str | None,
+    integration_revision: str | None,
     capability_report: dict[str, object],
+    repair_rounds_used: int,
+    elapsed_seconds: float,
     ledger: StateLedger,
+    claims: list[str],
+    supporting_evidence_refs: list[str],
+    unresolved_findings: list[str],
     human_decisions_required: list[str],
-) -> None:
+) -> dict[str, object]:
     evidence_refs = sorted(
-        {
+        set(supporting_evidence_refs)
+        | {
             reference
             for value in capability_report.values()
             if isinstance(value, dict)
@@ -78,26 +94,33 @@ def write_terminal_receipt(
             if isinstance(reference, str)
         }
     )
-    write_json(
-        output / "final-receipt.json",
-        {
-            "protocol": "klp-core/v0.3",
-            "status": status,
-            "mission_identity": mission_identity,
-            "contract_identity": contract_identity,
-            "capability_report": capability_report,
-            "claims": [
-                "The run stopped without claiming mission-preserving completion."
-            ],
-            "evidence_refs": evidence_refs,
-            "limitations": [
-                "This is an offline synthetic protocol fixture."
-            ],
-            "unresolved_findings": [],
-            "human_decisions_required": human_decisions_required,
-            "state_ledger_tail_hash": ledger.tail_hash,
+    return {
+        "protocol": "klp-core/v0.3",
+        "status": status,
+        "mission_identity": mission_identity,
+        "contract_identity": contract_identity,
+        "result_revision": result_revision,
+        "integration_revision": integration_revision,
+        "claims": claims,
+        "evidence_refs": evidence_refs,
+        "capability_report": capability_report,
+        "measured_budget": {
+            "repair_rounds_used": repair_rounds_used,
+            "elapsed_seconds": elapsed_seconds,
+            "external_cost_usd": 0,
         },
-    )
+        "limitations": [
+            "The worker is scripted and the critic is a loopback fake provider.",
+            "The fixture proves offline protocol mechanics, not model quality or production safety.",
+        ],
+        "unresolved_findings": unresolved_findings,
+        "human_decisions_required": human_decisions_required,
+        "state_ledger_tail_hash": ledger.tail_hash,
+    }
+
+
+def write_final_receipt(output: Path, **values: object) -> None:
+    write_json(output / "final-receipt.json", build_receipt(**values))
 
 
 def prepare_output(path: Path) -> None:
@@ -399,19 +422,61 @@ def require_clean_workspace(workspace: Path, *, boundary: str) -> None:
         )
 
 
+def probe_identity_error(
+    workspace: Path, *, expected_artifact_revision: str, baseline_revision: str
+) -> tuple[str, str | None]:
+    actual_revision = git(workspace, "rev-parse", "HEAD")
+    if actual_revision != expected_artifact_revision:
+        return (
+            actual_revision,
+            "expected artifact revision does not match the clean workspace HEAD",
+        )
+    baseline_exists = run_command(
+        ["git", "cat-file", "-e", f"{baseline_revision}^{{commit}}"],
+        cwd=workspace,
+        check=False,
+    )
+    if baseline_exists.returncode != 0:
+        return actual_revision, "named baseline revision is not a valid Git commit"
+    baseline_is_ancestor = run_command(
+        ["git", "merge-base", "--is-ancestor", baseline_revision, actual_revision],
+        cwd=workspace,
+        check=False,
+    )
+    if baseline_is_ancestor.returncode != 0:
+        return actual_revision, "named baseline revision is not an artifact ancestor"
+    return actual_revision, None
+
+
 def run_capability_probe(
     workspace: Path,
     evidence_path: Path,
     *,
-    mission_hash: str,
-    artifact_revision: str,
+    mission_snapshot: dict[str, object],
+    expected_artifact_revision: str,
     baseline_revision: str,
-    force_inconclusive: bool = False,
+    force_result: str | None = None,
 ) -> dict[str, object]:
+    mission = validate_mission_snapshot(mission_snapshot)
+    mission_identity = mission_snapshot["identity"]
+    assert isinstance(mission_identity, dict)
+    capability = next(
+        item
+        for item in mission["critical_capabilities"]
+        if item["capability_id"] == "adaptive-choice"
+    )
     require_clean_workspace(workspace, boundary="before execution")
-    if force_inconclusive:
+    artifact_revision, identity_error = probe_identity_error(
+        workspace,
+        expected_artifact_revision=expected_artifact_revision,
+        baseline_revision=baseline_revision,
+    )
+    if identity_error is not None:
         result = "inconclusive"
-        observations: dict[str, object] = {"reason": "fixture-forced-inconclusive"}
+        observations: dict[str, object] = {"reason": identity_error}
+    elif force_result is not None:
+        result = force_result
+        observations = {"reason": f"fixture-forced-{force_result}"}
     else:
         completed = run_command(
             [sys.executable, "-B", "capability_probe.py"],
@@ -426,14 +491,21 @@ def run_capability_probe(
         else:
             result = "passed" if completed.returncode == 0 else "failed"
     require_clean_workspace(workspace, boundary="after execution")
+    final_revision = git(workspace, "rev-parse", "HEAD")
+    if final_revision != artifact_revision:
+        identity_error = "artifact revision changed during capability probe"
+        artifact_revision = final_revision
+        result = "inconclusive"
+        observations = {"reason": identity_error}
 
     record = {
         "capability_id": "adaptive-choice",
-        "mission_hash": mission_hash,
+        "mission_hash": mission_identity["mission_hash"],
+        "expected_artifact_revision": expected_artifact_revision,
         "artifact_revision": artifact_revision,
         "baseline_revision": baseline_revision,
-        "positive_control": ["fire -> evacuate", "medical -> assist"],
-        "negative_control": ["unknown -> observe", "outputs are not constant"],
+        "positive_control": capability["positive_control"],
+        "negative_control": capability["negative_control"],
         "expected_observations": {"decision_source": "input-dependent"},
         "actual_observations": observations,
         "decision_provenance": observations.get("decision_sources", []),
@@ -442,6 +514,8 @@ def run_capability_probe(
         "result": result,
         "evidence_refs": [str(evidence_path.relative_to(evidence_path.parents[1]))],
     }
+    if identity_error is not None:
+        record["identity_error"] = identity_error
     write_json(evidence_path, record)
     return record
 
@@ -541,17 +615,31 @@ def mission_check(
 
 def execute(
     output: Path,
-    repair_round_limit: int,
+    repair_round_limit: int | None,
     *,
     probe_mode: str,
     omit_capability_declaration: bool,
+    baseline_probe_mode: str,
+    mismatch_baseline_artifact_revision: bool,
 ) -> int:
-    if repair_round_limit not in (0, 1):
-        raise FixtureError("repair round limit must be zero or one")
-    prepare_output(output)
+    started_at = time.monotonic()
     records = build_example_records()
     mission_snapshot = records["mission-contract.example.json"]
     task_snapshot = records["task-contract.example.json"]
+    task_body = task_snapshot["task"]
+    assert isinstance(task_body, dict)
+    limits = task_body["limits"]
+    assert isinstance(limits, dict)
+    frozen_repair_limit = int(limits["repair_rounds"])
+    if repair_round_limit is None:
+        repair_round_limit = frozen_repair_limit
+    if repair_round_limit < 0:
+        raise FixtureError("repair round limit must be nonnegative")
+    if repair_round_limit > frozen_repair_limit:
+        raise FixtureError(
+            "CLI repair round limit cannot increase the frozen Task Contract limit"
+        )
+    prepare_output(output)
     if omit_capability_declaration:
         task_snapshot = json.loads(json.dumps(task_snapshot))
         task = task_snapshot["task"]
@@ -590,11 +678,13 @@ def execute(
             reason=f"Task Contract validation stopped the fixture: {exc}",
             artifact_revision=None,
         )
-        write_terminal_receipt(
+        write_final_receipt(
             output,
             status="mission_mismatch",
             mission_identity=mission_identity,
             contract_identity=task_identity,
+            result_revision=None,
+            integration_revision=None,
             capability_report={
                 "adaptive-choice": {
                     "before": "not_run",
@@ -604,7 +694,18 @@ def execute(
                     "evidence_refs": [],
                 }
             },
+            repair_rounds_used=0,
+            elapsed_seconds=round(time.monotonic() - started_at, 3),
             ledger=ledger,
+            claims=[
+                "The synthetic run stopped before worker execution because mission binding failed."
+            ],
+            supporting_evidence_refs=[
+                "mission.snapshot.json",
+                "task.snapshot.json",
+                "state-events.jsonl",
+            ],
+            unresolved_findings=[str(exc)],
             human_decisions_required=[
                 "Submit a Task Contract that declares every triggered critical capability."
             ],
@@ -649,12 +750,63 @@ def execute(
     baseline = run_capability_probe(
         workspace,
         output / "evidence" / "capability-baseline.json",
-        mission_hash=mission_hash,
-        artifact_revision=baseline_revision,
+        mission_snapshot=mission_snapshot,
+        expected_artifact_revision=(
+            "0" * 40
+            if mismatch_baseline_artifact_revision
+            else baseline_revision
+        ),
         baseline_revision=baseline_revision,
+        force_result=(
+            None if baseline_probe_mode == "normal" else baseline_probe_mode
+        ),
     )
     if baseline["result"] != "passed":
-        raise FixtureError("accepted baseline did not pass the capability probe")
+        reason = str(
+            baseline.get(
+                "identity_error",
+                f"accepted baseline probe result was {baseline['result']}",
+            )
+        )
+        ledger.append(
+            "capability_unproven",
+            actor="capability-auditor",
+            reason=reason,
+            artifact_revision=baseline_revision,
+        )
+        write_final_receipt(
+            output,
+            status="capability_unproven",
+            mission_identity=mission_identity,
+            contract_identity=task_identity,
+            result_revision=None,
+            integration_revision=None,
+            capability_report={
+                "adaptive-choice": {
+                    "before": baseline["result"],
+                    "after": "not_run",
+                    "disposition": "unproven",
+                    "reason": reason,
+                    "evidence_refs": ["evidence/capability-baseline.json"],
+                }
+            },
+            repair_rounds_used=0,
+            elapsed_seconds=round(time.monotonic() - started_at, 3),
+            ledger=ledger,
+            claims=[
+                "The synthetic run stopped before worker execution because its accepted baseline was not proven."
+            ],
+            supporting_evidence_refs=[
+                "mission.snapshot.json",
+                "task.snapshot.json",
+                "mission-binding-report.json",
+            ],
+            unresolved_findings=[reason],
+            human_decisions_required=[
+                "Provide valid passing baseline evidence before worker execution."
+            ],
+        )
+        return 4
 
     ledger.append(
         "assigned",
@@ -734,10 +886,10 @@ def execute(
     first_capability = run_capability_probe(
         workspace,
         output / "evidence" / "capability-after-integration-1.json",
-        mission_hash=mission_hash,
-        artifact_revision=integration_one,
+        mission_snapshot=mission_snapshot,
+        expected_artifact_revision=integration_one,
         baseline_revision=baseline_revision,
-        force_inconclusive=probe_mode == "inconclusive",
+        force_result="inconclusive" if probe_mode == "inconclusive" else None,
     )
     if first_capability["result"] == "inconclusive":
         ledger.append(
@@ -746,11 +898,13 @@ def execute(
             reason="The first post-integration capability probe was inconclusive.",
             artifact_revision=integration_one,
         )
-        write_terminal_receipt(
+        write_final_receipt(
             output,
             status="capability_unproven",
             mission_identity=mission_identity,
             contract_identity=task_identity,
+            result_revision=worker_revision,
+            integration_revision=integration_one,
             capability_report={
                 "adaptive-choice": {
                     "before": "passed",
@@ -762,7 +916,20 @@ def execute(
                     ],
                 }
             },
+            repair_rounds_used=0,
+            elapsed_seconds=round(time.monotonic() - started_at, 3),
             ledger=ledger,
+            claims=[
+                "The synthetic task checks passed, but capability preservation remained unproven."
+            ],
+            supporting_evidence_refs=[
+                "evidence/worker-check.txt",
+                "critic-round-1/verdict.json",
+                "review-packet-round-1.json",
+            ],
+            unresolved_findings=[
+                "The post-integration adaptive-choice probe was inconclusive."
+            ],
             human_decisions_required=[
                 "Resolve the capability probe before authorizing repair or completion."
             ],
@@ -792,11 +959,13 @@ def execute(
             reason="The authorized repair-round budget was exhausted after regression.",
             artifact_revision=integration_one,
         )
-        write_terminal_receipt(
+        write_final_receipt(
             output,
             status="budget_exhausted",
             mission_identity=mission_identity,
             contract_identity=task_identity,
+            result_revision=worker_revision,
+            integration_revision=integration_one,
             capability_report={
                 "adaptive-choice": {
                     "before": "passed",
@@ -808,7 +977,21 @@ def execute(
                     ],
                 }
             },
+            repair_rounds_used=0,
+            elapsed_seconds=round(time.monotonic() - started_at, 3),
             ledger=ledger,
+            claims=[
+                "The synthetic task checks passed, but the integrated capability regressed."
+            ],
+            supporting_evidence_refs=[
+                "evidence/worker-check.txt",
+                "critic-round-1/verdict.json",
+                "evidence/restriction-disposition-1.json",
+                "review-packet-round-1.json",
+            ],
+            unresolved_findings=[
+                "The adaptive-choice capability remains degraded."
+            ],
             human_decisions_required=[
                 "Authorize another repair round or amend the frozen mission."
             ],
@@ -880,8 +1063,8 @@ def execute(
     second_capability = run_capability_probe(
         workspace,
         output / "evidence" / "capability-after-integration-2.json",
-        mission_hash=mission_hash,
-        artifact_revision=integration_two,
+        mission_snapshot=mission_snapshot,
+        expected_artifact_revision=integration_two,
         baseline_revision=baseline_revision,
     )
     if second_capability["result"] != "passed":
@@ -913,33 +1096,46 @@ def execute(
         reason="Task evidence, fresh criticism, and capability proof all passed.",
         artifact_revision=integration_two,
     )
-    write_json(
-        output / "final-receipt.json",
-        {
-            "protocol": "klp-core/v0.3",
-            "mission_identity": mission_identity,
-            "contract_identity": task_identity,
-            "status": "completed",
-            "capability_report": {
-                "adaptive-choice": {
-                    "before": "passed",
-                    "after": "passed",
-                    "intermediate": "failed",
-                    "disposition": "preserved",
-                    "evidence_refs": [
-                        "evidence/capability-baseline.json",
-                        "evidence/capability-after-integration-1.json",
-                        "evidence/capability-after-integration-2.json",
-                    ],
-                }
-            },
-            "measured_budget": {"repair_rounds_used": 1, "external_cost_usd": 0},
-            "limitations": [
-                "The worker and critic are scripted.",
-                "The fixture proves protocol gating, not model quality or production safety.",
-            ],
-            "state_ledger_tail_hash": ledger.tail_hash,
+    write_final_receipt(
+        output,
+        status="completed",
+        mission_identity=mission_identity,
+        contract_identity=task_identity,
+        result_revision=repaired_revision,
+        integration_revision=integration_two,
+        capability_report={
+            "adaptive-choice": {
+                "before": "passed",
+                "after": "passed",
+                "intermediate": "failed",
+                "disposition": "preserved",
+                "evidence_refs": [
+                    "evidence/capability-baseline.json",
+                    "evidence/capability-after-integration-1.json",
+                    "evidence/capability-after-integration-2.json",
+                ],
+            }
         },
+        repair_rounds_used=1,
+        elapsed_seconds=round(time.monotonic() - started_at, 3),
+        ledger=ledger,
+        claims=[
+            "The offline synthetic task checks and fresh critic review passed.",
+            "The exact repaired integration preserved the adaptive-choice capability against its Git baseline.",
+        ],
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "evidence/repair-check.txt",
+            "critic-round-1/verdict.json",
+            "critic-round-2/verdict.json",
+            "evidence/restriction-disposition-1.json",
+            "evidence/restriction-disposition-2.json",
+            "evidence/final-mission-check.json",
+            "review-packet-round-1.json",
+            "review-packet-round-2.json",
+        ],
+        unresolved_findings=[],
+        human_decisions_required=[],
     )
     return 0
 
@@ -952,6 +1148,10 @@ def main() -> int:
             args.repair_round_limit,
             probe_mode=args.probe_mode,
             omit_capability_declaration=args.omit_capability_declaration,
+            baseline_probe_mode=args.baseline_probe_mode,
+            mismatch_baseline_artifact_revision=(
+                args.mismatch_baseline_artifact_revision
+            ),
         )
     except FixtureError as exc:
         print(f"fixture error: {exc}", file=sys.stderr)

@@ -15,6 +15,23 @@ FIXTURE = ROOT / "examples" / "capability-regression" / "run_fixture.py"
 
 
 class CapabilityRegressionFixtureTests(unittest.TestCase):
+    RECEIPT_KEYS = {
+        "protocol",
+        "status",
+        "mission_identity",
+        "contract_identity",
+        "result_revision",
+        "integration_revision",
+        "claims",
+        "evidence_refs",
+        "capability_report",
+        "measured_budget",
+        "limitations",
+        "unresolved_findings",
+        "human_decisions_required",
+        "state_ledger_tail_hash",
+    }
+
     def run_fixture(
         self, output: Path, *arguments: str
     ) -> subprocess.CompletedProcess[str]:
@@ -43,6 +60,23 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
         self.assertEqual(1, states.count(expected))
         self.assertNotIn("completed", states)
         return states
+
+    def assert_complete_receipt(self, receipt: dict[str, object]) -> None:
+        self.assertEqual(self.RECEIPT_KEYS, set(receipt))
+        self.assertEqual("klp-core/v0.3", receipt["protocol"])
+        self.assertIsInstance(receipt["mission_identity"], dict)
+        self.assertIsInstance(receipt["contract_identity"], dict)
+        self.assertTrue(receipt["claims"])
+        self.assertTrue(receipt["evidence_refs"])
+        self.assertIsInstance(receipt["capability_report"], dict)
+        self.assertEqual(
+            {"repair_rounds_used", "elapsed_seconds", "external_cost_usd"},
+            set(receipt["measured_budget"]),
+        )
+        self.assertTrue(receipt["limitations"])
+        self.assertIsInstance(receipt["unresolved_findings"], list)
+        self.assertIsInstance(receipt["human_decisions_required"], list)
+        self.assertIsInstance(receipt["state_ledger_tail_hash"], str)
 
     @contextmanager
     def fixture_output(self, *arguments: str):
@@ -100,6 +134,7 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
             self.assertEqual("passed", repaired_capability["result"])
 
             receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
             self.assertEqual("klp-core/v0.3", receipt["protocol"])
             self.assertEqual("completed", receipt["status"])
             self.assertEqual(
@@ -109,6 +144,41 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
             self.assertEqual(
                 1, receipt["measured_budget"]["repair_rounds_used"]
             )
+            self.assertEqual(
+                receipt["result_revision"],
+                self.read_json(output / "critic-round-2" / "verdict.json")[
+                    "reviewed_revision"
+                ],
+            )
+            self.assertNotEqual(
+                receipt["result_revision"], receipt["integration_revision"]
+            )
+            self.assertEqual([], receipt["unresolved_findings"])
+            self.assertEqual([], receipt["human_decisions_required"])
+            self.assertIn("critic-round-2/verdict.json", receipt["evidence_refs"])
+            self.assertIn("evidence/repair-check.txt", receipt["evidence_refs"])
+
+            task_snapshot = self.read_json(output / "task.snapshot.json")
+            task = task_snapshot["task"]
+            self.assertEqual(1, task["limits"]["repair_rounds"])
+            self.assertIn("coordinator_may", task["delegation"])
+            self.assertIn("must_escalate", task["delegation"])
+            self.assertLessEqual(
+                receipt["measured_budget"]["elapsed_seconds"],
+                task["limits"]["elapsed_seconds"],
+            )
+            self.assertLessEqual(
+                receipt["measured_budget"]["external_cost_usd"],
+                task["limits"]["external_cost_usd"],
+            )
+            for evidence in (failed_capability, repaired_capability):
+                self.assertEqual(
+                    task["mission_hash"], evidence["mission_hash"]
+                )
+                self.assertEqual(
+                    evidence["expected_artifact_revision"],
+                    evidence["artifact_revision"],
+                )
 
             workspace = output / "workspace"
             workspace_status = subprocess.run(
@@ -138,6 +208,7 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
         with self.fixture_output("--repair-round-limit", "0") as (result, output):
             self.assertEqual(3, result.returncode, result.stderr)
             receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
             self.assertEqual("budget_exhausted", receipt["status"])
             self.assertEqual(
                 "degraded",
@@ -156,6 +227,7 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
         with self.fixture_output("--probe-mode", "inconclusive") as (result, output):
             self.assertEqual(4, result.returncode, result.stderr)
             receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
             self.assertEqual("capability_unproven", receipt["status"])
             states = self.assert_terminal_state(output, "capability_unproven")
             self.assertEqual(1, states.count("building"))
@@ -176,6 +248,7 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
         with self.fixture_output("--omit-capability-declaration") as (result, output):
             self.assertEqual(5, result.returncode, result.stderr)
             receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
             self.assertEqual("mission_mismatch", receipt["status"])
             capability = receipt["capability_report"]["adaptive-choice"]
             self.assertEqual("unproven", capability["disposition"])
@@ -185,6 +258,58 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
             )
             self.assert_terminal_state(output, "mission_mismatch")
             self.assertFalse((output / "evidence" / "worker-check.txt").exists())
+
+    def test_nonpassing_baseline_stops_before_worker_execution(self) -> None:
+        for mode in ("failed", "inconclusive"):
+            with self.subTest(mode=mode):
+                with self.fixture_output("--baseline-probe-mode", mode) as (
+                    result,
+                    output,
+                ):
+                    self.assertEqual(4, result.returncode, result.stderr)
+                    receipt = self.read_json(output / "final-receipt.json")
+                    self.assert_complete_receipt(receipt)
+                    self.assertEqual("capability_unproven", receipt["status"])
+                    self.assertEqual(
+                        "unproven",
+                        receipt["capability_report"]["adaptive-choice"][
+                            "disposition"
+                        ],
+                    )
+                    states = self.assert_terminal_state(
+                        output, "capability_unproven"
+                    )
+                    self.assertNotIn("assigned", states)
+                    self.assertNotIn("building", states)
+                    self.assertFalse(
+                        (output / "evidence" / "worker-check.txt").exists()
+                    )
+
+    def test_mismatched_expected_artifact_revision_is_unproven(self) -> None:
+        with self.fixture_output("--mismatch-baseline-artifact-revision") as (
+            result,
+            output,
+        ):
+            self.assertEqual(4, result.returncode, result.stderr)
+            evidence = self.read_json(
+                output / "evidence" / "capability-baseline.json"
+            )
+            self.assertEqual("inconclusive", evidence["result"])
+            self.assertNotEqual(
+                evidence["expected_artifact_revision"],
+                evidence["artifact_revision"],
+            )
+            self.assertIn("artifact revision", evidence["identity_error"])
+            receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
+            self.assertEqual("capability_unproven", receipt["status"])
+            self.assertFalse((output / "evidence" / "worker-check.txt").exists())
+
+    def test_cli_cannot_increase_frozen_repair_limit(self) -> None:
+        with self.fixture_output("--repair-round-limit", "2") as (result, output):
+            self.assertEqual(2, result.returncode)
+            self.assertIn("cannot increase", result.stderr)
+            self.assertFalse((output / "final-receipt.json").exists())
 
 
 if __name__ == "__main__":

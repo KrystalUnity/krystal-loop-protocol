@@ -13,9 +13,9 @@ sys.path.insert(0, str(FIXTURE_DIR))
 from example_records import build_example_records  # noqa: E402
 from klp_v03 import (  # noqa: E402
     ContractError,
+    build_authorized_mission_revision,
     digest,
     validate_amendment_request,
-    build_authorized_mission_revision,
     validate_mission_snapshot,
     validate_task_binding,
 )
@@ -27,6 +27,24 @@ class ContractTests(unittest.TestCase):
         self.mission = self.records["mission-contract.example.json"]
         self.task = self.records["task-contract.example.json"]
 
+    def resign_task(self, task: dict[str, object]) -> None:
+        task["identity"]["contract_hash"] = digest(task["task"])
+
+    def proposed_mission_body(self) -> dict[str, object]:
+        body = copy.deepcopy(self.mission["mission"])
+        body["critical_capabilities"][0]["required_behavior"] = (
+            "Return one fixed safe action for every signal."
+        )
+        body["critical_capabilities"][0]["negative_control"] = [
+            "unknown -> observe",
+            "outputs may be constant",
+            "decision_source == fixed-policy",
+        ]
+        body["revision_reason"] = (
+            "Operator approved the fixed-choice mission amendment."
+        )
+        return body
+
     def test_example_records_are_valid_and_digest_bound(self) -> None:
         body = validate_mission_snapshot(self.mission)
         self.assertEqual(digest(body), self.mission["identity"]["mission_hash"])
@@ -34,6 +52,9 @@ class ContractTests(unittest.TestCase):
             self.mission, self.task, ["path:chooser.py"]
         )
         self.assertEqual({"adaptive-choice"}, triggered)
+        self.assertEqual(1, self.task["task"]["limits"]["repair_rounds"])
+        self.assertIn("coordinator_may", self.task["task"]["delegation"])
+        self.assertIn("must_escalate", self.task["task"]["delegation"])
         validate_amendment_request(
             self.records["mission-amendment.example.json"]
         )
@@ -49,6 +70,50 @@ class ContractTests(unittest.TestCase):
         task["task"]["affected_capabilities"] = []
         with self.assertRaisesRegex(ContractError, "adaptive-choice"):
             validate_task_binding(self.mission, task, ["path:chooser.py"])
+
+    def test_affected_capability_requires_exact_accepted_baseline_ref(self) -> None:
+        cases = (
+            ("missing", None),
+            ("empty", []),
+            ("unrelated", ["evidence:unrelated-baseline"]),
+        )
+        for name, baseline_refs in cases:
+            with self.subTest(name=name):
+                task = copy.deepcopy(self.task)
+                if baseline_refs is None:
+                    task["task"].pop("baseline_evidence_refs")
+                else:
+                    task["task"]["baseline_evidence_refs"] = baseline_refs
+                self.resign_task(task)
+                with self.assertRaisesRegex(ContractError, "baseline_evidence_refs"):
+                    validate_task_binding(self.mission, task, ["path:chooser.py"])
+
+    def test_task_authority_and_limits_are_validated_inside_digest(self) -> None:
+        malformed = (
+            ("limits", {"repair_rounds": -1, "elapsed_seconds": 60, "external_cost_usd": 0}),
+            ("limits", {"repair_rounds": 1, "elapsed_seconds": 0, "external_cost_usd": 0}),
+            ("limits", {"repair_rounds": 1, "elapsed_seconds": 60, "external_cost_usd": float("nan")}),
+            ("delegation", {"coordinator_may": [], "must_escalate": ["increase a declared limit"]}),
+        )
+        for field, value in malformed:
+            with self.subTest(field=field, value=value):
+                task = copy.deepcopy(self.task)
+                task["task"][field] = value
+                self.resign_task(task)
+                with self.assertRaisesRegex(ContractError, field):
+                    validate_task_binding(self.mission, task, ["path:chooser.py"])
+
+    def test_malformed_capability_delta_types_raise_contract_error(self) -> None:
+        for malformed in (["preserve"], {"value": "preserve"}):
+            with self.subTest(malformed=malformed):
+                task = copy.deepcopy(self.task)
+                task["task"]["expected_capability_delta"] = malformed
+                self.resign_task(task)
+                with self.assertRaisesRegex(
+                    ContractError,
+                    "task.expected_capability_delta must be preserve or improve",
+                ):
+                    validate_task_binding(self.mission, task, ["path:chooser.py"])
 
     def test_amendment_requires_both_explanations(self) -> None:
         request = copy.deepcopy(
@@ -111,10 +176,7 @@ class ContractTests(unittest.TestCase):
             self.assertEqual(expected, actual)
 
     def test_authorized_revision_preserves_parent_and_authority(self) -> None:
-        body = copy.deepcopy(self.mission["mission"])
-        body["critical_capabilities"][0]["required_behavior"] = (
-            "Return one fixed safe action for every signal."
-        )
+        body = self.proposed_mission_body()
         revised = build_authorized_mission_revision(
             self.mission,
             self.records["mission-amendment.example.json"],
@@ -130,6 +192,52 @@ class ContractTests(unittest.TestCase):
             "operator-decision:fixture-001",
             revised["identity"]["authority_ref"],
         )
+        self.assertEqual(
+            "Operator approved the fixed-choice mission amendment.",
+            revised["mission"]["revision_reason"],
+        )
+
+    def test_amendment_rejects_undeclared_authority_field_change(self) -> None:
+        body = self.proposed_mission_body()
+        body["operator_revision_authority"] = "The coordinator may amend the mission."
+        request = copy.deepcopy(self.records["mission-amendment.example.json"])
+        request["proposed_mission_hash"] = digest(body)
+        with self.assertRaisesRegex(ContractError, "undeclared mission field change"):
+            build_authorized_mission_revision(
+                self.mission, request, body, "operator-decision:fixture-001"
+            )
+
+    def test_amendment_rejects_overbroad_field_declaration(self) -> None:
+        body = self.proposed_mission_body()
+        request = copy.deepcopy(self.records["mission-amendment.example.json"])
+        request["technical_explanation"]["fields_changed"] = ["mission"]
+        with self.assertRaisesRegex(ContractError, "exactly match"):
+            build_authorized_mission_revision(
+                self.mission, request, body, "operator-decision:fixture-001"
+            )
+
+    def test_amendment_rejects_stale_revision_reason(self) -> None:
+        body = self.proposed_mission_body()
+        stale_reason = self.mission["mission"]["revision_reason"]
+        body["revision_reason"] = stale_reason
+        request = copy.deepcopy(self.records["mission-amendment.example.json"])
+        request["proposed_revision_reason"] = stale_reason
+        request["proposed_mission_hash"] = digest(body)
+        with self.assertRaisesRegex(ContractError, "fresh revision reason"):
+            build_authorized_mission_revision(
+                self.mission, request, body, "operator-decision:fixture-001"
+            )
+
+    def test_amendment_rejects_mismatched_proposed_body_digest(self) -> None:
+        body = self.proposed_mission_body()
+        body["product_outcome"] = "A body not sealed by the approved request."
+        with self.assertRaisesRegex(ContractError, "proposed mission body"):
+            build_authorized_mission_revision(
+                self.mission,
+                self.records["mission-amendment.example.json"],
+                body,
+                "operator-decision:fixture-001",
+            )
 
 
 if __name__ == "__main__":

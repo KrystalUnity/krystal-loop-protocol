@@ -5,6 +5,7 @@ from __future__ import annotations
 import fnmatch
 import hashlib
 import json
+import math
 import re
 from typing import Any
 
@@ -58,6 +59,25 @@ def _string_list(value: object, label: str, *, nonempty: bool = True) -> list[st
 def _positive_revision(value: object, label: str) -> int:
     if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
         raise ContractError(f"{label} must be a positive integer")
+    return value
+
+
+def _nonnegative_integer(value: object, label: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ContractError(f"{label} must be a nonnegative integer")
+    return value
+
+
+def _number(value: object, label: str, *, positive: bool) -> int | float:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+    ):
+        raise ContractError(f"{label} must be a number")
+    if (positive and value <= 0) or (not positive and value < 0):
+        qualifier = "positive" if positive else "nonnegative"
+        raise ContractError(f"{label} must be {qualifier}")
     return value
 
 
@@ -178,7 +198,10 @@ def _validate_task_snapshot(
         nonempty=False,
     )
     expected_delta = _required(task, "expected_capability_delta", "task")
-    if expected_delta not in {"preserve", "improve"}:
+    if not isinstance(expected_delta, str) or expected_delta not in {
+        "preserve",
+        "improve",
+    }:
         raise ContractError("task.expected_capability_delta must be preserve or improve")
     _string_list(
         _required(task, "required_capability_probes", "task"),
@@ -192,6 +215,29 @@ def _validate_task_snapshot(
     _string_list(
         _required(task, "allowed_paths", "task"), "task.allowed_paths"
     )
+    limits = _mapping(_required(task, "limits", "task"), "task.limits")
+    _nonnegative_integer(
+        _required(limits, "repair_rounds", "task.limits"),
+        "task.limits.repair_rounds",
+    )
+    _number(
+        _required(limits, "elapsed_seconds", "task.limits"),
+        "task.limits.elapsed_seconds",
+        positive=True,
+    )
+    _number(
+        _required(limits, "external_cost_usd", "task.limits"),
+        "task.limits.external_cost_usd",
+        positive=False,
+    )
+    delegation = _mapping(
+        _required(task, "delegation", "task"), "task.delegation"
+    )
+    for branch in ("coordinator_may", "must_escalate"):
+        _string_list(
+            _required(delegation, branch, "task.delegation"),
+            f"task.delegation.{branch}",
+        )
     if task["task_id"] != identity["task_id"]:
         raise ContractError("task id does not match Task Contract identity")
     if verify_digest and digest(task) != contract_hash:
@@ -254,6 +300,18 @@ def validate_task_binding(
         raise ContractError(
             "triggered capability not declared: " + ", ".join(sorted(omitted))
         )
+    capability_by_id = {
+        item["capability_id"]: item for item in mission["critical_capabilities"]
+    }
+    expected_baseline_refs = [
+        capability_by_id[capability_id]["accepted_baseline_ref"]
+        for capability_id in task["affected_capabilities"]
+    ]
+    if task["baseline_evidence_refs"] != expected_baseline_refs:
+        raise ContractError(
+            "task.baseline_evidence_refs must exactly match the accepted baseline "
+            "references for affected capabilities"
+        )
     task_identity = task_snapshot["identity"]
     if digest(task) != task_identity["contract_hash"]:
         raise ContractError("contract hash does not match task body")
@@ -304,16 +362,58 @@ def validate_amendment_request(request: dict[str, Any]) -> None:
             _required(impact, key, "operator_impact_statement"),
             f"operator_impact_statement.{key}",
         )
-    for key in ("request_id", "mission_id", "current_mission_hash", "requested_change"):
+    for key in (
+        "request_id",
+        "mission_id",
+        "current_mission_hash",
+        "proposed_mission_hash",
+        "proposed_revision_reason",
+        "requested_change",
+    ):
         value = _required(record, key, "Mission Amendment Request")
-        if key == "requested_change":
-            _nonempty_string(value, "Mission Amendment Request.requested_change")
-        else:
-            _nonempty_string(value, f"Mission Amendment Request.{key}")
+        _nonempty_string(value, f"Mission Amendment Request.{key}")
     _digest_string(
         record["current_mission_hash"],
         "Mission Amendment Request.current_mission_hash",
     )
+    _digest_string(
+        record["proposed_mission_hash"],
+        "Mission Amendment Request.proposed_mission_hash",
+    )
+
+
+def _changed_paths(before: object, after: object, path: str) -> set[str]:
+    if type(before) is not type(after):
+        return {path}
+    if isinstance(before, dict):
+        changed: set[str] = set()
+        before_keys = set(before)
+        after_keys = set(after)
+        for key in before_keys | after_keys:
+            child = f"{path}.{key}"
+            if key not in before or key not in after:
+                changed.add(child)
+            else:
+                changed.update(_changed_paths(before[key], after[key], child))
+        return changed
+    if isinstance(before, list):
+        if before == after:
+            return set()
+        if len(before) != len(after):
+            return {path}
+        if not all(
+            isinstance(old_item, (dict, list))
+            and isinstance(new_item, (dict, list))
+            for old_item, new_item in zip(before, after)
+        ):
+            return {path}
+        changed = set()
+        for index, (old_item, new_item) in enumerate(zip(before, after)):
+            changed.update(
+                _changed_paths(old_item, new_item, f"{path}[{index}]")
+            )
+        return changed
+    return set() if before == after else {path}
 
 
 def build_authorized_mission_revision(
@@ -339,6 +439,38 @@ def build_authorized_mission_revision(
     if not isinstance(amended_mission, dict):
         raise ContractError("amended_mission must be an object")
     body = _validate_mission_body(amended_mission)
+    if digest(body) != request["proposed_mission_hash"]:
+        raise ContractError(
+            "amended mission does not match the approved proposed mission body"
+        )
+    current_body = current_snapshot["mission"]
+    proposed_reason = request["proposed_revision_reason"]
+    if proposed_reason == current_body["revision_reason"]:
+        raise ContractError("amendment requires a fresh revision reason")
+    if body["revision_reason"] != proposed_reason:
+        raise ContractError(
+            "mission revision reason does not match the approved request"
+        )
+    changed_paths = _changed_paths(current_body, body, "mission")
+    declared_paths = request["technical_explanation"]["fields_changed"]
+    declared_path_set = set(declared_paths)
+    if len(declared_path_set) != len(declared_paths):
+        raise ContractError(
+            "technical_explanation.fields_changed must not contain duplicates"
+        )
+    undeclared = sorted(changed_paths - declared_path_set)
+    if undeclared:
+        raise ContractError(
+            "technical_explanation.fields_changed must exactly match; "
+            "undeclared mission field change: " + ", ".join(undeclared)
+        )
+    unchanged_declarations = sorted(declared_path_set - changed_paths)
+    if unchanged_declarations:
+        raise ContractError(
+            "technical_explanation.fields_changed must exactly match; "
+            "declared mission fields did not change: "
+            + ", ".join(unchanged_declarations)
+        )
     identity = {
         "protocol_version": PROTOCOL_VERSION,
         "mission_id": current_identity["mission_id"],

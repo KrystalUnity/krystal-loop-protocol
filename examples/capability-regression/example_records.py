@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import os
 import sys
@@ -74,6 +75,24 @@ def build_example_records() -> dict[str, dict[str, Any]]:
         "required_capability_probes": ["adaptive-choice-product-truth"],
         "baseline_evidence_refs": ["evidence:adaptive-choice-baseline-001"],
         "allowed_paths": ["chooser.py"],
+        "limits": {
+            "repair_rounds": 1,
+            "elapsed_seconds": 60,
+            "external_cost_usd": 0,
+        },
+        "delegation": {
+            "coordinator_may": [
+                "run declared checks and capability probes",
+                "apply repairs within the frozen mission, task, and limits",
+                "invalidate stale evidence after an artifact revision",
+            ],
+            "must_escalate": [
+                "change the mission or task objective",
+                "change capability controls, triggers, proof, or baseline",
+                "increase a declared limit",
+                "perform a live or irreversible action",
+            ],
+        },
     }
     task = {
         "identity": {
@@ -85,16 +104,32 @@ def build_example_records() -> dict[str, dict[str, Any]]:
         },
         "task": task_body,
     }
+    proposed_mission = copy.deepcopy(mission_body)
+    proposed_mission["critical_capabilities"][0]["required_behavior"] = (
+        "Return one fixed safe action for every signal."
+    )
+    proposed_mission["critical_capabilities"][0]["negative_control"] = [
+        "unknown -> observe",
+        "outputs may be constant",
+        "decision_source == fixed-policy",
+    ]
+    proposed_revision_reason = (
+        "Operator approved the fixed-choice mission amendment."
+    )
+    proposed_mission["revision_reason"] = proposed_revision_reason
     amendment = {
         "protocol_version": PROTOCOL_VERSION,
         "request_id": "mission-amendment-fixed-choice",
         "mission_id": mission["identity"]["mission_id"],
         "current_mission_hash": mission_hash,
+        "proposed_mission_hash": digest(proposed_mission),
+        "proposed_revision_reason": proposed_revision_reason,
         "requested_change": "Permit a fixed safe action for every signal.",
         "technical_explanation": {
             "fields_changed": [
                 "mission.critical_capabilities[0].required_behavior",
                 "mission.critical_capabilities[0].negative_control",
+                "mission.revision_reason",
             ],
             "evidence_refs": ["evidence:adaptive-choice-regression-001"],
             "behavioral_impact": "The chooser could return one safe action for every signal.",

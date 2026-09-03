@@ -1,6 +1,6 @@
 {
   "identity": {
-    "contract_hash": "sha256:6d619beccd47bd2b0a10d7afe5f6cc137a736d703f40510ef4f5b1fb905b8fcd",
+    "contract_hash": "sha256:e9419cd58045bc57defbfa8ef93fb2a420a1f7f7d0503a164a38bef3f946b730",
     "created_at": "2026-09-03T00:00:00Z",
     "protocol_version": "klp-core/v0.3",
     "task_id": "build-adaptive-choice-fixture",
@@ -16,7 +16,25 @@
     "baseline_evidence_refs": [
       "evidence:adaptive-choice-baseline-001"
     ],
+    "delegation": {
+      "coordinator_may": [
+        "run declared checks and capability probes",
+        "apply repairs within the frozen mission, task, and limits",
+        "invalidate stale evidence after an artifact revision"
+      ],
+      "must_escalate": [
+        "change the mission or task objective",
+        "change capability controls, triggers, proof, or baseline",
+        "increase a declared limit",
+        "perform a live or irreversible action"
+      ]
+    },
     "expected_capability_delta": "preserve",
+    "limits": {
+      "elapsed_seconds": 60,
+      "external_cost_usd": 0,
+      "repair_rounds": 1
+    },
     "mission_hash": "sha256:1ab557f1a9dacdf5e6a16e41e247a484adb792b2682a31daea7c6eb881b205c1",
     "mission_id": "klp-capability-regression",
     "mission_revision": 1,
