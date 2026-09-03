@@ -94,12 +94,17 @@ class V03DocumentationTests(unittest.TestCase):
 
     def test_public_and_runtime_guidance_links_the_capability_fixture(self) -> None:
         readme = self.text("README.md")
+        prompt_section = readme.split("## Start With One Prompt", 1)[1].split(
+            "## Run a Worker and Critic", 1
+        )[0]
+        starter_prompt = prompt_section.split("```text", 1)[1].split("```", 1)[0]
         runtime = self.text("RUNTIME_PROFILES.md")
         safety = self.text("SAFETY_AND_LIMITS.md")
         hermes = self.text("adapters/hermes-kanban.md")
         fixture = ROOT / "examples" / "capability-regression" / "README.md"
         self.assertTrue(fixture.is_file())
-        self.assertIn("capability-regression", readme)
+        self.assertIn("examples/fail-review-repair/README.md", starter_prompt)
+        self.assertIn("examples/capability-regression/README.md", starter_prompt)
         self.assertIn("Capability Auditor", runtime)
         self.assertIn("capability_unproven", safety)
         self.assertIn("Mission Custodian", hermes)

@@ -51,6 +51,9 @@ Give this to the lead agent before a multi-agent build:
 
 ```text
 Work under Krystal Loop Protocol Core.
+Use `examples/fail-review-repair/README.md` and
+`examples/capability-regression/README.md` as offline lifecycle references;
+neither fixture certifies production safety.
 
 Before changing files, write a bounded task contract containing:
 - the canonical Mission Contract `mission_id`, `mission_revision`, and
