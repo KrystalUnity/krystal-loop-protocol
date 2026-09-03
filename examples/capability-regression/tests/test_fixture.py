@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 
 
@@ -35,6 +36,19 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
             json.loads(line)["new_state"]
             for line in path.read_text(encoding="utf-8").splitlines()
         ]
+
+    def assert_terminal_state(self, output: Path, expected: str) -> list[str]:
+        states = self.read_states(output / "state-events.jsonl")
+        self.assertEqual(expected, states[-1])
+        self.assertEqual(1, states.count(expected))
+        self.assertNotIn("completed", states)
+        return states
+
+    @contextmanager
+    def fixture_output(self, *arguments: str):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "fixture-output"
+            yield self.run_fixture(output, *arguments), output
 
     def test_green_task_checks_cannot_hide_capability_regression(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -119,6 +133,58 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
                 ),
                 workspace_status.stderr,
             )
+
+    def test_zero_repair_budget_stops_after_capability_regression(self) -> None:
+        with self.fixture_output("--repair-round-limit", "0") as (result, output):
+            self.assertEqual(3, result.returncode, result.stderr)
+            receipt = self.read_json(output / "final-receipt.json")
+            self.assertEqual("budget_exhausted", receipt["status"])
+            self.assertEqual(
+                "degraded",
+                receipt["capability_report"]["adaptive-choice"]["disposition"],
+            )
+            self.assert_terminal_state(output, "budget_exhausted")
+            self.assertFalse(
+                (
+                    output
+                    / "evidence"
+                    / "capability-after-integration-2.json"
+                ).exists()
+            )
+
+    def test_inconclusive_probe_cannot_complete(self) -> None:
+        with self.fixture_output("--probe-mode", "inconclusive") as (result, output):
+            self.assertEqual(4, result.returncode, result.stderr)
+            receipt = self.read_json(output / "final-receipt.json")
+            self.assertEqual("capability_unproven", receipt["status"])
+            states = self.assert_terminal_state(output, "capability_unproven")
+            self.assertEqual(1, states.count("building"))
+            self.assertNotIn("capability_regression", states)
+            self.assertFalse(
+                (
+                    output
+                    / "evidence"
+                    / "capability-after-integration-2.json"
+                ).exists()
+            )
+            self.assertFalse((output / "evidence" / "repair-check.txt").exists())
+            self.assertFalse(
+                (output / "evidence" / "restriction-disposition-2.json").exists()
+            )
+
+    def test_undeclared_trigger_stops_before_worker_execution(self) -> None:
+        with self.fixture_output("--omit-capability-declaration") as (result, output):
+            self.assertEqual(5, result.returncode, result.stderr)
+            receipt = self.read_json(output / "final-receipt.json")
+            self.assertEqual("mission_mismatch", receipt["status"])
+            capability = receipt["capability_report"]["adaptive-choice"]
+            self.assertEqual("unproven", capability["disposition"])
+            self.assertEqual(
+                "triggered capability not declared: adaptive-choice",
+                capability["reason"],
+            )
+            self.assert_terminal_state(output, "mission_mismatch")
+            self.assertFalse((output / "evidence" / "worker-check.txt").exists())
 
 
 if __name__ == "__main__":

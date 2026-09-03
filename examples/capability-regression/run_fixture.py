@@ -15,7 +15,12 @@ from pathlib import Path
 from typing import Any
 
 from example_records import build_example_records
-from klp_v03 import digest, validate_mission_snapshot, validate_task_binding
+from klp_v03 import (
+    ContractError,
+    digest,
+    validate_mission_snapshot,
+    validate_task_binding,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -52,6 +57,47 @@ def write_json(path: Path, value: object) -> None:
     finally:
         if temporary.exists():
             temporary.unlink()
+
+
+def write_terminal_receipt(
+    output: Path,
+    *,
+    status: str,
+    mission_identity: dict[str, object],
+    contract_identity: dict[str, object],
+    capability_report: dict[str, object],
+    ledger: StateLedger,
+    human_decisions_required: list[str],
+) -> None:
+    evidence_refs = sorted(
+        {
+            reference
+            for value in capability_report.values()
+            if isinstance(value, dict)
+            for reference in value.get("evidence_refs", [])
+            if isinstance(reference, str)
+        }
+    )
+    write_json(
+        output / "final-receipt.json",
+        {
+            "protocol": "klp-core/v0.3",
+            "status": status,
+            "mission_identity": mission_identity,
+            "contract_identity": contract_identity,
+            "capability_report": capability_report,
+            "claims": [
+                "The run stopped without claiming mission-preserving completion."
+            ],
+            "evidence_refs": evidence_refs,
+            "limitations": [
+                "This is an offline synthetic protocol fixture."
+            ],
+            "unresolved_findings": [],
+            "human_decisions_required": human_decisions_required,
+            "state_ledger_tail_hash": ledger.tail_hash,
+        },
+    )
 
 
 def prepare_output(path: Path) -> None:
@@ -489,28 +535,32 @@ def mission_check(
     )
 
 
-def execute(output: Path, repair_round_limit: int) -> int:
-    if repair_round_limit != 1:
-        raise FixtureError("Task 2 requires exactly one authorized repair round")
+def execute(
+    output: Path,
+    repair_round_limit: int,
+    *,
+    probe_mode: str,
+    omit_capability_declaration: bool,
+) -> int:
+    if repair_round_limit not in (0, 1):
+        raise FixtureError("repair round limit must be zero or one")
     prepare_output(output)
     records = build_example_records()
     mission_snapshot = records["mission-contract.example.json"]
     task_snapshot = records["task-contract.example.json"]
+    if omit_capability_declaration:
+        task_snapshot = json.loads(json.dumps(task_snapshot))
+        task = task_snapshot["task"]
+        assert isinstance(task, dict)
+        task["affected_capabilities"] = []
     validate_mission_snapshot(mission_snapshot)
     changed_surfaces = ["path:chooser.py", "interface:choose_action"]
-    triggered = validate_task_binding(mission_snapshot, task_snapshot, changed_surfaces)
-    write_json(output / "mission.snapshot.json", mission_snapshot)
-    write_json(output / "task.snapshot.json", task_snapshot)
 
     mission_identity = mission_snapshot["identity"]
     task_identity = task_snapshot["identity"]
-    task = task_snapshot["task"]
     assert isinstance(mission_identity, dict)
     assert isinstance(task_identity, dict)
-    assert isinstance(task, dict)
     mission_hash = str(mission_identity["mission_hash"])
-    workspace = output / "workspace"
-    baseline_revision = setup_workspace(workspace)
     ledger = StateLedger(
         output / "state-events.jsonl",
         mission_revision=int(mission_identity["mission_revision"]),
@@ -521,8 +571,46 @@ def execute(output: Path, repair_round_limit: int) -> int:
         "draft",
         actor="fixture-author",
         reason="Created the offline capability-preservation fixture.",
-        artifact_revision=baseline_revision,
+        artifact_revision=None,
     )
+    write_json(output / "mission.snapshot.json", mission_snapshot)
+    write_json(output / "task.snapshot.json", task_snapshot)
+    try:
+        triggered = validate_task_binding(
+            mission_snapshot, task_snapshot, changed_surfaces
+        )
+    except ContractError as exc:
+        ledger.append(
+            "mission_mismatch",
+            actor="mission-custodian",
+            reason=f"Task Contract validation stopped the fixture: {exc}",
+            artifact_revision=None,
+        )
+        write_terminal_receipt(
+            output,
+            status="mission_mismatch",
+            mission_identity=mission_identity,
+            contract_identity=task_identity,
+            capability_report={
+                "adaptive-choice": {
+                    "before": "not_run",
+                    "after": "not_run",
+                    "disposition": "unproven",
+                    "reason": str(exc),
+                    "evidence_refs": [],
+                }
+            },
+            ledger=ledger,
+            human_decisions_required=[
+                "Submit a Task Contract that declares every triggered critical capability."
+            ],
+        )
+        return 5
+
+    task = task_snapshot["task"]
+    assert isinstance(task, dict)
+    workspace = output / "workspace"
+    baseline_revision = setup_workspace(workspace)
     ledger.append(
         "mission_binding_check",
         actor="mission-custodian",
@@ -645,7 +733,37 @@ def execute(output: Path, repair_round_limit: int) -> int:
         mission_hash=mission_hash,
         artifact_revision=integration_one,
         baseline_revision=baseline_revision,
+        force_inconclusive=probe_mode == "inconclusive",
     )
+    if first_capability["result"] == "inconclusive":
+        ledger.append(
+            "capability_unproven",
+            actor="capability-auditor",
+            reason="The first post-integration capability probe was inconclusive.",
+            artifact_revision=integration_one,
+        )
+        write_terminal_receipt(
+            output,
+            status="capability_unproven",
+            mission_identity=mission_identity,
+            contract_identity=task_identity,
+            capability_report={
+                "adaptive-choice": {
+                    "before": "passed",
+                    "after": "inconclusive",
+                    "disposition": "unproven",
+                    "evidence_refs": [
+                        "evidence/capability-baseline.json",
+                        "evidence/capability-after-integration-1.json",
+                    ],
+                }
+            },
+            ledger=ledger,
+            human_decisions_required=[
+                "Resolve the capability probe before authorizing repair or completion."
+            ],
+        )
+        return 4
     if first_capability["result"] != "failed":
         raise FixtureError("fixed-policy integration did not trigger capability regression")
     ledger.append(
@@ -663,6 +781,35 @@ def execute(output: Path, repair_round_limit: int) -> int:
             "evidence_refs": ["evidence/capability-after-integration-1.json"],
         },
     )
+    if repair_round_limit == 0:
+        ledger.append(
+            "budget_exhausted",
+            actor="execution-coordinator",
+            reason="The authorized repair-round budget was exhausted after regression.",
+            artifact_revision=integration_one,
+        )
+        write_terminal_receipt(
+            output,
+            status="budget_exhausted",
+            mission_identity=mission_identity,
+            contract_identity=task_identity,
+            capability_report={
+                "adaptive-choice": {
+                    "before": "passed",
+                    "after": "failed",
+                    "disposition": "degraded",
+                    "evidence_refs": [
+                        "evidence/capability-baseline.json",
+                        "evidence/capability-after-integration-1.json",
+                    ],
+                }
+            },
+            ledger=ledger,
+            human_decisions_required=[
+                "Authorize another repair round or amend the frozen mission."
+            ],
+        )
+        return 3
     mission_check(
         output,
         "repair-mission-check.json",
@@ -796,7 +943,12 @@ def execute(output: Path, repair_round_limit: int) -> int:
 def main() -> int:
     args = parse_args()
     try:
-        return execute(args.out_dir, args.repair_round_limit)
+        return execute(
+            args.out_dir,
+            args.repair_round_limit,
+            probe_mode=args.probe_mode,
+            omit_capability_declaration=args.omit_capability_declaration,
+        )
     except FixtureError as exc:
         print(f"fixture error: {exc}", file=sys.stderr)
         return 2

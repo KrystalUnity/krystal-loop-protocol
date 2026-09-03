@@ -58,6 +58,26 @@ class ContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "plain-English"):
             validate_amendment_request(request)
 
+        request = copy.deepcopy(
+            self.records["mission-amendment.example.json"]
+        )
+        request.pop("technical_explanation")
+        with self.assertRaisesRegex(ContractError, "technical_explanation"):
+            validate_amendment_request(request)
+
+        request = copy.deepcopy(
+            self.records["mission-amendment.example.json"]
+        )
+        request["operator_impact_statement"]["after"] = ""
+        with self.assertRaisesRegex(
+            ContractError, "operator_impact_statement.after"
+        ):
+            validate_amendment_request(request)
+
+        validate_amendment_request(
+            self.records["mission-amendment.example.json"]
+        )
+
     def test_amendment_requires_v03_protocol_version(self) -> None:
         for protocol_version in (None, "klp-core/v0.2"):
             with self.subTest(protocol_version=protocol_version):
