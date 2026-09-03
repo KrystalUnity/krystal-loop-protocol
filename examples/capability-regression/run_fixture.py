@@ -474,10 +474,14 @@ def review_packet(
     mission_identity = mission_snapshot["identity"]
     task_identity = task_snapshot["identity"]
     task = task_snapshot["task"]
+    assert isinstance(mission_identity, dict)
     assert isinstance(task_identity, dict)
     assert isinstance(task, dict)
     return {
         "protocol": "klp-core/v0.3",
+        "mission_id": mission_identity["mission_id"],
+        "mission_revision": mission_identity["mission_revision"],
+        "mission_hash": mission_identity["mission_hash"],
         "task_id": task_identity["task_id"],
         "contract_id": task_identity["task_id"],
         "contract_revision": task_identity["task_revision"],
