@@ -1,0 +1,29 @@
+{
+  "identity": {
+    "contract_hash": "sha256:6d619beccd47bd2b0a10d7afe5f6cc137a736d703f40510ef4f5b1fb905b8fcd",
+    "created_at": "2026-09-03T00:00:00Z",
+    "protocol_version": "klp-core/v0.3",
+    "task_id": "build-adaptive-choice-fixture",
+    "task_revision": 1
+  },
+  "task": {
+    "affected_capabilities": [
+      "adaptive-choice"
+    ],
+    "allowed_paths": [
+      "chooser.py"
+    ],
+    "baseline_evidence_refs": [
+      "evidence:adaptive-choice-baseline-001"
+    ],
+    "expected_capability_delta": "preserve",
+    "mission_hash": "sha256:1ab557f1a9dacdf5e6a16e41e247a484adb792b2682a31daea7c6eb881b205c1",
+    "mission_id": "klp-capability-regression",
+    "mission_revision": 1,
+    "objective": "Preserve adaptive choices while making the fixture implementation explicit.",
+    "required_capability_probes": [
+      "adaptive-choice-product-truth"
+    ],
+    "task_id": "build-adaptive-choice-fixture"
+  }
+}

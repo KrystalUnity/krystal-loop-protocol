@@ -1,0 +1,34 @@
+{
+  "current_mission_hash": "sha256:1ab557f1a9dacdf5e6a16e41e247a484adb792b2682a31daea7c6eb881b205c1",
+  "mission_id": "klp-capability-regression",
+  "operator_impact_statement": {
+    "after": "After this amendment, it may return one fixed safe action.",
+    "expected_benefit": "The fixed action would reduce decision variability.",
+    "if_declined": "The current adaptive capability and its existing limits remain.",
+    "today": "Today the product selects different actions from the supplied signal.",
+    "user_may_lose": "Users may lose adaptive decisions for supported signals."
+  },
+  "protocol_version": "klp-core/v0.3",
+  "request_id": "mission-amendment-fixed-choice",
+  "requested_change": "Permit a fixed safe action for every signal.",
+  "technical_explanation": {
+    "alternatives_considered": [
+      "Keep adaptive selection and narrow only the unsafe input handling.",
+      "Add bounded fallback behavior without changing supported choices."
+    ],
+    "architectural_impact": "Input-dependent decision logic could be replaced by a fixed policy.",
+    "behavioral_impact": "The chooser could return one safe action for every signal.",
+    "compatibility_impact": "Clients expecting distinct supported actions may observe the same action.",
+    "duration": "Permanent unless a later operator-authorized amendment supersedes it.",
+    "evidence_refs": [
+      "evidence:adaptive-choice-regression-001"
+    ],
+    "fields_changed": [
+      "mission.critical_capabilities[0].required_behavior",
+      "mission.critical_capabilities[0].negative_control"
+    ],
+    "rollback_implications": "Restore the prior mission revision and adaptive implementation.",
+    "safety_impact": "A fixed action may be safer for some signals but less appropriate for others.",
+    "testing_impact": "The positive and negative controls would need new acceptance criteria."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "identity": {
+    "authority_ref": "operator-decision:fixture-000",
+    "created_at": "2026-09-03T00:00:00Z",
+    "mission_hash": "sha256:1ab557f1a9dacdf5e6a16e41e247a484adb792b2682a31daea7c6eb881b205c1",
+    "mission_id": "klp-capability-regression",
+    "mission_revision": 1,
+    "parent_mission_hash": null,
+    "protocol_version": "klp-core/v0.3"
+  },
+  "mission": {
+    "critical_capabilities": [
+      {
+        "accepted_baseline_ref": "evidence:adaptive-choice-baseline-001",
+        "capability_id": "adaptive-choice",
+        "decision_provenance_requirement": "decision_source must be input-dependent.",
+        "negative_control": [
+          "unknown -> observe",
+          "outputs are not constant",
+          "decision_source == input-dependent"
+        ],
+        "positive_control": [
+          "fire -> evacuate",
+          "medical -> assist"
+        ],
+        "proof_method": "Run the bounded adaptive-choice product-truth probe.",
+        "required_behavior": "Select different actions for different supported signals.",
+        "severity": "critical",
+        "trigger_rules": [
+          "path:chooser.py",
+          "interface:choose_action",
+          "config:decision-policy"
+        ]
+      }
+    ],
+    "forbidden_regressions": [
+      "Replace input-dependent choice with a fixed output.",
+      "Move product judgment into a pre-authored answer."
+    ],
+    "operator_revision_authority": "Only the human operator may amend this mission.",
+    "product_outcome": "Select the appropriate safe action from each supplied signal.",
+    "revision_reason": "Initial capability-preservation mission for the offline fixture."
+  }
+}
