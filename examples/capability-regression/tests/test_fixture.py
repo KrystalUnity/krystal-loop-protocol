@@ -12,6 +12,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 FIXTURE = ROOT / "examples" / "capability-regression" / "run_fixture.py"
+sys.path.insert(0, str(FIXTURE.parent))
+
+import run_fixture  # noqa: E402
+
+
+class FinalBoundaryClock:
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def __call__(self) -> float:
+        self.calls += 1
+        return 60.0001 if self.calls >= 10 else 0.0
 
 
 class CapabilityRegressionFixtureTests(unittest.TestCase):
@@ -310,6 +322,53 @@ class CapabilityRegressionFixtureTests(unittest.TestCase):
             self.assertEqual(2, result.returncode)
             self.assertIn("cannot increase", result.stderr)
             self.assertFalse((output / "final-receipt.json").exists())
+
+    def test_elapsed_budget_exhaustion_at_final_boundary_preserves_evidence(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "fixture-output"
+            clock = FinalBoundaryClock()
+            try:
+                result = run_fixture.execute(
+                    output,
+                    None,
+                    probe_mode="normal",
+                    omit_capability_declaration=False,
+                    baseline_probe_mode="normal",
+                    mismatch_baseline_artifact_revision=False,
+                    clock=clock,
+                )
+            except TypeError as exc:
+                self.fail(f"fixture must accept an injected clock: {exc}")
+
+            self.assertEqual(3, result)
+            self.assertEqual(10, clock.calls)
+            states = self.assert_terminal_state(output, "budget_exhausted")
+            self.assertEqual("final_review", states[-2])
+
+            receipt = self.read_json(output / "final-receipt.json")
+            self.assert_complete_receipt(receipt)
+            self.assertEqual("budget_exhausted", receipt["status"])
+            self.assertEqual(
+                "preserved",
+                receipt["capability_report"]["adaptive-choice"]["disposition"],
+            )
+            self.assertEqual(
+                [
+                    "evidence/capability-baseline.json",
+                    "evidence/capability-after-integration-1.json",
+                    "evidence/capability-after-integration-2.json",
+                ],
+                receipt["capability_report"]["adaptive-choice"]["evidence_refs"],
+            )
+            task = self.read_json(output / "task.snapshot.json")["task"]
+            self.assertGreater(
+                receipt["measured_budget"]["elapsed_seconds"],
+                task["limits"]["elapsed_seconds"],
+            )
+            self.assertIsNotNone(receipt["result_revision"])
+            self.assertIsNotNone(receipt["integration_revision"])
 
 
 if __name__ == "__main__":

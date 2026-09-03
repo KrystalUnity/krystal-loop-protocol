@@ -13,7 +13,7 @@ import time
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from example_records import build_example_records
 from klp_v03 import (
@@ -209,6 +209,80 @@ class StateLedger:
         with self.path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(event, sort_keys=True) + "\n")
         self.state = new_state
+
+
+class ElapsedBudgetGate:
+    def __init__(
+        self,
+        *,
+        output: Path,
+        mission_identity: dict[str, object],
+        contract_identity: dict[str, object],
+        ledger: StateLedger,
+        elapsed_limit: float,
+        started_at: float,
+        clock: Callable[[], float],
+    ) -> None:
+        self.output = output
+        self.mission_identity = mission_identity
+        self.contract_identity = contract_identity
+        self.ledger = ledger
+        self.elapsed_limit = elapsed_limit
+        self.started_at = started_at
+        self.clock = clock
+        self.last_elapsed_seconds = 0.0
+
+    def elapsed_seconds(self) -> float:
+        self.last_elapsed_seconds = round(
+            max(0.0, self.clock() - self.started_at), 6
+        )
+        return self.last_elapsed_seconds
+
+    def stop_if_exhausted(
+        self,
+        *,
+        result_revision: str | None,
+        integration_revision: str | None,
+        capability_report: dict[str, object],
+        repair_rounds_used: int,
+        supporting_evidence_refs: list[str],
+    ) -> bool:
+        raw_elapsed_seconds = max(0.0, self.clock() - self.started_at)
+        self.last_elapsed_seconds = raw_elapsed_seconds
+        if raw_elapsed_seconds <= self.elapsed_limit:
+            return False
+        if self.ledger.state == "budget_exhausted":
+            return True
+        artifact_revision = integration_revision or result_revision
+        self.ledger.append(
+            "budget_exhausted",
+            actor="execution-coordinator",
+            reason="The digest-bound elapsed-time limit was exhausted.",
+            artifact_revision=artifact_revision,
+        )
+        write_final_receipt(
+            self.output,
+            status="budget_exhausted",
+            mission_identity=self.mission_identity,
+            contract_identity=self.contract_identity,
+            result_revision=result_revision,
+            integration_revision=integration_revision,
+            capability_report=capability_report,
+            repair_rounds_used=repair_rounds_used,
+            elapsed_seconds=self.last_elapsed_seconds,
+            ledger=self.ledger,
+            claims=[
+                "The synthetic run stopped when its digest-bound elapsed-time limit was exhausted."
+            ],
+            supporting_evidence_refs=supporting_evidence_refs,
+            unresolved_findings=[
+                "The frozen elapsed-time limit was exhausted before completion."
+            ],
+            human_decisions_required=[
+                "Authorize a new Task Contract before continuing beyond the elapsed-time limit."
+            ],
+        )
+        return True
 
 
 class FakeCriticProvider:
@@ -621,8 +695,10 @@ def execute(
     omit_capability_declaration: bool,
     baseline_probe_mode: str,
     mismatch_baseline_artifact_revision: bool,
+    clock: Callable[[], float] | None = None,
 ) -> int:
-    started_at = time.monotonic()
+    active_clock = clock or time.monotonic
+    started_at = active_clock()
     records = build_example_records()
     mission_snapshot = records["mission-contract.example.json"]
     task_snapshot = records["task-contract.example.json"]
@@ -695,7 +771,7 @@ def execute(
                 }
             },
             repair_rounds_used=0,
-            elapsed_seconds=round(time.monotonic() - started_at, 3),
+            elapsed_seconds=round(max(0.0, active_clock() - started_at), 3),
             ledger=ledger,
             claims=[
                 "The synthetic run stopped before worker execution because mission binding failed."
@@ -714,6 +790,15 @@ def execute(
 
     task = task_snapshot["task"]
     assert isinstance(task, dict)
+    elapsed_budget = ElapsedBudgetGate(
+        output=output,
+        mission_identity=mission_identity,
+        contract_identity=task_identity,
+        ledger=ledger,
+        elapsed_limit=float(limits["elapsed_seconds"]),
+        started_at=started_at,
+        clock=active_clock,
+    )
     workspace = output / "workspace"
     baseline_revision = setup_workspace(workspace)
     ledger.append(
@@ -741,6 +826,25 @@ def execute(
         reason="The task preserves the declared adaptive-choice capability.",
         artifact_revision=baseline_revision,
     )
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=None,
+        integration_revision=None,
+        capability_report={
+            "adaptive-choice": {
+                "before": "not_run",
+                "after": "not_run",
+                "disposition": "unproven",
+                "evidence_refs": [],
+            }
+        },
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "mission.snapshot.json",
+            "task.snapshot.json",
+            "mission-binding-report.json",
+        ],
+    ):
+        return 3
     ledger.append(
         "capability_baseline",
         actor="capability-auditor",
@@ -791,7 +895,7 @@ def execute(
                 }
             },
             repair_rounds_used=0,
-            elapsed_seconds=round(time.monotonic() - started_at, 3),
+            elapsed_seconds=elapsed_budget.elapsed_seconds(),
             ledger=ledger,
             claims=[
                 "The synthetic run stopped before worker execution because its accepted baseline was not proven."
@@ -807,6 +911,26 @@ def execute(
             ],
         )
         return 4
+
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=None,
+        integration_revision=None,
+        capability_report={
+            "adaptive-choice": {
+                "before": "passed",
+                "after": "not_run",
+                "disposition": "unproven",
+                "evidence_refs": ["evidence/capability-baseline.json"],
+            }
+        },
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "mission.snapshot.json",
+            "task.snapshot.json",
+            "mission-binding-report.json",
+        ],
+    ):
+        return 3
 
     ledger.append(
         "assigned",
@@ -843,6 +967,24 @@ def execute(
             ),
         },
     )
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=worker_revision,
+        integration_revision=None,
+        capability_report={
+            "adaptive-choice": {
+                "before": "passed",
+                "after": "not_run",
+                "disposition": "unproven",
+                "evidence_refs": ["evidence/capability-baseline.json"],
+            }
+        },
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "evidence/restriction-candidate.json",
+        ],
+    ):
+        return 3
     ledger.append(
         "critic_review",
         actor="execution-coordinator",
@@ -864,6 +1006,25 @@ def execute(
     )
     if first_verdict.get("verdict") != "PASS":
         raise FixtureError("first scripted critic did not return PASS")
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=worker_revision,
+        integration_revision=None,
+        capability_report={
+            "adaptive-choice": {
+                "before": "passed",
+                "after": "not_run",
+                "disposition": "unproven",
+                "evidence_refs": ["evidence/capability-baseline.json"],
+            }
+        },
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "critic-round-1/verdict.json",
+            "review-packet-round-1.json",
+        ],
+    ):
+        return 3
     ledger.append(
         "accepted_unit",
         actor="execution-coordinator",
@@ -917,7 +1078,7 @@ def execute(
                 }
             },
             repair_rounds_used=0,
-            elapsed_seconds=round(time.monotonic() - started_at, 3),
+            elapsed_seconds=elapsed_budget.elapsed_seconds(),
             ledger=ledger,
             claims=[
                 "The synthetic task checks passed, but capability preservation remained unproven."
@@ -952,6 +1113,30 @@ def execute(
             "evidence_refs": ["evidence/capability-after-integration-1.json"],
         },
     )
+    degraded_capability_report = {
+        "adaptive-choice": {
+            "before": "passed",
+            "after": "failed",
+            "disposition": "degraded",
+            "evidence_refs": [
+                "evidence/capability-baseline.json",
+                "evidence/capability-after-integration-1.json",
+            ],
+        }
+    }
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=worker_revision,
+        integration_revision=integration_one,
+        capability_report=degraded_capability_report,
+        repair_rounds_used=0,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "critic-round-1/verdict.json",
+            "evidence/restriction-disposition-1.json",
+            "review-packet-round-1.json",
+        ],
+    ):
+        return 3
     if repair_round_limit == 0:
         ledger.append(
             "budget_exhausted",
@@ -966,19 +1151,9 @@ def execute(
             contract_identity=task_identity,
             result_revision=worker_revision,
             integration_revision=integration_one,
-            capability_report={
-                "adaptive-choice": {
-                    "before": "passed",
-                    "after": "failed",
-                    "disposition": "degraded",
-                    "evidence_refs": [
-                        "evidence/capability-baseline.json",
-                        "evidence/capability-after-integration-1.json",
-                    ],
-                }
-            },
+            capability_report=degraded_capability_report,
             repair_rounds_used=0,
-            elapsed_seconds=round(time.monotonic() - started_at, 3),
+            elapsed_seconds=elapsed_budget.elapsed_seconds(),
             ledger=ledger,
             claims=[
                 "The synthetic task checks passed, but the integrated capability regressed."
@@ -1020,6 +1195,19 @@ def execute(
         reason="The declared task-level test passed after the bounded repair.",
         artifact_revision=repaired_revision,
     )
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=repaired_revision,
+        integration_revision=integration_one,
+        capability_report=degraded_capability_report,
+        repair_rounds_used=1,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "evidence/repair-check.txt",
+            "critic-round-1/verdict.json",
+            "evidence/restriction-disposition-1.json",
+        ],
+    ):
+        return 3
     ledger.append(
         "critic_review",
         actor="execution-coordinator",
@@ -1041,6 +1229,21 @@ def execute(
     )
     if second_verdict.get("verdict") != "PASS":
         raise FixtureError("second scripted critic did not return PASS")
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=repaired_revision,
+        integration_revision=integration_one,
+        capability_report=degraded_capability_report,
+        repair_rounds_used=1,
+        supporting_evidence_refs=[
+            "evidence/worker-check.txt",
+            "evidence/repair-check.txt",
+            "critic-round-1/verdict.json",
+            "critic-round-2/verdict.json",
+            "evidence/restriction-disposition-1.json",
+            "review-packet-round-2.json",
+        ],
+    ):
+        return 3
     ledger.append(
         "accepted_unit",
         actor="execution-coordinator",
@@ -1078,6 +1281,37 @@ def execute(
             "evidence_refs": ["evidence/capability-after-integration-2.json"],
         },
     )
+    preserved_capability_report = {
+        "adaptive-choice": {
+            "before": "passed",
+            "after": "passed",
+            "intermediate": "failed",
+            "disposition": "preserved",
+            "evidence_refs": [
+                "evidence/capability-baseline.json",
+                "evidence/capability-after-integration-1.json",
+                "evidence/capability-after-integration-2.json",
+            ],
+        }
+    }
+    completed_evidence_refs = [
+        "evidence/worker-check.txt",
+        "evidence/repair-check.txt",
+        "critic-round-1/verdict.json",
+        "critic-round-2/verdict.json",
+        "evidence/restriction-disposition-1.json",
+        "evidence/restriction-disposition-2.json",
+        "review-packet-round-1.json",
+        "review-packet-round-2.json",
+    ]
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=repaired_revision,
+        integration_revision=integration_two,
+        capability_report=preserved_capability_report,
+        repair_rounds_used=1,
+        supporting_evidence_refs=completed_evidence_refs,
+    ):
+        return 3
     mission_check(
         output,
         "final-mission-check.json",
@@ -1090,6 +1324,15 @@ def execute(
         reason="Confirmed the repaired integration preserves the frozen mission.",
         artifact_revision=integration_two,
     )
+    completed_evidence_refs.append("evidence/final-mission-check.json")
+    if elapsed_budget.stop_if_exhausted(
+        result_revision=repaired_revision,
+        integration_revision=integration_two,
+        capability_report=preserved_capability_report,
+        repair_rounds_used=1,
+        supporting_evidence_refs=completed_evidence_refs,
+    ):
+        return 3
     ledger.append(
         "completed",
         actor="execution-coordinator",
@@ -1103,37 +1346,15 @@ def execute(
         contract_identity=task_identity,
         result_revision=repaired_revision,
         integration_revision=integration_two,
-        capability_report={
-            "adaptive-choice": {
-                "before": "passed",
-                "after": "passed",
-                "intermediate": "failed",
-                "disposition": "preserved",
-                "evidence_refs": [
-                    "evidence/capability-baseline.json",
-                    "evidence/capability-after-integration-1.json",
-                    "evidence/capability-after-integration-2.json",
-                ],
-            }
-        },
+        capability_report=preserved_capability_report,
         repair_rounds_used=1,
-        elapsed_seconds=round(time.monotonic() - started_at, 3),
+        elapsed_seconds=elapsed_budget.last_elapsed_seconds,
         ledger=ledger,
         claims=[
             "The offline synthetic task checks and fresh critic review passed.",
             "The exact repaired integration preserved the adaptive-choice capability against its Git baseline.",
         ],
-        supporting_evidence_refs=[
-            "evidence/worker-check.txt",
-            "evidence/repair-check.txt",
-            "critic-round-1/verdict.json",
-            "critic-round-2/verdict.json",
-            "evidence/restriction-disposition-1.json",
-            "evidence/restriction-disposition-2.json",
-            "evidence/final-mission-check.json",
-            "review-packet-round-1.json",
-            "review-packet-round-2.json",
-        ],
+        supporting_evidence_refs=completed_evidence_refs,
         unresolved_findings=[],
         human_decisions_required=[],
     )
