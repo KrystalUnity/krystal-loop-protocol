@@ -311,7 +311,10 @@ The following changes are automatically classified as
   baseline.
 
 The candidate must state the behavior it intends to control and provide direct
-evidence that the critical capability remains preserved before integration.
+evidence that the critical capability remains preserved before the integrated
+candidate can be accepted. A bounded integration candidate may be created for
+the product-truth probe, but the open restriction tripwire blocks final
+acceptance until that evidence passes.
 
 The protocol principle is:
 
