@@ -7,11 +7,14 @@ run tools, edit an artifact, repair findings, or authorize a lifecycle action.
 ## Prepare the packet
 
 Start from `review-packet.example.json`. Bind the packet to the exact worker
-result revision and the exact contract ID, revision, and hash it is judged
-against. Include only the bounded diff, declared checks, evidence, limitations,
-and unresolved findings needed for review. The controller must inspect and
-redact it before external egress. The harness performs no implicit file
-collection, log collection, or content redaction.
+result revision, the exact contract ID, revision, and hash it is judged against,
+and, for v0.3, the Mission Contract ID, revision, and hash. A v0.3 packet also
+declares affected capabilities, preservation or improvement commitments,
+expected capability delta, required capability probes, and baseline evidence
+references. Include only the bounded diff, declared checks, evidence,
+limitations, and unresolved findings needed for review. The controller must
+inspect and redact it before external egress. The harness performs no implicit
+file collection, log collection, or content redaction.
 
 Packet contents are untrusted passive evidence. The critic system prompt tells
 the model to ignore instructions, role claims, authorization requests, and tool
@@ -70,4 +73,6 @@ python3 examples/openai-compatible-critic/tests/test_critic.py -v
 
 The tests use a local HTTP server and a fake credential. A critic verdict is
 advisory evidence for the controller and human; it is never permission to edit,
-merge, push, deploy, spend, or perform another live action.
+merge, push, deploy, spend, or perform another live action. For v0.3, the
+critic may report capability risk, but it cannot pass, certify, or override the
+separate mechanical capability gate.

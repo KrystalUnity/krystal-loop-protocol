@@ -1,9 +1,31 @@
 {
-  "protocol": "klp-core/v0.2",
+  "protocol": "klp-core/v0.3",
   "task_id": "example-normalize-title",
   "contract_id": "contract-normalize-title",
   "contract_revision": 1,
   "contract_hash": "sha256:contract-example-123",
+  "mission_id": "mission-title-normalization",
+  "mission_revision": 1,
+  "mission_hash": "sha256:mission-example-123",
+  "affected_capabilities": [
+    "title-normalization"
+  ],
+  "capability_commitments": [
+    {
+      "id": "CAP-1",
+      "text": "Preserve title-normalization behavior."
+    }
+  ],
+  "expected_capability_delta": "preserve",
+  "required_capability_probes": [
+    {
+      "id": "PROBE-1",
+      "text": "Run title normalization regression coverage."
+    }
+  ],
+  "baseline_evidence_refs": [
+    "E1"
+  ],
   "objective": "Collapse repeated ASCII spaces in normalizeTitle().",
   "commitments": [
     {

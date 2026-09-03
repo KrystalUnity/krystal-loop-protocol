@@ -2,6 +2,11 @@
   "task_id": "example-normalize-title",
   "base_revision": "controller-supplied-base-revision",
   "result_revision": "controller-supplied-result-revision",
+  "mission_hash": "sha256:mission-example-123",
+  "affected_capabilities": [
+    "title-normalization"
+  ],
+  "capability_risks_observed": [],
   "changed_files": [
     "src/title.ts",
     "tests/title.test.ts"

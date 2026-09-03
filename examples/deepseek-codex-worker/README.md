@@ -39,7 +39,9 @@ a credential file and starts Codex with a scrubbed child environment.
 The model endpoint supplies inference. The assignment, workspace sandbox,
 standing instructions, controller checks, independent critic, and human
 decision supply control. A cheaper model does not receive broader authority,
-and a successful worker response is not an acceptance verdict.
+and a successful worker response is not an acceptance verdict. For v0.3, the
+worker reports observed capability risks but cannot certify preservation or
+pass or override the separate mechanical capability gate.
 
 The assignment's path allow-list is a controller and model instruction, not a
 per-file sandbox. `workspace-write` restricts the worker to its workspace but
