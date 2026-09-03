@@ -15,9 +15,11 @@ modes in your project.
 | Retrieval memory | Optional | Full-text search, embeddings, vector database |
 | Agent tool adapter | Optional | CLI, MCP server, framework-native tools |
 
-The authoritative state layer owns versioned task contracts, assignments,
-lifecycle state, finding dispositions, evidence references, and human
-decisions. Optional layers may accelerate or present that state but must not
+The authoritative state layer owns the canonical Mission Contract, versioned
+task contracts, assignments, lifecycle state, finding dispositions, capability
+baselines and reports, evidence references, and human decisions. A Mission
+Contract is authoritative only when its canonicalization and digest method are
+declared. Optional layers may accelerate or present this state but must not
 silently replace it.
 
 ## Profile A: Local And Simple
@@ -26,15 +28,22 @@ Use this for one lead agent and a small number of sequential workers.
 
 ```text
 Git repository
+  + immutable Mission Contract JSON or structured Markdown record
   + Markdown or JSON task records
   + append-only state-events.jsonl
   + local evidence directory
   + normal test/build tools
+  + manually invoked offline Capability Auditor
 ```
 
-No database or message bus is required. Use atomic snapshots, append-only state
-events, exact Git revisions or content digests, and a clear folder convention.
-This is enough to learn KLP before adding infrastructure.
+No database, message bus, or scheduler is required. Use atomic snapshots,
+append-only state events, exact Git revisions or content digests, and a clear
+folder convention. The Mission Custodian verifies exact Mission Contract
+binding and affected capabilities at approval, repair, integration, and final
+review. The Capability Auditor manually runs the approved baseline and
+post-integration product-truth probes against the declared artifacts and keeps
+its observations with the local evidence. This is enough to learn KLP before
+adding infrastructure.
 
 ## Profile B: Single-Host Multi-Agent
 
@@ -42,6 +51,7 @@ Use this when several named agents work concurrently on one machine.
 
 ```text
 SQLite in WAL mode or PostgreSQL
+  + immutable Mission Contract snapshots and hashes
   + task/dependency table
   + ownership leases or heartbeats
   + append-only state events
@@ -51,7 +61,11 @@ SQLite in WAL mode or PostgreSQL
 
 The database should enforce atomic assignment and idempotent state changes.
 The queue carries notifications; the database remains the durable source of
-truth. Separate workspaces or Git worktrees reduce file collisions.
+truth. Separate workspaces or Git worktrees reduce file collisions. This
+profile may schedule a Capability Auditor and publish its signed or immutable
+observations directly to the operator-facing evidence store. Scheduling is
+optional: the scheduled result supplements monitoring and never replaces the
+required post-integration capability gate on the exact integrated artifact.
 
 ## Profile C: Distributed Fleet
 
@@ -61,6 +75,7 @@ Use this only when workers span machines or failure domains.
 Transactional database
   + durable queue
   + immutable artifact/evidence storage
+  + immutable shared Mission Contract records and capability reports
   + worker identity and scoped credentials
   + lease expiry and crash recovery
   + centralized observability
@@ -69,7 +84,26 @@ Transactional database
 Add idempotency keys, retry ceilings, dead-letter handling, clock-skew tolerant
 leases, and tenant or project isolation. Distributed operation increases the
 importance of immutable artifact identity and makes filesystem-only state
-insufficient.
+insufficient. Give a distributed Capability Auditor only scoped probe
+credentials and access to the exact approved artifacts. Shared evidence must be
+immutable or append-only and available to the Mission Custodian and operator;
+neither a coordinator nor a scheduler may rewrite auditor observations.
+
+## Capability Gate Operation
+
+Every profile preserves the same v0.3 contract. Before work, the Capability
+Auditor runs the required controls against the accepted baseline artifact. After
+integration, it runs the required controls against the exact integrated
+artifact revision and records a disposition for every affected capability.
+The Mission Custodian compares changed surfaces with the Mission Contract's
+trigger rules at approval, repair, integration, and final review. A missing,
+unavailable, invalid, or inconclusive required probe is
+`capability_unproven`, not permission to continue.
+
+Local manual operation, optional scheduled monitoring, and distributed shared
+operation are deployment choices. They do not change the gate: a critical
+capability that is `degraded` or `unproven` blocks `completed`, and scheduled
+monitoring never replaces post-integration proof.
 
 ## Communication Guidance
 

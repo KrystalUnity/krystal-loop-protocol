@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -90,6 +91,40 @@ class V03DocumentationTests(unittest.TestCase):
             "accepted baseline: `capability_regression`",
             stop_behavior,
         )
+
+    def test_public_and_runtime_guidance_links_the_capability_fixture(self) -> None:
+        readme = self.text("README.md")
+        runtime = self.text("RUNTIME_PROFILES.md")
+        safety = self.text("SAFETY_AND_LIMITS.md")
+        hermes = self.text("adapters/hermes-kanban.md")
+        fixture = ROOT / "examples" / "capability-regression" / "README.md"
+        self.assertTrue(fixture.is_file())
+        self.assertIn("capability-regression", readme)
+        self.assertIn("Capability Auditor", runtime)
+        self.assertIn("capability_unproven", safety)
+        self.assertIn("Mission Custodian", hermes)
+        self.assertIn("Execution Coordinator", hermes)
+
+    def test_all_local_markdown_links_resolve(self) -> None:
+        documents = (
+            "README.md",
+            "PROTOCOL.md",
+            "AI_AGENT_INTEGRATION.md",
+            "RUNTIME_PROFILES.md",
+            "SAFETY_AND_LIMITS.md",
+            "adapters/hermes-kanban.md",
+            "examples/capability-regression/README.md",
+        )
+        pattern = re.compile(r"\[[^]]+\]\(([^)]+)\)")
+        for relative in documents:
+            source = ROOT / relative
+            for match in pattern.findall(source.read_text(encoding="utf-8")):
+                target = match.split("#", 1)[0]
+                if not target or "://" in target or target.startswith("mailto:"):
+                    continue
+                resolved = (source.parent / target).resolve()
+                with self.subTest(source=relative, target=target):
+                    self.assertTrue(resolved.exists(), str(resolved))
 
 
 if __name__ == "__main__":

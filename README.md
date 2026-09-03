@@ -2,8 +2,8 @@
 
 ![Krystal Loop Protocol](assets/krystal-loop-protocol-banner.jpg)
 
-Use fast AI agents for the grunt work. Use a lead agent and real checks to keep
-the project coherent, working, and under your control.
+Use fast AI agents for bounded work. Freeze the product promise and use direct
+evidence to keep the project coherent, working, and under your control.
 
 AI coding agents can produce a lot of code quickly. The harder problem begins
 after the first impressive demo: agents lose context, overlap each other's
@@ -15,22 +15,23 @@ build with multiple AI agents without handing them control of the project.
 
 ## The 90-Second Version
 
-1. **Scope it.** Write down the outcome, allowed files, forbidden actions,
-   checks, budget, and stop conditions.
-2. **Split it.** Give each worker one small outcome that can be judged on its
-   own.
-3. **Build it.** The worker returns the exact revision and a factual handover,
-   not its own pass verdict.
-4. **Check it.** Run tests, linters, builds, or other deterministic checks
-   before asking another model what it thinks.
-5. **Critique it.** A fresh, read-only critic reviews the exact revision against
-   the original task and direct evidence.
-6. **Adjudicate and repair it.** Confirm or refute each critic finding with
-   direct evidence, then fix confirmed blockers within declared limits.
-7. **Integrate it.** Treat the combined system as a new artifact and check it
-   again.
-8. **Govern it.** The loop completes automatically inside its delegation. A
-   person decides only material changes and consequential actions.
+1. **Freeze the core promise.** Store one canonical Mission Contract with its
+   identity, critical capabilities, trigger rules, accepted baselines, and
+   operator amendment authority.
+2. **Scope it.** Bind the task to that exact mission, declare affected
+   capabilities, allowed files, forbidden actions, checks, budget, and stops.
+3. **Build and check it.** Workers return factual handovers; deterministic
+   checks run before independent criticism.
+4. **Critique and repair it.** A fresh, read-only critic is evidence-bound;
+   confirmed blockers receive only bounded repairs inside the frozen contract.
+5. **Integrate it.** Treat the combined system as a new artifact.
+6. **Prove the core promise again.** A Capability Auditor runs approved
+   product-truth controls against the exact integrated artifact. A critical
+   capability that is degraded or unproven stops completion.
+
+> Before agents change an app, prove it still does its main job. After they
+> finish, prove it again. If it no longer works, the loop stops, even if every
+> technical test passed.
 
 ## What This Prevents
 
@@ -52,6 +53,10 @@ Give this to the lead agent before a multi-agent build:
 Work under Krystal Loop Protocol Core.
 
 Before changing files, write a bounded task contract containing:
+- the canonical Mission Contract `mission_id`, `mission_revision`, and
+  `mission_hash`, recovered from authoritative durable storage;
+- affected critical capabilities, their accepted baseline evidence, and the
+  required product-truth probes and controls;
 - its ID, revision, parent identity, and coordinator delegation;
 - the exact outcome;
 - allowed and protected paths;
@@ -64,9 +69,12 @@ Split the task into independently judgeable work units. Workers must return
 factual handovers tied to exact revisions and must not certify their own work.
 Run deterministic checks before independent, read-only criticism. Confirm,
 refute, or leave each critic finding unresolved using direct evidence. Treat
-the integrated result as a new artifact. Normal repair rounds may proceed under
-the recorded delegation; material changes and consequential actions stop at
-the authority boundary.
+the integrated result as a new artifact, then require the Capability Auditor to
+prove every affected critical capability against the frozen accepted baseline.
+Do not complete a run with a degraded or unproven critical capability. Normal
+repair rounds may proceed under the recorded delegation; material changes,
+Mission Contract amendments, and consequential actions stop at the authority
+boundary.
 ```
 
 KLP does not require a special model, database, vector store, or message bus.
@@ -112,6 +120,13 @@ loopback fake provider, confirms one real finding, refutes one false finding,
 applies one authorized repair, and re-checks the integrated artifact. A second
 test proves a zero-round repair budget stops instead of overrunning authority.
 
+The [capability-regression fixture](examples/capability-regression/README.md)
+proves the v0.3 product-truth gate. It establishes an accepted baseline,
+deliberately regresses an adaptive capability while task checks pass, blocks
+completion, repairs within the declared limit, and proves the repaired
+integrated artifact. Both lifecycle fixtures are offline protocol examples:
+neither certifies production safety.
+
 ## Read Next
 
 - [KLP Core protocol](PROTOCOL.md)
@@ -121,6 +136,7 @@ test proves a zero-round repair budget stops instead of overrunning authority.
 - [DeepSeek Codex worker example](examples/deepseek-codex-worker/README.md)
 - [OpenAI-compatible critic example](examples/openai-compatible-critic/README.md)
 - [Offline fail-review-repair fixture](examples/fail-review-repair/README.md)
+- [Offline capability-regression fixture](examples/capability-regression/README.md)
 - [Hermes Kanban adapter example](adapters/hermes-kanban.md)
 
 ## What KLP Is Not
@@ -137,11 +153,11 @@ and working across many changes.
 
 ## Project Status
 
-KLP Core v0.2 is a provisional public profile. This repository includes a
+KLP Core v0.3 draft is a provisional public profile. This repository includes a
 portable worker launcher, a sealed-packet critic harness, local fake-provider
-tests, example contracts, and a reproducible offline fail-review-repair
-fixture. The fixture proves protocol mechanics; it does not certify model
-quality, production safety, or a particular agent framework.
+tests, Mission Contract examples, and reproducible offline lifecycle fixtures.
+The fixtures prove protocol mechanics and capability-gate behavior; they do not
+certify model quality, production safety, or a particular agent framework.
 
 ## License
 

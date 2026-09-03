@@ -19,6 +19,12 @@ itself authorize:
 Projects may approve some of these actions through their own human-controlled
 process. KLP records the boundary; it does not replace that process.
 
+KLP cannot authorize a live capability probe. A live or consequential probe
+requires separate operator authority even when a task contract lists it. If a
+required probe is unauthorized, unavailable, invalid, missing, or
+inconclusive, the affected run is `capability_unproven`; it cannot be treated
+as a generic successful check or a reason to waive the capability gate.
+
 A coordinator may run assigned work, checks, criticism, evidence adjudication,
 and bounded repairs without asking a person to approve each round when the task
 contract or standing policy explicitly delegates those operations. Repeated
@@ -58,6 +64,25 @@ Use deterministic checks and direct observation wherever practical. Bind every
 review to the exact artifact examined. Re-run relevant checks after repair and
 integration.
 
+## Capability Preservation Limits
+
+Safety constraints remain valid. A constraint may reduce the reachable action
+space, disable an unsafe operation, or require a safer control, but it must not
+silently redefine the frozen Mission Contract. When a safety change affects a
+critical capability or matches one of its trigger rules, the run must prove
+that the affected capability is preserved with the declared controls and
+decision provenance. Replacing adaptive behavior with a fixed sequence,
+narrowing an API or tool schema, removing an input, or weakening a control,
+threshold, trigger, or baseline is a `capability_restriction_candidate` and
+requires direct preservation evidence.
+
+If the needed preservation proof changes the capability, baseline, controls,
+trigger scope, severity, or provenance requirement, it is a Mission Amendment
+Request. The request pauses affected work and includes both the technical
+explanation and the plain-English Operator Impact Statement required by the
+Mission Contract. A coordinator, worker, critic, verifier, Mission Custodian,
+or Capability Auditor cannot approve that amendment.
+
 ## Scope And Budget Limits
 
 Agents should stop when work requires a new file boundary, dependency,
@@ -81,3 +106,9 @@ isolation, and incident-response controls.
 A passing KLP run supports only the claims tied to its task contract and
 retained evidence. Avoid claims such as fully autonomous, production-safe, zero
 bugs, or independently verified when the run did not establish them.
+
+Do not claim `completed` when any critical capability is `degraded` or
+`unproven`. A failed, missing, unavailable, invalid, or inconclusive capability
+probe cannot be overridden by task checks, critic confidence, a scheduler, or
+an agent message. `capability_unproven` takes precedence over generic
+`blocked` for a v0.3 critical-capability evidence failure.
