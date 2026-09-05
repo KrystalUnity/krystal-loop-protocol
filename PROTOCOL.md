@@ -93,7 +93,7 @@ schemas, configuration, prompts, models, data contracts, or runtime behavior.
 | Human operator | Defines authority boundaries and makes consequential lifecycle decisions. |
 | Mission Custodian | Re-reads and protects the frozen Mission Contract, verifies capability impact at approval, repair, integration, and final review, and does not implement or troubleshoot worker code for the same critical run. |
 | Capability Auditor | Mechanically runs approved integrated-artifact product-truth probes and publishes immutable observations without editing the artifact. |
-| Coordinator | Preserves the task contract and delegation, assigns work, adjudicates findings, tracks state, and integrates evidence. |
+| Coordinator | Preserves the authorized outcome and delegation, chooses and reassesses the approach, assigns work, adjudicates findings, tracks total effort, and integrates evidence. |
 | Worker | Produces one bounded outcome and a factual handover. |
 | Verifier | Runs deterministic checks and captures direct evidence. |
 | Critic | Independently judges one exact artifact revision without modifying it. |
@@ -233,6 +233,11 @@ KLP implementations may combine records, but must preserve these facts:
 17. No KLP record, agent, critic, test, or message can authorize a live action.
 18. Contract revisions and invalidations preserve the prior identity, causal
     evidence, and authority basis instead of silently replacing history.
+19. Additional investigation, tooling, checks, repairs, and reviews must address
+    a specific unmet requirement or credible risk in the affected scope. An
+    agent's chosen implementation is not itself a product requirement.
+20. The coordinator reassesses unsuccessful approaches and enforces one total
+    task budget across planning, delegation, review, repair, and completion.
 
 ## Contract Identity And Delegation
 
@@ -267,6 +272,14 @@ Delegation cannot silently change the objective, acceptance criteria, allowed
 paths, side effects, resource ceilings, Mission Contract, or capability gate.
 Correcting a test implementation so it matches frozen criteria may be
 delegated; changing the criteria themselves is a material change.
+
+The contract should distinguish binding implementation commitments from
+agent-selected implementation details. Delegation may permit simplifying those
+details, including abandoning newly introduced tooling, inside the same outcome,
+paths, architecture boundary, side effects, required checks, and limits. Record
+the decision and invalidate affected evidence. Removing a binding commitment
+still requires an authorized contract revision; simplification never permits
+discarding unrelated work or weakening a Mission Contract.
 
 ## Product-Truth Capability Gate
 
@@ -304,6 +317,62 @@ missing either explanation is invalid. An authorized revision records its
 `parent_mission_hash`, `authority_ref`, and reason; rejection leaves the prior
 Mission Contract unchanged.
 
+## Choosing And Reassessing The Approach
+
+Before dispatch, define observable completion, required capability preservation,
+and the existing checks or operational path that can establish them. For an
+existing capability, first assess whether the authorized outcome can be reached
+through its current configuration and workflow.
+
+Before adding investigation, a helper, a harness, a check, a repair, or another
+review, identify the unmet requirement or credible risk, the supporting evidence
+or precise evidence gap, and what decision the next bounded step will resolve.
+Use the smallest sufficient method. Extend existing checks before creating a
+new harness, and create one only when existing methods cannot adequately verify
+something necessary. Direct source analysis or observation can establish a
+defect; not every concern needs a new executable reproduction. New checks must
+stay within delegation and must not silently add acceptance criteria.
+
+Reassess the approach after two unsuccessful plan, review, or repair cycles
+toward the same unmet outcome, even if finding IDs or individual defects change.
+A cycle is a completed attempt to resolve that outcome followed by its check or
+review; tool calls and ordinary implementation steps are not separate cycles.
+Reassess sooner when agent-created tooling becomes the main source of blockers
+or the operator redirects the task, asks to simplify, or asks why it is not
+finished. A stricter declared stop or budget limit takes precedence.
+
+In the existing task record, briefly record:
+
+- the remaining unmet outcome and where its blockers originated;
+- what the attempts actually established, including problems introduced by the
+  approach itself;
+- whether to continue, simplify, abandon or defer optional tooling, or stop;
+- the next sufficient action, its expected evidence, and the remaining budget.
+
+Continue only with an evidence-backed reason or a materially different approach
+inside delegation. Otherwise stop affected work as `plateau`, `blocked`, or the
+applicable existing stop. A reassessment is not an automatic request for another
+human approval, a budget reset, or permission to bypass a required check. An
+operator correction must affect the next action or receive a concrete explanation
+of the remaining binding constraint; an acknowledgement alone is insufficient.
+
+Set an overall effort envelope at intake and retain it in the Task Contract.
+Planning, tool construction, checks, reviewer calls and retries, waiting,
+repairs, integration, and documentation all consume it. Child assignments and
+replacement agents inherit the remaining envelope; new findings, new plans,
+context recovery, and delegated workflows do not reset it. Measure elapsed time
+once across the parent task and aggregate resource use across its children.
+Report unavailable measurements honestly and use enforceable limits rather than
+inventing cost or token totals.
+
+When using KLP alongside skills or another review system, select one coordinated
+review plan. Reuse evidence that satisfies the same scope, artifact identity,
+independence, and freshness requirements. Preserve mandatory gates, but do not
+multiply optional reviews merely because several workflows recommend them.
+Every additional review must resolve a named requirement or relevant uncertainty.
+Progress reports should state changed evidence, remaining work, or a decision;
+do not repeatedly describe an unchanged wait as progress.
+
 ## Finding Adjudication
 
 A critic verdict is a claim requiring disposition, not an automatic command.
@@ -317,6 +386,22 @@ Refutation must cite evidence tied to the reviewed artifact. Coordinator
 confidence or a persuasive worker response is not sufficient. Confirmed and
 unresolved blocking findings remain open until repaired, bounded by the
 declared stop limits, or escalated.
+
+Judge a finding's truth separately from whether it blocks acceptance. A blocker
+must identify a violated task commitment, protected capability, or applicable
+safety/authority constraint and cite direct evidence or a specific missing
+required proof. A preference, optional test, or unrelated defect is not a new
+acceptance criterion. Report unrelated findings separately without automatically
+repairing them; a credible serious risk may stop affected work without
+authorizing that repair.
+
+Record the origin in the existing finding or disposition rationale: pre-existing
+defect, regression from the requested change, defect in agent-created tooling,
+or optional improvement. Use `unknown` when evidence cannot establish origin.
+For tooling defects, reassess whether the tooling is needed before repairing it.
+Removing unnecessary tooling may resolve the problem, provided the authorized
+outcome and required protections are still met and the resulting artifact is
+verified. Neither origin nor severity alone determines blocking status.
 
 ## Evidence Order
 
@@ -334,9 +419,12 @@ not replace direct proof that was practical to collect.
 
 ## Material Change
 
-A material change includes a proposed alteration to the objective, accepted
-plan, scope, architecture boundary, authority, external side effects, data
-classification, rollback needs, or resource ceiling.
+A material change includes a proposed alteration to the objective, binding
+commitments in the accepted plan, scope, architecture boundary, authority,
+external side effects, data classification, rollback needs, or resource ceiling.
+Simplifying agent-selected implementation details already permitted by the
+recorded delegation is not a material change when those boundaries, required
+checks, and capability commitments remain unchanged.
 
 When a material change is discovered:
 
@@ -355,6 +443,13 @@ are recorded. A v0.3 Final Receipt is incomplete without exact Mission Contract
 identity and a Capability Report that gives every affected capability
 `preserved` or `improved`. It may reach this state without a per-round human
 click.
+
+When these conditions are met, complete the task. Further investigation, checks,
+or review require new relevant evidence or an authorized requirement change;
+nonblocking findings do not require a zero-finding review cycle. If the requested
+runtime behavior is already active while a required gate remains pending, report
+both facts explicitly and finish only that remaining gate. A healthy setting
+does not establish untested end-to-end behavior.
 
 If merge, release, deployment, spending, credential changes, customer contact,
 or production mutation remains, record `ready_for_authority_decision` and list

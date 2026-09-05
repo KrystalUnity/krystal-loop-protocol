@@ -90,9 +90,20 @@ architecture, side effect, acceptance criterion, or authority level. That is a
 material change, even when the proposed change appears useful.
 
 Set round, time, cost, and any task-specific size ceilings before dispatch, then
-record the measured values rather than agent estimates. Repeated blocking
-findings or no measurable evidence improvement should trigger a plateau rather
-than an unbounded agent loop.
+record measured values rather than agent estimates. One parent budget includes
+planning, tooling, review and retries, waiting, repair, and completion work;
+delegation or a new plan does not reset it. Reassess after two unsuccessful
+cycles toward the same outcome, when agent-created tooling dominates the
+blockers, or when the operator redirects the task. Preserve stricter existing
+stops and all required capability evidence.
+
+Follow [Choosing And Reassessing The Approach](PROTOCOL.md#choosing-and-reassessing-the-approach).
+A defect in optional new tooling is a reason to consider simplifying the
+approach, not an automatic obligation to keep building that tooling. Neither
+urgency nor simplification permits weakening a binding commitment, skipping a
+required gate, deleting unrelated work, or exceeding delegated authority.
+Complete when the required evidence is sufficient; unrelated findings and
+optional improvements do not automatically extend the task.
 
 ## Infrastructure Limits
 

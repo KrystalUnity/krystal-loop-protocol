@@ -106,9 +106,14 @@ reasoning that can return to a parent in one session. Use Kanban for work that
 must survive restarts, cross named agent profiles, retain a visible audit trail,
 or allow human intervention.
 
-A Kanban worker may use subagents internally, but the durable KLP assignment,
-artifact revision, evidence, and final state still belong on the board or in
-referenced storage.
+A Kanban worker may use subagents internally when its assignment permits it,
+but the durable KLP assignment, artifact revision, evidence, and final state
+still belong on the board or in referenced storage. Child tasks, retries, and
+replacement workers inherit the root task's remaining total budget. Record
+approach reassessments on that root task; creating another card does not reset
+failed cycles or justify new tooling. Coordinate verifier tasks with any other
+required review so equivalent evidence is reused rather than duplicating
+optional gates.
 
 ## Memory
 

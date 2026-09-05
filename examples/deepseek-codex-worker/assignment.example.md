@@ -11,10 +11,16 @@
   actions, nested agents, and undeclared tests
 - Deterministic check: `npm test -- tests/title.test.ts`
 - Required evidence: exact command, exit status, and concise output
-- Time limit: 15 minutes
+- Completion: requested normalization works and the declared check passes;
+  hand off the result and any limitations
+- Verification approach: use the existing test runner; no new harness is needed
+- Time limit: at most 15 minutes, reduced to the parent's remaining allowance
 - Repair limit: one implementation attempt
-- Stop conditions: scope change, missing dependency, failing unrelated check,
-  credential request, or inability to produce the required evidence
+- Stop conditions: scope change, missing required dependency, exhausted parent
+  or assignment budget, credential request, or inability to produce required
+  evidence within the single permitted attempt
+- Unrelated findings: report separately; do not automatically repair or block
+  on them unless they prevent safe authorized work
 
 Return only a factual handover matching `expected-handover.json`, including
 observed capability risks. Do not issue a PASS verdict, certify preservation,

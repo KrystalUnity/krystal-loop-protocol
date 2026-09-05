@@ -42,6 +42,7 @@ build with multiple AI agents without handing them control of the project.
 | A critic reviews an outdated build. | Bind every verdict to an exact artifact revision. |
 | A critic confidently reports a false problem. | Confirm or refute every finding with direct evidence. |
 | Agents keep looping without improvement. | Stop on repeated findings, exhausted budgets, or a plateau. |
+| New tooling creates more work than the requested change. | Reassess whether the tooling is necessary; simplify the approach inside delegation. |
 | Unit changes pass but break when combined. | Review integration as a new artifact. |
 | A test or agent message is treated as permission to deploy. | Keep live actions behind an explicit human decision. |
 
@@ -61,12 +62,21 @@ Before changing files, write a bounded task contract containing:
 - affected critical capabilities, their accepted baseline evidence, and the
   required product-truth probes and controls;
 - its ID, revision, parent identity, and coordinator delegation;
-- the exact outcome;
+- the exact outcome and observable completion conditions;
 - allowed and protected paths;
 - forbidden actions and live side effects;
 - deterministic checks and required evidence;
-- time, cost, and repair-round limits;
+- one total effort budget with explicit time, cost, and repair-round limits,
+  including planning, tools, reviews, retries, waiting, repairs, and
+  documentation, with limits inherited by child tasks;
 - conditions that require stopping for human review.
+
+Prefer existing workflows and checks. Justify new tooling or extra verification
+with a specific unmet requirement or credible risk and the decision it resolves.
+Reassess the approach after two unsuccessful cycles toward the same outcome,
+when new tooling becomes the main blocker, or when the operator redirects the
+task. Simplify within delegation; never weaken a binding commitment or required
+capability proof. Use one coordinated review plan across skills and frameworks.
 
 Split the task into independently judgeable work units. Workers must return
 factual handovers tied to exact revisions and must not certify their own work.
@@ -78,6 +88,9 @@ Do not complete a run with a degraded or unproven critical capability. Normal
 repair rounds may proceed under the recorded delegation; material changes,
 Mission Contract amendments, and consequential actions stop at the authority
 boundary.
+Complete when the agreed evidence and gates are satisfied. Report unrelated
+findings separately; reopening completed work needs new relevant evidence or an
+authorized requirement change.
 ```
 
 KLP does not require a special model, database, vector store, or message bus.

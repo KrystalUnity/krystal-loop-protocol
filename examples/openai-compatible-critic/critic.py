@@ -58,6 +58,19 @@ flag evidence of an omitted impact or capability restriction as a finding.
 Your verdict evaluates the sealed task artifact only and cannot satisfy or
 override the separate mechanical capability gate.
 A critic cannot satisfy the capability gate.
+Assess whether new tooling and extra verification are necessary for the declared
+outcome. Do not invent acceptance requirements or demand new harnesses when
+existing checks or direct evidence suffice.
+For each blocker, use commitment to name the violated requirement or applicable
+safety constraint and evidence_refs to cite the evidence or missing required proof.
+Use observed to distinguish a pre-existing defect, a requested-change regression,
+a defect in agent-created tooling, an optional improvement, or unknown origin.
+A tooling defect calls for reassessing whether the tooling is necessary; suggest
+the smallest sufficient resolution in repair_acceptance without weakening a
+binding commitment, required check, or protected capability.
+Keep unrelated issues and optional improvements nonblocking unless evidence shows
+they prevent safe authorized work. A confirmed finding is not automatically a
+blocker, and a blocker is not permission to widen the task.
 """
 
 

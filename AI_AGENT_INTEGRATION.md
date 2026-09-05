@@ -49,6 +49,22 @@ current state from authoritative durable storage, then follows this order:
 8. Return a factual handover tied to the result revision.
 9. Do not declare your own artifact accepted or claim preservation.
 
+Before dispatch, the coordinator follows
+[Choosing And Reassessing The Approach](PROTOCOL.md#choosing-and-reassessing-the-approach).
+Define observable completion and prefer existing operational paths and checks.
+Record why new tooling or additional verification is necessary. Preserve one
+total effort budget across planning, child tasks, reviewer retries, waiting,
+repairs, and close-out; replacement agents recover the remaining budget.
+
+After two unsuccessful cycles toward the same unmet outcome, when new tooling
+becomes the main blocker, or when the operator redirects the task, reassess the
+approach before continuing. Use the existing task record for the evidence,
+decision, next sufficient action, and remaining budget. Workers report the need
+for reassessment to the coordinator; they cannot revise their own assignment.
+Simplification within delegation is allowed, but binding commitments, required
+checks, capability preservation, and authority boundaries remain intact.
+Coordinate overlapping skill and review requirements in one review plan.
+
 Critics must start from fresh read-only context containing the task contract,
 exact artifact revision, check results, direct evidence, and unresolved prior
 findings. A critic must not edit the artifact it reviews. A task critic may
@@ -249,6 +265,18 @@ the evidence references and rationale. A critic verdict is not self-executing,
 but an unresolved blocking finding still prevents acceptance.
 Task checks and critic verdicts cannot override `capability_regression` or
 `capability_unproven`.
+
+Use `commitment` (or `affected_commitments[]`) to identify the actual acceptance
+requirement, and `evidence_refs[]` for its supporting evidence or missing required
+proof. In `observed` or the disposition rationale, distinguish an existing
+defect, a requested-change regression, an agent-created tooling defect, an
+optional improvement, or unknown origin. Explain the smallest sufficient
+resolution in `repair_acceptance`; do not invent requirements or demand a new
+harness when existing evidence suffices. A tooling defect also calls for
+reassessing whether the tooling is necessary. Report unrelated issues separately
+without turning them into blockers unless they prevent safe authorized work.
+The existing verdict schema is unchanged; these explanations use its current
+fields.
 
 ## Stop Behavior
 

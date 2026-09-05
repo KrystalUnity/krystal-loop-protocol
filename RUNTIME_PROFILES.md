@@ -105,6 +105,17 @@ operation are deployment choices. They do not change the gate: a critical
 capability that is `degraded` or `unproven` blocks `completed`, and scheduled
 monitoring never replaces post-integration proof.
 
+## Shared Effort And Review Limits
+
+All profiles use one parent task budget covering planning, tools, reviews and
+retries, waiting, repairs, and completion. Child tasks, replacement agents, and
+resumed runs recover the remaining budget; they do not receive a fresh allowance.
+Elapsed time is measured across the parent task, while resource use aggregates
+across children. Use one coordinated review plan when combining KLP with skills
+or other frameworks, reusing applicable evidence without omitting mandatory
+gates. The coordinator owns approach reassessment and completion as defined in
+[the protocol](PROTOCOL.md#choosing-and-reassessing-the-approach).
+
 ## Communication Guidance
 
 Agent communication should be short and structured:
