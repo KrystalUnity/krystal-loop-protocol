@@ -169,7 +169,12 @@ and working across many changes.
 
 ## Project Status
 
-KLP Core v0.3 draft is a provisional public profile. This repository includes a
+The current package revision is **v0.3.1-draft**, a provisional public profile.
+It adds rules for justifying extra tooling, reassessing failed approaches,
+sharing task budgets, and completing work when required checks pass. The record
+format remains `klp-core/v0.3`; existing v0.3 records need no schema migration.
+
+This repository includes a
 portable worker launcher, a sealed-packet critic harness, local fake-provider
 tests, Mission Contract examples, and reproducible offline lifecycle fixtures.
 The fixtures prove protocol mechanics and capability-gate behavior; they do not

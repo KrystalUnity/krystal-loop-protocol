@@ -2,7 +2,10 @@
 
 Status: provisional public profile
 
-Version: 0.3 draft
+Version: 0.3.1 draft
+
+Record format: `klp-core/v0.3` (unchanged). This revision adds effort-control
+and approach-reassessment guidance without changing the record schema.
 
 ## Purpose
 
