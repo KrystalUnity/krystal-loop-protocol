@@ -4,8 +4,9 @@ Status: provisional public profile
 
 Version: 0.3.1 draft
 
-Record format: `klp-core/v0.3` (unchanged). This revision adds effort-control
-and approach-reassessment guidance without changing the record schema.
+Record format: `klp-core/v0.3` (unchanged). This draft includes effort-control,
+approach-reassessment, and demonstrated-failure guidance without changing the
+record schema.
 
 ## Purpose
 
@@ -398,6 +399,15 @@ acceptance criterion. Report unrelated findings separately without automatically
 repairing them; a credible serious risk may stop affected work without
 authorizing that repair.
 
+A demonstrated failure condition within supported operating conditions that
+violates a task commitment or protected capability blocks acceptance, even if
+production has not encountered it. Cite the triggering conditions and evidence
+tied to the reviewed artifact. Calling it a "residual" does not reduce its
+significance. Theoretical reachability outside the supported conditions is not
+enough; neither is proximity to a limit without evidence of crossing it. A
+blocking finding stops affected acceptance, not the scope boundary: repair
+outside delegation still requires the applicable scope-change decision.
+
 Record the origin in the existing finding or disposition rationale: pre-existing
 defect, regression from the requested change, defect in agent-created tooling,
 or optional improvement. Use `unknown` when evidence cannot establish origin.
@@ -405,6 +415,30 @@ For tooling defects, reassess whether the tooling is needed before repairing it.
 Removing unnecessary tooling may resolve the problem, provided the authorized
 outcome and required protections are still met and the resulting artifact is
 verified. Neither origin nor severity alone determines blocking status.
+
+### Worked Example: Size Limits
+
+This is a hypothetical example, not a verified production incident. All sizes
+refer to the actual serialized bytes measured at the enforcing boundary, using
+KiB (1,024 bytes), not in-memory objects or rounded display values.
+
+- A supported result is 77 KiB and its required store rejects values above
+  64 KiB. This violates the persistence commitment and blocks acceptance;
+  waiting for a production failure adds no necessary evidence.
+- A 77 KiB result against a 131 KiB ceiling does not alone demonstrate failure.
+  Record the concern and any specific missing required proof; do not invent
+  accumulation, duplication, or encoding overhead.
+- If the supported workflow must append two such results to one untrimmed
+  journal, its payload alone is 154 KiB before envelope overhead. Against that
+  same 131 KiB ceiling, verified append/retention behavior and byte measurements
+  demonstrate a blocking failure condition.
+- A claimed second append that is actually prevented by an enforced supported
+  limit does not establish that condition. Cite the enforcement evidence; an
+  informal expectation that users will stay below the ceiling is not a bound.
+
+Use the existing finding record for the commitment, supported trigger, actual
+measurement or calculation, and disposition. No extra review round or live
+production failure is required merely to rename the finding.
 
 ## Evidence Order
 

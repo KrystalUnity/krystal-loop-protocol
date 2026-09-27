@@ -15,7 +15,7 @@ class V03DocumentationTests(unittest.TestCase):
     def test_normative_protocol_contains_capability_gate(self) -> None:
         protocol = self.text("PROTOCOL.md")
         for required in (
-            "Version: 0.3 draft",
+            "Version: 0.3.1 draft",
             "## Mission Contract",
             "mission_binding_check",
             "capability_baseline",
@@ -25,6 +25,20 @@ class V03DocumentationTests(unittest.TestCase):
             "capability_unproven",
             "mission_amendment_requested",
             "plain-English Operator Impact Statement",
+        ):
+            self.assertIn(required, protocol)
+
+    def test_demonstrated_failure_rule_is_bounded_and_has_size_example(self) -> None:
+        protocol = " ".join(self.text("PROTOCOL.md").split())
+        for required in (
+            "within supported operating conditions",
+            "blocks acceptance, even if production has not encountered it",
+            "proximity to a limit without evidence of crossing it",
+            "repair outside delegation still requires",
+            "hypothetical example, not a verified production incident",
+            "actual serialized bytes measured at the enforcing boundary",
+            "77 KiB result against a 131 KiB ceiling does not alone demonstrate failure",
+            "154 KiB before envelope overhead",
         ):
             self.assertIn(required, protocol)
 
