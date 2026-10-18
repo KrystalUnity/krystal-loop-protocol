@@ -154,6 +154,7 @@ neither certifies production safety.
 - [Offline fail-review-repair fixture](examples/fail-review-repair/README.md)
 - [Offline capability-regression fixture](examples/capability-regression/README.md)
 - [Hermes Kanban adapter example](adapters/hermes-kanban.md)
+- [Optional Semio agent-coordination adapter](adapters/semio.md)
 
 ## What KLP Is Not
 

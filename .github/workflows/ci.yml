@@ -22,6 +22,8 @@ jobs:
         run: python3 examples/fail-review-repair/tests/test_fixture.py -v
       - name: Check launcher syntax
         run: bash -n examples/deepseek-codex-worker/run.sh
+      - name: Check optional Semio adapter offline
+        run: python3 -m unittest discover -s examples/semio-coordination/tests -v
       - name: Check critic syntax
         run: |
           python3 -m py_compile examples/openai-compatible-critic/critic.py
