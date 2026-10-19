@@ -36,6 +36,8 @@ In the prior controlled source-review pilot, six source-review calls covered thr
 
 ## Review and handover
 
-The same assignment should be used for compact and full arms, with the compact candidate selected before results. A worker reports the exact artifact revision, factual changes, checks run, evidence references, risks, failures, retries, and limitations. It must not self-accept, claim preservation, or replace an independent critic. The coordinator still performs the declared mechanical and capability checks, and an independent critic reviews the exact candidate. Acceptance remains outside worker authority and requires the required evidence, including capability results and final finding dispositions.
+For ordinary bounded work, prepare one compact packet; a full-context control run or benchmark is not required. Only when a comparison is separately selected should compact and full arms use the same assignment, with the compact candidate selected before results. Comparisons are optional experiments, not part of the normal work loop.
+
+A worker reports the exact artifact revision, factual changes, checks run, evidence references, risks, failures, retries, and limitations. It must not self-accept, claim preservation, or replace an independent critic. The coordinator still performs the declared mechanical and capability checks, and an independent critic reviews the exact candidate. Acceptance remains outside worker authority and requires the required evidence, including capability results and final finding dispositions.
 
 For the optional coordination example, see the [Semio adapter boundary](../../adapters/semio.md) and the [Semio coordination example](README.md).
