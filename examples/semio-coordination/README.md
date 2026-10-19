@@ -110,7 +110,74 @@ has durably recorded receipt. That mark is not KLP task acceptance. Deduplicate
 actual jobs separately and reconcile from durable task records after a stream
 retention gap. There is no exactly-once job or reliable outbox guarantee.
 
-No message is automatically executed. The adapter does not dereference evidence
+No message content is automatically executed. The adapter does not dereference evidence
 links, launch tools, choose a model, interpret a critic verdict or grant
 authority. Use it with an existing runner rather than creating a new always-on
 agent just to poll for updates.
+
+## One-Job Wake Bridge
+
+`wake_runner.py` is an optional host integration, separate from the notification
+adapter. It waits for one exact predeclared trigger, then invokes an existing
+locally registered `execute()` callback. The callback accepts no message
+argument: executable, prompt, workspace, model and permissions must already be
+fixed by the host's approved job, not selected from bus fields or references.
+
+The host must provide a stable job ID, a digest covering its reviewed local
+configuration, an expiry, exact trigger identity and private receipt database.
+It must recheck mutable file hashes at launch and bound the child process and
+its output. A digest is an integrity check, not approval or authentication.
+Use the same receipt database after restart. Deleting it or choosing another
+job ID is not an authorized retry.
+
+The bridge is default off. Once explicitly armed, it durably claims the launch
+before calling the host. A failed or uncertain launch is not automatically
+retried. The receipt records execution outcome, not whether a critic verdict
+is correct or whether the artifact may be accepted. An operator-approved
+reconciliation is needed when a launch is uncertain.
+
+Host integration sketch (all variables come from the approved local job):
+
+```python
+from wake_runner import WakeRunner
+
+runner = WakeRunner(
+    inbox, receipt_path, trigger=approved_trigger,
+    job_id=stable_job_id, job_hash=reviewed_job_digest,
+    expires_at=expiry_iso_timestamp,
+    execute=launch_fixed_review_job, runner_timeout_seconds=120,
+    wait_for_event=bounded_stream_wait,
+)
+try:
+    outcome = runner.run(armed=True, timeout=10, mode="event")
+finally:
+    runner.close()
+```
+
+`approved_trigger` includes the exact protocol, mission ID/revision/hash, task
+ID, contract ID/revision, artifact revision, unit ID, sender (`from`), recipient
+(`to`), message ID and kind. Extra fields are exact-matched too. The host's
+zero-argument launcher returns `None` only on successful exit and raises on
+failure. It must enforce the declared 120-second child-process limit itself;
+the bridge cannot interrupt a blocked Python callback. `timeout=10` limits
+waiting, not total wait plus job execution. Omit `armed=True` to remain off.
+
+Use `mode="poll"` only as a comparison or compatibility path; it defaults to
+100ms mechanical sleeps. `runner.counters` reports scans, event waits, poll
+waits and callback calls, not model tokens. Record the counters before closing.
+An attempted job raises `AlreadyAttemptedError` on another armed run, even
+after reopening. A dedicated inbox is required for each exact job: mismatched
+pending notifications stop that job rather than being silently discarded.
+
+For event waiting, the host supplies `wait_for_event(cursor, seconds)`, for
+example a bounded Redis `XREAD BLOCK` call against the same stream. Always use
+the saved cursor, never `$`: otherwise a notification arriving between scanning
+and waiting could be missed. Treat the wake as a hint and re-read through the
+adapter's identity and retention checks before dispatching. A shared stream
+may also wake on unrelated traffic; it is not a per-recipient queue.
+
+One local receiver process per inbox/receipt remains the supported model.
+This example does not install a background service, change a platform runner,
+resume arbitrary desktop sessions, add provider credentials or bypass the
+host's execution permissions. The existing offline test command covers both
+the notification adapter and wake bridge.

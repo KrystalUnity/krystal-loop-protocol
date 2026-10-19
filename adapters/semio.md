@@ -21,10 +21,12 @@ durable inbox, duplicate handling, revision checks and finite mechanical waits.
 Offline tests require only Python's standard library. Live transport is supplied
 by the host; the example does not bundle private platform code or credentials.
 
-There is no automatic agent launcher, model router, acceptance engine or
-production deployment. A host runner may use the returned notification to wake
-an already-authorized agent. It must enforce its own assignment, process and
-resource limits; it must never execute a command received in a message.
+The base adapter has no agent launcher, model router, acceptance engine or
+production deployment. The optional one-job wake bridge in the
+[Python example](../examples/semio-coordination/README.md#one-job-wake-bridge)
+can call a host-registered launcher after the exact expected notification.
+The job is approved and fixed locally before arming; no command or prompt comes
+from the bus. This is not an installed daemon or automatic desktop integration.
 
 ## Keep Three Things Separate
 
@@ -81,3 +83,13 @@ token or cost savings without a comparable baseline and actual measurements.
 
 The protocol and record format are unchanged. Other transports and harnesses
 can implement the same optional mapping without adopting a KU installation.
+
+## Measuring a Wake Integration
+
+Compare the same workload, delay, runner, prompt and candidate. Count actual
+transport reads, blocking waits, launches, delivered bytes and available model
+usage separately. A mechanical polling loop already makes no model calls;
+replacing it with a blocking wait does not itself reduce model context.
+Report zero observed prompt savings when both paths use the same prompt. Any
+comparison with repeated LLM-driven status checks needs a real separate
+baseline, not an assumed one. Keep failed launches in the denominator.
