@@ -13,6 +13,37 @@ features that worked yesterday.
 Krystal Loop Protocol (KLP) is a practical operating pattern for continuing to
 build with multiple AI agents without handing them control of the project.
 
+## What You Gain
+
+- **Less repeated explanation.** Give each agent the material needed for its
+  assignment, not the whole project history. Compact packets retain the full
+  mission, task requirements and required evidence.
+- **Use your strongest model where it matters.** Delegate suitable bounded
+  work to a lower-cost capable model while keeping planning and independent
+  review. This is a model-choice option, not a promised reduction in your bill.
+- **Clearer handovers.** Explicit task IDs, revisions and message types help
+  agents distinguish a status update, a question and a finding. The optional
+  Semio adapter checks those bindings; a message is not permission to act.
+- **Less checking for updates.** An optional wake bridge can notify a
+  preconfigured job when its expected event arrives, instead of repeatedly
+  scanning for it. It does not turn message text into launch instructions.
+- **A stopping point.** Shared effort budgets and repair limits keep the
+  assignment bounded. Tests, independent review and capability evidence still
+  matter; a smaller prompt is not an excuse to skip them.
+
+### What We Have Measured
+
+One real documentation assignment used **20.99% fewer reported worker-plus-critic
+input tokens** with compact packets, including repairs and review rechecks.
+Both versions passed final review after one repair each. Separately, one local
+wake comparison reduced transport reads from **21 to 3 (85.71%)**, with no
+observed prompt-byte savings.
+
+These are small, task-specific observations, not a guaranteed cost or quality
+improvement. The percentages measure different things and must not be added
+together. See [Measured benefits and limits](EVIDENCE.md) for the totals,
+methods, unavailable costs and further results already recorded.
+
 ## The 90-Second Version
 
 1. **Freeze the core promise.** Store one canonical Mission Contract with its
@@ -155,6 +186,8 @@ neither certifies production safety.
 - [Offline capability-regression fixture](examples/capability-regression/README.md)
 - [Hermes Kanban adapter example](adapters/hermes-kanban.md)
 - [Optional Semio agent-coordination adapter](adapters/semio.md)
+- [Compact context packet guide](examples/semio-coordination/CONTEXT_PACKETS.md)
+- [Measured benefits and limits](EVIDENCE.md)
 
 ## What KLP Is Not
 
