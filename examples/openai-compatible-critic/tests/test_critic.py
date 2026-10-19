@@ -249,6 +249,7 @@ class CriticHarnessTests(unittest.TestCase):
         *,
         critic_family: str = "grok",
         allow_same_family: bool = False,
+        timeout_seconds: str = "2",
     ) -> tuple[subprocess.CompletedProcess[str], dict[str, str]]:
         with tempfile.TemporaryDirectory() as temporary:
             temp = Path(temporary)
@@ -272,8 +273,7 @@ class CriticHarnessTests(unittest.TestCase):
                 str(VERDICT_SCHEMA),
                 "--out-dir",
                 str(out_dir),
-                "--timeout-seconds",
-                "2",
+                f"--timeout-seconds={timeout_seconds}",
             ]
             if allow_same_family:
                 command.append("--allow-same-family")
@@ -283,6 +283,7 @@ class CriticHarnessTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
                 env=env,
+                timeout=10,
             )
             artifacts = {}
             if out_dir.exists():
@@ -314,6 +315,28 @@ class CriticHarnessTests(unittest.TestCase):
         self.assertTrue(VERDICT_SCHEMA.is_file())
         self.assertIsInstance(json.loads(EXAMPLE_PACKET.read_text()), dict)
         self.assertIsInstance(json.loads(VERDICT_SCHEMA.read_text()), dict)
+
+    def test_invalid_timeout_stops_without_request_or_artifacts(self) -> None:
+        for value in ("nan", "inf", "-inf", "0", "-1"):
+            with self.subTest(timeout=value):
+                with FakeProvider(self.provider_payload(valid_verdict())) as provider:
+                    result, artifacts = self.run_harness(
+                        valid_packet(), provider, timeout_seconds=value
+                    )
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("timeout", result.stderr.lower())
+                self.assertNotIn("Traceback", result.stderr)
+                self.assertEqual(0, provider.request_count)
+                self.assertEqual({}, artifacts)
+
+    def test_positive_fractional_timeout_preserves_review(self) -> None:
+        with FakeProvider(self.provider_payload(valid_verdict())) as provider:
+            result, artifacts = self.run_harness(
+                valid_packet(), provider, timeout_seconds="1.5"
+            )
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(1, provider.request_count)
+        self.assertEqual("PASS", json.loads(artifacts["verdict.json"])["verdict"])
 
     def test_v02_packet_still_produces_three_secret_free_artifacts(self) -> None:
         with FakeProvider(self.provider_payload(valid_verdict())) as provider:

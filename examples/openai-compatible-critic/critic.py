@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import re
 import sys
@@ -379,8 +380,8 @@ def call_provider(
 
 def run() -> int:
     args = parse_args()
-    if args.timeout_seconds <= 0:
-        raise HarnessError("timeout must be positive")
+    if not math.isfinite(args.timeout_seconds) or args.timeout_seconds <= 0:
+        raise HarnessError("timeout must be finite and positive")
 
     packet, packet_size = load_json(args.packet, "review packet")
     schema, _ = load_json(args.schema, "verdict schema")
