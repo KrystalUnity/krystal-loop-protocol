@@ -181,3 +181,7 @@ This example does not install a background service, change a platform runner,
 resume arbitrary desktop sessions, add provider credentials or bypass the
 host's execution permissions. The existing offline test command covers both
 the notification adapter and wake bridge.
+
+## Compact Context Packets
+
+The optional [compact context packet guide](CONTEXT_PACKETS.md) describes how to select reviewed material for a bounded assignment while preserving KLP contracts, evidence, accounting, capability checks, and independent review. It does not change runtime behavior or grant authority.
