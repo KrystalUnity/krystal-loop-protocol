@@ -1,7 +1,7 @@
 # Measured Benefits and Limits
 
 KLP aims to make bounded agent work more focused and inspectable. This page
-summarizes measurements already recorded on **19 October 2026**. Publishing
+summarizes measurements already recorded on **19-20 October 2026**. Publishing
 these results did not run a new benchmark. Normal work uses the selected
 packet; a full-context comparison is not a required extra step.
 
@@ -10,6 +10,40 @@ evaluation or a guarantee of savings. The tables are sanitized aggregates from
 retained run receipts and usage records. Private host configuration and raw
 execution traces are not published here; the arithmetic is inspectable, but
 this page is not a complete benchmark reproduction package.
+
+## New: Real Coding Repair, Three Approaches
+
+A real notification-retrieval repair used a frozen KrystalView snapshot of
+255 files / 2,450,391 bytes. All three final candidates passed the same 15
+checks plus their regression suites and fresh final review.
+
+| Measured API cost | Conventional frontier | Frontier KLP | DeepSeek KLP |
+| --- | ---: | ---: | ---: |
+| Worker, including repair | $0.201606 | $0.160661 | $0.010199 |
+| In-loop critic | $0.000000 | $0.104168 | $0.102805 |
+| Equal share of readiness and final evaluation | $0.157923 | $0.157923 | $0.157923 |
+| Total | **$0.359529** | **$0.422751** | **$0.270926** |
+
+DeepSeek KLP's worker was **94.94% cheaper** than the conventional worker;
+the **total measured API reduction was 24.64%**, or **35.91%** against
+frontier-only KLP. These denominators must remain separate. The conventional
+arm's review caught a real compatibility regression; its successful repair
+is included. Frontier-only KLP used fewer input tokens but cost more overall.
+
+All three arms and shared evaluation cost **$1.053205606**. Historical rates
+include cache effects and output; these are usage-based estimates, not an
+invoice. Coordinator setup/oversight usage is disclosed separately; its
+subscription dollar allocation is unavailable, not zero. This is not an
+all-inclusive project cost or evidence of a universal savings percentage.
+
+Read the [full case study](case-studies/krystalview-2026-10-20/README.md),
+[55 sanitized call receipts](case-studies/krystalview-2026-10-20/receipts.json)
+and [offline arithmetic check](case-studies/krystalview-2026-10-20/verify.py).
+The case study reports failed work, repair, extra reads and the shared
+evaluation allocation. It does not publish proprietary source or raw prompts.
+A later integration review caught a stored-null compatibility gap in C that
+the experiment missed. The source integration includes a bounded correction;
+its later work is outside these experiment API totals, as the case study explains.
 
 ## 1. One Real Documentation Assignment
 

@@ -33,6 +33,17 @@ build with multiple AI agents without handing them control of the project.
 
 ### What We Have Measured
 
+On a real coding repair from a **255-file KrystalView snapshot**, a DeepSeek
+worker with frontier review cost **94.94% less for the worker** than the
+conventional frontier worker. Including critics and an equal share of all
+shared model evaluation, **total measured API cost was 24.64% lower**:
+**$0.2709 versus $0.3595**. All final candidates passed the same 15 checks;
+the conventional arm needed one review-driven repair, which is counted.
+Coordinator subscription cost is unavailable and is not included as zero.
+Later integration review found and corrected one additional C compatibility
+gap; that subsequent work is outside the experiment's cost figures.
+See the [three-way coding case study and sanitized receipts](case-studies/krystalview-2026-10-20/README.md).
+
 One real documentation assignment used **20.99% fewer reported worker-plus-critic
 input tokens** with compact packets, including repairs and review rechecks.
 Both versions passed final review after one repair each. Separately, one local

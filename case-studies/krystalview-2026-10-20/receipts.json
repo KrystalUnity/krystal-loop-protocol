@@ -1,0 +1,1224 @@
+{
+  "schema": "klp-case-study-usage/v1",
+  "case": "krystalview-notifications-2026-10-20",
+  "date": "2026-10-20",
+  "post_experiment_integration": {
+    "candidate": "C",
+    "finding": "Stored NULL read flags were excluded although the original filter treated them as unread.",
+    "disposition": "Confirmed by regression; SQL predicate corrected during integration.",
+    "frozen_checks_passed": 15,
+    "integration_regressions_passed": 6,
+    "cost_included_in_experiment": false,
+    "subscription_cash_allocation": null,
+    "deployed": false
+  },
+  "currency": "USD",
+  "cost_method": "Provider usage times dated official rates including cache-write/cache-hit/output. Not an invoice. All shared model evaluation calls allocated equally as predeclared.",
+  "rate_order": [
+    "uncached_input",
+    "cached_input",
+    "output",
+    "cache_write"
+  ],
+  "rate_unit": "USD per million tokens",
+  "source_files": 255,
+  "source_bytes": 2450391,
+  "shared_allocation": "equal thirds, including A final repair recheck",
+  "arms": {
+    "A": {
+      "usd": 0.2016059,
+      "with_equal_shared_usd": 0.35952853333333334,
+      "formal_repairs": 1,
+      "gate_tests": 15,
+      "accepted": true,
+      "tool_counts": {
+        "list_files": 1,
+        "read_file": 17,
+        "search": 7,
+        "edit": 7,
+        "write_test": 2,
+        "run_checks": 4
+      },
+      "tool_output_bytes": 80260
+    },
+    "B": {
+      "usd": 0.264828,
+      "with_equal_shared_usd": 0.42275063333333335,
+      "formal_repairs": 0,
+      "gate_tests": 15,
+      "accepted": true,
+      "tool_counts": {
+        "read_file": 9,
+        "search": 7,
+        "list_files": 1,
+        "edit": 4,
+        "write_test": 2,
+        "run_checks": 2
+      },
+      "tool_output_bytes": 48342
+    },
+    "C": {
+      "usd": 0.113003806,
+      "with_equal_shared_usd": 0.2709264393333333,
+      "formal_repairs": 0,
+      "gate_tests": 15,
+      "accepted": true,
+      "tool_counts": {
+        "read_file": 15,
+        "search": 11,
+        "list_files": 7,
+        "edit": 4,
+        "write_test": 1,
+        "run_checks": 1
+      },
+      "tool_output_bytes": 49847
+    }
+  },
+  "total": {
+    "requests": 55,
+    "input_tokens": 869822,
+    "cached_input_tokens": 757666,
+    "cache_write_tokens": 89519,
+    "output_tokens": 32780,
+    "usd": 1.053205606,
+    "provider_seconds": 529.1458430290222,
+    "unknown_receipts": []
+  },
+  "shared": {
+    "requests": 6,
+    "input_tokens": 23099,
+    "cached_input_tokens": 0,
+    "cache_write_tokens": 23036,
+    "output_tokens": 3744,
+    "usd": 0.4737679,
+    "provider_seconds": 96.54823350906372,
+    "unknown_receipts": []
+  },
+  "comparisons": {
+    "C_vs_A_including_equal_shared_api_cost_reduction_pct": 24.643967247476706,
+    "C_vs_B_including_equal_shared_api_cost_reduction_pct": 35.91341609659722,
+    "C_vs_A_worker_api_cost_reduction_pct": 94.94121650209641,
+    "C_vs_B_worker_api_cost_reduction_pct": 93.65195178653123,
+    "B_vs_A_reported_input_including_equal_shared_reduction_pct": 60.92835026434613,
+    "C_vs_A_reported_input_including_equal_shared_reduction_pct": 25.774728705995443
+  },
+  "coordinator": {
+    "usage": {
+      "input_tokens": 16770741,
+      "cached_input_tokens": 16642560,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 40269,
+      "reasoning_output_tokens": 14452,
+      "total_tokens": 16811010
+    },
+    "cash_usd": null,
+    "checkpoint": "2026-10-20T12:24:45.445911+00:00",
+    "scope": "experiment preparation and execution; excludes prior planning and post-checkpoint work, integration and publication preparation",
+    "cash_note": "Codex subscription allocation unavailable, not zero"
+  },
+  "inference_calls": [
+    {
+      "id": "001-shared-preflight",
+      "arm": "shared",
+      "role": "preflight",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 13,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 5,
+      "charge_or_reservation_usd": 7.6e-05
+    },
+    {
+      "id": "002-shared-preflight",
+      "arm": "shared",
+      "role": "preflight",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 38,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 27,
+      "charge_or_reservation_usd": 2.1899999999999997e-05
+    },
+    {
+      "id": "003-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 3031,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 235,
+      "charge_or_reservation_usd": 0.00059565
+    },
+    {
+      "id": "004-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 8987,
+      "cached_input_tokens": 3200,
+      "cache_write_tokens": 0,
+      "output_tokens": 159,
+      "charge_or_reservation_usd": 0.0009730499999999999
+    },
+    {
+      "id": "005-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 9321,
+      "cached_input_tokens": 9088,
+      "cache_write_tokens": 0,
+      "output_tokens": 236,
+      "charge_or_reservation_usd": 0.000203814
+    },
+    {
+      "id": "006-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 11069,
+      "cached_input_tokens": 9472,
+      "cache_write_tokens": 0,
+      "output_tokens": 877,
+      "charge_or_reservation_usd": 0.0007941659999999999
+    },
+    {
+      "id": "007-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 14945,
+      "cached_input_tokens": 11904,
+      "cache_write_tokens": 0,
+      "output_tokens": 227,
+      "charge_or_reservation_usd": 0.0006280619999999999
+    },
+    {
+      "id": "008-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 15528,
+      "cached_input_tokens": 15104,
+      "cache_write_tokens": 0,
+      "output_tokens": 703,
+      "charge_or_reservation_usd": 0.000530712
+    },
+    {
+      "id": "009-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 16449,
+      "cached_input_tokens": 16128,
+      "cache_write_tokens": 0,
+      "output_tokens": 171,
+      "charge_or_reservation_usd": 0.00019913399999999998
+    },
+    {
+      "id": "010-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 17760,
+      "cached_input_tokens": 16512,
+      "cache_write_tokens": 0,
+      "output_tokens": 735,
+      "charge_or_reservation_usd": 0.000677736
+    },
+    {
+      "id": "011-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 19689,
+      "cached_input_tokens": 18432,
+      "cache_write_tokens": 0,
+      "output_tokens": 162,
+      "charge_or_reservation_usd": 0.000341046
+    },
+    {
+      "id": "012-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 19962,
+      "cached_input_tokens": 19712,
+      "cache_write_tokens": 0,
+      "output_tokens": 1911,
+      "charge_or_reservation_usd": 0.0012432359999999998
+    },
+    {
+      "id": "013-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 21921,
+      "cached_input_tokens": 21760,
+      "cache_write_tokens": 0,
+      "output_tokens": 1852,
+      "charge_or_reservation_usd": 0.00120063
+    },
+    {
+      "id": "014-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 23832,
+      "cached_input_tokens": 23680,
+      "cache_write_tokens": 0,
+      "output_tokens": 120,
+      "charge_or_reservation_usd": 0.00016584
+    },
+    {
+      "id": "015-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 23977,
+      "cached_input_tokens": 23808,
+      "cache_write_tokens": 0,
+      "output_tokens": 2838,
+      "charge_or_reservation_usd": 0.001799574
+    },
+    {
+      "id": "016-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 26831,
+      "cached_input_tokens": 26624,
+      "cache_write_tokens": 0,
+      "output_tokens": 27,
+      "charge_or_reservation_usd": 0.000127122
+    },
+    {
+      "id": "017-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 27460,
+      "cached_input_tokens": 26752,
+      "cache_write_tokens": 0,
+      "output_tokens": 343,
+      "charge_or_reservation_usd": 0.00039225599999999995
+    },
+    {
+      "id": "018-C-worker",
+      "arm": "C",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 28503,
+      "cached_input_tokens": 27776,
+      "cache_write_tokens": 0,
+      "output_tokens": 224,
+      "charge_or_reservation_usd": 0.000326778
+    },
+    {
+      "id": "019-C-critic",
+      "arm": "C",
+      "role": "critic",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10.0,
+        1.0,
+        50.0,
+        12.5
+      ],
+      "input_tokens": 5725,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5722,
+      "output_tokens": 625,
+      "charge_or_reservation_usd": 0.102805
+    },
+    {
+      "id": "020-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 747,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 20,
+      "charge_or_reservation_usd": 0.001694
+    },
+    {
+      "id": "021-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 3269,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 3266,
+      "output_tokens": 138,
+      "charge_or_reservation_usd": 0.009551
+    },
+    {
+      "id": "022-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 4693,
+      "cached_input_tokens": 3266,
+      "cache_write_tokens": 1424,
+      "output_tokens": 202,
+      "charge_or_reservation_usd": 0.0059126000000000005
+    },
+    {
+      "id": "023-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 9610,
+      "cached_input_tokens": 4690,
+      "cache_write_tokens": 4917,
+      "output_tokens": 327,
+      "charge_or_reservation_usd": 0.0160375
+    },
+    {
+      "id": "024-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 13002,
+      "cached_input_tokens": 9607,
+      "cache_write_tokens": 3392,
+      "output_tokens": 938,
+      "charge_or_reservation_usd": 0.018826700000000002
+    },
+    {
+      "id": "025-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 14931,
+      "cached_input_tokens": 12999,
+      "cache_write_tokens": 1929,
+      "output_tokens": 121,
+      "charge_or_reservation_usd": 0.007338399999999999
+    },
+    {
+      "id": "026-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 16871,
+      "cached_input_tokens": 14928,
+      "cache_write_tokens": 1940,
+      "output_tokens": 65,
+      "charge_or_reservation_usd": 0.0069988
+    },
+    {
+      "id": "027-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 16977,
+      "cached_input_tokens": 16868,
+      "cache_write_tokens": 106,
+      "output_tokens": 36,
+      "charge_or_reservation_usd": 0.0023178
+    },
+    {
+      "id": "028-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 17643,
+      "cached_input_tokens": 16974,
+      "cache_write_tokens": 666,
+      "output_tokens": 2705,
+      "charge_or_reservation_usd": 0.0304184
+    },
+    {
+      "id": "029-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 20364,
+      "cached_input_tokens": 17640,
+      "cache_write_tokens": 2721,
+      "output_tokens": 14,
+      "charge_or_reservation_usd": 0.0087125
+    },
+    {
+      "id": "030-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 23041,
+      "cached_input_tokens": 20361,
+      "cache_write_tokens": 2677,
+      "output_tokens": 2479,
+      "charge_or_reservation_usd": 0.0335246
+    },
+    {
+      "id": "031-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 25536,
+      "cached_input_tokens": 23038,
+      "cache_write_tokens": 2495,
+      "output_tokens": 14,
+      "charge_or_reservation_usd": 0.008687299999999998
+    },
+    {
+      "id": "032-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 27003,
+      "cached_input_tokens": 25533,
+      "cache_write_tokens": 1467,
+      "output_tokens": 324,
+      "charge_or_reservation_usd": 0.0094668
+    },
+    {
+      "id": "033-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 27759,
+      "cached_input_tokens": 27000,
+      "cache_write_tokens": 756,
+      "output_tokens": 328,
+      "charge_or_reservation_usd": 0.007876
+    },
+    {
+      "id": "034-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 28101,
+      "cached_input_tokens": 27756,
+      "cache_write_tokens": 342,
+      "output_tokens": 14,
+      "charge_or_reservation_usd": 0.0037766
+    },
+    {
+      "id": "035-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 28642,
+      "cached_input_tokens": 28098,
+      "cache_write_tokens": 541,
+      "output_tokens": 118,
+      "charge_or_reservation_usd": 0.0053483
+    },
+    {
+      "id": "036-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 2475,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 2472,
+      "output_tokens": 161,
+      "charge_or_reservation_usd": 0.007796
+    },
+    {
+      "id": "037-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 4395,
+      "cached_input_tokens": 2472,
+      "cache_write_tokens": 1920,
+      "output_tokens": 208,
+      "charge_or_reservation_usd": 0.0071332
+    },
+    {
+      "id": "038-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 7721,
+      "cached_input_tokens": 4392,
+      "cache_write_tokens": 3326,
+      "output_tokens": 339,
+      "charge_or_reservation_usd": 0.0121502
+    },
+    {
+      "id": "039-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 10139,
+      "cached_input_tokens": 7718,
+      "cache_write_tokens": 0,
+      "output_tokens": 626,
+      "charge_or_reservation_usd": 0.011873799999999999
+    },
+    {
+      "id": "040-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 12461,
+      "cached_input_tokens": 7718,
+      "cache_write_tokens": 4740,
+      "output_tokens": 178,
+      "charge_or_reservation_usd": 0.0144078
+    },
+    {
+      "id": "041-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 12653,
+      "cached_input_tokens": 12458,
+      "cache_write_tokens": 192,
+      "output_tokens": 692,
+      "charge_or_reservation_usd": 0.0086518
+    },
+    {
+      "id": "042-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 13383,
+      "cached_input_tokens": 12650,
+      "cache_write_tokens": 730,
+      "output_tokens": 2885,
+      "charge_or_reservation_usd": 0.031946
+    },
+    {
+      "id": "043-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 16284,
+      "cached_input_tokens": 13380,
+      "cache_write_tokens": 2901,
+      "output_tokens": 14,
+      "charge_or_reservation_usd": 0.0087365
+    },
+    {
+      "id": "044-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 19776,
+      "cached_input_tokens": 16281,
+      "cache_write_tokens": 3492,
+      "output_tokens": 3154,
+      "charge_or_reservation_usd": 0.0419041
+    },
+    {
+      "id": "045-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 22946,
+      "cached_input_tokens": 19773,
+      "cache_write_tokens": 3170,
+      "output_tokens": 14,
+      "charge_or_reservation_usd": 0.0100483
+    },
+    {
+      "id": "046-B-worker",
+      "arm": "B",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 23487,
+      "cached_input_tokens": 22943,
+      "cache_write_tokens": 541,
+      "output_tokens": 236,
+      "charge_or_reservation_usd": 0.0060128000000000004
+    },
+    {
+      "id": "047-B-critic",
+      "arm": "B",
+      "role": "critic",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10.0,
+        1.0,
+        50.0,
+        12.5
+      ],
+      "input_tokens": 5914,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5911,
+      "output_tokens": 605,
+      "charge_or_reservation_usd": 0.1041675
+    },
+    {
+      "id": "048-shared-final-review",
+      "arm": "shared",
+      "role": "final-review",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10.0,
+        1.0,
+        50.0,
+        12.5
+      ],
+      "input_tokens": 5620,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5617,
+      "output_tokens": 1731,
+      "charge_or_reservation_usd": 0.1567925
+    },
+    {
+      "id": "049-shared-final-review",
+      "arm": "shared",
+      "role": "final-review",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10.0,
+        1.0,
+        50.0,
+        12.5
+      ],
+      "input_tokens": 5915,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5912,
+      "output_tokens": 441,
+      "charge_or_reservation_usd": 0.09598
+    },
+    {
+      "id": "050-shared-final-review",
+      "arm": "shared",
+      "role": "final-review",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10.0,
+        1.0,
+        50.0,
+        12.5
+      ],
+      "input_tokens": 5725,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5722,
+      "output_tokens": 995,
+      "charge_or_reservation_usd": 0.121305
+    },
+    {
+      "id": "051-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 29235,
+      "cached_input_tokens": 28639,
+      "cache_write_tokens": 593,
+      "output_tokens": 216,
+      "charge_or_reservation_usd": 0.0065124
+    },
+    {
+      "id": "052-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 30481,
+      "cached_input_tokens": 29232,
+      "cache_write_tokens": 1246,
+      "output_tokens": 318,
+      "charge_or_reservation_usd": 0.0092242
+    },
+    {
+      "id": "053-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 30825,
+      "cached_input_tokens": 30478,
+      "cache_write_tokens": 344,
+      "output_tokens": 14,
+      "charge_or_reservation_usd": 0.0040538
+    },
+    {
+      "id": "054-A-worker",
+      "arm": "A",
+      "role": "worker",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2.0,
+        0.1,
+        10.0,
+        2.5
+      ],
+      "input_tokens": 31369,
+      "cached_input_tokens": 30822,
+      "cache_write_tokens": 544,
+      "output_tokens": 88,
+      "charge_or_reservation_usd": 0.005328200000000001
+    },
+    {
+      "id": "055-shared-final-review",
+      "arm": "shared",
+      "role": "final-review",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10.0,
+        1.0,
+        50.0,
+        12.5
+      ],
+      "input_tokens": 5788,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5785,
+      "output_tokens": 545,
+      "charge_or_reservation_usd": 0.0995925
+    }
+  ],
+  "non_inference_provider_requests": 1,
+  "retries": 0,
+  "provider_failures": 0
+}
