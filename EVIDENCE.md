@@ -11,7 +11,43 @@ retained run receipts and usage records. Private host configuration and raw
 execution traces are not published here; the arithmetic is inspectable, but
 this page is not a complete benchmark reproduction package.
 
-## New: Real Coding Repair, Three Approaches
+## Semio: 75% Fewer Coordination Input Tokens
+
+**Four coordination model calls became one. Both paths handled all four
+scenarios correctly.** The optional Semio adapter filtered duplicate, stale
+and already-attempted notifications before they reached the model.
+
+| Coordination metric | Agent-managed handovers | Semio-backed |
+| --- | ---: | ---: |
+| Model calls | 4 | **1** |
+| Reported input tokens | 5,325 | **1,331** |
+| Correct scenario outcomes | 4/4 | **4/4** |
+| Serialized API request bytes | 22,004 | 5,498 |
+| Observed API cost | $0.0169565 | $0.0021088 |
+| API cost including equal shared worker/review allocation | $0.0664040 | $0.0515563 |
+
+The comparison used the same real coding artifact, compact evidence and
+coordination model. A DeepSeek worker repaired the task; an OpenAI critic
+reviewed it independently. All 15 frozen checks and six regressions passed.
+The new valid handover used an identical model request in both paths. Semio
+avoided the other three model decisions using the existing public adapter
+and durable attempt guard.
+
+The **75.00% input reduction** is the coordination result. Observed API costs
+also benefited from a warm cache on Semio's one call. A separate
+cache-equalized calculation gives **68.77% lower coordination API cost**,
+or **17.56% lower including the shared coding/review allocation**. This
+calculation is a sensitivity check, not another measured run.
+
+Read the [case study and method](case-studies/semio-coordination-2026-10-20/README.md),
+[seven sanitized receipts](case-studies/semio-coordination-2026-10-20/receipts.json)
+and [offline arithmetic check](case-studies/semio-coordination-2026-10-20/verify.py).
+The method includes a stronger conventional host-guard control and explains
+the deliberately fault-heavy four-event replay. These are savings against
+agent-managed message triage, not a claim that all coding tokens fall by 75%.
+Coordinator subscription cash allocation remains unavailable, not zero.
+
+## Real Coding Repair, Three Approaches
 
 A real notification-retrieval repair used a frozen KrystalView snapshot of
 255 files / 2,450,391 bytes. All three final candidates passed the same 15

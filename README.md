@@ -26,12 +26,21 @@ build with multiple AI agents without handing them control of the project.
   Semio adapter checks those bindings; a message is not permission to act.
 - **Less checking for updates.** An optional wake bridge can notify a
   preconfigured job when its expected event arrives, instead of repeatedly
-  scanning for it. It does not turn message text into launch instructions.
+  scanning for it. Duplicate, stale and already-attempted notifications can
+  be handled before they consume another model turn.
 - **A stopping point.** Shared effort budgets and repair limits keep the
   assignment bounded. Tests, independent review and capability evidence still
   matter; a smaller prompt is not an excuse to skip them.
 
 ### What We Have Measured
+
+**Semio cut coordination input tokens by 75%, with every scenario handled
+correctly.** In a four-scenario comparison against agent-managed handovers,
+the optional Semio adapter reduced coordination model calls **from four to
+one** and input tokens **from 5,325 to 1,331**. Both paths achieved **4/4 correct
+outcomes**. The saving came from handling duplicate, stale and already-attempted
+work before it reached the model, not from dropping the coding checks or review.
+See the [Semio coordination case study and seven sanitized receipts](case-studies/semio-coordination-2026-10-20/README.md).
 
 On a real coding repair from a **255-file KrystalView snapshot**, a DeepSeek
 worker with frontier review cost **94.94% less for the worker** than the

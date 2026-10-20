@@ -1,0 +1,228 @@
+{
+  "schema": "klp-public-coordination-evidence/v1",
+  "date": "2026-10-20",
+  "scope": "Four-scenario paired coordination replay with one shared real coding assignment",
+  "rates_unit": "USD per million tokens; order: uncached input, cached input, output, cache write",
+  "inference_calls": [
+    {
+      "id": "001-shared-worker",
+      "role": "worker",
+      "model": "deepseek-flash",
+      "returned_model": "deepseek-flash",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        0.15,
+        0.003,
+        0.6,
+        0.15
+      ],
+      "input_tokens": 868,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 1558,
+      "charge_or_reservation_usd": 0.001065,
+      "prompt_bytes": 3536
+    },
+    {
+      "id": "002-shared-critic",
+      "role": "critic",
+      "model": "gpt-6-astra",
+      "returned_model": "gpt-6-astra",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        10,
+        1,
+        50,
+        12.5
+      ],
+      "input_tokens": 5035,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5032,
+      "output_tokens": 698,
+      "charge_or_reservation_usd": 0.09783,
+      "prompt_bytes": 20322
+    },
+    {
+      "id": "003-shared-A-clean",
+      "role": "A-clean",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2,
+        0.1,
+        10,
+        2.5
+      ],
+      "input_tokens": 1331,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 1328,
+      "output_tokens": 177,
+      "charge_or_reservation_usd": 0.005096,
+      "prompt_bytes": 5498
+    },
+    {
+      "id": "004-shared-B-clean",
+      "role": "B-clean",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2,
+        0.1,
+        10,
+        2.5
+      ],
+      "input_tokens": 1331,
+      "cached_input_tokens": 1328,
+      "cache_write_tokens": 0,
+      "output_tokens": 197,
+      "charge_or_reservation_usd": 0.0021088,
+      "prompt_bytes": 5498
+    },
+    {
+      "id": "005-shared-A-duplicate",
+      "role": "A-duplicate",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2,
+        0.1,
+        10,
+        2.5
+      ],
+      "input_tokens": 1331,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 1328,
+      "output_tokens": 50,
+      "charge_or_reservation_usd": 0.003826,
+      "prompt_bytes": 5502
+    },
+    {
+      "id": "006-shared-A-stale",
+      "role": "A-stale",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2,
+        0.1,
+        10,
+        2.5
+      ],
+      "input_tokens": 1332,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 1329,
+      "output_tokens": 82,
+      "charge_or_reservation_usd": 0.0041485,
+      "prompt_bytes": 5504
+    },
+    {
+      "id": "007-shared-A-restart",
+      "role": "A-restart",
+      "model": "gpt-6.1-sol",
+      "returned_model": "gpt-6.1-sol",
+      "status": "completed",
+      "http_status": 200,
+      "rates": [
+        2,
+        0.1,
+        10,
+        2.5
+      ],
+      "input_tokens": 1331,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 1328,
+      "output_tokens": 56,
+      "charge_or_reservation_usd": 0.003886,
+      "prompt_bytes": 5500
+    }
+  ],
+  "outcomes": {
+    "A": {
+      "clean": true,
+      "duplicate": true,
+      "stale": true,
+      "restart": true
+    },
+    "B": {
+      "clean": true,
+      "duplicate": true,
+      "stale": true,
+      "restart": true
+    }
+  },
+  "verification": {
+    "frozen_checks_passed": 15,
+    "regressions_before": {
+      "passed": 5,
+      "failed": 1
+    },
+    "regressions_after": {
+      "passed": 6,
+      "failed": 0
+    },
+    "adapter_tests_passed": 27,
+    "critic_verdict": "PASS",
+    "worker_critic_different_families": true
+  },
+  "totals": {
+    "A": {
+      "calls": 4,
+      "input_tokens": 5325,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5313,
+      "output_tokens": 365,
+      "prompt_bytes": 22004,
+      "usd": 0.0169565,
+      "with_equal_shared_usd": 0.066404
+    },
+    "B": {
+      "calls": 1,
+      "input_tokens": 1331,
+      "cached_input_tokens": 1328,
+      "cache_write_tokens": 0,
+      "output_tokens": 197,
+      "prompt_bytes": 5498,
+      "usd": 0.0021088,
+      "with_equal_shared_usd": 0.0515563
+    },
+    "shared": {
+      "calls": 2,
+      "input_tokens": 5903,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 5032,
+      "output_tokens": 2256,
+      "prompt_bytes": 23858,
+      "usd": 0.098895
+    },
+    "total_api_usd": 0.1179603
+  },
+  "cache_sensitivity": {
+    "method": "Calculation, not another run: price B clean input at A identical clean request input cost; retain B actual output.",
+    "clean_request_bodies_identical": true,
+    "B_coordination_cache_equalized_usd": 0.005296,
+    "B_with_equal_shared_usd": 0.0547435
+  },
+  "coordinator": {
+    "checkpoint_utc": "2026-10-20T17:49:52.979Z",
+    "input_tokens": 6051356,
+    "cached_input_tokens": 6008448,
+    "output_tokens": 19999,
+    "subscription_cash_usd": null,
+    "coverage": "Cumulative repeated-request usage for preparation, harness, inspection and report through checkpoint; excludes later publication preparation. Not unique context size."
+  },
+  "conventional_guard_control": {
+    "mode": "offline",
+    "correct_scenarios": 4,
+    "total_scenarios": 4,
+    "model_triage_needed_for_ineligible_events": 0
+  }
+}
