@@ -66,6 +66,22 @@ methods, unavailable costs and further results already recorded.
 
 ## The 90-Second Version
 
+**Start with Standard for ordinary bounded work.** One short versioned task
+record, relevant checks, one independent review plan and an evidence-backed
+finish. No compulsory message bus, per-step ledger or custom stamping scripts.
+
+**Use Critical when the consequences demand it:** save/data migrations,
+security boundaries, consequential economy changes, release qualification or
+anything affecting a protected core capability. Critical keeps the full
+mission and capability gate below. The number of developers is not the risk test.
+
+See [Execution Profiles](EXECUTION_PROFILES.md) and the
+[one-record Standard template](examples/standard-task.md). Standard uses
+`klp-standard/v0.1`; Critical retains `klp-core/v0.3`. Do not downgrade an active
+Critical run or claim that Standard passed Core-only validators.
+
+For **Critical** work:
+
 1. **Freeze the core promise.** Store one canonical Mission Contract with its
    identity, critical capabilities, trigger rules, accepted baselines, and
    operator amendment authority.
@@ -103,45 +119,32 @@ Give this to the lead agent before a multi-agent build:
 
 ```text
 Work under Krystal Loop Protocol Core.
-Use `examples/fail-review-repair/README.md` and
-`examples/capability-regression/README.md` as offline lifecycle references;
-neither fixture certifies production safety.
+First read EXECUTION_PROFILES.md and select Standard or Critical before editing.
+Record why, under the operator's request or standing authority. Never downgrade
+an active Critical run or waive a required product capability to finish faster.
 
-Before changing files, write a bounded task contract containing:
-- the canonical Mission Contract `mission_id`, `mission_revision`, and
-  `mission_hash`, recovered from authoritative durable storage;
-- affected critical capabilities, their accepted baseline evidence, and the
-  required product-truth probes and controls;
-- its ID, revision, parent identity, and coordinator delegation;
-- the exact outcome and observable completion conditions;
-- allowed and protected paths;
-- forbidden actions and live side effects;
-- deterministic checks and required evidence;
-- one total effort budget with explicit time, cost, and repair-round limits,
-  including planning, tools, reviews, retries, waiting, repairs, and
-  documentation, with limits inherited by child tasks;
-- conditions that require stopping for human review.
+For ordinary bounded work with no Critical trigger, use klp-standard/v0.1 and
+examples/standard-task.md: one versioned record with the product promise,
+outcome, exact base/result, authorized paths, protected areas, relevant checks,
+independent reviewer, and one finite time/cost/repair budget for the whole task.
+Do not add Core-only paperwork, a message bus or custom stamping tooling.
 
-Prefer existing workflows and checks. Justify new tooling or extra verification
-with a specific unmet requirement or credible risk and the decision it resolves.
-Reassess the approach after two unsuccessful cycles toward the same outcome,
-when new tooling becomes the main blocker, or when the operator redirects the
-task. Simplify within delegation; never weaken a binding commitment or required
-capability proof. Use one coordinated review plan across skills and frameworks.
+For Critical work, follow PROTOCOL.md in full under klp-core/v0.3: exact Mission
+Contract binding, accepted pre-work baseline, required separate roles, checks,
+review and integrated-artifact capability proof. Existing offline references are
+examples/fail-review-repair/README.md and
+examples/capability-regression/README.md; neither certifies production safety.
 
-Split the task into independently judgeable work units. Workers must return
-factual handovers tied to exact revisions and must not certify their own work.
-Run deterministic checks before independent, read-only criticism. Confirm,
-refute, or leave each critic finding unresolved using direct evidence. Treat
-the integrated result as a new artifact, then require the Capability Auditor to
-prove every affected critical capability against the frozen accepted baseline.
-Do not complete a run with a degraded or unproven critical capability. Normal
-repair rounds may proceed under the recorded delegation; material changes,
-Mission Contract amendments, and consequential actions stop at the authority
-boundary.
-Complete when the agreed evidence and gates are satisfied. Report unrelated
-findings separately; reopening completed work needs new relevant evidence or an
-authorized requirement change.
+In either profile, keep tests isolated from production credentials and external
+network access. Give the critic relevant functions, callers, tests and evidence,
+not just a diff. Confirm, refute or leave findings unresolved using direct proof;
+a reviewer preference cannot invent acceptance criteria. Use an upfront bounded
+adjacent-edit allowance only when authorized; otherwise respect the file boundary.
+
+Reuse existing checks and one coordinated review plan. Reassess after two failed
+cycles or when process tooling becomes the blocker. Finish when the required
+evidence is satisfied; advisory notes do not require another review loop.
+No profile authorizes deployment, spending, public posting or other live actions.
 ```
 
 KLP does not require a special model, database, vector store, or message bus.
@@ -197,6 +200,8 @@ neither certifies production safety.
 ## Read Next
 
 - [KLP Core protocol](PROTOCOL.md)
+- [Standard and Critical execution profiles](EXECUTION_PROFILES.md)
+- [Compact Standard task record](examples/standard-task.md)
 - [Instructions for AI agents and orchestrators](AI_AGENT_INTEGRATION.md)
 - [Optional runtime profiles](RUNTIME_PROFILES.md)
 - [Safety and limits](SAFETY_AND_LIMITS.md)
@@ -223,10 +228,11 @@ and working across many changes.
 
 ## Project Status
 
-The current package revision is **v0.3.1-draft**, a provisional public profile.
-It adds rules for justifying extra tooling, reassessing failed approaches,
-sharing task budgets, and completing work when required checks pass. The record
-format remains `klp-core/v0.3`; existing v0.3 records need no schema migration.
+The current package revision is **v0.3.2-draft**, a provisional public profile.
+It adds explicit Standard/Critical selection, a compact Standard record and
+bounded adjacent-edit guidance. Critical retains `klp-core/v0.3` unchanged.
+Standard is documented as `klp-standard/v0.1`; existing validators and adapters
+do not automatically accept it. No existing record is silently migrated.
 
 This repository includes a
 portable worker launcher, a sealed-packet critic harness, local fake-provider

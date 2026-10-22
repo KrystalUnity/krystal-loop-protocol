@@ -4,6 +4,13 @@ KLP defines operating requirements, not an infrastructure stack. Start with the
 smallest durable system that matches the number of agents, hosts, and failure
 modes in your project.
 
+First select [Standard or Critical execution](EXECUTION_PROFILES.md). These
+infrastructure profiles are a separate choice, not extra lifecycle requirements.
+The Core record and auditor requirements below apply to Critical. Standard can
+use one versioned task record and existing test tools without a separate state
+ledger or auditor seat. Do not add Core-only infrastructure to a Standard task
+just because it appears on this page. Neither profile requires Semio or Nexus.
+
 ## Capability Layers
 
 | Layer | Requirement | Examples |

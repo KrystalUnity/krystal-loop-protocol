@@ -1,7 +1,20 @@
 # AI Agent Integration Guide
 
 This guide tells an AI agent, orchestrator, or agent framework how to operate
-under KLP Core without depending on a particular model or tool stack.
+under KLP without depending on a particular model or tool stack.
+
+## Choose the Execution Profile First
+
+Read [Execution Profiles](EXECUTION_PROFILES.md) before dispatch. For ordinary
+bounded work with no Critical trigger, use `klp-standard/v0.1` and the
+[compact task record](examples/standard-task.md). Its profile guide is the
+complete Standard checklist; do not import every Core record below into it.
+
+The required capabilities, bootstrap, minimum record shape, envelope and
+capability gate below describe **Critical / `klp-core/v0.3`** unless a section
+explicitly says it applies to both profiles. Existing runnable examples keep
+their stated versions; Standard is not automatically supported by their validators.
+Shared authority, data handling and evidence-based finding decisions apply to both.
 
 ## Required Capabilities
 
@@ -67,7 +80,15 @@ Coordinate overlapping skill and review requirements in one review plan.
 
 Critics must start from fresh read-only context containing the task contract,
 exact artifact revision, check results, direct evidence, and unresolved prior
-findings. A critic must not edit the artifact it reviews. A task critic may
+findings. For both profiles, include whole touched functions (or coherent
+sections for large functions), necessary callers, interfaces and tests alongside
+the diff. Use bounded additional reads at the same revision for missing context;
+do not dump the entire repository or treat a bare diff as complete evidence.
+Set a finite provider-specific timeout within the remaining parent budget,
+not a blanket 800-second default. A timeout is not a pass; no automatic retry
+or model fallback is authorized by this guidance.
+
+A critic must not edit the artifact it reviews. A task critic may
 assess declared impact but cannot satisfy the mechanical capability gate or
 override a Capability Auditor result.
 
@@ -277,6 +298,14 @@ reassessing whether the tooling is necessary. Report unrelated issues separately
 without turning them into blockers unless they prevent safe authorized work.
 The existing verdict schema is unchanged; these explanations use its current
 fields.
+
+For both profiles, use `blocking` separately from the truth disposition. A
+reviewer's requested condition is not a new acceptance condition unless it
+implements an actual commitment or missing required proof. For example, refute
+a demanded changed sim hash with source/trace evidence if the bot never reaches
+the changed behavior, then verify that behavior with a relevant probe. Refuting
+the hash demand does not prove the feature. Record the decision once; a refuted
+or advisory note does not require another critic round merely to obtain silence.
 
 ## Stop Behavior
 

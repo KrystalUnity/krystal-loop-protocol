@@ -15,7 +15,7 @@ class V03DocumentationTests(unittest.TestCase):
     def test_normative_protocol_contains_capability_gate(self) -> None:
         protocol = self.text("PROTOCOL.md")
         for required in (
-            "Version: 0.3.1 draft",
+            "Version: 0.3.2 draft",
             "## Mission Contract",
             "mission_binding_check",
             "capability_baseline",
@@ -131,6 +131,8 @@ class V03DocumentationTests(unittest.TestCase):
             "AI_AGENT_INTEGRATION.md",
             "RUNTIME_PROFILES.md",
             "SAFETY_AND_LIMITS.md",
+            "EXECUTION_PROFILES.md",
+            "examples/standard-task.md",
             "adapters/hermes-kanban.md",
             "examples/capability-regression/README.md",
         )
@@ -144,6 +146,51 @@ class V03DocumentationTests(unittest.TestCase):
                 resolved = (source.parent / target).resolve()
                 with self.subTest(source=relative, target=target):
                     self.assertTrue(resolved.exists(), str(resolved))
+
+    def test_execution_profiles_preserve_critical_identity_and_escalation(self) -> None:
+        profiles = " ".join(self.text("EXECUTION_PROFILES.md").split())
+        for required in (
+            "klp-standard/v0.1", "klp-core/v0.3",
+            "not a claim of Core v0.3 conformance",
+            "Never downgrade an active Critical run",
+            "Unknown impact is not evidence of low risk",
+            "save/schema migration", "security or authorization boundary",
+            "economy", "Release qualification", "accepted baseline",
+        ):
+            self.assertIn(required, profiles)
+
+    def test_standard_record_is_compact_but_retains_authority_and_proof(self) -> None:
+        template = self.text("examples/standard-task.md")
+        for required in (
+            "klp-standard/v0.1", "authority_ref", "product_promise_ref",
+            "profile_reason", "base_revision", "result_revision",
+            "protected_paths", "adjacent_edit_allowance", "reviewer_identity",
+            "blocking", "evidence_refs", "limitations", "human_decisions_required",
+            "time_limit", "cost_limit", "repair_limit",
+        ):
+            self.assertIn(required, template)
+
+    def test_profile_guidance_is_reachable_without_new_runtime_requirements(self) -> None:
+        for relative in ("README.md", "PROTOCOL.md", "AI_AGENT_INTEGRATION.md",
+                         "RUNTIME_PROFILES.md"):
+            self.assertIn("EXECUTION_PROFILES.md", self.text(relative))
+        profiles = " ".join(self.text("EXECUTION_PROFILES.md").split())
+        for required in ("No per-step message", "one independent critic pass",
+                         "Do not build a stamping tool", "required check that did not run"):
+            self.assertIn(required, profiles)
+
+    def test_review_guidance_rejects_invented_requirements_and_long_timeout_default(self) -> None:
+        guide = " ".join(self.text("AI_AGENT_INTEGRATION.md").split())
+        for required in ("whole touched functions", "necessary callers",
+                         "not a blanket 800-second default", "sim hash",
+                         "not a new acceptance condition"):
+            self.assertIn(required, guide)
+
+    def test_offline_safety_and_adjacent_edit_authority_are_explicit(self) -> None:
+        safety = " ".join(self.text("SAFETY_AND_LIMITS.md").split())
+        for required in ("allowlisted environment", "Deny external network access",
+                         "pre-authorized adjacent-edit allowance", "missing assertion"):
+            self.assertIn(required, safety)
 
 
 if __name__ == "__main__":

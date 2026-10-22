@@ -4,6 +4,12 @@ Compact context packets are an optional preparation method for bounded KLP work.
 
 ## Required packet contents
 
+Select the [execution profile](../../EXECUTION_PROFILES.md) first. The full
+mission/hash field list below applies to Critical/Core packets. Standard retains
+its complete compact task record, product-promise reference, exact artifacts and
+required evidence, without importing the Core-only record ceremony. The existing
+Semio example has not gained Standard record support from this guidance.
+
 A packet must retain the exact mission and task identity, including mission ID, revision, hash, contract identity, authority, allowed and protected paths, forbidden actions, dependencies, required capability probes, checks, evidence references, unresolved findings, repair limits, time and cost limits, and stop rules. The worker must recover these from authoritative durable storage, not rely on conversational memory. Required acceptance evidence must not be omitted merely because context is compact.
 
 A small manifest can document the selection:
@@ -23,6 +29,13 @@ A small manifest can document the selection:
 ```
 
 The hashes above are illustrative placeholders. They do not verify content. When a hash or revision matters, check it against the source and record the actual result. The packet should state why each included item is sufficient and identify omitted material whose absence could affect the task.
+
+For review, include whole relevant functions or coherent sections, necessary
+callers and contracts, test source and results, as well as the diff. Compact
+means sufficient context selected for the task, not diff-only criticism. Permit
+bounded same-revision reads when needed and record what they resolve. In ordinary
+work, reuse the runner's existing usage records; do not build a custom accounting
+or stamping system merely to follow this guide. Unavailable metrics stay unknown.
 
 ## Controlled additional reads
 

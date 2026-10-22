@@ -42,6 +42,21 @@ private reasoning, or unrestricted logs in coordination messages, fixtures, or
 public evidence. Redact evidence before sending it to external models or
 services.
 
+## Offline Test Boundary
+
+In both profiles, tests default to synthetic data and an allowlisted environment.
+Do not inherit the operator's provider keys, production database URLs or shell
+credentials. Deny external network access through the test runner or sandbox;
+unsetting known keys alone is not sufficient. Explicitly allow only needed local
+fake services, bound to isolated endpoints. Test-server subprocesses must inherit
+these restrictions too. Review a required external smoke separately for data,
+destination, cost and operator authority; never silently fall back to it.
+
+Record expected assertions and verify that required probes actually executed.
+A missing assertion, empty result, skipped required probe or timeout is not a
+successful check. Repair a broken probe inside delegation, or report the missing
+proof. Do not change the acceptance requirement to make its probe pass.
+
 ## Model And Critic Limits
 
 Independent criticism reduces correlated blind spots but does not prove
@@ -88,6 +103,12 @@ or Capability Auditor cannot approve that amendment.
 Agents should stop when work requires a new file boundary, dependency,
 architecture, side effect, acceptance criterion, or authority level. That is a
 material change, even when the proposed change appears useful.
+
+A pre-authorized adjacent-edit allowance can cover a small related edit before
+work starts; using it does not create a new boundary. It must specify candidate
+paths, allowed edit types, a file-count cap and exclusions. Record its use before
+editing and recheck capability triggers. It cannot waive mission, security,
+side-effect, budget or approval constraints. See [Execution Profiles](EXECUTION_PROFILES.md).
 
 Set round, time, cost, and any task-specific size ceilings before dispatch, then
 record measured values rather than agent estimates. One parent budget includes

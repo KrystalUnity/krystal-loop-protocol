@@ -2,11 +2,17 @@
 
 Status: provisional public profile
 
-Version: 0.3.1 draft
+Version: 0.3.2 draft
 
-Record format: `klp-core/v0.3` (unchanged). This draft includes effort-control,
-approach-reassessment, and demonstrated-failure guidance without changing the
-record schema.
+Record format: `klp-core/v0.3` (unchanged). This is the **Critical** execution
+profile. This draft adds profile selection and bounded adjacent-edit guidance
+without changing the Core record schema or capability gate.
+
+Start with [Execution Profiles](EXECUTION_PROFILES.md). Ordinary bounded work
+may use the separate `klp-standard/v0.1` compact record when its eligibility
+checks pass. Standard does not claim Core v0.3 conformance. The lifecycle,
+required records and hard rules below govern Critical/Core runs; neither
+profile authorizes live action or a silent mission change.
 
 ## Purpose
 
@@ -213,8 +219,10 @@ KLP implementations may combine records, but must preserve these facts:
    revision it judges.
 8. Every critic finding must be confirmed, refuted, or left unresolved using
    direct evidence. An unresolved blocking finding prevents acceptance.
-9. New paths, dependencies, side effects, architecture, or acceptance criteria
-   are material changes and stop execution for human review.
+9. Paths outside the authorized boundary, new dependencies, side effects,
+   architecture, or acceptance criteria are material changes and stop execution
+   for human review. Exercising an explicit pre-authorized adjacent-edit allowance
+   is not a boundary change; see Contract Identity And Delegation.
 10. Repair loops have declared round, time, and cost limits.
 11. Integration is a new artifact and requires its own relevant checks.
 12. A critical capability requires an accepted baseline and integrated-artifact
@@ -272,10 +280,17 @@ artifact revision, adjudicating findings with direct evidence, and applying
 repairs inside frozen scope and limits. That delegation avoids a human approval
 click on every normal repair round.
 
-Delegation cannot silently change the objective, acceptance criteria, allowed
-paths, side effects, resource ceilings, Mission Contract, or capability gate.
+Delegation cannot silently change the objective, acceptance criteria, authorized
+path boundary, side effects, resource ceilings, Mission Contract, or capability gate.
 Correcting a test implementation so it matches frozen criteria may be
 delegated; changing the criteria themselves is a material change.
+
+An upfront adjacent-edit allowance may name a narrow directory or candidate set,
+edit types, maximum extra-file count and exclusions. Before adding a file under
+that allowance, record the coordinator decision, rationale, required checks and
+remaining allowance; rerun mission trigger matching. Without an explicit allowance,
+an exact file list remains exact. This is use of delegated scope, not permission
+to expand it. See [bounded adjacent edits](EXECUTION_PROFILES.md#small-related-edits-without-scope-drift).
 
 The contract should distinguish binding implementation commitments from
 agent-selected implementation details. Delegation may permit simplifying those
