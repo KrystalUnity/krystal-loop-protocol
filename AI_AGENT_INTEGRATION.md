@@ -10,6 +10,19 @@ bounded work with no Critical trigger, use `klp-standard/v0.1` and the
 [compact task record](examples/standard-task.md). Its profile guide is the
 complete Standard checklist; do not import every Core record below into it.
 
+In the existing Standard critic pass, include the exact project-policy/mission
+references and assess `profile_assessment`: `eligible`, `critical_trigger` or
+`insufficient_evidence`, with evidence from the exact final candidate. Missing or
+unresolved eligibility blocks Standard acceptance; a true Critical trigger uses
+the escalation path. The coordinator's label alone is not confirmation.
+Prefer behavior-based triggers when authoring missions, but never narrow an
+existing file-wide trigger without the required operator-approved amendment.
+
+For routine shipping, use the [release gate](EXECUTION_PROFILES.md#routine-release-gate)
+instead of automatically converting every Standard task to Core. Assess the full
+bundle, run applicable artifact-bound probes, retain rollback and operator
+authority, and verify activation. Critical changes retain the full Core gate.
+
 The required capabilities, bootstrap, minimum record shape, envelope and
 capability gate below describe **Critical / `klp-core/v0.3`** unless a section
 explicitly says it applies to both profiles. Existing runnable examples keep

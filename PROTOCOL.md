@@ -2,17 +2,21 @@
 
 Status: provisional public profile
 
-Version: 0.3.2 draft
+Version: 0.3.3 draft
 
 Record format: `klp-core/v0.3` (unchanged). This is the **Critical** execution
-profile. This draft adds profile selection and bounded adjacent-edit guidance
-without changing the Core record schema or capability gate.
+profile. This draft clarifies Standard profile review, routine release gates
+and project economy policy without changing the Core record schema or capability gate.
 
 Start with [Execution Profiles](EXECUTION_PROFILES.md). Ordinary bounded work
 may use the separate `klp-standard/v0.1` compact record when its eligibility
 checks pass. Standard does not claim Core v0.3 conformance. The lifecycle,
 required records and hard rules below govern Critical/Core runs; neither
 profile authorizes live action or a silent mission change.
+
+Standard's critic also checks its eligibility; ordinary deployment permission is
+handled separately by the [routine release gate](EXECUTION_PROFILES.md#routine-release-gate).
+Critical release bundles retain all applicable Core proofs and authorization.
 
 ## Purpose
 
@@ -95,6 +99,14 @@ The accepted baseline is the most recent operator-accepted product-truth
 evidence. Test counts, coverage, critic confidence, and worker assertions do
 not replace it. Trigger rules may cover paths, symbols, dependency edges, APIs,
 schemas, configuration, prompts, models, data contracts, or runtime behavior.
+
+When authoring triggers, prefer protected behavior and claims over blanket file
+matches: for example, changes to the source or meaning of displayed persistent
+balances, rather than every panel in a UI file. Paths/symbols help discover impact;
+they do not replace behavioral analysis or exclude effects from other files.
+Existing whole-file triggers remain binding. Narrowing trigger scope is a Mission
+Amendment Request with technical and plain-English explanation, not an agent's
+classification shortcut. See [trigger guidance](EXECUTION_PROFILES.md#author-behavior-based-mission-triggers).
 
 ## Roles
 

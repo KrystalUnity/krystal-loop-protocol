@@ -71,7 +71,7 @@ record, relevant checks, one independent review plan and an evidence-backed
 finish. No compulsory message bus, per-step ledger or custom stamping scripts.
 
 **Use Critical when the consequences demand it:** save/data migrations,
-security boundaries, consequential economy changes, release qualification or
+security boundaries, consequential economy changes, critical release bundles or
 anything affecting a protected core capability. Critical keeps the full
 mission and capability gate below. The number of developers is not the risk test.
 
@@ -79,6 +79,14 @@ See [Execution Profiles](EXECUTION_PROFILES.md) and the
 [one-record Standard template](examples/standard-task.md). Standard uses
 `klp-standard/v0.1`; Critical retains `klp-core/v0.3`. Do not downgrade an active
 Critical run or claim that Standard passed Core-only validators.
+
+The Standard critic confirms eligibility in the same review pass. Approved
+project policy can bound temporary tuning, not exempt persistent rewards or
+protected capabilities. Define mission triggers around behavior and claims,
+not entire UI files; existing triggers still require an approved amendment to
+change. Routine shipping uses a separate [release gate](EXECUTION_PROFILES.md#routine-release-gate)
+with exact-artifact checks, rollback and operator authority, not an automatic
+upgrade to Critical.
 
 For **Critical** work:
 
@@ -118,7 +126,7 @@ For **Critical** work:
 Give this to the lead agent before a multi-agent build:
 
 ```text
-Work under Krystal Loop Protocol Core.
+Work under Krystal Loop Protocol.
 First read EXECUTION_PROFILES.md and select Standard or Critical before editing.
 Record why, under the operator's request or standing authority. Never downgrade
 an active Critical run or waive a required product capability to finish faster.
@@ -144,6 +152,12 @@ adjacent-edit allowance only when authorized; otherwise respect the file boundar
 Reuse existing checks and one coordinated review plan. Reassess after two failed
 cycles or when process tooling becomes the blocker. Finish when the required
 evidence is satisfied; advisory notes do not require another review loop.
+Have the existing Standard critic confirm eligibility against the final change
+and approved project policy. Use behavior-based mission triggers, but do not
+reinterpret an existing file-wide trigger without its required amendment.
+For routine release, follow EXECUTION_PROFILES.md's release gate: assess the
+whole bundle, verify the exact artifact, retain rollback and operator authority,
+then check activation. Critical changes still require the full Core gate.
 No profile authorizes deployment, spending, public posting or other live actions.
 ```
 
@@ -228,9 +242,10 @@ and working across many changes.
 
 ## Project Status
 
-The current package revision is **v0.3.2-draft**, a provisional public profile.
-It adds explicit Standard/Critical selection, a compact Standard record and
-bounded adjacent-edit guidance. Critical retains `klp-core/v0.3` unchanged.
+The current package revision is **v0.3.3-draft**, a provisional public profile.
+It adds critic confirmation of Standard eligibility, a separate routine-release
+gate and approved project economy policy, with behavior-based trigger guidance.
+Critical retains `klp-core/v0.3` unchanged.
 Standard is documented as `klp-standard/v0.1`; existing validators and adapters
 do not automatically accept it. No existing record is silently migrated.
 

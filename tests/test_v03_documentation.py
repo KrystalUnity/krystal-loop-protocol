@@ -15,7 +15,7 @@ class V03DocumentationTests(unittest.TestCase):
     def test_normative_protocol_contains_capability_gate(self) -> None:
         protocol = self.text("PROTOCOL.md")
         for required in (
-            "Version: 0.3.2 draft",
+            "Version: 0.3.3 draft",
             "## Mission Contract",
             "mission_binding_check",
             "capability_baseline",
@@ -155,7 +155,7 @@ class V03DocumentationTests(unittest.TestCase):
             "Never downgrade an active Critical run",
             "Unknown impact is not evidence of low risk",
             "save/schema migration", "security or authorization boundary",
-            "economy", "Release qualification", "accepted baseline",
+            "economy", "release bundle", "accepted baseline",
         ):
             self.assertIn(required, profiles)
 
@@ -191,6 +191,59 @@ class V03DocumentationTests(unittest.TestCase):
         for required in ("allowlisted environment", "Deny external network access",
                          "pre-authorized adjacent-edit allowance", "missing assertion"):
             self.assertIn(required, safety)
+
+    def test_standard_critic_confirms_profile_without_an_extra_review_round(self) -> None:
+        profiles = " ".join(self.text("EXECUTION_PROFILES.md").split())
+        for required in (
+            "same critic pass", "exact candidate", "profile_assessment",
+            "eligible", "critical_trigger", "insufficient_evidence",
+            "Missing or unresolved profile assessment blocks Standard acceptance",
+        ):
+            self.assertIn(required, profiles)
+        template = self.text("examples/standard-task.md")
+        self.assertIn("profile_assessment", template)
+        self.assertIn("project_policy_ref", template)
+
+    def test_routine_release_keeps_artifact_proof_and_operator_authority(self) -> None:
+        profiles = " ".join(self.text("EXECUTION_PROFILES.md").split())
+        for required in (
+            "## Routine Release Gate", "does not automatically make it Critical",
+            "entire release bundle", "exact release artifact",
+            "post-release checks", "rollback", "operator authorization",
+            "gate is not deployment authority", "Existing Critical runs retain",
+        ):
+            self.assertIn(required, profiles)
+        self.assertNotIn(
+            "Release qualification, deployment, production mutation or live activation.",
+            profiles,
+        )
+        for relative in ("README.md", "PROTOCOL.md", "AI_AGENT_INTEGRATION.md",
+                         "SAFETY_AND_LIMITS.md", "examples/standard-task.md"):
+            self.assertIn("routine-release-gate", self.text(relative))
+
+    def test_economy_policy_cannot_exempt_persistent_or_protected_effects(self) -> None:
+        profiles = " ".join(self.text("EXECUTION_PROFILES.md").split())
+        for required in (
+            "operator-approved, versioned project policy",
+            "Persistent currency, purchases, saves and account progression remain Critical",
+            "indirect persistent effects", "Temporary in-run tuning",
+            "cannot override a Mission Contract trigger",
+        ):
+            self.assertIn(required, profiles)
+
+    def test_behavior_triggers_do_not_silently_narrow_existing_missions(self) -> None:
+        for relative in ("PROTOCOL.md", "EXECUTION_PROFILES.md"):
+            document = " ".join(self.text(relative).split())
+            self.assertIn("whole-file trigger", document)
+            self.assertIn("Mission Amendment Request", document)
+        profiles = " ".join(self.text("EXECUTION_PROFILES.md").split())
+        for required in (
+            "Prefer protected behavior or claims over whole-file triggers",
+            "Never use a path mismatch as proof that behavior is safe",
+            "An existing whole-file trigger remains binding",
+            "plain-English impact statement",
+        ):
+            self.assertIn(required, profiles)
 
 
 if __name__ == "__main__":

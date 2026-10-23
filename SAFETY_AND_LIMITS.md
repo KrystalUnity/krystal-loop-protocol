@@ -19,6 +19,13 @@ itself authorize:
 Projects may approve some of these actions through their own human-controlled
 process. KLP records the boundary; it does not replace that process.
 
+Risk classification and live-action permission are separate. A routine release
+of Standard work need not become Critical solely because it is shipped; it must
+pass the [routine release gate](EXECUTION_PROFILES.md#routine-release-gate), with
+exact-artifact evidence, full-bundle impact assessment, rollback, operator
+authorization and post-release verification. Critical changes or deployment-process
+risks still require Core. No passing check supplies missing authority or proof.
+
 KLP cannot authorize a live capability probe. A live or consequential probe
 requires separate operator authority even when a task contract lists it. If a
 required probe is unauthorized, unavailable, invalid, missing, or

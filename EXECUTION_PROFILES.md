@@ -1,8 +1,9 @@
 # Choose the Right Amount of KLP
 
 Use **Standard** for ordinary bounded work. Use **Critical** when a mistake
-could change the product's essential behavior, lose durable data, cross a trust
-boundary or affect a live release. Keep the proof; cut repeated administration.
+could change the product's essential behavior, lose durable data or cross a trust
+boundary. Routine release permission is a separate gate, not automatically a
+Critical task. Keep the proof; cut repeated administration.
 
 These execution profiles are separate from the infrastructure options in
 [Runtime Profiles](RUNTIME_PROFILES.md). Redis, Semio, Nexus, vector memory and
@@ -22,14 +23,16 @@ Select **Critical** for any of these triggers:
 - A critical capability or existing Mission Contract trigger is affected.
 - A save/schema migration, persistent-data conversion or destructive data operation.
 - A security or authorization boundary, tenant isolation, secrets, money, billing
-  or consequential economy change, including reward/balance correctness.
-- Release qualification, deployment, production mutation or live activation.
+  or consequential economy change as bounded by the approved project policy below.
+- A release bundle or deployment-process change affecting critical behavior,
+  infrastructure, access, data conversion or production data mutations beyond an
+  established, bounded release procedure. Routine releases follow the separate gate.
 - A capability restriction, mission amendment, proof/control weakening or change
   to what the product is allowed to decide.
 - Uncertain impact that could plausibly reach any of the above boundaries.
 
 Examples: fixing a harmless display typo can be Standard; changing save formats,
-tenant filtering or rewards is Critical. Being a one-person project does not
+tenant filtering or persistent rewards is Critical. Being a one-person project does not
 lower the consequence of losing its players' saves.
 
 Unknown impact is not evidence of low risk. Do a bounded scope check; if it
@@ -39,6 +42,39 @@ Retain its evidence, obtain any missing authority, and establish the Critical
 contract and accepted baseline before resuming. Later results cannot retroactively
 substitute for the missing baseline. Never downgrade an active Critical run to
 avoid a failed check, blocked review, exhausted budget or missing capability proof.
+
+### Project Economy Policy
+
+Use an operator-approved, versioned project policy to define which economy
+changes are consequential and any bounded Standard tuning allowance. Record its
+exact reference in the task and critic packet. Persistent currency, purchases,
+saves and account progression remain Critical when their behavior or correctness
+is affected. Merely displaying an unchanged, already-verified value is assessed
+against the actual behavior and existing mission triggers, not the screen name.
+
+Temporary in-run tuning may be Standard only inside explicit policy bounds, with
+relevant executed probes and no other Critical trigger. Check indirect persistent
+effects: a temporary damage bonus that changes banked rewards is not automatically
+transient. Policy should state the tunable values/ranges, excluded effects and
+required checks; it cannot override a Mission Contract trigger or authorize a live
+action. Missing policy or uncertain effects are not permission to assume low risk.
+
+### Author Behavior-Based Mission Triggers
+
+Prefer protected behavior or claims over whole-file triggers. For example,
+"changes to the calculation, source or meaning of displayed persistent balances"
+is more precise than "all panels in menu.mjs". A new copy-only panel need not
+affect that capability, while a formatter or API change elsewhere might.
+
+Use paths and symbols as discovery clues alongside data flow, user-visible claims
+and observable effects. Never use a path mismatch as proof that behavior is safe.
+Distinguish a text/layout change from a change to what the UI promises about state.
+The critic must check the actual behavior, not just accept a copy-only label.
+
+An existing whole-file trigger remains binding. Narrowing it requires the normal
+operator-approved Mission Amendment Request, with technical explanation and a
+plain-English impact statement. Do not reinterpret, relabel or bypass it mid-run
+to obtain Standard eligibility. Existing Critical runs retain their agreed gates.
 
 ## Standard: One Record, One Review Plan
 
@@ -53,7 +89,9 @@ or one Markdown file using the [Standard task template](examples/standard-task.m
 3. Implement inside the boundary and run the declared checks with observable
    expected results. A required check that did not run is not a pass.
 4. Obtain one independent critic pass on the exact candidate, including the
-   relevant source context and check evidence. The worker cannot self-review.
+   relevant source context and check evidence. In that same critic pass, confirm
+   Standard eligibility against the actual changed behavior, project policy and
+   Mission Contract triggers. The worker cannot self-review.
 5. Adjudicate findings with evidence. Repair only confirmed blockers within the
    declared budget, rerun affected checks and obtain targeted review of the new
    candidate where needed to close those blockers. Every accepted candidate
@@ -61,6 +99,14 @@ or one Markdown file using the [Standard task template](examples/standard-task.m
 6. Check the integrated artifact, record final findings, limitations and measured
    effort, then finish. If integration changes the reviewed contents, recheck
    affected behavior and review that delta; do not silently accept a new artifact.
+
+Record the critic's `profile_assessment` as `eligible`, `critical_trigger` or
+`insufficient_evidence`, with the exact candidate, policy/mission references and
+supporting evidence. Missing or unresolved profile assessment blocks Standard
+acceptance. A `critical_trigger` stops affected Standard work under the escalation
+rule above; a disagreement is evidence-adjudicated, not overridden by a coordinator
+label. Correct demonstrably false findings using the existing disposition process;
+genuine unknowns stay unresolved. Refresh the assessment for changed final contents.
 
 Use an exact Git revision, immutable snapshot or content digest for artifacts
 and a versioned task record for authority. A commit label alone does not identify
@@ -102,6 +148,43 @@ and Semio envelope examples retain their stated record versions. They do not
 validate or automatically execute Standard. Do not pass a Standard record to a
 Core-only validator or adapter and claim success. A host using Standard needs
 an explicitly compatible integration; none is added by this documentation change.
+
+## Routine Release Gate
+
+Shipping a Standard change through an established, operator-approved release
+procedure does not automatically make it Critical. Release qualification for
+such a change is this gate; implementation profile and live-action permission
+remain separate. No profile or passing gate is deployment authority.
+
+Before release, record in the existing task or release record:
+
+1. The exact release artifact and destination, with the entire release bundle
+   compared to the deployed baseline. Check combined changes and the release
+   procedure for Critical triggers, not just the last Standard task. If a trigger
+   is found, stop release and establish the applicable Core authority, accepted
+   baseline and proofs. Do not use release checks to retroactively invent them.
+2. Relevant lasting product probes and integration checks actually executed
+   against that artifact, with assertions, results and evidence. Reuse fresh
+   evidence that matches the same artifact, scope and environment; do not add a
+   duplicate critic call merely because a release follows. Required missing,
+   failed or inconclusive proof blocks release.
+3. An applicable rollback path and retained prior artifact/data recovery evidence
+   appropriate to the risk. A migration or irreversible change is not routine
+   merely because a deployment script can run it.
+4. Explicit operator authorization for the artifact/destination or a documented
+   standing release delegation covering it. KLP records that authority; the
+   gate is not deployment authority. If authorization is pending, report
+   `ready_for_authority_decision` and do not deploy.
+5. Bounded post-release checks of the deployed artifact and required behavior,
+   with failure/rollback conditions and who is authorized to act. Do not claim
+   live success from a pre-release pass. If activation cannot be verified,
+   report it as unverified and follow the approved stop/recovery procedure.
+
+If integration, configuration or build changes the artifact or assessed effects,
+refresh affected checks and profile/review evidence before proceeding. A bundle
+containing Critical work retains that work's required Core gate; it cannot be
+reclassified by packaging it with Standard changes. Existing Critical runs retain
+their requirements; this release gate is not a downgrade mechanism.
 
 ## Small Related Edits Without Scope Drift
 
