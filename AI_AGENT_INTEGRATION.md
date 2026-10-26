@@ -29,6 +29,11 @@ explicitly says it applies to both profiles. Existing runnable examples keep
 their stated versions; Standard is not automatically supported by their validators.
 Shared authority, data handling and evidence-based finding decisions apply to both.
 
+One operator can use separate agent identities; see the
+[solo-operator example](examples/solo-operator.md). Infrastructure Profile A
+means local files, not relaxed review. Standard/Critical selects the required
+assurance; infrastructure profiles select how records and messages are stored.
+
 ## Required Capabilities
 
 An implementation is KLP-compatible when it can:
@@ -349,6 +354,15 @@ after `capability_regression`. A live or consequential probe is not run without
 explicit operator authority; its absence is `capability_unproven`.
 For v0.3 critical-capability evidence failures, `capability_unproven` takes
 precedence over the generic `blocked` state.
+
+For a resumable stop, follow
+[Recovering Missing Capability Proof](PROTOCOL.md#recovering-missing-capability-proof):
+preserve exact identities and evidence, name the missing proof and smallest
+next action, identify its owner/authority and retain the remaining budget.
+Return this handover instead of polling for approval or starting repeated
+reviews. Do not turn completed implementation into a completed Critical run
+while proof is missing. Resume at the blocked gate only when its prerequisites
+are satisfied; no silent proof substitution, late baseline or budget reset.
 
 ## Integration Checklist
 

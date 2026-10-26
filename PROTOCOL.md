@@ -128,6 +128,12 @@ identities. The Capability Auditor cannot be the worker whose artifact it
 checks and cannot alter observations at a coordinator's request. Existing
 worker and critic independence remains mandatory for the same reviewed artifact.
 
+These are role and identity boundaries, not a requirement for separate human
+employees. A solo operator may use separate agents and a mechanical auditor;
+renaming one session does not create independence. See the
+[solo-operator example](examples/solo-operator.md) for valid combinations and
+what to do when independent roles are unavailable.
+
 ## Core Lifecycle
 
 ```text
@@ -192,6 +198,43 @@ can never be accepted as `accepted_with_limitations` or `completed`.
 
 For v0.3 critical-capability evidence failures, `capability_unproven` takes
 precedence over the generic `blocked` state.
+
+### Recovering Missing Capability Proof
+
+`capability_unproven` is a recoverable stop, not a successful finish or an
+instruction to keep agents waiting. Stop affected work and use the existing
+task/evidence record to preserve the exact artifact, mission and task identities,
+accepted baseline reference, completed checks and missing or unusable proof.
+State the **smallest missing action**, who owns it, any exact operator decision
+needed, the resume checkpoint and the **remaining budget**. Explain the blocker
+in plain English as well as naming the probe. No new receipt format is required.
+
+Choose the applicable path:
+
+- **Permission or access missing:** request only the required probe, target,
+  data/egress and side-effect scope. Do not run it before the relevant authority
+  exists; existing standing delegation may already cover it.
+- **Probe execution broken:** repair an execution defect only within existing
+  delegation and limits, retaining the failed evidence. Do not change expected
+  behavior, controls, baseline or proof requirements to make it pass.
+- **Different proof needed:** use an alternative only if the frozen contract
+  already permits that method and its evidence meets the same requirements.
+  Otherwise submit a Mission Amendment Request with technical and plain-English
+  impact; a coordinator cannot declare a substitute equivalent on its own.
+- **Cannot resolve now:** preserve a resumable handover, report the implementation
+  separately from the missing proof, and end the attempt as `capability_unproven`,
+  not `completed` or `accepted_with_limitations`. Do not poll or repeatedly
+  dispatch critics when neither evidence nor authority has changed.
+
+On resume, verify the identities, authority, evidence freshness and remaining
+budget before restarting at the blocked gate. Reuse only still-applicable
+artifact-bound evidence; changed inputs or artifacts require the affected checks
+again. A missing pre-work baseline cannot be manufactured retroactively from
+the completed candidate: establish the required accepted baseline and valid run
+sequence before proceeding. A new session does not reset time/cost/repair limits.
+An exhausted limit needs the applicable authorized task revision, not a retry.
+The stop clears only when the required proof is valid and supports preservation;
+new proof of degradation follows `capability_regression` instead.
 
 ## Required Records
 

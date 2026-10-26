@@ -10,6 +10,11 @@ These execution profiles are separate from the infrastructure options in
 per-step messages are not prerequisites for either profile. Local platform
 policies may still require a handover; reference one record instead of copying it.
 
+New to KLP? Use the [solo-operator example](examples/solo-operator.md).
+Standard/Critical chooses the required assurance; infrastructure Profiles A/B/C
+choose storage and transport. You do not need to choose infrastructure beyond
+Git and local files to begin either execution profile.
+
 ## Select Before Editing
 
 The coordinator records the profile and a short reason in the task record under

@@ -13,6 +13,54 @@ features that worked yesterday.
 Krystal Loop Protocol (KLP) is a practical operating pattern for continuing to
 build with multiple AI agents without handing them control of the project.
 
+## Start Here
+
+**Ordinary coding task? Start with Standard.** You need Git, one short
+[task record](examples/standard-task.md), a worker and a separate reviewer.
+
+1. **Give it a clear job.** Record what should change, what must keep working,
+   the edit boundary, checks and a finite budget.
+2. **Build and check.** The worker implements the change and runs the relevant
+   checks. A skipped check is not a pass.
+3. **Get a second pair of eyes.** A fresh, read-only critic reviews the actual
+   result and confirms Standard fits. Resolve findings with evidence, not votes.
+4. **Finish or stop.** Repair confirmed blockers within budget, verify the
+   integrated result and record the outcome. Advisory suggestions do not keep
+   the loop running. Shipping still needs its own authority and release checks.
+
+No compulsory message bus, per-step ledger or custom stamping scripts.
+[Working solo? Here is the role setup](examples/solo-operator.md).
+
+**Changing saves, security, money or a protected core capability?** Use the
+[Critical path](EXECUTION_PROFILES.md#critical-preserve-the-existing-core-gate).
+It requires proof the product still does its main job before and after the change.
+Read [profile selection](EXECUTION_PROFILES.md#select-before-editing) first;
+existing Critical runs cannot be downgraded to bypass their checks.
+
+## Try the Demo
+
+**Watch KLP catch a broken product even when ordinary tests pass.** From a
+checkout, with Python 3.12+, Git and a POSIX shell:
+
+```bash
+output="$(mktemp -d)/klp-demo"
+python3 examples/capability-regression/run_fixture.py --out-dir "$output" &&
+python3 -m json.tool "$output/final-receipt.json"
+```
+
+The demo makes a tiny program stop responding correctly to different inputs.
+Its ordinary checks stay green. The capability gate catches the regression,
+blocks acceptance, then verifies one repair. Inspect the receipt's
+`capability_report`: `before: passed`, `intermediate: failed`, `after: passed`.
+
+This is executable, public source with a scripted worker and loopback fake
+critic. No API keys, paid calls or production access. It demonstrates the gate,
+not model intelligence. It binds a temporary localhost port and keeps evidence
+in the generated directory; a restricted environment may need loopback permission.
+
+**[Verify it yourself](VERIFY.md):** inspect the demo evidence, run Semio's
+offline checks, and recalculate the published savings from the included receipts.
+
 ## What You Gain
 
 - **Less repeated explanation.** Give each agent the material needed for its
@@ -64,50 +112,6 @@ improvement. The percentages measure different things and must not be added
 together. See [Measured benefits and limits](EVIDENCE.md) for the totals,
 methods, unavailable costs and further results already recorded.
 
-## The 90-Second Version
-
-**Start with Standard for ordinary bounded work.** One short versioned task
-record, relevant checks, one independent review plan and an evidence-backed
-finish. No compulsory message bus, per-step ledger or custom stamping scripts.
-
-**Use Critical when the consequences demand it:** save/data migrations,
-security boundaries, consequential economy changes, critical release bundles or
-anything affecting a protected core capability. Critical keeps the full
-mission and capability gate below. The number of developers is not the risk test.
-
-See [Execution Profiles](EXECUTION_PROFILES.md) and the
-[one-record Standard template](examples/standard-task.md). Standard uses
-`klp-standard/v0.1`; Critical retains `klp-core/v0.3`. Do not downgrade an active
-Critical run or claim that Standard passed Core-only validators.
-
-The Standard critic confirms eligibility in the same review pass. Approved
-project policy can bound temporary tuning, not exempt persistent rewards or
-protected capabilities. Define mission triggers around behavior and claims,
-not entire UI files; existing triggers still require an approved amendment to
-change. Routine shipping uses a separate [release gate](EXECUTION_PROFILES.md#routine-release-gate)
-with exact-artifact checks, rollback and operator authority, not an automatic
-upgrade to Critical.
-
-For **Critical** work:
-
-1. **Freeze the core promise.** Store one canonical Mission Contract with its
-   identity, critical capabilities, trigger rules, accepted baselines, and
-   operator amendment authority.
-2. **Scope it.** Bind the task to that exact mission, declare affected
-   capabilities, allowed files, forbidden actions, checks, budget, and stops.
-3. **Build and check it.** Workers return factual handovers; deterministic
-   checks run before independent criticism.
-4. **Critique and repair it.** A fresh, read-only critic is evidence-bound;
-   confirmed blockers receive only bounded repairs inside the frozen contract.
-5. **Integrate it.** Treat the combined system as a new artifact.
-6. **Prove the core promise again.** A Capability Auditor runs approved
-   product-truth controls against the exact integrated artifact. A critical
-   capability that is degraded or unproven stops completion.
-
-> Before agents change an app, prove it still does its main job. After they
-> finish, prove it again. If it no longer works, the loop stops, even if every
-> technical test passed.
-
 ## What This Prevents
 
 | Common agent failure | KLP response |
@@ -127,38 +131,18 @@ Give this to the lead agent before a multi-agent build:
 
 ```text
 Work under Krystal Loop Protocol.
-First read EXECUTION_PROFILES.md and select Standard or Critical before editing.
-Record why, under the operator's request or standing authority. Never downgrade
-an active Critical run or waive a required product capability to finish faster.
-
-For ordinary bounded work with no Critical trigger, use klp-standard/v0.1 and
-examples/standard-task.md: one versioned record with the product promise,
-outcome, exact base/result, authorized paths, protected areas, relevant checks,
-independent reviewer, and one finite time/cost/repair budget for the whole task.
-Do not add Core-only paperwork, a message bus or custom stamping tooling.
-
-For Critical work, follow PROTOCOL.md in full under klp-core/v0.3: exact Mission
-Contract binding, accepted pre-work baseline, required separate roles, checks,
-review and integrated-artifact capability proof. Existing offline references are
-examples/fail-review-repair/README.md and
-examples/capability-regression/README.md; neither certifies production safety.
-
-In either profile, keep tests isolated from production credentials and external
-network access. Give the critic relevant functions, callers, tests and evidence,
-not just a diff. Confirm, refute or leave findings unresolved using direct proof;
-a reviewer preference cannot invent acceptance criteria. Use an upfront bounded
-adjacent-edit allowance only when authorized; otherwise respect the file boundary.
-
-Reuse existing checks and one coordinated review plan. Reassess after two failed
-cycles or when process tooling becomes the blocker. Finish when the required
-evidence is satisfied; advisory notes do not require another review loop.
-Have the existing Standard critic confirm eligibility against the final change
-and approved project policy. Use behavior-based mission triggers, but do not
-reinterpret an existing file-wide trigger without its required amendment.
-For routine release, follow EXECUTION_PROFILES.md's release gate: assess the
-whole bundle, verify the exact artifact, retain rollback and operator authority,
-then check activation. Critical changes still require the full Core gate.
-No profile authorizes deployment, spending, public posting or other live actions.
+Read EXECUTION_PROFILES.md, select the profile and record why before editing.
+For Standard, follow its complete checklist using examples/standard-task.md:
+one record, bounded work, relevant checks, independent review and integration.
+For Critical, follow PROTOCOL.md in full. Do not downgrade existing gates.
+Follow AI_AGENT_INTEGRATION.md and SAFETY_AND_LIMITS.md for context, isolation,
+evidence and authority. Reuse checks; do not invent extra process machinery.
+Finish when the required proof is met. If proof is missing, preserve the work,
+state the exact blocker and smallest next action, then stop affected work.
+Keep routine shipping behind EXECUTION_PROFILES.md's routine-release-gate.
+No profile grants deployment, spending or publication authority.
+Runnable offline references: examples/capability-regression/README.md and
+examples/fail-review-repair/README.md. See VERIFY.md for what each proves.
 ```
 
 KLP does not require a special model, database, vector store, or message bus.
@@ -213,9 +197,12 @@ neither certifies production safety.
 
 ## Read Next
 
-- [KLP Core protocol](PROTOCOL.md)
 - [Standard and Critical execution profiles](EXECUTION_PROFILES.md)
 - [Compact Standard task record](examples/standard-task.md)
+- [Solo-operator role example](examples/solo-operator.md)
+- [Public demo and evidence verification](VERIFY.md)
+- [KLP Core protocol for Critical work](PROTOCOL.md)
+- [Recovering missing capability proof](PROTOCOL.md#recovering-missing-capability-proof)
 - [Instructions for AI agents and orchestrators](AI_AGENT_INTEGRATION.md)
 - [Optional runtime profiles](RUNTIME_PROFILES.md)
 - [Safety and limits](SAFETY_AND_LIMITS.md)
@@ -233,6 +220,11 @@ neither certifies production safety.
 KLP is not an autonomous software factory, deployment platform, model router,
 or claim that tests prove a product has no defects. It is a portable way to
 bound multi-agent work, retain useful evidence, and make uncertainty visible.
+
+**KLP checks how software changes earn acceptance; runtime controls govern what
+that software can do after deployment.** Release verification is a checkpoint,
+not continuous runtime enforcement. Runtime governance is a separate layer;
+using KLP does not install or integrate a runtime enforcement product.
 
 KLP is inspired by public builder/critic systems such as the
 [Gauntlet Loop](https://somethingbig.ai/gauntlet-loop). It does not claim to

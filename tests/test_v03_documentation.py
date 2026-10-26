@@ -133,6 +133,8 @@ class V03DocumentationTests(unittest.TestCase):
             "SAFETY_AND_LIMITS.md",
             "EXECUTION_PROFILES.md",
             "examples/standard-task.md",
+            "examples/solo-operator.md",
+            "VERIFY.md",
             "adapters/hermes-kanban.md",
             "examples/capability-regression/README.md",
         )
@@ -244,6 +246,62 @@ class V03DocumentationTests(unittest.TestCase):
             "plain-English impact statement",
         ):
             self.assertIn(required, profiles)
+
+    def test_readme_leads_with_standard_and_a_runnable_demo(self) -> None:
+        readme = self.text("README.md")
+        self.assertLess(readme.index("## Start Here"), readme.index("## What You Gain"))
+        self.assertLess(readme.index("## Try the Demo"), readme.index("## What You Gain"))
+        start = readme.split("## Start Here", 1)[1].split("## Try the Demo", 1)[0]
+        self.assertIn("Standard", start)
+        self.assertIn("examples/standard-task.md", start)
+        self.assertIn("examples/solo-operator.md", start)
+        self.assertIn("VERIFY.md", readme)
+        self.assertIn("runtime controls", readme)
+
+    def test_solo_guide_keeps_actual_identity_separation(self) -> None:
+        guide = " ".join(self.text("examples/solo-operator.md").split())
+        for required in (
+            "not a requirement for separate human employees",
+            "Renaming the same session", "Mission Custodian", "Coordinator",
+            "Capability Auditor", "cannot claim Critical conformance",
+            "same-family", "standing delegation",
+        ):
+            self.assertIn(required, guide)
+
+    def test_missing_proof_recovery_preserves_stops_authority_and_budget(self) -> None:
+        protocol = " ".join(self.text("PROTOCOL.md").split())
+        recovery = protocol.split("### Recovering Missing Capability Proof", 1)[1].split(
+            "## Required Records", 1
+        )[0]
+        for required in (
+            "capability_unproven", "smallest missing action", "remaining budget",
+            "Do not poll", "Mission Amendment Request",
+            "pre-work baseline", "exact artifact", "not `completed`",
+        ):
+            self.assertIn(required, recovery)
+        self.assertIn(
+            "recovering-missing-capability-proof",
+            self.text("AI_AGENT_INTEGRATION.md"),
+        )
+
+    def test_public_verification_separates_execution_from_receipt_arithmetic(self) -> None:
+        guide = " ".join(self.text("VERIFY.md").split())
+        for required in (
+            "scripted worker", "loopback fake critic", "Python 3.12",
+            "No API keys", "not a replay of the private coding task",
+            "capability-after-integration-1.json", "capability-after-integration-2.json",
+            "case-studies/krystalview-2026-10-20/verify.py",
+            "case-studies/semio-coordination-2026-10-20/verify.py",
+        ):
+            self.assertIn(required, guide)
+        workflow = self.text(".github/workflows/ci.yml")
+        for command in (
+            "python3 tests/test_v03_documentation.py -v",
+            "python3 -m unittest discover -s examples/capability-regression/tests -v",
+            "python3 case-studies/krystalview-2026-10-20/verify.py",
+            "python3 case-studies/semio-coordination-2026-10-20/verify.py",
+        ):
+            self.assertIn(command, workflow)
 
 
 if __name__ == "__main__":
