@@ -119,6 +119,12 @@ repairs and failures. Record coordinator cost separately when unavailable.
 To attribute savings to Semio, hold task, models and evidence fixed and vary the
 coordination path rather than changing the worker model at the same time.
 
-The existing private KrystalView source is not part of this distribution. A
-small standalone public task could live here first and become a separate repo
-if it needs its own release cycle. No paid benchmark is launched by these commands.
+The separate [KLP Public Coding Challenge](https://github.com/KrystalUnity/klp-public-challenge)
+now provides an original task, fixed checks, an offline demo, three workflow
+instructions and result-record validation. Its demo needs Linux/WSL, Python
+3.12+ and user/network namespace support; no API keys or paid calls are needed.
+Use its run guide to plan a comparison with your own models and budget.
+
+The private KrystalView source is not part of either distribution. The public
+challenge supports new measurements, not a replay of the private experiment or
+a promise of the same savings. No paid benchmark is launched by these commands.

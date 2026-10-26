@@ -61,6 +61,14 @@ in the generated directory; a restricted environment may need loopback permissio
 **[Verify it yourself](VERIFY.md):** inspect the demo evidence, run Semio's
 offline checks, and recalculate the published savings from the included receipts.
 
+**Try it with your own coding agent:** the
+[KLP Public Coding Challenge](https://github.com/KrystalUnity/klp-public-challenge)
+provides an original bug, fixed checks and a one-command offline demo. Compare
+conventional coding, same-model KLP and cheaper-worker KLP on the same task,
+recording reviews, retries and unknown costs. The demo needs Linux/WSL and Python
+3.12+, but no API key. Live model runs use your own harness and declared budget;
+this public task does not replay the private KrystalView experiment.
+
 ## What You Gain
 
 - **Less repeated explanation.** Give each agent the material needed for its
@@ -201,6 +209,7 @@ neither certifies production safety.
 - [Compact Standard task record](examples/standard-task.md)
 - [Solo-operator role example](examples/solo-operator.md)
 - [Public demo and evidence verification](VERIFY.md)
+- [Public coding challenge for your own agents](https://github.com/KrystalUnity/klp-public-challenge)
 - [KLP Core protocol for Critical work](PROTOCOL.md)
 - [Recovering missing capability proof](PROTOCOL.md#recovering-missing-capability-proof)
 - [Instructions for AI agents and orchestrators](AI_AGENT_INTEGRATION.md)
