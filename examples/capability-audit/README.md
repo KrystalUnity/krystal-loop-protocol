@@ -181,6 +181,13 @@ comparison, not the entire Critical lifecycle.
 
 ## Offline Tests
 
+The GitHub-hosted CI job uses elevated setup privileges only for this offline
+fixture, because its host can deny unprivileged network-namespace setup. Probe
+execution still uses private namespaces and drops all capabilities. This is a
+disposable CI configuration, not advice to elevate untrusted code on a live
+server or disable host security controls. On your own host, first confirm that
+its approved Bubblewrap configuration supports the required isolation.
+
 ```bash
 python3 -m unittest discover -s examples/capability-audit/tests -v
 ```

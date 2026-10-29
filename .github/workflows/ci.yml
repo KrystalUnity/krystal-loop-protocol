@@ -30,8 +30,10 @@ jobs:
           sudo apt-get install -y bubblewrap
       - name: Verify deterministic capability audit runner
         run: |
-          bwrap --unshare-all --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64 /usr/bin/true
-          python3 -m unittest discover -s examples/capability-audit/tests -v
+          # Hosted runners can deny unprivileged network-namespace setup.
+          # Elevate this offline fixture only; probes still drop all capabilities.
+          sudo -n bwrap --unshare-all --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64 /usr/bin/true
+          sudo -n env -i PATH=/usr/local/bin:/usr/bin:/bin /usr/bin/python3 -m unittest discover -s examples/capability-audit/tests -v
       - name: Verify published receipt arithmetic
         run: |
           python3 case-studies/krystalview-2026-10-20/verify.py
