@@ -24,6 +24,12 @@ jobs:
         run: python3 tests/test_v03_documentation.py -v
       - name: Run capability gate and recovery fixtures
         run: python3 -m unittest discover -s examples/capability-regression/tests -v
+      - name: Install offline audit isolation dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bubblewrap
+      - name: Verify deterministic capability audit runner
+        run: python3 -m unittest discover -s examples/capability-audit/tests -v
       - name: Verify published receipt arithmetic
         run: |
           python3 case-studies/krystalview-2026-10-20/verify.py

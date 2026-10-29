@@ -1,0 +1,25 @@
+{
+  "schema": "klp-capability-audit/v1",
+  "contracts": {
+    "mission": {"path": "mission.md", "sha256": "REPLACE_WITH_APPROVED_FILE_SHA256"},
+    "task": {"path": "task.md", "sha256": "REPLACE_WITH_APPROVED_FILE_SHA256"}
+  },
+  "instruments": [
+    {"path": "probe.py", "sha256": "REPLACE_WITH_APPROVED_FILE_SHA256"}
+  ],
+  "limits": {"elapsed_seconds": 600, "max_log_bytes": 1048576},
+  "probes": [
+    {
+      "id": "title-controls",
+      "capability_ids": ["title-normalization"],
+      "argv": ["python3", "/instruments/probe.py"],
+      "side_args": {"base": [], "candidate": []},
+      "ports": [],
+      "timeout_seconds": 30,
+      "expect": {
+        "base": {"exit_code": 0, "observations": {"positive_control": true, "negative_control": true}},
+        "candidate": {"exit_code": 0, "observations": {"positive_control": true, "negative_control": true}}
+      }
+    }
+  ]
+}

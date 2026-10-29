@@ -117,6 +117,15 @@ the accepted baseline artifact identified by `accepted_baseline_ref`. At
 integrated artifact revision. The Capability Auditor publishes observations
 without editing either artifact.
 
+For repetitive before/after checks, the optional
+[capability audit runner](examples/capability-audit/README.md) collects frozen
+probe observations without model calls and builds a compact judging packet.
+Keep runner/instrument identity independent of the worker's product changes;
+verify the retained evidence digest, check coverage against the complete
+contracts, and spot-check raw evidence on both sides before judging. The packet
+does not replace the independent Capability Report or pre-work baseline and
+does not automatically dispatch a critic. Standard tasks need not add this gate.
+
 ## Runnable Worker and Critic Path
 
 The repository includes a concrete endpoint-backed example while keeping the

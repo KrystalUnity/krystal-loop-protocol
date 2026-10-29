@@ -375,6 +375,16 @@ Each probe record contains `capability_id`, `mission_hash`,
 `improved`, `degraded`, or `unproven`; only the first two pass the capability
 gate. Scheduled monitoring supplements, and never replaces, integration checks.
 
+Mechanical collection may use the optional
+[deterministic audit runner](examples/capability-audit/README.md): approved,
+hash-pinned probes run sequentially against isolated base/candidate snapshots,
+and an independent judging pass receives the contracts, diff, comparison and
+command ledger with raw evidence available for spot-checks. This separates
+repetitive execution from judgment; it does not change the capability gate or
+role boundaries. Matching declared expectations is not capability acceptance.
+Missing or inconclusive evidence remains unproven, and a post-work comparison
+cannot manufacture the required pre-work baseline retroactively.
+
 ## Mission Amendment Request
 
 A Mission Amendment Request pauses affected work and requires a direct operator
