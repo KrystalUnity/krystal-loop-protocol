@@ -203,6 +203,23 @@ completion, repairs within the declared limit, and proves the repaired
 integrated artifact. Both lifecycle fixtures are offline protocol examples:
 neither certifies production safety.
 
+## Let Software Run the Repetitive Checks
+
+An AI reviewer should judge the evidence, not spend turn after turn launching
+the same tests. The optional [capability audit runner](examples/capability-audit/README.md)
+runs approved checks against frozen before-and-after versions, isolates each
+execution, and prepares a compact evidence packet for independent review.
+
+The collector makes no model calls. It retains failed checks and incomplete
+evidence instead of converting them into a green result. Use it when a task
+already needs a capability audit; ordinary Standard work stays lightweight.
+
+The runner has been exercised on a real, asset-heavy game repository: 42 probe
+executions including preflight and a bounded correction. See the
+[validation note](examples/capability-audit/VALIDATION.md) for results and full-effort
+limits. This demonstrates collection and review, not a new measured cost-saving
+percentage. Linux, Python, Git and Bubblewrap are required.
+
 ## Read Next
 
 - [Standard and Critical execution profiles](EXECUTION_PROFILES.md)
@@ -219,6 +236,7 @@ neither certifies production safety.
 - [OpenAI-compatible critic example](examples/openai-compatible-critic/README.md)
 - [Offline fail-review-repair fixture](examples/fail-review-repair/README.md)
 - [Offline capability-regression fixture](examples/capability-regression/README.md)
+- [Optional deterministic capability audit runner](examples/capability-audit/README.md)
 - [Hermes Kanban adapter example](adapters/hermes-kanban.md)
 - [Optional Semio agent-coordination adapter](adapters/semio.md)
 - [Compact context packet guide](examples/semio-coordination/CONTEXT_PACKETS.md)

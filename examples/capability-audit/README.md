@@ -9,6 +9,9 @@ candidate snapshots. It makes **no provider calls**. It does not change KLP's
 roles, declare a capability preserved, authorize deployment or replace the
 independent Capability Report. Standard tasks do not acquire a mandatory auditor.
 
+For the first real-project exercise, see the [validation note](VALIDATION.md).
+It separates the observed results from what has not yet been measured.
+
 ## Boundary
 
 - Use on an authorized test host with Python 3.10+, Git and Bubblewrap (`bwrap`).
