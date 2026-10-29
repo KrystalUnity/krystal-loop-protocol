@@ -29,7 +29,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y bubblewrap
       - name: Verify deterministic capability audit runner
-        run: python3 -m unittest discover -s examples/capability-audit/tests -v
+        run: |
+          bwrap --unshare-all --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64 /usr/bin/true
+          python3 -m unittest discover -s examples/capability-audit/tests -v
       - name: Verify published receipt arithmetic
         run: |
           python3 case-studies/krystalview-2026-10-20/verify.py
