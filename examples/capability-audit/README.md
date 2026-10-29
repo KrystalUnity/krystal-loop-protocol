@@ -16,6 +16,10 @@ independent Capability Report. Standard tasks do not acquire a mandatory auditor
 - Both commits are exported with `git archive`, then file bytes are checked
   against their Git trees. Dirty/untracked working files are neither used nor
   modified. Commit the intended candidate first, including its tests.
+- Snapshots default to a 256 MiB tar limit. A reviewed manifest may set
+  `limits.max_snapshot_bytes` up to 1 GiB for asset-heavy repositories. The
+  selected ceiling is retained in the evidence; byte/mode verification and
+  isolation are unchanged. Size is checked after export, not a disk quota.
 - The Mission and Task Contracts, probe list, expectations and instrument files
   must already be reviewed and frozen. Their hashes identify bytes, **not human
   authorization**. Pin the runner version separately from the product under test.
@@ -161,7 +165,8 @@ comparison, not the entire Critical lifecycle.
 - The run time budget includes setup. Git snapshot operations also have a
   30-second per-command bound; filesystem setup/cleanup is not a hard real-time
   deadline. No new probe starts after the run deadline. No automatic retries.
-- Version 1 supports regular-file Git repositories up to 256 MiB per archive,
+- Version 1 supports regular-file Git repositories with a default 256 MiB
+  archive ceiling (explicitly configurable up to 1 GiB),
   a 2 MiB diff and 2 MiB per input. It rejects submodules, symlinks, special
   files and Git export attributes that omit or substitute committed bytes.
 - Dependencies must be available from the exported snapshot or mounted system

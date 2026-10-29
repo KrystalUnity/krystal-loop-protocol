@@ -125,6 +125,9 @@ def validate_manifest(data):
     if set(data["contracts"]) != {"mission", "task"}:
         raise AuditError("both frozen mission and task contracts are required")
     number(data["limits"]["elapsed_seconds"], 7200)
+    snapshot_limit = data["limits"].get("max_snapshot_bytes", MAX_SNAPSHOT)
+    if type(snapshot_limit) is not int or not 1 <= snapshot_limit <= 1024 * 1024 * 1024:
+        raise AuditError("snapshot byte limit must be an integer from 1 through 1 GiB")
     log_limit = data["limits"].get("max_log_bytes", 1024 * 1024)
     if type(log_limit) is not int or not 1 <= log_limit <= 16 * 1024 * 1024:
         raise AuditError("invalid log byte limit")
@@ -163,15 +166,15 @@ def git(repo, *args, destination=None):
     return result.stdout
 
 
-def snapshot(repo, revision, target, archive):
+def snapshot(repo, revision, target, archive, limit=MAX_SNAPSHOT):
     if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", revision):
         raise AuditError("revision must be a full immutable commit ID, not a branch or tag")
     if git(repo, "rev-parse", "--verify", revision + "^{commit}").decode().strip() != revision:
         raise AuditError("revision is not a commit")
     with archive.open("wb") as handle:
         git(repo, "archive", "--format=tar", revision, destination=handle)
-    if archive.stat().st_size > MAX_SNAPSHOT:
-        raise AuditError("snapshot exceeds 256 MiB; use a smaller approved repository")
+    if archive.stat().st_size > limit:
+        raise AuditError(f"snapshot exceeds declared limit of {limit} bytes")
     target.mkdir()
     with tarfile.open(archive) as bundle:
         for member in bundle:
@@ -201,12 +204,12 @@ def snapshot(repo, revision, target, archive):
         raise AuditError("Git archive omitted tracked files; export-ignore is unsupported")
     hash_function = hashlib.sha1 if len(revision) == 40 else hashlib.sha256
     for name, (mode, identity) in expected.items():
-        content = read_file(target / name, MAX_SNAPSHOT)
+        content = read_file(target / name, limit)
         if hash_function(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest() != identity:
             raise AuditError("Git archive differs from committed bytes; export-subst is unsupported")
         # tar.umask is local configuration, not the committed executable bit.
         (target / name).chmod(0o755 if mode == b"100755" else 0o644)
-    return sha(read_file(archive, MAX_SNAPSHOT))
+    return sha(read_file(archive, limit))
 
 
 def sandbox_command(work, instruments, results, probe, side):
@@ -338,6 +341,7 @@ def run(args):
         raise AuditError("manifest hash mismatch")
     manifest = parse_json(raw)
     validate_manifest(manifest)
+    snapshot_limit = manifest["limits"].get("max_snapshot_bytes", MAX_SNAPSHOT)
     contracts = {name: pinned_file(args.manifest.parent, ref) for name, ref in manifest["contracts"].items()}
     instruments = {}
     for descriptor in manifest["instruments"]:
@@ -359,6 +363,7 @@ def run(args):
     report = {"schema": "klp-audit-observations/v1", "started_at": now(),
               "base_revision": args.base, "candidate_revision": args.candidate,
               "manifest_sha256": sha(raw), "runner_sha256": sha(Path(__file__).read_bytes()),
+              "max_snapshot_bytes": snapshot_limit,
               "instrument_sha256": {name: sha(data) for name, data in instruments.items()},
               "snapshot_sha256": {}, "probes": [], "all_expectations_met": False}
     with tempfile.TemporaryDirectory(prefix="klp-audit-") as directory:
@@ -371,7 +376,7 @@ def run(args):
             path.write_bytes(data)
             path.chmod(0o755)
         for side in SIDES:
-            report["snapshot_sha256"][side] = snapshot(args.repo, getattr(args, side), scratch / side, scratch / (side + ".tar"))
+            report["snapshot_sha256"][side] = snapshot(args.repo, getattr(args, side), scratch / side, scratch / (side + ".tar"), snapshot_limit)
         diff = git(args.repo, "diff", "--no-ext-diff", "--no-textconv", "--binary", args.base, args.candidate, "--")
         if len(diff) > MAX_INPUT:
             raise AuditError("diff exceeds 2 MiB packet limit")

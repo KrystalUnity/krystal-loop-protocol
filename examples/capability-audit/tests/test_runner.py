@@ -87,6 +87,24 @@ class AuditRunnerTests(unittest.TestCase):
     def report(self):
         return json.loads((self.output / "comparison.json").read_text())
 
+    def test_explicit_snapshot_limit_is_recorded(self):
+        self.manifest["limits"]["max_snapshot_bytes"] = 768 * 1024 * 1024
+        result = self.run_audit()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.report()["max_snapshot_bytes"], 768 * 1024 * 1024)
+
+    def test_snapshot_limit_rejects_oversized_archive(self):
+        self.manifest["limits"]["max_snapshot_bytes"] = 1024
+        result = self.run_audit()
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("snapshot exceeds", result.stderr)
+
+    def test_snapshot_limit_rejects_unbounded_or_invalid_values(self):
+        for value in (0, True, 1.5, 1024 * 1024 * 1024 + 1):
+            with self.subTest(value=value):
+                self.manifest["limits"]["max_snapshot_bytes"] = value
+                self.assertEqual(self.run_audit().returncode, 2)
+
     def test_exact_snapshots_compact_packet_and_dirty_checkout_preserved(self):
         before = self.git("status", "--porcelain")
         result = self.run_audit()
