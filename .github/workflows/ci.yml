@@ -33,25 +33,14 @@ jobs:
           # Hosted runners can deny unprivileged network-namespace setup.
           # Elevate this offline fixture only; probes still drop all capabilities.
           sudo -n bwrap --unshare-all --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64 /usr/bin/true
-          sudo -n env -i PATH=/usr/local/bin:/usr/bin:/bin /usr/bin/python3 -m unittest discover -s examples/capability-audit/tests -v
-      - name: Diagnose failed audit fixture without hiding the failure
-        if: failure()
-        run: |
-          sudo -n env -i PATH=/usr/local/bin:/usr/bin:/bin /usr/bin/python3 - <<'PY'
-          import sys
-          sys.path.insert(0, "examples/capability-audit/tests")
-          from test_runner import AuditRunnerTests
-          fixture = AuditRunnerTests()
-          try:
-              fixture.setUp()
-              result = fixture.run_audit()
-              print("fixture exit:", result.returncode, result.stdout, result.stderr)
-              for path in sorted((fixture.output / "logs").glob("*")):
-                  if path.is_file():
-                      print(path.name, path.read_text(errors="replace")[:4096])
-          finally:
-              fixture.doCleanups()
-          PY
+          sudo -n env -i PATH=/usr/local/bin:/usr/bin:/bin /bin/bash -eu <<'SH'
+          # After capabilities are dropped, namespace root cannot traverse the
+          # runner user's private home. Test identical bytes from its own temp dir.
+          audit_dir="$(mktemp -d)"
+          trap 'rm -rf -- "$audit_dir"' EXIT
+          cp -R examples/capability-audit/. "$audit_dir/"
+          /usr/bin/python3 -m unittest discover -s "$audit_dir/tests" -v
+          SH
       - name: Verify published receipt arithmetic
         run: |
           python3 case-studies/krystalview-2026-10-20/verify.py

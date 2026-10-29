@@ -183,7 +183,9 @@ comparison, not the entire Critical lifecycle.
 
 The GitHub-hosted CI job uses elevated setup privileges only for this offline
 fixture, because its host can deny unprivileged network-namespace setup. Probe
-execution still uses private namespaces and drops all capabilities. This is a
+execution still uses private namespaces and drops all capabilities. CI copies
+the unchanged fixture into a temporary directory owned by the test identity,
+so mounts do not need access through another user's private home. This is a
 disposable CI configuration, not advice to elevate untrusted code on a live
 server or disable host security controls. On your own host, first confirm that
 its approved Bubblewrap configuration supports the required isolation.
