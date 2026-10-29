@@ -34,6 +34,24 @@ jobs:
           # Elevate this offline fixture only; probes still drop all capabilities.
           sudo -n bwrap --unshare-all --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64 /usr/bin/true
           sudo -n env -i PATH=/usr/local/bin:/usr/bin:/bin /usr/bin/python3 -m unittest discover -s examples/capability-audit/tests -v
+      - name: Diagnose failed audit fixture without hiding the failure
+        if: failure()
+        run: |
+          sudo -n env -i PATH=/usr/local/bin:/usr/bin:/bin /usr/bin/python3 - <<'PY'
+          import sys
+          sys.path.insert(0, "examples/capability-audit/tests")
+          from test_runner import AuditRunnerTests
+          fixture = AuditRunnerTests()
+          try:
+              fixture.setUp()
+              result = fixture.run_audit()
+              print("fixture exit:", result.returncode, result.stdout, result.stderr)
+              for path in sorted((fixture.output / "logs").glob("*")):
+                  if path.is_file():
+                      print(path.name, path.read_text(errors="replace")[:4096])
+          finally:
+              fixture.doCleanups()
+          PY
       - name: Verify published receipt arithmetic
         run: |
           python3 case-studies/krystalview-2026-10-20/verify.py
