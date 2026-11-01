@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run offline worker and critic tests
-        run: python3 examples/openai-compatible-critic/tests/test_critic.py -v
+        run: python3 -m unittest discover -s examples/openai-compatible-critic/tests -v
       - name: Run fail-review-repair lifecycle fixture
         run: python3 examples/fail-review-repair/tests/test_fixture.py -v
       - name: Check protocol documentation and local links

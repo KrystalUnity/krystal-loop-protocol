@@ -85,6 +85,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--schema", type=Path, required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--timeout-seconds", type=float, default=90.0)
+    parser.add_argument("--evidence-reads", action="store_true", help="opt in to bounded sealed-source reads")
+    parser.add_argument("--generated-source", action="append", default=[], help="explicit generated source path to compact")
+    parser.add_argument("--disable-thinking", action="store_true", help="send thinking.type=disabled (provider must support it)")
     parser.add_argument(
         "--allow-same-family",
         action="store_true",
@@ -337,6 +340,11 @@ def call_provider(
     schema: dict[str, Any],
     timeout: float,
     independent: bool,
+    messages=None,
+    tools=None,
+    max_tokens=None,
+    on_request=None,
+    disable_thinking=False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     endpoint = base_url.rstrip("/") + "/chat/completions"
     user_content = json.dumps(
@@ -353,6 +361,16 @@ def call_provider(
         "stream": False,
         "response_format": {"type": "json_object"},
     }
+    if messages is not None:
+        request_body["messages"] = messages
+    if tools is not None:
+        request_body["tools"] = tools
+    if max_tokens is not None:
+        request_body["max_tokens"] = max_tokens
+    if disable_thinking:
+        request_body["thinking"] = {"type": "disabled"}
+    if on_request is not None:
+        on_request(request_body)
     request = Request(
         endpoint,
         data=json.dumps(request_body).encode("utf-8"),
@@ -382,10 +400,14 @@ def run() -> int:
     args = parse_args()
     if not math.isfinite(args.timeout_seconds) or args.timeout_seconds <= 0:
         raise HarnessError("timeout must be finite and positive")
+    if (args.generated_source or args.disable_thinking) and not args.evidence_reads:
+        raise HarnessError("generated-source and disable-thinking require --evidence-reads")
 
     packet, packet_size = load_json(args.packet, "review packet")
     schema, _ = load_json(args.schema, "verdict schema")
     validate_packet(packet, packet_size)
+    if "generated_context_refs" in packet or "source_manifest" in packet:
+        raise HarnessError("supply original inline sources, not external evidence references")
 
     base_url = required_env("CRITIC_BASE_URL")
     api_key = required_env("CRITIC_API_KEY")
@@ -408,15 +430,22 @@ def run() -> int:
     }
     write_json(args.out_dir / "request.packet.json", request_record)
 
-    _, provider_payload = call_provider(
+    provider_options = dict(
         base_url=base_url,
         api_key=api_key,
         model=model,
-        packet=packet,
-        schema=schema,
-        timeout=args.timeout_seconds,
         independent=not args.allow_same_family,
     )
+    if args.evidence_reads:
+        from evidence_review import run_review
+        provider_options["disable_thinking"] = args.disable_thinking
+        provider_payload = run_review(packet, schema, args.generated_source,
+            call=call_provider, write=write_json, out_dir=args.out_dir,
+            prompt=system_prompt_for(packet, not args.allow_same_family),
+            timeout=args.timeout_seconds, provider_options=provider_options, error=HarnessError)
+    else:
+        _, provider_payload = call_provider(**provider_options, packet=packet,
+            schema=schema, timeout=args.timeout_seconds)
     content = extract_content(provider_payload)
     provider_record = {
         "id": provider_payload.get("id"),
