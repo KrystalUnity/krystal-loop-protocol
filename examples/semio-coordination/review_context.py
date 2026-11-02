@@ -43,9 +43,11 @@ def compact_generated_context(snapshot, *, generated_paths, store_text, read_tex
     paths = list(dict.fromkeys(generated_paths))
     for path in paths:
         text = snapshot["sources"].get(path)
-        if not isinstance(text, str) or not any(
+        lines = text.splitlines()[:10] if isinstance(text, str) else []
+        generated_header = len(lines) >= 2 and lines[0].startswith("// GENERATED ") and lines[1] == "// Do not edit by hand."
+        if not generated_header and not any(
             "Code generated " in line and "DO NOT EDIT." in line
-            for line in text.splitlines()[:10]
+            for line in lines
         ):
             raise ValueError("Selected source is missing a generated marker: " + path)
     packed = copy.deepcopy(snapshot)

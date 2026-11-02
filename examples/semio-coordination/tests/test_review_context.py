@@ -64,6 +64,18 @@ class ReviewContextTests(unittest.TestCase):
                 self.compact(generated_paths=[path])
         self.assertFalse(self.evidence)
 
+    def test_typescript_generated_header_from_kvc(self):
+        header = "// GENERATED \u2014 edit docs/kvc/kb and rerun scripts/generate_kvc_help_content.py\n// Do not edit by hand.\n"
+        self.snapshot["sources"]["rpc/flipt.pb.go"] = header + "export const help = [];\n" * 100
+        packed, _ = self.compact()
+        self.assertIn("generated_context_refs", packed)
+
+    def test_incomplete_typescript_header_is_not_sufficient(self):
+        for header in ("// GENERATED from source\n", "// Do not edit by hand.\n"):
+            self.snapshot["sources"]["rpc/flipt.pb.go"] = header + "content\n" * 100
+            with self.subTest(header=header), self.assertRaises(ValueError):
+                self.compact()
+
     def test_tampered_readback_rejected(self):
         with self.assertRaisesRegex(ValueError, "readback"):
             self.compact(read_text=lambda key: "tampered")
