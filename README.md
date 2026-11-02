@@ -174,10 +174,28 @@ Start with the [DeepSeek Codex worker](examples/deepseek-codex-worker/README.md)
 then use the
 [OpenAI-compatible critic harness](examples/openai-compatible-critic/README.md).
 The worker launcher uses an isolated Codex profile and a reviewed assignment.
-The critic makes one request, validates its structured verdict locally, and
-cannot edit or authorize any action. The examples do not automatically connect
+The critic makes one request by default, validates its structured verdict locally,
+and cannot edit or authorize any action. Its optional bounded evidence-read mode
+can retrieve selected generated source from the sealed packet. The examples do not automatically connect
 worker output to critic input; the controller must inspect and redact the
 review packet first.
+
+### Review Generated Source
+
+Use the [maintained critic quick-start](examples/openai-compatible-critic/README.md#review-generated-source)
+when a task includes generated code. Supply the exact retained source, keep the
+complete diff and required checks, and explicitly select which generated excerpts
+may move out of the initial prompt. The runner verifies retained text and gives
+the critic bounded reads; it does not let the model browse your filesystem.
+
+Malformed JSON, schema failures and a pass with blocking findings are rejected.
+Keep failed receipts; never extract an apparent verdict from a malformed reply.
+Count all calls, later reads, repairs and failures using the runner's effort
+records, not just the initial packet size. No benchmark is needed to use it.
+
+The harness currently accepts `klp-core/v0.2` and `klp-core/v0.3` packets, **not**
+`klp-standard/v0.1` task records. Standard users can keep their existing independent
+review workflow; do not relabel a record or invent Core approvals to fit this tool.
 
 ## Run the Offline Lifecycle Proof
 

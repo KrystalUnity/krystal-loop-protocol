@@ -1,8 +1,15 @@
 # OpenAI-Compatible Critic Harness
 
-This harness sends one explicit, controller-reviewed KLP packet to one
-OpenAI-compatible `/chat/completions` endpoint. It does not inspect a repository,
-run tools, edit an artifact, repair findings, or authorize a lifecycle action.
+By default this harness sends one explicit, controller-reviewed KLP packet to one
+OpenAI-compatible `/chat/completions` endpoint. An optional mode permits bounded
+reads from that packet's sealed sources. Neither mode inspects a repository,
+executes commands, edits an artifact, repairs findings or authorizes a lifecycle action.
+
+It accepts `klp-core/v0.2` and `klp-core/v0.3` packets; the included
+`verdict.schema.json` is used for both.
+It does not accept `klp-standard/v0.1` task records. Keep Standard reviews in your
+existing workflow unless you have a compatible runner; never relabel a record
+or fabricate Mission Contract fields to bypass this boundary.
 
 ## Prepare the packet
 
@@ -102,10 +109,70 @@ assistant content; reasoning fields are discarded. Invalid packets, default
 same-family pairings, provider failures, malformed JSON, schema failures, and
 pass verdicts with blockers produce no `verdict.json`.
 
+## Review generated source
+
+After configuring the provider above and authorizing the bounded cost and source
+transmission, prepare `review-packet.json` from the example for your actual task.
+Replace illustrative identities, hashes, diff and check evidence with verified
+values. Keep the complete diff, relevant functions, callers, tests and unresolved
+findings. Add a `sources` object mapping source names to their exact retained text:
+
+```json
+{
+  "sources": {
+    "src/generated/help.ts": "// GENERATED from reviewed source\n// Do not edit by hand.\nexport const help = [];\n"
+  }
+}
+```
+
+This fragment illustrates the additional field, not a complete review packet.
+Capture real source from the candidate under review; do not add a generated
+header to ordinary source to make it eligible. The helper recognises Go-style
+`Code generated ... DO NOT EDIT.` markers in the first ten lines, or a first line
+starting `// GENERATED ` followed by exactly `// Do not edit by hand.`.
+Only explicitly selected excerpts that reduce the prepared snapshot size are
+moved out of the initial packet. Small excerpts may remain inline.
+
+From the repository root, with a new output directory:
+
+```bash
+python3 examples/openai-compatible-critic/critic.py \
+  --packet review-packet.json \
+  --schema examples/openai-compatible-critic/verdict.schema.json \
+  --out-dir review-output-generated \
+  --evidence-reads \
+  --generated-source src/generated/help.ts \
+  --timeout-seconds 180
+```
+
+Repeat `--generated-source` for each approved source key. This enables the bounded
+mode described above, not automatic repair or retries. Missing required source
+must remain an incomplete review. Keep the output directory and sealed inputs
+through adjudication and any separately authorised repair.
+
+### Check the result and count the effort
+
+- Require the runner's validated `verdict.json`, bound to the reviewed revision.
+  A response file, successful HTTP call or `effort.json` status alone is not a pass.
+- Parse the entire response strictly. Do not strip prose, fences or provider
+  delimiters to recover an embedded verdict. A malformed response is a failed
+  attempt; a retry needs its own authority, budget and new output directory.
+- Retain `effort.json`, `call-N.request.json`, `call-N.response.json`,
+  `request.packet.json`, `prepared-packet.json` and `provider-response.json`.
+  Failed calls and extra source reads count too. These files can contain private
+  source; review and redact before publishing them.
+- Sum reported input, cached input and output usage across attempts without
+  double-counting reasoning already included in output. Add worker, repair and
+  coordinator effort to report the whole job. Record request/read bytes and
+  elapsed time separately. Use actual provider rates for calculated API costs;
+  unavailable usage, invoices or subscription allocation remain unknown.
+- Adjudicate findings against evidence and perform required integration checks.
+  The critic does not approve deployment or replace the capability gate.
+
 ## Test without provider egress
 
 ```bash
-python3 examples/openai-compatible-critic/tests/test_critic.py -v
+python3 -m unittest discover -s examples/openai-compatible-critic/tests -v
 ```
 
 The tests use a local HTTP server and a fake credential. A critic verdict is
@@ -123,6 +190,7 @@ decides whether to simplify within delegation.
 
 The v0.2 prompt and verdict schema remain unchanged. Offline tests verify
 compatibility and request handling, not whether a real model follows the new
-guidance. The harness makes one request; overall budgets, two-cycle
+guidance. The default harness makes one request; the optional evidence-read mode
+has the finite limits above. Overall budgets, two-cycle
 reassessment, operator steering, and completion remain coordinator duties under
 [the protocol](../../PROTOCOL.md#choosing-and-reassessing-the-approach).
