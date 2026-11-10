@@ -31,8 +31,10 @@ USER_CONFIG = {
                "api_key_env": "DEEPSEEK_API_KEY",
                "params": {"max_tokens": 16384, "thinking": {"type": "enabled"}, "reasoning_effort": "high"}},
     "critic": {"name": "gpt-6.1-sol", "family": "openai", "base_url": "https://api.openai.com/v1",
-               "api_key_env": "OPENAI_API_KEY", "params": {"max_completion_tokens": 16384}},
-    "limits": {"cost_usd": 2.0, "max_steps": 40, "repair_steps": 20, "repair_rounds": 1, "time_seconds": 3600},
+               "api_key_env": "OPENAI_API_KEY",
+               # One review is one request, so skip the cache write: plain input price, nothing to reuse.
+               "params": {"max_completion_tokens": 16384, "prompt_cache_options": {"mode": "explicit"}}},
+    "limits": {"cost_usd": 2.0, "max_steps": 100, "repair_steps": 40, "repair_rounds": 2, "time_seconds": 3600},
     "sandbox": {"read_only_paths": [], "path": "", "network": False},
 }
 REPO_CONFIG = {"checks": [], "critical_triggers": []}

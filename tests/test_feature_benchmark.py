@@ -24,36 +24,49 @@ def result(task, arm, *, solved, first, worker, critic=None, repair=None, review
 
 
 class Report(unittest.TestCase):
-    def test_report_pairs_arms_and_separates_review_cost(self):
+    def write(self, rows):
         work = Path(tempfile.mkdtemp(prefix="klp-bench-test-"))
-        rows = [
-            result("t1", "frontier-solo", solved=True, first=True, worker="0.4000"),
-            result("t2", "frontier-solo", solved=False, first=False, worker="0.6000"),
-            result("t1", "klp", solved=True, first=True, worker="0.0200", critic="0.0300",
-                   reviews=[dict(verdict="PASS", packet_bytes=1, dispositions=[])]),
-            result("t2", "klp", solved=True, first=False, worker="0.0300", critic="0.0600", repair="0.0100",
-                   reviews=[dict(verdict="FAIL", packet_bytes=1, dispositions=["confirmed", "refuted"]),
-                            dict(verdict="PASS", packet_bytes=1, dispositions=[])],
-                   repairs=[dict(kept=True, closed=1, probes=1)]),
-            result("t3", "klp", solved=True, first=True, worker="0.0100", critic="0.0100"),  # no frontier pair
-        ]
         for row in rows:
             folder = work / "runs" / row["arm"] / row["task"]
             folder.mkdir(parents=True)
             (folder / "result.json").write_text(json.dumps(row))
+        return work
+
+    def test_review_arm_reuses_worker_candidates_and_carries_their_cost(self):
+        work = self.write([
+            result("t1", "frontier-solo", solved=True, first=True, worker="0.4000"),
+            result("t2", "frontier-solo", solved=False, first=False, worker="0.6000"),
+            result("t1", "worker", solved=True, first=True, worker="0.0200"),
+            result("t2", "worker", solved=False, first=False, worker="0.0300"),
+            result("t3", "worker", solved=True, first=True, worker="0.0100"),  # not in every arm: left out
+            dict(result("t1", "klp-sol", solved=True, first=True, worker="0", critic="0.0300",
+                        reviews=[dict(verdict="PASS", packet_bytes=1, dispositions=[])]), effort={"critic": {"usd": "0.0300"}}, usd="0.0300"),
+            dict(result("t2", "klp-sol", solved=True, first=False, worker="0", critic="0.0600", repair="0.0100",
+                        reviews=[dict(verdict="FAIL", packet_bytes=1, dispositions=["confirmed", "refuted"]),
+                                 dict(verdict="PASS", packet_bytes=1, dispositions=[])],
+                        repairs=[dict(kept=True, closed=1, probes=1)]),
+                 effort={"critic": {"usd": "0.0600"}, "repair": {"usd": "0.0100"}}, usd="0.0700"),
+        ])
         report = features.report(work)
         self.assertEqual(report["tasks_compared"], 2)
-        arms = report["arms"]
-        self.assertEqual((arms["frontier model alone"]["solved"], arms["frontier model alone"]["usd"]), (1, "1.0000"))
-        self.assertEqual((arms["low-cost worker alone"]["solved"], arms["low-cost worker alone"]["usd"]), (1, "0.0500"))
-        self.assertEqual((arms["KLP Standard"]["solved"], arms["KLP Standard"]["usd"]), (2, "0.1500"))
-        self.assertEqual(arms["KLP Standard"]["usd_per_solved"], "0.0750")
-        review = report["klp_review"]
+        rows = {v["arm"]: v for v in report["arms"].values()}
+        self.assertEqual((rows["frontier-solo"]["solved"], rows["frontier-solo"]["usd"]), (1, "1.0000"))
+        self.assertEqual((rows["worker"]["solved"], rows["worker"]["usd"]), (1, "0.0500"))
+        # review arm = its own critic and repair spend plus the worker spend it built on
+        self.assertEqual((rows["klp-sol"]["solved"], rows["klp-sol"]["usd"]), (2, "0.1500"))
+        self.assertEqual(rows["klp-sol"]["usd_per_solved"], "0.0750")
+        review = report["reviews"]["klp-sol"]
         self.assertEqual(review["fixed_by_review"], ["t2"])
         self.assertEqual(review["broken_by_review"], [])
-        self.assertEqual(review["findings"]["confirmed"], 1)
-        self.assertEqual(review["findings"]["refuted"], 1)
+        self.assertEqual((review["findings"]["confirmed"], review["findings"]["refuted"], review["findings_closed"]), (1, 1, 1))
         self.assertEqual(review["usd_by_role"], {"worker": "0.0500", "critic": "0.0900", "repair": "0.0100"})
+
+    def test_report_can_be_limited_to_named_arms(self):
+        work = self.write([result("t1", "frontier-solo", solved=True, first=True, worker="0.4000"),
+                           result("t1", "worker", solved=True, first=True, worker="0.0200"),
+                           result("t2", "worker", solved=True, first=True, worker="0.0200")])
+        self.assertEqual(features.report(work)["tasks_compared"], 1)
+        self.assertEqual(features.report(work, ["worker"])["tasks_compared"], 2)
 
 
 class TaskFolder(unittest.TestCase):

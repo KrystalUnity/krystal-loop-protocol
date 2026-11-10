@@ -27,10 +27,10 @@ PROTOCOL = "klp-standard/v0.1"
 
 @dataclass
 class Limits:
-    max_steps: int = 40          # worker turns for the first build
-    repair_steps: int = 20       # worker turns for the repair
-    repair_rounds: int = 1
-    command_timeout: float = 180
+    max_steps: int = 100         # worker turns for the first build
+    repair_steps: int = 40       # worker turns for each repair
+    repair_rounds: int = 2
+    command_timeout: float = 300
     check_timeout: float = 900
     cost_usd: float = 2.0        # per task, all roles
     time_seconds: float = 3600
@@ -60,8 +60,14 @@ def _repair_prompt(failed_checks: list, confirmed: list) -> str:
 
 def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox: Sandbox, task: str,
                  checks: list[str], scope: str, limits: Limits, out_dir: Path, task_id: str = "",
-                 critical_triggers: list[str] | None = None, project_revision: str = "") -> dict:
-    """Run one task. `critic=None` runs the worker alone (no review, no repair) for comparison arms."""
+                 critical_triggers: list[str] | None = None, project_revision: str = "",
+                 resume: dict | None = None) -> dict:
+    """Run one task. `critic=None` runs the worker alone (no review, no repair) for comparison arms.
+
+    `resume` continues from a recorded unreviewed run: {"receipt": that run's receipt, "messages": its
+    worker transcript}. The workspace and snapshot store must be copies of that run's. The build is
+    not repeated; review and repair start from the recorded candidate.
+    """
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     started = time.time()
@@ -69,7 +75,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
     if critic is not None and critic.family == worker.family:
         raise ValueError("worker and critic must be different model families for an independent review")
     snapshots = Snapshots(sandbox, out_dir / "snapshots")
-    base = snapshots.take("base")
+    base = resume["receipt"]["base_revision"] if resume else snapshots.take("base")
     receipt: dict = dict(
         protocol=PROTOCOL, task_id=task_id or scope, base_revision=base, project_revision=project_revision,
         before_work=dict(task=task, checks=checks, limits=asdict(limits), critical_triggers=list(critical_triggers or []),
@@ -100,12 +106,20 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         return settled
 
     try:
-        session = run_worker(ledger, worker, sandbox, task, scope=scope, max_steps=limits.max_steps,
-                             command_timeout=limits.command_timeout)
-        candidate = record_candidate("candidate", session["handover"])
+        if resume:
+            candidate = dict(resume["receipt"]["candidates"][0])
+            snapshots.restore(candidate["revision"])
+            receipt["candidates"].append(candidate)
+            receipt["errors"] += resume["receipt"]["errors"]
+            receipt["resumed_from"] = resume["receipt"]["task_id"]
+            session = dict(messages=resume["messages"], handover=candidate["handover"], finished=True, steps=0)
+        else:
+            session = run_worker(ledger, worker, sandbox, task, scope=scope, max_steps=limits.max_steps,
+                                 command_timeout=limits.command_timeout)
+            candidate = record_candidate("candidate", session["handover"])
+            if not session["finished"]:
+                receipt["errors"].append("worker used all its steps without handing over")
         final = candidate["revision"]
-        if not session["finished"]:
-            receipt["errors"].append("worker used all its steps without handing over")
         if critic is None:
             state = "unreviewed"
         else:

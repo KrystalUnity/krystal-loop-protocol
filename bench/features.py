@@ -184,7 +184,16 @@ def prepare(work: Path, jobs: int) -> None:
 
 # ---------------------------------------------------------------- run
 
-ARMS = {"frontier-solo": ("frontier", None), "klp": ("worker", "critic")}
+# name: (worker model, critic model, reuse the "worker" arm's candidate, row label)
+ARMS = {
+    "frontier-solo": ("frontier", None, False, "Frontier model alone (gpt-6.1-sol)"),
+    "astra-solo": ("astra", None, False, "Heavy model alone (gpt-6-astra)"),
+    "worker": ("worker", None, False, "Low-cost worker alone (deepseek-flash)"),
+    "klp-sol": ("worker", "critic", True, "KLP Standard, gpt-6.1-sol critic"),
+    "klp-astra": ("worker", "critic_astra", True, "KLP Standard, gpt-6-astra critic"),
+    "klp-terra": ("worker", "critic_terra", True, "KLP Standard, gpt-6.1-terra critic"),
+    "klp": ("worker", "critic", False, "KLP Standard (single pass)"),
+}
 
 
 def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) -> dict:
@@ -192,23 +201,40 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
     if (out / "result.json").exists():
         return json.loads((out / "result.json").read_text())
     env_dir = work / "envs" / task["env"]
-    ws = fresh_workspace(env_dir, out / "ws")
-    worker_key, critic_key = ARMS[arm]
+    worker_key, critic_key, reuse, _ = ARMS[arm]
     check = f"{PYTEST} -x {' '.join(task['test_files'])}"
     statement = Path(task["statement"]).read_text().strip()
     prompt = f"{statement}\n\nExisting tests that must keep passing:\n$ {check}"
     scope = f"{arm}/{task['id']}"
+    resume, known = None, {}
     try:
+        if reuse:
+            # Review the worker arm's exact candidate: same files, same snapshot store, same session.
+            source = work / "runs" / "worker" / task["id"]
+            built = json.loads((source / "result.json").read_text())
+            if built["state"] == "harness_error":
+                raise RuntimeError("worker arm has no candidate for this task")
+            shutil.rmtree(out, ignore_errors=True)
+            out.mkdir(parents=True)
+            sh("cp", "-a", str(source / "ws"), str(out / "ws"))
+            sh("cp", "-a", str(source / "snapshots"), str(out / "snapshots"))
+            resume = dict(receipt=json.loads((source / "receipt.json").read_text()),
+                          messages=json.loads((source / "worker-transcript.json").read_text()))
+            known = built["grades"]
+            ws = out / "ws"
+        else:
+            ws = fresh_workspace(env_dir, out / "ws")
         receipt = run_standard(ledger=ledger, worker=Model.from_spec(MODELS[worker_key]),
                                critic=Model.from_spec(MODELS[critic_key]) if critic_key else None,
                                sandbox=box(ws, env_dir), task=prompt, checks=[check], scope=scope, limits=limits,
-                               out_dir=out, task_id=task["id"], project_revision=task["commit"])
+                               out_dir=out, task_id=task["id"], project_revision=task["commit"], resume=resume)
     except Exception as error:  # a harness fault is a recorded failure, never a silent skip
+        out.mkdir(parents=True, exist_ok=True)
         result = dict(task=task["id"], arm=arm, state="harness_error", error=f"{type(error).__name__}: {error}"[:400],
                       grades={}, usd=str(ledger.spent(scope=scope)), effort=ledger.summary(scope=scope))
         (out / "result.json").write_text(json.dumps(result, indent=1))
         return result
-    grades, snapshots = {}, Snapshots(box(ws, env_dir), out / "snapshots")
+    grades, snapshots = dict(known), Snapshots(box(ws, env_dir), out / "snapshots")
     for candidate in receipt["candidates"]:
         if candidate["revision"] not in grades:
             patch = snapshots.patch(receipt["base_revision"], candidate["revision"])
@@ -236,75 +262,115 @@ def run(work: Path, arms: list[str], cap: float, jobs: int, limit: int | None, i
     if limit:
         tasks = tasks[:limit]
     ledger = Ledger(work / "ledger.jsonl", cap)
-    jobs_list = [(t, a) for t in tasks for a in arms]
-    print(f"{len(tasks)} tasks x {len(arms)} arms, cap ${cap}, already spent ${ledger.spent():.4f}", flush=True)
-    with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
-        futures = {pool.submit(run_one, work, ledger, t, a, limits): (t["id"], a) for t, a in jobs_list}
-        for future in concurrent.futures.as_completed(futures):
-            r = future.result()
-            print(f"  {r['arm']:14s} {r['task']:38s} {r['state']:17s} solved={r.get('solved')} "
-                  f"first={r.get('first_candidate_solved')} ${float(r['usd']):.4f} total=${ledger.spent():.3f}", flush=True)
+    spent_before = ledger.spent()
+    ledger.cap += spent_before  # the cap is for this invocation; earlier spend stays on the ledger
+    print(f"{len(tasks)} tasks x {len(arms)} arms, cap ${cap} for this run, ledger so far ${spent_before:.4f}", flush=True)
+    # Arms that review the worker arm's candidates wait until those candidates exist.
+    for wave in ([a for a in arms if not ARMS[a][2]], [a for a in arms if ARMS[a][2]]):
+        with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
+            futures = [pool.submit(run_one, work, ledger, t, a, limits) for t in tasks for a in wave]
+            for future in concurrent.futures.as_completed(futures):
+                r = future.result()
+                print(f"  {r['arm']:14s} {r['task']:38s} {r['state']:17s} solved={r.get('solved')} "
+                      f"first={r.get('first_candidate_solved')} ${float(r['usd']):.4f} "
+                      f"run=${ledger.spent() - spent_before:.3f}", flush=True)
     report(work)
 
 
 # ---------------------------------------------------------------- report
 
-def report(work: Path) -> dict:
+def role_usd(result: dict, roles: tuple | None = None) -> D:
+    return sum((D(v["usd"]) for k, v in result.get("effort", {}).items() if roles is None or k in roles), D(0))
+
+
+def report(work: Path, arms: list[str] | None = None) -> dict:
+    """One row per arm over the tasks every reported arm finished. Review arms include their worker's cost."""
     rows = [json.loads(p.read_text()) for p in sorted((work / "runs").glob("*/*/result.json"))]
     by_arm: dict = {}
     for r in rows:
-        by_arm.setdefault(r["arm"], []).append(r)
-    common = set.intersection(*[{r["task"] for r in v} for v in by_arm.values()]) if by_arm else set()
-    table = {}
-
-    def line(name: str, items: list, solved_key: str, usd) -> None:
-        solved = sum(bool(r.get(solved_key)) for r in items)
-        total = sum((usd(r) for r in items), D(0))
-        table[name] = dict(tasks=len(items), solved=solved, solve_rate=round(solved / len(items), 4) if items else None,
-                           usd=str(total), usd_per_task=str(total / len(items)) if items else None,
-                           usd_per_solved=str(total / solved) if solved else None,
-                           median_seconds=statistics.median([r.get("seconds", 0) for r in items]) if items else None)
-
-    def role_usd(r: dict, roles: tuple) -> D:
-        return sum((D(v["usd"]) for k, v in r.get("effort", {}).items() if k in roles), D(0))
-
-    frontier = [r for r in by_arm.get("frontier-solo", []) if r["task"] in common]
-    klp = [r for r in by_arm.get("klp", []) if r["task"] in common]
-    if frontier:
-        line("frontier model alone", frontier, "solved", lambda r: D(r["usd"]))
-    if klp:
-        line("low-cost worker alone", klp, "first_candidate_solved", lambda r: role_usd(r, ("worker",)))
-        line("KLP Standard", klp, "solved", lambda r: D(r["usd"]))
-    review = dict(
-        reviews=sum(len(r["reviews"]) for r in klp), fail_verdicts=sum(v["verdict"] == "FAIL" for r in klp for v in r["reviews"]),
-        findings={d: sum(v["dispositions"].count(d) for r in klp for v in r["reviews"])
-                  for d in ("confirmed", "refuted", "unverified", "advisory")},
-        repairs=sum(len(r["repairs"]) for r in klp), repairs_kept=sum(bool(x["kept"]) for r in klp for x in r["repairs"]),
-        fixed_by_review=sorted(r["task"] for r in klp if r["solved"] and not r["first_candidate_solved"]),
-        broken_by_review=sorted(r["task"] for r in klp if not r["solved"] and r["first_candidate_solved"]),
-        usd_by_role={role: str(sum((role_usd(r, (role,)) for r in klp), D(0))) for role in ("worker", "critic", "repair")})
-    states: dict = {}
-    for r in rows:
-        states.setdefault(r["arm"], {}).setdefault(r["state"], 0)
-        states[r["arm"]][r["state"]] += 1
-    out = dict(tasks_compared=len(common), arms=table, klp_review=review, states=states)
+        if r["arm"] in ARMS and (arms is None or r["arm"] in arms):
+            by_arm.setdefault(r["arm"], {})[r["task"]] = r
+    common = sorted(set.intersection(*[set(v) for v in by_arm.values()])) if by_arm else []
+    built = by_arm.get("worker", {})
+    table, reviews = {}, {}
+    for arm in [a for a in ARMS if a in by_arm]:
+        items = [by_arm[arm][t] for t in common]
+        reuse = ARMS[arm][2]
+        cost = [D(r["usd"]) + (role_usd(built[r["task"]]) if reuse and r["task"] in built else D(0)) for r in items]
+        solved, total = sum(bool(r.get("solved")) for r in items), sum(cost, D(0))
+        table[ARMS[arm][3]] = dict(
+            arm=arm, tasks=len(items), solved=solved, usd=str(total),
+            usd_per_task=str(total / len(items)) if items else None, usd_per_solved=str(total / solved) if solved else None,
+            median_seconds=statistics.median([r.get("seconds", 0) for r in items]) if items else None,
+            states=dict(sorted({s: sum(r["state"] == s for r in items) for s in {r["state"] for r in items}}.items())))
+        if ARMS[arm][1]:
+            if arm == "klp":  # single-pass arm: the worker's own pre-review result is a row too
+                table["Low-cost worker alone (same runs, before review)"] = dict(
+                    arm="klp:first-candidate", tasks=len(items), solved=sum(bool(r.get("first_candidate_solved")) for r in items),
+                    usd=str(sum((role_usd(r, ("worker",)) for r in items), D(0))))
+            reviews[arm] = dict(
+                reviews=sum(len(r["reviews"]) for r in items),
+                findings={d: sum(v["dispositions"].count(d) for r in items for v in r["reviews"])
+                          for d in ("confirmed", "refuted", "unverified", "advisory")},
+                repairs=sum(len(r["repairs"]) for r in items), repairs_kept=sum(bool(x["kept"]) for r in items for x in r["repairs"]),
+                findings_closed=sum(x["closed"] for r in items for x in r["repairs"]),
+                fixed_by_review=sorted(r["task"] for r in items if r["solved"] and not r["first_candidate_solved"]),
+                broken_by_review=sorted(r["task"] for r in items if not r["solved"] and r["first_candidate_solved"]),
+                usd_by_role={role: str(sum((role_usd(r, (role,)) for r in items), D(0))
+                                       + (sum((role_usd(built[r["task"]]) for r in items if r["task"] in built), D(0))
+                                          if reuse and role == "worker" else D(0)))
+                             for role in ("worker", "critic", "repair")})
+    out = dict(tasks_compared=len(common), arms=table, reviews=reviews)
     (work / "report.json").write_text(json.dumps(out, indent=1))
     print(json.dumps(out, indent=1))
     return out
 
 
-def export(work: Path, out: Path, examples: list[str]) -> None:
+def reprice(work: Path) -> None:
+    """Recompute every recorded cost from token usage and the current price list. Usage is never changed."""
+    from klp.llm import load_prices, price
+    from klp.standard import render_receipt
+    prices = load_prices()
+    ledger_file = work / "ledger.jsonl"
+    rows = [json.loads(line) for line in ledger_file.read_text().splitlines()]
+    for row in rows:
+        if row.get("usage"):
+            usd = price(row["usage"], prices.get(row["model"]))
+            row["usd"] = None if usd is None else str(usd)
+    ledger_file.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    ledger = Ledger(ledger_file, 0)
+    for result_file in sorted((work / "runs").glob("*/*/result.json")):
+        result = json.loads(result_file.read_text())
+        scope = f"{result['arm']}/{result['task']}"
+        result["usd"], result["effort"] = str(ledger.spent(scope=scope)), ledger.summary(scope=scope)
+        result_file.write_text(json.dumps(result, indent=1))
+        receipt_file = result_file.with_name("receipt.json")
+        if receipt_file.exists():
+            receipt = json.loads(receipt_file.read_text())
+            receipt["completion"]["measured_effort"].update(by_role=result["effort"], usd=result["usd"])
+            receipt_file.write_text(json.dumps(receipt, indent=1))
+            result_file.with_name("receipt.md").write_text(render_receipt(receipt))
+    print(f"repriced {len(rows)} calls; total ${ledger.spent():.4f}")
+    report(work)
+
+
+def export(work: Path, out: Path, examples: list[str], arms_filter: list[str] | None = None) -> None:
     """Write the public evidence pack: per-run results, the call ledger and the report. No prompts or model text."""
     out.mkdir(parents=True, exist_ok=True)
     tasks = json.loads((work / "tasks.json").read_text())
     rows = [json.loads(p.read_text()) for p in sorted((work / "runs").glob("*/*/result.json"))]
+    if arms_filter:
+        rows = [r for r in rows if r["arm"] in arms_filter]
     for row in rows:
         row["grades"] = {rev: dict(passed=g["passed"], stage=g["stage"]) for rev, g in row.get("grades", {}).items()}
     keep = ("id", "scope", "role", "model", "returned_model", "status", "usage", "usd", "seconds", "finish_reason")
     calls = [{k: r.get(k) for k in keep} for r in (json.loads(line) for line in (work / "ledger.jsonl").read_text().splitlines())]
+    if arms_filter:
+        calls = [c for c in calls if c["scope"].split("/")[0] in arms_filter]
     (out / "results.json").write_text(json.dumps(rows, indent=1) + "\n")
     (out / "ledger.jsonl").write_text("".join(json.dumps(c) + "\n" for c in calls))
-    (out / "report.json").write_text(json.dumps(report(work), indent=1) + "\n")
+    arms = sorted({r["arm"] for r in rows})
+    (out / "report.json").write_text(json.dumps(report(work, arms), indent=1) + "\n")
     (out / "tasks.json").write_text(json.dumps(dict(
         dataset=tasks["dataset"], revision=tasks["revision"],
         tasks=[dict(id=t["id"], repository=json.loads((work / "envs" / t["env"] / "env.json").read_text())["url"],
@@ -312,24 +378,25 @@ def export(work: Path, out: Path, examples: list[str]) -> None:
         indent=1) + "\n")
     (out / "models.json").write_text(json.dumps(MODELS, indent=1) + "\n")
     shutil.copy(Path(__file__).resolve().parents[1] / "klp" / "prices.json", out / "prices.json")
-    for name in examples:
-        source = work / "runs" / "klp" / name / "receipt.md"
+    for name in examples:  # "arm/task-id"
+        source = work / "runs" / name / "receipt.md"
         if source.exists():
             (out / "receipts").mkdir(exist_ok=True)
-            shutil.copy(source, out / "receipts" / f"{name}.md")
+            shutil.copy(source, out / "receipts" / (name.replace("/", "--") + ".md"))
     print(f"exported {len(rows)} run results and {len(calls)} call receipts to {out}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=("prepare", "run", "report", "export"))
+    parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice"))
     parser.add_argument("--work", type=Path, required=True)
-    parser.add_argument("--arms", default="frontier-solo,klp")
+    parser.add_argument("--arms", default="frontier-solo,worker,klp-sol",
+                        help="comma-separated: " + ", ".join(ARMS))
     parser.add_argument("--cap", type=float, default=5.0, help="hard USD limit across the whole run")
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--ids", default="")
-    parser.add_argument("--max-steps", type=int, default=40)
+    parser.add_argument("--max-steps", type=int, default=100)
     parser.add_argument("--task-cap", type=float, default=2.0)
     parser.add_argument("--out", type=Path, help="export: destination folder")
     parser.add_argument("--examples", default="", help="export: task ids whose receipts to include")
@@ -340,10 +407,13 @@ def main() -> None:
     elif args.command == "run":
         run(args.work, args.arms.split(","), args.cap, args.jobs, args.limit,
             [i for i in args.ids.split(",") if i], Limits(max_steps=args.max_steps, cost_usd=args.task_cap))
+    elif args.command == "reprice":
+        reprice(args.work)
     elif args.command == "export":
-        export(args.work, args.out, [i for i in args.examples.split(",") if i])
+        export(args.work, args.out, [i for i in args.examples.split(",") if i],
+               [a for a in args.arms.split(",") if a] if args.arms != parser.get_default("arms") else None)
     else:
-        report(args.work)
+        report(args.work, [a for a in args.arms.split(",") if a] if args.arms != parser.get_default("arms") else None)
 
 
 if __name__ == "__main__":

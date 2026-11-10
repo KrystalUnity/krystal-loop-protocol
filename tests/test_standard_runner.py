@@ -206,6 +206,28 @@ class StandardLoop(unittest.TestCase):
         self.assertIn(".gitattributes", packet)
         self.assertEqual(receipt["completion"]["state"], "completed")
 
+    def test_review_resumes_from_a_recorded_unreviewed_run(self):
+        wrong = bash("printf 'def double(x):\\n    return x + 2\\n' > calc.py")
+        right = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py")
+        built, _, _ = self.run_loop([wrong, say("done")], [], critic_model=None)
+        transcript = json.loads((self.tmp / "out/worker-transcript.json").read_text())
+        # Another arm reviews that exact candidate from copies of the workspace and snapshot store.
+        shutil.copytree(self.tmp / "ws", self.tmp / "ws2", symlinks=True)
+        shutil.copytree(self.tmp / "out/snapshots", self.tmp / "out2/snapshots", symlinks=True)
+        probe = "import sys; sys.path.insert(0, '/workspace/repo'); import calc; assert calc.double(5) == 10"
+        script = Script([right, say("fixed")], [verdict(finding("double(5) is 7", probe)), verdict()])
+        ledger = Ledger(self.tmp / "ledger2.jsonl", 5.0, prices=PRICES, transport=script)
+        receipt = run_standard(ledger=ledger, worker=WORKER, critic=CRITIC, sandbox=Sandbox(self.tmp / "ws2"),
+                               task="Make double(x) return twice x.", checks=["python3 check.py"], scope="t2",
+                               limits=Limits(max_steps=5, repair_steps=5), out_dir=self.tmp / "out2",
+                               resume=dict(receipt=built, messages=transcript))
+        self.assertEqual(receipt["completion"]["state"], "completed")
+        self.assertEqual(receipt["candidates"][0]["revision"], built["candidates"][0]["revision"])
+        self.assertEqual(receipt["reviews"][0]["reviewed_revision"], built["candidates"][0]["revision"])
+        self.assertEqual(sorted(ledger.summary(scope="t2")), ["critic", "repair"])  # the build was not repeated
+        self.assertIn("x * 2", (self.tmp / "ws2/repo/calc.py").read_text())
+        self.assertIn("x + 2", (self.tmp / "ws/repo/calc.py").read_text())  # the recorded run is untouched
+
     def test_runner_git_ignores_a_planted_git_on_the_worker_path(self):
         from klp.snapshot import Snapshots
         tools = self.tmp / "ws" / "repo" / "tools"
