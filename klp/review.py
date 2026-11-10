@@ -222,23 +222,38 @@ def disposition(result: dict, command: str) -> str:
     return "confirmed"
 
 
-def _stage(sandbox: Sandbox, snapshots: Snapshots, probe: dict, command: str, head: str, timeout: float, limit: int):
-    """Write a probe file and run it against the candidate, leaving the candidate as it was."""
+def probe_command(probe: dict, rules: dict | None, repo_dir: str) -> tuple[str, str]:
+    """Where the runner writes a probe file, and the command with that path in it. A critic may name its own
+    file by a bare or relative path; the command gets the path the file is really written to."""
     name = re.sub(r"[^A-Za-z0-9_.-]", "_", Path(probe["filename"]).name) or "probe.txt"
     path = f"/workspace/probes/{name}"
+
+    def located(token: str) -> str:
+        file = token.split("::")[0]
+        if file != path and (file == name or file.endswith("/" + name)):
+            return path + token[len(file):]
+        return token
+
+    command = " ".join(located(token) for token in probe["command"].split(" "))
+    return path, under_project_rules(command, rules, repo_dir)
+
+
+def _stage(sandbox: Sandbox, snapshots: Snapshots, probe: dict, path: str, command: str, head: str, timeout: float,
+           limit: int) -> dict:
+    """Write a probe file and run it against the candidate, leaving the candidate as it was."""
     try:
         sandbox.write_file(path, probe["content"])
         result = sandbox.run(command, timeout=timeout, limit=limit)
     except RuntimeError as error:  # the probe could not be staged; nothing was proven
         result = dict(returncode=None, timed_out=True, output=str(error))
     snapshots.restore(head)
-    return path, result
+    return result
 
 
 def run_probe(sandbox: Sandbox, snapshots: Snapshots, finding: dict, head: str, *, rules: dict | None = None,
               timeout: float = 180) -> dict:
-    command = under_project_rules(finding["probe"]["command"], rules, sandbox.repo_dir)
-    path, result = _stage(sandbox, snapshots, finding["probe"], command, head, timeout, 3000)
+    path, command = probe_command(finding["probe"], rules, sandbox.repo_dir)
+    result = _stage(sandbox, snapshots, finding["probe"], path, command, head, timeout, 3000)
     return dict(command=command, file=path, returncode=result["returncode"], timed_out=result["timed_out"],
                 output=result["output"], disposition=disposition(result, command))
 
@@ -262,9 +277,9 @@ def adjudicate(sandbox: Sandbox, snapshots: Snapshots, verdict: dict, head: str,
 def run_acceptance(sandbox: Sandbox, snapshots: Snapshots, acceptance: dict, head: str, *, rules: dict | None = None,
                    timeout: float = 300) -> tuple[dict, list]:
     """Execute the critic's acceptance file. Each test that fails on its own is one confirmed finding."""
-    command = re.sub(r"\s(-x|--exitfirst|--maxfail[= ]\d+)(?=\s|$)", "", acceptance["command"])
-    command = under_project_rules(command, rules, sandbox.repo_dir)
-    path, result = _stage(sandbox, snapshots, acceptance, command, head, timeout, 8000)
+    path, command = probe_command(acceptance, rules, sandbox.repo_dir)
+    command = re.sub(r"\s(-x|--exitfirst|--maxfail[= ]\d+)(?=\s|$)", "", command)
+    result = _stage(sandbox, snapshots, acceptance, path, command, head, timeout, 8000)
     outcome = disposition(result, command)
     failed = list(dict.fromkeys(re.findall(r"^FAILED \S*?::(\S+)", result["output"], flags=re.M))) if outcome == "confirmed" else []
     record = dict(file=path, command=command, returncode=result["returncode"], timed_out=result["timed_out"],

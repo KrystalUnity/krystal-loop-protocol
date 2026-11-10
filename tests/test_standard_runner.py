@@ -14,8 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from klp.llm import Ledger, Model, ProviderError, price, rates_at, read_usage, reply_from  # noqa: E402
-from klp.review import (critic_system, disposition, parse_verdict, project_test_rules, run_acceptance,  # noqa: E402
-                        under_project_rules)
+from klp.review import (critic_system, disposition, parse_verdict, probe_command, project_test_rules,  # noqa: E402
+                        run_acceptance, under_project_rules)
 from klp.sandbox import Sandbox  # noqa: E402
 from klp.standard import Limits, run_standard  # noqa: E402
 
@@ -381,6 +381,11 @@ class Parsing(unittest.TestCase):
         rules = dict(file="pyproject.toml", settings="{}")
         self.assertEqual(under_project_rules("python -m pytest -q /workspace/probes/t.py", rules, "/workspace/repo"),
                          "python -m pytest -c /workspace/repo/pyproject.toml --rootdir /workspace/repo -q /workspace/probes/t.py")
+        # However the critic spells its probe file, the command gets the path the runner wrote it to.
+        for spelled in ("probes/test_f1.py", "test_f1.py", "tests/../workspace/probes/test_f1.py", "/workspace/probes/test_f1.py"):
+            probe = {"filename": "test_f1.py", "content": "x", "command": f"python -m pytest -q {spelled}::test_a"}
+            self.assertEqual(probe_command(probe, None, "/workspace/repo"),
+                             ("/workspace/probes/test_f1.py", "python -m pytest -q /workspace/probes/test_f1.py::test_a"))
         for untouched in ("python3 /workspace/probes/t.py", "python -m pytest -c other.ini t.py", "go test ./..."):
             self.assertEqual(under_project_rules(untouched, rules, "/workspace/repo"), untouched)
         self.assertEqual(under_project_rules("pytest t.py", None, "/r"), "pytest t.py")
