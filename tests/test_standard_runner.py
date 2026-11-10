@@ -121,10 +121,11 @@ class StandardLoop(unittest.TestCase):
         still_wrong = bash("printf 'def double(x):\\n    return x + 3\\n' > calc.py")
         probe = "import sys; sys.path.insert(0, '/workspace/repo'); import calc; assert calc.double(5) == 10"
         # The critic passes both repairs, but its own probe still fails, so the finding is carried, not dropped.
+        still_failing = say(json.dumps({"verdict": "FAIL", "profile_assessment": "eligible", "findings": []}))
         receipt, _, _ = self.run_loop([wrong, say("done"), still_wrong, say("fixed"), still_wrong, say("fixed again")],
-                                      [verdict(finding("double(5) is 7", probe)), verdict(), verdict()])
+                                      [verdict(finding("double(5) is 7", probe)), verdict(), still_failing])
         self.assertEqual(receipt["completion"]["state"], "budget_exhausted")
-        self.assertEqual([r["verdict"] for r in receipt["reviews"]], ["FAIL", "PASS", "PASS"])
+        self.assertEqual([r["verdict"] for r in receipt["reviews"]], ["FAIL", "PASS", "FAIL"])
         carried = receipt["reviews"][-1]["findings"][0]
         self.assertEqual((carried["id"], carried["disposition"], carried["carried"]), ("F1", "confirmed", True))
         self.assertEqual([f["id"] for f in receipt["completion"]["unresolved_findings"]], ["F1"])
@@ -350,6 +351,10 @@ class Parsing(unittest.TestCase):
                     json.dumps({"verdict": "FAIL", "findings": []})):
             with self.assertRaises(ValueError):
                 parse_verdict(bad)
+        # On a re-review with an earlier finding still open, FAIL needs no new finding. PASS with a blocker never parses.
+        self.assertEqual(parse_verdict(json.dumps({"verdict": "FAIL", "findings": []}), open_earlier=True)["verdict"], "FAIL")
+        with self.assertRaises(ValueError):
+            parse_verdict(json.dumps({"verdict": "PASS", "findings": [{"claim": "x", "blocking": True}]}), open_earlier=True)
 
     def test_probe_dispositions(self):
         run = lambda rc, timed_out=False: dict(returncode=rc, timed_out=timed_out)  # noqa: E731

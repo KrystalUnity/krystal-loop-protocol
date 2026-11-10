@@ -193,21 +193,21 @@ ARMS = {
     "klp-astra": ("worker", "critic_astra", "worker", "KLP Standard, gpt-6-astra critic", False),
     "klp-terra": ("worker", "critic_terra", "worker", "KLP Standard, gpt-6.1-terra critic", False),
     "klp": ("worker", "critic", None, "KLP Standard (single pass)", False),
-    # klp-standard/v0.2 on the same candidates as the arms above
-    "v2-sol": ("worker", "critic", "worker", "KLP Standard v0.2, gpt-6.1-sol critic", False),
-    "v2a-sol": ("worker", "critic", "worker", "KLP Standard v0.2 with acceptance file, gpt-6.1-sol critic", True),
-    "v2-grok": ("worker", "critic_grok", "worker", "KLP Standard v0.2, grok-4.7 critic", False),
-    "v2a-grok": ("worker", "critic_grok", "worker", "KLP Standard v0.2 with acceptance file, grok-4.7 critic", True),
-    "v2-argon": ("worker", "critic_argon", "worker", "KLP Standard v0.2, Gemini 4 Argon critic on a subscription CLI", False),
-    "v2a-argon": ("worker", "critic_argon", "worker", "KLP Standard v0.2 with acceptance file, Gemini 4 Argon critic on a subscription CLI", True),
-    "v2-kimi": ("worker", "critic_kimi", "worker", "KLP Standard v0.2, Kimi K3.1 Pro critic on a subscription CLI", False),
-    "v2a-kimi": ("worker", "critic_kimi", "worker", "KLP Standard v0.2 with acceptance file, Kimi K3.1 Pro critic on a subscription CLI", True),
-    "v2-qwen": ("worker", "critic_qwen", "worker", "KLP Standard v0.2, Qwen 3.8 Max critic on a subscription CLI", False),
-    "v2a-qwen": ("worker", "critic_qwen", "worker", "KLP Standard v0.2 with acceptance file, Qwen 3.8 Max critic on a subscription CLI", True),
-    # a fresh set of worker candidates, built and reviewed under v0.2
+    # runner 0.5 on the same candidates as the arms above
+    "v2-sol": ("worker", "critic", "worker", "KLP Standard (runner 0.5), gpt-6.1-sol critic", False),
+    "v2a-sol": ("worker", "critic", "worker", "KLP Standard (runner 0.5) with acceptance file, gpt-6.1-sol critic", True),
+    "v2-grok": ("worker", "critic_grok", "worker", "KLP Standard (runner 0.5), grok-4.7 critic", False),
+    "v2a-grok": ("worker", "critic_grok", "worker", "KLP Standard (runner 0.5) with acceptance file, grok-4.7 critic", True),
+    "v2-argon": ("worker", "critic_argon", "worker", "KLP Standard (runner 0.5), Gemini 4 Argon critic on a subscription CLI", False),
+    "v2a-argon": ("worker", "critic_argon", "worker", "KLP Standard (runner 0.5) with acceptance file, Gemini 4 Argon critic on a subscription CLI", True),
+    "v2-kimi": ("worker", "critic_kimi", "worker", "KLP Standard (runner 0.5), Kimi K3.1 Pro critic on a subscription CLI", False),
+    "v2a-kimi": ("worker", "critic_kimi", "worker", "KLP Standard (runner 0.5) with acceptance file, Kimi K3.1 Pro critic on a subscription CLI", True),
+    "v2-qwen": ("worker", "critic_qwen", "worker", "KLP Standard (runner 0.5), Qwen 3.8 Max critic on a subscription CLI", False),
+    "v2a-qwen": ("worker", "critic_qwen", "worker", "KLP Standard (runner 0.5) with acceptance file, Qwen 3.8 Max critic on a subscription CLI", True),
+    # a fresh set of worker candidates, built and reviewed with runner 0.5
     "worker-3": ("worker", None, None, "Low-cost worker alone, run 3 (deepseek-flash)", False),
-    "klp-3": ("worker", "critic", "worker-3", "KLP Standard v0.2, run 3, gpt-6.1-sol critic", False),
-    "klp-3a": ("worker", "critic", "worker-3", "KLP Standard v0.2 with acceptance file, run 3, gpt-6.1-sol critic", True),
+    "klp-3": ("worker", "critic", "worker-3", "KLP Standard, run 3, gpt-6.1-sol critic", False),
+    "klp-3a": ("worker", "critic", "worker-3", "KLP Standard with acceptance file, run 3, gpt-6.1-sol critic", True),
 }
 
 

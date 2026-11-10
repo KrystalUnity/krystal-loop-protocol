@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "krystal-loop-protocol"
-version = "0.4.0"
+version = "0.5.0"
 description = "KLP Standard runner: bounded agent work, executed checks, independent review, one receipt."
 readme = "README.md"
 requires-python = ">=3.11"

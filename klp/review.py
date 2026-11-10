@@ -76,7 +76,8 @@ REREVIEW_EXTRA = """
 This is a re-review after a repair. The packet lists the earlier findings and whether each probe now passes.
 A finding whose probe still fails stays open without you repeating it. If the worker's handover shows that
 such a finding asks for something the task statement does not require, list its id under "withdrawn".
-Report only new problems that the repair introduced or left behind.
+Report only new problems that the repair introduced or left behind. While an earlier finding is still open,
+the verdict may be FAIL with no new finding.
 """
 REREVIEW_KEYS = ',\n "withdrawn": ["id of an earlier finding you withdraw"]'
 
@@ -159,8 +160,10 @@ def _probe(raw) -> dict | None:
     return None
 
 
-def parse_verdict(text: str) -> dict:
-    """Strict: one JSON object with a consistent verdict. No substring salvage."""
+def parse_verdict(text: str, *, open_earlier: bool = False) -> dict:
+    """Strict: one JSON object with a consistent verdict. No substring salvage.
+
+    `open_earlier` says an earlier finding is still open, which is the one case where FAIL needs no new finding."""
     try:
         data = json.loads(text)
     except (TypeError, ValueError) as error:
@@ -173,7 +176,8 @@ def parse_verdict(text: str) -> dict:
             raise ValueError("malformed finding")
         findings.append(dict(id=str(raw.get("id") or f"F{index + 1}"), claim=raw["claim"], blocking=raw["blocking"],
                              evidence=str(raw.get("evidence") or ""), probe=_probe(raw.get("probe"))))
-    if (data["verdict"] == "FAIL") != any(f["blocking"] for f in findings):
+    blocking = any(f["blocking"] for f in findings)
+    if (data["verdict"] == "PASS" and blocking) or (data["verdict"] == "FAIL" and not blocking and not open_earlier):
         raise ValueError("verdict inconsistent with findings")
     profile = data.get("profile_assessment")
     if profile not in ("eligible", "critical_trigger", "insufficient_evidence"):
@@ -185,7 +189,7 @@ def parse_verdict(text: str) -> dict:
 
 
 def review(ledger: Ledger, critic: Model, packet: str, *, scope: str, role: str = "critic", acceptance: bool = False,
-           rereview: bool = False) -> dict:
+           rereview: bool = False, open_earlier: bool = False) -> dict:
     """One critic pass. A malformed reply gets one more attempt; both are billed and recorded."""
     system = critic_system(acceptance=acceptance, rereview=rereview) + (COMMAND_NOTE if critic.api == "command" else "")
     messages = [{"role": "system", "content": system}, {"role": "user", "content": packet}]
@@ -193,7 +197,7 @@ def review(ledger: Ledger, critic: Model, packet: str, *, scope: str, role: str 
     for attempt in range(2):
         reply = ledger.chat(critic, messages, role=role, scope=scope, extra={"response_format": {"type": "json_object"}})
         try:
-            verdict = parse_verdict(reply.get("content") or "")
+            verdict = parse_verdict(reply.get("content") or "", open_earlier=open_earlier)
             verdict.update(model=critic.name, family=critic.family, attempts=attempt + 1, packet_bytes=len(packet.encode()))
             return verdict
         except ValueError as exc:

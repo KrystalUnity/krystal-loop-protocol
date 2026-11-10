@@ -22,7 +22,8 @@ from .sandbox import Sandbox, clip
 from .snapshot import Snapshots
 from .worker import run_worker
 
-PROTOCOL = "klp-standard/v0.2"
+PROTOCOL = "klp-standard/v0.1"
+RUNNER = "0.5.0"  # this implementation of the profile; receipts carry both
 
 
 @dataclass
@@ -80,7 +81,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
     snapshots = Snapshots(sandbox, out_dir / "snapshots")
     base = resume["receipt"]["base_revision"] if resume else snapshots.take("base")
     receipt: dict = dict(
-        protocol=PROTOCOL, task_id=task_id or scope, base_revision=base, project_revision=project_revision,
+        protocol=PROTOCOL, runner=RUNNER, task_id=task_id or scope, base_revision=base, project_revision=project_revision,
         before_work=dict(task=task, checks=checks, limits=asdict(limits), critical_triggers=list(critical_triggers or []),
                          worker=dict(model=worker.name, family=worker.family),
                          critic=None if critic is None else dict(model=critic.name, family=critic.family),
@@ -103,7 +104,8 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         packet = build_packet(task, diff, entry["checks"], entry["handover"], prior=prior, triggers=critical_triggers,
                               rules=rules)
         (out_dir / f"review-packet-{number}.md").write_text(packet)
-        verdict = review(ledger, critic, packet, scope=scope, acceptance=acceptance and number == 1, rereview=number > 1)
+        verdict = review(ledger, critic, packet, scope=scope, acceptance=acceptance and number == 1, rereview=number > 1,
+                         open_earlier=bool(still_open))
         settled = adjudicate(sandbox, snapshots, verdict, entry["revision"], rules=rules)
         ran = None
         if verdict["acceptance"]:
@@ -215,7 +217,8 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
 def render_receipt(receipt: dict) -> str:
     done, effort = receipt["completion"], receipt["completion"]["measured_effort"]
     lines = [f"# KLP Standard receipt: {receipt['task_id']}", "",
-             f"- protocol: {receipt['protocol']}", f"- state: **{done['state']}**",
+             f"- protocol: {receipt['protocol']}" + (f", runner {receipt['runner']}" if receipt.get("runner") else ""),
+             f"- state: **{done['state']}**",
              f"- project revision: `{receipt.get('project_revision') or 'not recorded'}`",
              f"- base snapshot: `{receipt['base_revision']}`", f"- final snapshot: `{done['final_revision']}`",
              f"- declared checks on final revision: {'passed' if done['checks_passed'] else 'NOT passed'}",
