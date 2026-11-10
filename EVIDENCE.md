@@ -50,6 +50,33 @@ a filtered-pagination repair with 17 acceptance checks: the DeepSeek worker
 built the fix, the frontier critic reviewed it once and passed it, and all 17
 checks passed. The run cost $0.011 and took 32 seconds.
 
+## A SWE-bench Pro Task: Solved for $0.60 Where Another Worker Cost $6.59
+
+A pinned public SWE-bench Pro task in Ansible, a repository of 5,501 files:
+add opt-in offline collection installation across the CLI, dependency
+resolution and API access. A DeepSeek Flash worker under KLP, with independent
+OpenAI review, delivered a solution the official verifier scored as solved.
+Gemini Flash ran through the same loop from the same plan and also solved it.
+
+| Measure | DeepSeek Flash | Gemini Flash |
+| --- | ---: | ---: |
+| Official verifier | Solved | Solved |
+| Independent critic | PASS | PASS after one repair |
+| Workflow API cost, including an equal planning share | **$0.597** | $6.588 |
+| Active coding, checking and review time | **6m 10s** | 38m 33s |
+| Worker calls | 39 | 184 |
+
+The DeepSeek workflow cost 91% less and finished six times sooner. On the
+Gemini candidate the critic found three task-related problems, one repair
+closed them, and the candidate then passed official grading. The Semiotic
+Protocol dispatched every worker and critic: four dispatches, four transport
+reads and no model calls for coordination.
+
+Read the [case study](case-studies/ansible-workers-2026-10-27/README.md), the
+[341 call receipts](case-studies/ansible-workers-2026-10-27/receipts.json), the
+[offline checker](case-studies/ansible-workers-2026-10-27/verify.py) and the
+[reproduction specification](case-studies/ansible-workers-2026-10-27/REPRODUCE.md).
+
 ## Semio: 75% Fewer Coordination Input Tokens
 
 **Four coordination model calls became one. Both paths handled all four

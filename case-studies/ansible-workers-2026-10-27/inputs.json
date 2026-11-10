@@ -1,0 +1,84 @@
+{
+  "schema": "klp.ansible-inputs.v1",
+  "repository": "ansible/ansible",
+  "upstream_repository": "https://github.com/scaleapi/SWE-bench_Pro-os",
+  "upstream_revision": "66f92766bba642462d4bbe5479e83f91f9211862",
+  "task_id": "instance_ansible__ansible-a02e22e902a69aeb465f16bf03f7f5a91b2cb828-vba6da65a0f3baefda7a058ebbd0a8dcafb8512f5",
+  "task_files": [
+    {
+      "sha256": "879a141d031b202ed949731ddaabe9589973b5fb2f59e2c99da25f8060199d38",
+      "bytes": 5709,
+      "source_url": "https://raw.githubusercontent.com/scaleapi/SWE-bench_Pro-os/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_ansible__ansible-a02e22e902a69aeb465f16bf03f7f5a91b2cb828-vba6da65a0f3baefda7a058ebbd0a8dcafb8512f5/instruction.md"
+    },
+    {
+      "sha256": "253d4023c66b2ca560a71678535787b5bc2500895753c51610be8c49de48d2c7",
+      "bytes": 865,
+      "source_url": "https://raw.githubusercontent.com/scaleapi/SWE-bench_Pro-os/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_ansible__ansible-a02e22e902a69aeb465f16bf03f7f5a91b2cb828-vba6da65a0f3baefda7a058ebbd0a8dcafb8512f5/task.toml"
+    },
+    {
+      "sha256": "8e6fed0e581acca3e4d603be1b9278e4ff2b0a533d49d38d1bb9cda2f18c07ee",
+      "bytes": 148,
+      "source_url": "https://raw.githubusercontent.com/scaleapi/SWE-bench_Pro-os/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_ansible__ansible-a02e22e902a69aeb465f16bf03f7f5a91b2cb828-vba6da65a0f3baefda7a058ebbd0a8dcafb8512f5/environment/Dockerfile"
+    }
+  ],
+  "base_commit": "813c25eed1e4832a8ae363455a2f40bb3de33c7f",
+  "image": "ghcr.io/scaleapi/swe-bench_pro-v2@sha256:4579c917dd583fa52282aa528e2d2f1bca8e5864285dd3ed02e370d122d0b34b",
+  "frozen_plan_sha256": "59c6ef5797e39237c034def96841475fdd8d626e152d20cb11746794e7fd4de7",
+  "source_packet_sha256": "0539236ca03663af35494ed53adcc3f195d4f50ff432fabc1b4842d19d58184a",
+  "initial_source_ranges": [
+    {
+      "path": "lib/ansible/galaxy/collection/galaxy_api_proxy.py",
+      "start_line": 1,
+      "count": 300
+    },
+    {
+      "path": "lib/ansible/galaxy/dependency_resolution/__init__.py",
+      "start_line": 1,
+      "count": 300
+    }
+  ],
+  "initial_path_listing": "git ls-files 'lib/ansible/cli/galaxy.py' 'lib/ansible/galaxy/*' 'test/units/galaxy/*' 'test/units/cli/*' | head -180",
+  "source_test_command": "PYTHONPATH=lib:test/lib python3 -m pytest -q test/units/galaxy --disable-warnings",
+  "limits": {
+    "arm_usd": "10",
+    "arm_seconds_including_plan_share": 3000,
+    "max_repairs": 2,
+    "initial_worker_calls": 140,
+    "repair_worker_calls": 50,
+    "critic_calls_per_stage": 18,
+    "max_new_arm_calls": 297,
+    "request_seconds": 240,
+    "worker_output_tokens": 16384,
+    "critic_output_tokens": 8192,
+    "automatic_retries": 0
+  },
+  "models": {
+    "deepseek_worker": "deepseek-flash",
+    "deepseek_recorded_mapping": "DeepSeek-V4.1-Flash-1017",
+    "gemini_worker": "gemini-3.8-flash",
+    "critic": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "context": {
+    "text_target_bytes": 393216,
+    "original_serialized_limit_bytes": 524288,
+    "followup_gemini_transport_limit_bytes": 4194304,
+    "fresh_context_per_formal_repair": true,
+    "signature_policy": "Preserve exact provider-returned signatures; registered opaque metadata only is excluded from text accounting, never from the transport or spending bounds."
+  },
+  "environment": {
+    "docker_version": "29.1.3",
+    "harbor_version": "0.25.0",
+    "cpus": 1,
+    "memory_gib": 4,
+    "pids_limit": 256,
+    "worker_network": "none",
+    "storage_limit_enforced": false
+  },
+  "source_inventory": {
+    "tracked_files": 5501,
+    "tracked_bytes": 29661093,
+    "initial_packet_bytes": 17482
+  },
+  "reproduction_boundary": "Offline receipts and pinned input recipe; custom execution controller and private verifier are not included. A new paid run is an independent reproduction, not a byte-identical execution replay."
+}

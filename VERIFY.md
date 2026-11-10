@@ -85,19 +85,25 @@ to see exactly what is asserted.
 ```bash
 env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/krystalview-2026-10-20/verify.py
 env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/semio-coordination-2026-10-20/verify.py
+env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/ansible-workers-2026-10-27/verify.py
 ```
 
 Run Python normally, not with `-O`, which disables these verifiers' assertions.
 The first checks 55 recorded calls and prints **94.94% lower worker API cost**
 and **24.64% lower API cost including equal shared evaluation**. The second checks
 seven recorded calls and prints **75.00% fewer coordination input tokens**, four
-calls versus one, and the separate cache-equalized cost calculation.
+calls versus one, and the separate cache-equalized cost calculation. The third
+checks 341 recorded calls of the Ansible worker comparison, the frozen plan hash
+and both workflow totals: **$0.5965 for the DeepSeek workflow, $6.5882 for
+Gemini**.
 
 The scripts recompute costs and totals from the included usage records and
 recorded rates. This is arithmetic verification, not a replay of the private
 coding task. Read the [coding case study](case-studies/krystalview-2026-10-20/README.md)
 and [coordination case study](case-studies/semio-coordination-2026-10-20/README.md)
-for the methods.
+for the methods, and the [Ansible case study](case-studies/ansible-workers-2026-10-27/README.md)
+with its [reproduction specification](case-studies/ansible-workers-2026-10-27/REPRODUCE.md)
+for a pinned public task you can run yourself.
 
 ## 4. Check the Standard Runner
 

@@ -144,6 +144,27 @@
       "model_calls": 6165
     },
     {
+      "id": "ansible-workers-2026-10-27",
+      "what": "one pinned public SWE-bench Pro task in Ansible (5,501 files), two workers under KLP with the same frozen plan, independent OpenAI review and the Semiotic Protocol",
+      "official_verifier": {
+        "deepseek_flash": "solved",
+        "gemini_flash": "solved"
+      },
+      "usd_workflow_including_planning_share": {
+        "deepseek_flash": 0.596507542,
+        "gemini_flash": 6.588168375
+      },
+      "active_seconds": {
+        "deepseek_flash": 370,
+        "gemini_flash": 2313
+      },
+      "deepseek_cost_reduction_versus_gemini": 0.9095,
+      "coordination_model_calls": 0,
+      "model_calls_verified": 341,
+      "receipts": "case-studies/ansible-workers-2026-10-27/",
+      "verify": "python3 case-studies/ansible-workers-2026-10-27/verify.py"
+    },
+    {
       "id": "semio-coordination-2026-10-20",
       "what": "four coordination scenarios, agent-managed handovers versus the Semio adapter",
       "model_calls": {
