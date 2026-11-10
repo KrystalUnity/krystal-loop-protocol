@@ -35,6 +35,8 @@ USER_CONFIG = {
                # One review is one request, so skip the cache write: plain input price, nothing to reuse.
                "params": {"max_completion_tokens": 16384, "prompt_cache_options": {"mode": "explicit"}}},
     "limits": {"cost_usd": 2.0, "max_steps": 100, "repair_steps": 40, "repair_rounds": 2, "time_seconds": 3600},
+    # acceptance: the critic also writes one test per behaviour the task spells out, and the runner executes it.
+    "review": {"acceptance": False},
     "sandbox": {"read_only_paths": [], "path": "", "network": False},
 }
 REPO_CONFIG = {"checks": [], "critical_triggers": []}
@@ -123,12 +125,13 @@ def cmd_run(args) -> int:
     worker = Model.from_spec(config["worker"])
     critic = None if args.no_review else Model.from_spec(config["critic"])
     say = (lambda *a, **k: print(*a, file=sys.stderr, **k)) if args.json else print
-    say(f"KLP Standard: worker {worker.name} via {worker.base_url}, "
-        f"critic {critic.name + ' via ' + critic.base_url if critic else 'none'}, "
+    say(f"KLP Standard: worker {worker.name} via {worker.route}, "
+        f"critic {critic.name + ' via ' + critic.route if critic else 'none'}, "
         f"limit ${limits.cost_usd:.2f}, {len(checks)} check(s), sandbox network {'on' if box['network'] else 'off'}")
     receipt = run_standard(ledger=ledger, worker=worker, critic=critic, sandbox=sandbox, task=task, checks=checks,
                            scope=slug, limits=limits, out_dir=run_dir, task_id=slug,
-                           critical_triggers=config["critical_triggers"], project_revision=head)
+                           critical_triggers=config["critical_triggers"], project_revision=head,
+                           acceptance=bool(args.acceptance or config["review"].get("acceptance")))
     done = receipt["completion"]
     patch = Snapshots(sandbox, run_dir / "snapshots").patch(receipt["base_revision"], done["final_revision"])
     (run_dir / "candidate.patch").write_bytes(patch)
@@ -165,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--cap", type=float, help="cost limit in USD for this run")
     run.add_argument("--config", help="path to your user config (default ~/.config/klp/config.json)")
     run.add_argument("--no-review", action="store_true", help="worker only, for comparison")
+    run.add_argument("--acceptance", action="store_true",
+                     help="the critic also writes an acceptance test file from the task, and the runner executes it")
     run.add_argument("--json", action="store_true", help="print one JSON result object on stdout (for calling agents)")
     run.set_defaults(run=cmd_run)
     args = parser.parse_args(argv)

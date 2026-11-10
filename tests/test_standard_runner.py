@@ -13,8 +13,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from klp.llm import Ledger, Model, ProviderError, price, read_usage  # noqa: E402
-from klp.review import disposition, parse_verdict  # noqa: E402
+from klp.llm import Ledger, Model, ProviderError, price, rates_at, read_usage, reply_from  # noqa: E402
+from klp.review import (critic_system, disposition, parse_verdict, project_test_rules, run_acceptance,  # noqa: E402
+                        under_project_rules)
 from klp.sandbox import Sandbox  # noqa: E402
 from klp.standard import Limits, run_standard  # noqa: E402
 
@@ -34,10 +35,10 @@ def say(text: str) -> dict:
     return {"role": "assistant", "content": text}
 
 
-def verdict(*findings: dict, profile: str = "eligible") -> dict:
+def verdict(*findings: dict, profile: str = "eligible", **more) -> dict:
     blocking = any(f["blocking"] for f in findings)
     return say(json.dumps({"verdict": "FAIL" if blocking else "PASS", "profile_assessment": profile,
-                           "findings": list(findings)}))
+                           "findings": list(findings), **more}))
 
 
 def finding(claim: str, probe_body: str | None) -> dict:
@@ -87,12 +88,13 @@ class StandardLoop(unittest.TestCase):
         for args in (["init", "-q"], ["add", "-A"], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "base"]):
             subprocess.run(["git", "-C", str(repo), *args], check=True)
 
-    def run_loop(self, worker: list, critic: list, *, critic_model=CRITIC, cap=5.0, checks=("python3 check.py",)):
+    def run_loop(self, worker: list, critic: list, *, critic_model=CRITIC, cap=5.0, checks=("python3 check.py",),
+                 acceptance=False):
         script = Script(worker, critic)
         ledger = Ledger(self.tmp / "ledger.jsonl", cap, prices=PRICES, transport=script)
         receipt = run_standard(ledger=ledger, worker=WORKER, critic=critic_model, sandbox=Sandbox(self.tmp / "ws"),
                                task="Make double(x) return twice x.", checks=list(checks), scope="t1",
-                               limits=Limits(max_steps=5, repair_steps=5), out_dir=self.tmp / "out")
+                               limits=Limits(max_steps=5, repair_steps=5), out_dir=self.tmp / "out", acceptance=acceptance)
         return receipt, script, ledger
 
     def source(self) -> str:
@@ -113,6 +115,73 @@ class StandardLoop(unittest.TestCase):
         # The review is bound to the exact commit it judged, and the repair was reviewed too.
         self.assertEqual([r["reviewed_revision"] for r in receipt["reviews"]], [c["revision"] for c in receipt["candidates"]])
         self.assertTrue((self.tmp / "out/receipt.md").read_text().startswith("# KLP Standard receipt"))
+
+    def test_open_finding_stays_open_until_its_probe_passes(self):
+        wrong = bash("printf 'def double(x):\\n    return x + 2\\n' > calc.py")
+        still_wrong = bash("printf 'def double(x):\\n    return x + 3\\n' > calc.py")
+        probe = "import sys; sys.path.insert(0, '/workspace/repo'); import calc; assert calc.double(5) == 10"
+        # The critic passes both repairs, but its own probe still fails, so the finding is carried, not dropped.
+        receipt, _, _ = self.run_loop([wrong, say("done"), still_wrong, say("fixed"), still_wrong, say("fixed again")],
+                                      [verdict(finding("double(5) is 7", probe)), verdict(), verdict()])
+        self.assertEqual(receipt["completion"]["state"], "budget_exhausted")
+        self.assertEqual([r["verdict"] for r in receipt["reviews"]], ["FAIL", "PASS", "PASS"])
+        carried = receipt["reviews"][-1]["findings"][0]
+        self.assertEqual((carried["id"], carried["disposition"], carried["carried"]), ("F1", "confirmed", True))
+        self.assertEqual([f["id"] for f in receipt["completion"]["unresolved_findings"]], ["F1"])
+        self.assertIn("still open from an earlier review", (self.tmp / "out/receipt.md").read_text())
+
+    def test_critic_can_withdraw_an_open_finding(self):
+        right = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py")
+        probe = "import sys; sys.path.insert(0, '/workspace/repo'); import calc; assert calc.double(5) == 11"
+        receipt, script, _ = self.run_loop([right, say("done"), bash("true"), say("the probe asks for 11; twice 5 is 10")],
+                                           [verdict(finding("double(5) should be 11", probe)), verdict(withdrawn=["F1"])])
+        self.assertEqual(receipt["completion"]["state"], "completed")
+        self.assertEqual(receipt["reviews"][1]["withdrawn"], ["F1"])
+        self.assertEqual(receipt["reviews"][1]["findings"], [])
+        reviews = [r for r in script.requests if "response_format" in r]
+        self.assertNotIn('"withdrawn"', reviews[0]["messages"][0]["content"])
+        self.assertIn('"withdrawn"', reviews[1]["messages"][0]["content"])
+
+    def test_acceptance_file_is_executed_and_its_failure_is_repaired(self):
+        wrong = bash("printf 'def double(x):\\n    return x + 2\\n' > calc.py")
+        right = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py")
+        accept = {"filename": "accept.py", "command": "python3 /workspace/probes/accept.py",
+                  "content": "import sys; sys.path.insert(0, '/workspace/repo'); import calc\n"
+                             "# 'return twice x'\nassert calc.double(5) == 10\n"}
+        receipt, script, _ = self.run_loop([wrong, say("done"), right, say("fixed")],
+                                           [verdict(acceptance=accept), verdict()], acceptance=True)
+        first = receipt["reviews"][0]
+        self.assertEqual(first["verdict"], "PASS")  # the critic saw nothing; its executed acceptance file did
+        self.assertEqual(first["acceptance"]["result"], "failed")
+        self.assertEqual([(f["id"], f["source"], f["disposition"]) for f in first["findings"]], [("A1", "acceptance", "confirmed")])
+        self.assertTrue(receipt["repairs"][0]["probes"][0]["closed"])
+        self.assertEqual(receipt["completion"]["state"], "completed")
+        reviews = [r for r in script.requests if "response_format" in r]
+        self.assertIn('"acceptance"', reviews[0]["messages"][0]["content"])
+        self.assertNotIn('"acceptance"', reviews[1]["messages"][0]["content"])  # asked for once, on the first review
+
+    def test_command_critic_reviews_without_a_metered_call(self):
+        right = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py")
+        cli_critic = Model("seat-critic", "", "", "gamma", api="command", command=("some-agent", "--print", "{prompt}"),
+                           reply="json:response")
+        script = Script([right, say("done")], [])
+        ledger = Ledger(self.tmp / "ledger.jsonl", 5.0, prices=PRICES, transport=script)
+        seen = []
+
+        def runner(model, prompt, timeout):
+            seen.append(prompt)
+            return json.dumps({"response": "```json\n" + json.dumps({"verdict": "PASS", "findings": []}) + "\n```"})
+
+        ledger.command_runner = runner
+        receipt = run_standard(ledger=ledger, worker=WORKER, critic=cli_critic, sandbox=Sandbox(self.tmp / "ws"),
+                               task="Make double(x) return twice x.", checks=["python3 check.py"], scope="t1",
+                               limits=Limits(max_steps=5, repair_steps=5), out_dir=self.tmp / "out")
+        self.assertEqual(receipt["completion"]["state"], "completed")
+        self.assertIn("# TASK STATEMENT", seen[0])
+        critic_row = [r for r in ledger.rows if r["role"] == "critic"][0]
+        self.assertEqual((critic_row["metered"], critic_row["usd"]), (False, "0"))
+        self.assertEqual(ledger.summary(scope="t1")["critic"]["unmetered_calls"], 1)
+        self.assertIn("subscription route, not metered", (self.tmp / "out/receipt.md").read_text())
 
     def test_refuted_finding_starts_no_repair(self):
         right = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py")
@@ -289,6 +358,96 @@ class Parsing(unittest.TestCase):
         self.assertEqual(disposition(run(2), "python -m pytest p.py"), "unverified")
         self.assertEqual(disposition(run(3), "go test ./..."), "confirmed")
         self.assertEqual(disposition(run(None, True), "go test ./..."), "unverified")
+
+    def test_optional_reply_parts(self):
+        accept = {"filename": "t.py", "content": "x", "command": "python t.py"}
+        got = parse_verdict(json.dumps({"verdict": "PASS", "findings": [], "acceptance": accept, "withdrawn": ["A2", 3]}))
+        self.assertEqual((got["acceptance"], got["withdrawn"]), (accept, ["A2", "3"]))
+        plain = parse_verdict(json.dumps({"verdict": "PASS", "findings": [], "acceptance": {"filename": "t.py"}}))
+        self.assertEqual((plain["acceptance"], plain["withdrawn"]), (None, []))
+        self.assertIn("first review", critic_system(acceptance=True))
+        self.assertNotIn("first review", critic_system())
+
+    def test_pytest_probes_run_under_the_project_rules(self):
+        rules = dict(file="pyproject.toml", settings="{}")
+        self.assertEqual(under_project_rules("python -m pytest -q /workspace/probes/t.py", rules, "/workspace/repo"),
+                         "python -m pytest -c /workspace/repo/pyproject.toml --rootdir /workspace/repo -q /workspace/probes/t.py")
+        for untouched in ("python3 /workspace/probes/t.py", "python -m pytest -c other.ini t.py", "go test ./..."):
+            self.assertEqual(under_project_rules(untouched, rules, "/workspace/repo"), untouched)
+        self.assertEqual(under_project_rules("pytest t.py", None, "/r"), "pytest t.py")
+
+        class Files:
+            def __init__(self, files):
+                self.files = files
+
+            def run(self, command, **_):
+                name = command.split()[-1]
+                return dict(returncode=0 if name in self.files else 1, output=self.files.get(name, ""), timed_out=False)
+
+        toml = '[tool.pytest.ini_options]\nfilterwarnings = ["error"]\n'
+        self.assertEqual(project_test_rules(Files({"pyproject.toml": toml}))["file"], "pyproject.toml")
+        self.assertIn("error", project_test_rules(Files({"pyproject.toml": toml}))["settings"])
+        self.assertEqual(project_test_rules(Files({"setup.cfg": "[tool:pytest]\naddopts = -ra\n", "pyproject.toml": "[project]\n"}))["file"],
+                         "setup.cfg")
+        self.assertIsNone(project_test_rules(Files({"pyproject.toml": "[project]\nname = 'x'\n"})))
+
+    def test_each_failing_acceptance_test_is_one_finding(self):
+        summary = ("F.F\n=== short test summary info ===\n"
+                   "FAILED ../probes/test_acceptance.py::test_default - assert 1 == 2\n"
+                   "FAILED ../probes/test_acceptance.py::test_rejects[US-11] - AssertionError\n2 failed, 1 passed\n")
+
+        class Box:
+            repo_dir = "/workspace/repo"
+            commands: list = []
+
+            def write_file(self, path, content):
+                self.written = path
+
+            def run(self, command, **_):
+                self.commands.append(command)
+                if "::" not in command:
+                    return dict(returncode=1, timed_out=False, output=summary)
+                # alone, the parametrised case passes: it only failed beside the others, so it is not evidence
+                return dict(returncode=0 if "test_rejects" in command else 1, timed_out=False, output="assert 1 == 2")
+
+        class Snaps:
+            def restore(self, revision):
+                pass
+
+        box = Box()
+        accept = {"filename": "test_acceptance.py", "content": "...", "command": "python -m pytest -q -x /workspace/probes/test_acceptance.py"}
+        record, findings = run_acceptance(box, Snaps(), accept, "head")
+        self.assertNotIn(" -x", box.commands[0])
+        self.assertEqual(record["result"], "failed")
+        self.assertEqual(record["failed_tests"], ["test_default", "test_rejects[US-11]"])
+        self.assertEqual([f["id"] for f in findings], ["A1"])
+        self.assertEqual(findings[0]["probe"]["command"], "python -m pytest -q /workspace/probes/test_acceptance.py::test_default")
+        self.assertIn("'/workspace/probes/test_acceptance.py::test_rejects[US-11]'", box.commands[2])
+
+    def test_command_replies(self):
+        self.assertEqual(reply_from('{"response": "{\\"a\\": 1}\\n"}', "json:response"), '{"a": 1}')
+        lines = '{"role":"meta","type":"v"}\n{"role":"assistant","content":"first"}\n{"role":"assistant","content":"{}"}\n'
+        self.assertEqual(reply_from(lines, "ndjson:content"), "{}")
+        self.assertEqual(reply_from("```json\n{}\n```\n", "text"), "{}")
+        for broken in (("not json", "json:response"), ('{"other": 1}', "json:response"), ('{"role":"meta"}', "ndjson:content")):
+            with self.assertRaises(ProviderError):
+                reply_from(*broken)
+
+    def test_off_peak_rates_and_reasoning_tokens(self):
+        entry = {"input": 0.3, "cached": 0.006, "write": 0.3, "output": 1.2,
+                 "off_peak": {"input": 0.15, "cached": 0.003, "write": 0.15, "output": 0.6},
+                 "peak_utc": {"days": [0, 1, 2, 3, 4], "hours": [[1, 4], [6, 10]]}}
+        import calendar
+        at = lambda text: calendar.timegm(__import__("time").strptime(text, "%Y-%m-%d %H:%M"))  # noqa: E731
+        self.assertEqual(rates_at(entry, at("2026-11-10 07:30")), (entry, "standard"))          # Tuesday, peak
+        self.assertEqual(rates_at(entry, at("2026-11-10 10:00")), (entry["off_peak"], "off_peak"))
+        self.assertEqual(rates_at(entry, at("2026-11-14 07:30"))[1], "off_peak")                  # Saturday
+        self.assertEqual(rates_at({"input": 1, "output": 2}, at("2026-11-10 12:00"))[1], "standard")
+        self.assertEqual(price(dict(input=1000, cached=0, write=0, output=1000), entry), D("0.0015"))
+        # A provider that reports reasoning outside the completion count still bills it as output.
+        xai = {"prompt_tokens": 1299, "completion_tokens": 17, "total_tokens": 1527, "prompt_tokens_details": {"cached_tokens": 1152}}
+        self.assertEqual(read_usage(xai), dict(input=1299, output=228, cached=1152, write=0))
+        self.assertEqual(price(read_usage(xai), {"input": 2.0, "cached": 0.5, "write": 2.0, "output": 6.0}), D("0.002238"))
 
     def test_usage_and_price(self):
         usage = read_usage(USAGE)

@@ -73,5 +73,60 @@
         "mode": "explicit"
       }
     }
+  },
+  "critic_grok": {
+    "name": "grok-4.7",
+    "family": "xai",
+    "base_url": "https://api.x.ai/v1",
+    "api_key_env": "XAI_API_KEY",
+    "params": {
+      "max_completion_tokens": 16384
+    }
+  },
+  "critic_argon": {
+    "name": "gemini-4-argon-high",
+    "family": "google",
+    "api": "command",
+    "command": [
+      "agy",
+      "--print",
+      "{prompt}",
+      "--mode",
+      "plan",
+      "--model",
+      "gemini-4-argon-high",
+      "--output-format",
+      "json"
+    ],
+    "reply": "json:response"
+  },
+  "critic_kimi": {
+    "name": "k3.1-pro",
+    "family": "moonshot",
+    "api": "command",
+    "command": [
+      "kimi",
+      "--prompt",
+      "{prompt}",
+      "--model",
+      "kimi-code/k3.1-pro",
+      "--output-format",
+      "stream-json"
+    ],
+    "reply": "ndjson:content"
+  },
+  "critic_qwen": {
+    "name": "qwen3.8-max",
+    "family": "alibaba",
+    "api": "command",
+    "command": [
+      "qwen",
+      "{prompt}",
+      "--approval-mode",
+      "plan",
+      "--model",
+      "qwen3.8-max"
+    ],
+    "reply": "text"
   }
 }

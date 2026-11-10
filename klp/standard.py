@@ -2,11 +2,11 @@
 
     worker builds  ->  runner executes the declared checks  ->  an independent critic reviews
     the exact candidate  ->  findings are settled by running their probes  ->  confirmed
-    blockers get one bounded repair  ->  the repair is re-checked and re-reviewed  ->  receipt.
+    blockers get a bounded repair  ->  the repair is re-checked and re-reviewed  ->  receipt.
 
 The worker never accepts its own work, review is bound to an exact commit, required checks
-actually run, and time, cost and repair attempts are finite. Merging, pushing and deploying
-stay with you.
+actually run, and time, cost and repair attempts are finite. A confirmed finding stays open
+until its probe passes or the critic withdraws it. Merging, pushing and deploying stay with you.
 """
 from __future__ import annotations
 
@@ -17,12 +17,12 @@ from decimal import Decimal as D
 from pathlib import Path
 
 from .llm import BudgetExceeded, Ledger, Model, ProviderError
-from .review import adjudicate, build_packet, candidate_diff, review
+from .review import adjudicate, build_packet, candidate_diff, project_test_rules, review, run_acceptance
 from .sandbox import Sandbox, clip
 from .snapshot import Snapshots
 from .worker import run_worker
 
-PROTOCOL = "klp-standard/v0.1"
+PROTOCOL = "klp-standard/v0.2"
 
 
 @dataclass
@@ -61,8 +61,11 @@ def _repair_prompt(failed_checks: list, confirmed: list) -> str:
 def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox: Sandbox, task: str,
                  checks: list[str], scope: str, limits: Limits, out_dir: Path, task_id: str = "",
                  critical_triggers: list[str] | None = None, project_revision: str = "",
-                 resume: dict | None = None) -> dict:
+                 resume: dict | None = None, acceptance: bool = False) -> dict:
     """Run one task. `critic=None` runs the worker alone (no review, no repair) for comparison arms.
+
+    `acceptance` asks the critic, on its first review, for a test file covering each behaviour the task
+    statement spells out. The runner executes it and every failing test is a confirmed finding.
 
     `resume` continues from a recorded unreviewed run: {"receipt": that run's receipt, "messages": its
     worker transcript}. The workspace and snapshot store must be copies of that run's. The build is
@@ -81,9 +84,10 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         before_work=dict(task=task, checks=checks, limits=asdict(limits), critical_triggers=list(critical_triggers or []),
                          worker=dict(model=worker.name, family=worker.family),
                          critic=None if critic is None else dict(model=critic.name, family=critic.family),
+                         acceptance_file=bool(acceptance and critic is not None),
                          forbidden_actions="network access, merge, push, deploy"),
         candidates=[], reviews=[], repairs=[], errors=[])
-    state, session, final = "completed", None, base
+    state, session, final, rules = "completed", None, base, None
 
     def record_candidate(label: str, handover: str | None) -> dict:
         revision = snapshots.take(label)
@@ -93,16 +97,28 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         receipt["candidates"].append(entry)
         return entry
 
-    def review_candidate(entry: dict, since: str, prior: list | None) -> list:
+    def review_candidate(entry: dict, since: str, prior: list | None, still_open: list) -> list:
+        number = len(receipt["reviews"]) + 1
         diff = candidate_diff(snapshots, since, entry["revision"])
-        packet = build_packet(task, diff, entry["checks"], entry["handover"], prior=prior, triggers=critical_triggers)
-        (out_dir / f"review-packet-{len(receipt['reviews']) + 1}.md").write_text(packet)
-        verdict = review(ledger, critic, packet, scope=scope)
-        settled = adjudicate(sandbox, snapshots, verdict, entry["revision"])
+        packet = build_packet(task, diff, entry["checks"], entry["handover"], prior=prior, triggers=critical_triggers,
+                              rules=rules)
+        (out_dir / f"review-packet-{number}.md").write_text(packet)
+        verdict = review(ledger, critic, packet, scope=scope, acceptance=acceptance and number == 1, rereview=number > 1)
+        settled = adjudicate(sandbox, snapshots, verdict, entry["revision"], rules=rules)
+        ran = None
+        if verdict["acceptance"]:
+            ran, found = run_acceptance(sandbox, snapshots, verdict["acceptance"], entry["revision"], rules=rules)
+            settled += found
+        if number > 1:
+            for finding in settled:  # ids restart in every reply; keep them unique across the run
+                finding["id"] = f"R{number}-{finding['id']}"
+        withdrawn = [f["id"] for f in still_open if f["id"] in verdict["withdrawn"]]
+        settled += [f for f in still_open if f["id"] not in withdrawn]
         receipt["reviews"].append(dict(reviewed_revision=entry["revision"], model=verdict["model"], family=verdict["family"],
                                        verdict=verdict["verdict"], profile_assessment=verdict["profile_assessment"],
                                        attempts=verdict["attempts"], packet_bytes=verdict["packet_bytes"],
-                                       diff_bytes=diff["bytes"], diff_truncated=diff["truncated"], findings=settled))
+                                       diff_bytes=diff["bytes"], diff_truncated=diff["truncated"], findings=settled,
+                                       acceptance=ran, withdrawn=withdrawn))
         return settled
 
     try:
@@ -123,7 +139,9 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         if critic is None:
             state = "unreviewed"
         else:
-            settled = review_candidate(candidate, base, None)
+            rules = project_test_rules(sandbox)
+            receipt["probe_rules"] = rules and rules["file"]
+            settled = review_candidate(candidate, base, None, [])
             if receipt["reviews"][-1]["profile_assessment"] == "critical_trigger":
                 state = "critical_trigger"
             confirmed = [f for f in settled if f["disposition"] == "confirmed"]
@@ -138,12 +156,16 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
                                      max_steps=limits.repair_steps, command_timeout=limits.command_timeout,
                                      messages=session["messages"], role="repair")
                 repaired = record_candidate(f"repair-{rounds}", session["handover"])
-                probes = []
+                probes, still_open = [], []
                 for finding in confirmed:
                     again = sandbox.run(finding["probe"]["command"], timeout=180, limit=2000)
                     snapshots.restore(repaired["revision"])
                     probes.append(dict(id=finding["id"], command=finding["probe"]["command"],
                                        returncode=again["returncode"], closed=again["returncode"] == 0))
+                    if again["returncode"] != 0:  # stays open on the repaired candidate, with its latest output
+                        still_open.append({**finding, "carried": True, "probe": {
+                            **finding["probe"], "returncode": again["returncode"], "timed_out": again["timed_out"],
+                            "output": again["output"]}})
                 receipt["repairs"].append(dict(round=rounds, from_revision=candidate["revision"],
                                                to_revision=repaired["revision"], steps=session["steps"], probes=probes,
                                                checks_passed=repaired["checks_passed"]))
@@ -157,7 +179,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
                 prior = [dict(id=f["id"], claim=f["claim"], disposition=f["disposition"],
                               closed_after_repair=next((p["closed"] for p in probes if p["id"] == f["id"]), None))
                          for f in settled]
-                settled = review_candidate(repaired, candidate["revision"], prior)
+                settled = review_candidate(repaired, candidate["revision"], prior, still_open)
                 candidate, final = repaired, repaired["revision"]
                 confirmed = [f for f in settled if f["disposition"] == "confirmed"]
                 failed = [c for c in candidate["checks"] if not c["passed"]]
@@ -200,13 +222,23 @@ def render_receipt(receipt: dict) -> str:
              f"- critic: {(receipt['before_work']['critic'] or {}).get('model', 'none (unreviewed run)')}",
              f"- elapsed: {effort['seconds']}s, cost: ${float(effort['usd']):.4f}", ""]
     for role, s in effort["by_role"].items():
+        if s.get("unmetered_calls"):
+            lines.append(f"  - {role}: {s['calls']} calls on a subscription route, not metered")
+            continue
         lines.append(f"  - {role}: {s['calls']} calls, {s['input']:,} input tokens ({s['cached']:,} cached), "
                      f"{s['output']:,} output, ${float(s['usd']):.4f}")
     for number, item in enumerate(receipt["reviews"], 1):
         lines += ["", f"## Review {number}: {item['verdict']} on `{item['reviewed_revision'][:12]}` "
                       f"({item['model']}, profile {item['profile_assessment']})"]
+        ran = item.get("acceptance")
+        if ran:
+            lines.append(f"- acceptance file: {ran['result']}"
+                         + (f" ({len(ran['failed_tests'])} failing: {', '.join(ran['failed_tests'][:8])})" if ran["failed_tests"] else ""))
         for f in item["findings"]:
-            lines.append(f"- [{f['disposition']}] {f['id']}: {f['claim']}")
+            lines.append(f"- [{f['disposition']}{', still open from an earlier review' if f.get('carried') else ''}] "
+                         f"{f['id']}: {f['claim']}")
+        if item.get("withdrawn"):
+            lines.append(f"- withdrawn by the critic: {', '.join(item['withdrawn'])}")
     for repair in receipt["repairs"]:
         closed = sum(p["closed"] for p in repair["probes"])
         lines += ["", f"## Repair {repair['round']}: {closed}/{len(repair['probes'])} confirmed findings closed, "

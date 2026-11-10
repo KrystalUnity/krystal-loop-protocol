@@ -184,15 +184,30 @@ def prepare(work: Path, jobs: int) -> None:
 
 # ---------------------------------------------------------------- run
 
-# name: (worker model, critic model, reuse the "worker" arm's candidate, row label)
+# name: (worker model, critic model, arm whose candidates it reviews, row label, acceptance file)
 ARMS = {
-    "frontier-solo": ("frontier", None, False, "Frontier model alone (gpt-6.1-sol)"),
-    "astra-solo": ("astra", None, False, "Heavy model alone (gpt-6-astra)"),
-    "worker": ("worker", None, False, "Low-cost worker alone (deepseek-flash)"),
-    "klp-sol": ("worker", "critic", True, "KLP Standard, gpt-6.1-sol critic"),
-    "klp-astra": ("worker", "critic_astra", True, "KLP Standard, gpt-6-astra critic"),
-    "klp-terra": ("worker", "critic_terra", True, "KLP Standard, gpt-6.1-terra critic"),
-    "klp": ("worker", "critic", False, "KLP Standard (single pass)"),
+    "frontier-solo": ("frontier", None, None, "Frontier model alone (gpt-6.1-sol)", False),
+    "astra-solo": ("astra", None, None, "Heavy model alone (gpt-6-astra)", False),
+    "worker": ("worker", None, None, "Low-cost worker alone (deepseek-flash)", False),
+    "klp-sol": ("worker", "critic", "worker", "KLP Standard, gpt-6.1-sol critic", False),
+    "klp-astra": ("worker", "critic_astra", "worker", "KLP Standard, gpt-6-astra critic", False),
+    "klp-terra": ("worker", "critic_terra", "worker", "KLP Standard, gpt-6.1-terra critic", False),
+    "klp": ("worker", "critic", None, "KLP Standard (single pass)", False),
+    # klp-standard/v0.2 on the same candidates as the arms above
+    "v2-sol": ("worker", "critic", "worker", "KLP Standard v0.2, gpt-6.1-sol critic", False),
+    "v2a-sol": ("worker", "critic", "worker", "KLP Standard v0.2 with acceptance file, gpt-6.1-sol critic", True),
+    "v2-grok": ("worker", "critic_grok", "worker", "KLP Standard v0.2, grok-4.7 critic", False),
+    "v2a-grok": ("worker", "critic_grok", "worker", "KLP Standard v0.2 with acceptance file, grok-4.7 critic", True),
+    "v2-argon": ("worker", "critic_argon", "worker", "KLP Standard v0.2, Gemini 4 Argon critic on a subscription CLI", False),
+    "v2a-argon": ("worker", "critic_argon", "worker", "KLP Standard v0.2 with acceptance file, Gemini 4 Argon critic on a subscription CLI", True),
+    "v2-kimi": ("worker", "critic_kimi", "worker", "KLP Standard v0.2, Kimi K3.1 Pro critic on a subscription CLI", False),
+    "v2a-kimi": ("worker", "critic_kimi", "worker", "KLP Standard v0.2 with acceptance file, Kimi K3.1 Pro critic on a subscription CLI", True),
+    "v2-qwen": ("worker", "critic_qwen", "worker", "KLP Standard v0.2, Qwen 3.8 Max critic on a subscription CLI", False),
+    "v2a-qwen": ("worker", "critic_qwen", "worker", "KLP Standard v0.2 with acceptance file, Qwen 3.8 Max critic on a subscription CLI", True),
+    # a fresh set of worker candidates, built and reviewed under v0.2
+    "worker-3": ("worker", None, None, "Low-cost worker alone, run 3 (deepseek-flash)", False),
+    "klp-3": ("worker", "critic", "worker-3", "KLP Standard v0.2, run 3, gpt-6.1-sol critic", False),
+    "klp-3a": ("worker", "critic", "worker-3", "KLP Standard v0.2 with acceptance file, run 3, gpt-6.1-sol critic", True),
 }
 
 
@@ -201,7 +216,7 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
     if (out / "result.json").exists():
         return json.loads((out / "result.json").read_text())
     env_dir = work / "envs" / task["env"]
-    worker_key, critic_key, reuse, _ = ARMS[arm]
+    worker_key, critic_key, reuse, _, acceptance = ARMS[arm]
     check = f"{PYTEST} -x {' '.join(task['test_files'])}"
     statement = Path(task["statement"]).read_text().strip()
     prompt = f"{statement}\n\nExisting tests that must keep passing:\n$ {check}"
@@ -210,10 +225,10 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
     try:
         if reuse:
             # Review the worker arm's exact candidate: same files, same snapshot store, same session.
-            source = work / "runs" / "worker" / task["id"]
+            source = work / "runs" / reuse / task["id"]
             built = json.loads((source / "result.json").read_text())
             if built["state"] == "harness_error":
-                raise RuntimeError("worker arm has no candidate for this task")
+                raise RuntimeError(f"arm {reuse} has no candidate for this task")
             shutil.rmtree(out, ignore_errors=True)
             out.mkdir(parents=True)
             sh("cp", "-a", str(source / "ws"), str(out / "ws"))
@@ -227,7 +242,8 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
         receipt = run_standard(ledger=ledger, worker=Model.from_spec(MODELS[worker_key]),
                                critic=Model.from_spec(MODELS[critic_key]) if critic_key else None,
                                sandbox=box(ws, env_dir), task=prompt, checks=[check], scope=scope, limits=limits,
-                               out_dir=out, task_id=task["id"], project_revision=task["commit"], resume=resume)
+                               out_dir=out, task_id=task["id"], project_revision=task["commit"], resume=resume,
+                               acceptance=acceptance)
     except Exception as error:  # a harness fault is a recorded failure, never a silent skip
         out.mkdir(parents=True, exist_ok=True)
         result = dict(task=task["id"], arm=arm, state="harness_error", error=f"{type(error).__name__}: {error}"[:400],
@@ -247,7 +263,11 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
                   grades=grades, usd=done["measured_effort"]["usd"], seconds=done["measured_effort"]["seconds"],
                   effort=done["measured_effort"]["by_role"],
                   reviews=[dict(verdict=r["verdict"], packet_bytes=r["packet_bytes"],
-                                dispositions=[f["disposition"] for f in r["findings"]]) for r in receipt["reviews"]],
+                                dispositions=[f["disposition"] for f in r["findings"] if not f.get("carried")],
+                                acceptance=(r.get("acceptance") or {}).get("result"),
+                                acceptance_findings=sum(f.get("source") == "acceptance" and not f.get("carried")
+                                                        for f in r["findings"]),
+                                withdrawn=len(r.get("withdrawn") or [])) for r in receipt["reviews"]],
                   repairs=[dict(kept=r.get("kept"), closed=sum(p["closed"] for p in r["probes"]), probes=len(r["probes"]))
                            for r in receipt["repairs"]], errors=receipt["errors"])
     (out / "result.json").write_text(json.dumps(result, indent=1))
@@ -286,20 +306,22 @@ def role_usd(result: dict, roles: tuple | None = None) -> D:
 def report(work: Path, arms: list[str] | None = None) -> dict:
     """One row per arm over the tasks every reported arm finished. Review arms include their worker's cost."""
     rows = [json.loads(p.read_text()) for p in sorted((work / "runs").glob("*/*/result.json"))]
-    by_arm: dict = {}
+    by_arm, every = {}, {}
     for r in rows:
+        every.setdefault(r["arm"], {})[r["task"]] = r
         if r["arm"] in ARMS and (arms is None or r["arm"] in arms):
             by_arm.setdefault(r["arm"], {})[r["task"]] = r
     common = sorted(set.intersection(*[set(v) for v in by_arm.values()])) if by_arm else []
-    built = by_arm.get("worker", {})
     table, reviews = {}, {}
     for arm in [a for a in ARMS if a in by_arm]:
         items = [by_arm[arm][t] for t in common]
         reuse = ARMS[arm][2]
+        built = every.get(reuse, {}) if reuse else {}
         cost = [D(r["usd"]) + (role_usd(built[r["task"]]) if reuse and r["task"] in built else D(0)) for r in items]
         solved, total = sum(bool(r.get("solved")) for r in items), sum(cost, D(0))
         table[ARMS[arm][3]] = dict(
-            arm=arm, tasks=len(items), solved=solved, usd=str(total),
+            arm=arm, candidates_from=reuse, tasks=len(items), solved=solved, usd=str(total),
+            unmetered_review_calls=sum(r.get("effort", {}).get("critic", {}).get("unmetered_calls", 0) for r in items),
             usd_per_task=str(total / len(items)) if items else None, usd_per_solved=str(total / solved) if solved else None,
             median_seconds=statistics.median([r.get("seconds", 0) for r in items]) if items else None,
             states=dict(sorted({s: sum(r["state"] == s for r in items) for s in {r["state"] for r in items}}.items())))
@@ -312,6 +334,10 @@ def report(work: Path, arms: list[str] | None = None) -> dict:
                 reviews=sum(len(r["reviews"]) for r in items),
                 findings={d: sum(v["dispositions"].count(d) for r in items for v in r["reviews"])
                           for d in ("confirmed", "refuted", "unverified", "advisory")},
+                acceptance={k: sum(v.get("acceptance") == k for r in items for v in r["reviews"])
+                            for k in ("passed", "failed", "did not run")},
+                acceptance_findings=sum(v.get("acceptance_findings", 0) for r in items for v in r["reviews"]),
+                withdrawn=sum(v.get("withdrawn", 0) for r in items for v in r["reviews"]),
                 repairs=sum(len(r["repairs"]) for r in items), repairs_kept=sum(bool(x["kept"]) for r in items for x in r["repairs"]),
                 findings_closed=sum(x["closed"] for r in items for x in r["repairs"]),
                 fixed_by_review=sorted(r["task"] for r in items if r["solved"] and not r["first_candidate_solved"]),
@@ -328,14 +354,15 @@ def report(work: Path, arms: list[str] | None = None) -> dict:
 
 def reprice(work: Path) -> None:
     """Recompute every recorded cost from token usage and the current price list. Usage is never changed."""
-    from klp.llm import load_prices, price
+    from klp.llm import load_prices, price, rates_at
     from klp.standard import render_receipt
     prices = load_prices()
     ledger_file = work / "ledger.jsonl"
     rows = [json.loads(line) for line in ledger_file.read_text().splitlines()]
     for row in rows:
-        if row.get("usage"):
-            usd = price(row["usage"], prices.get(row["model"]))
+        if row.get("usage") and row.get("metered") is not False:
+            rates, row["tier"] = rates_at(prices.get(row["model"]), row["started"])
+            usd = price(row["usage"], rates)
             row["usd"] = None if usd is None else str(usd)
     ledger_file.write_text("".join(json.dumps(r) + "\n" for r in rows))
     ledger = Ledger(ledger_file, 0)
@@ -363,7 +390,8 @@ def export(work: Path, out: Path, examples: list[str], arms_filter: list[str] | 
         rows = [r for r in rows if r["arm"] in arms_filter]
     for row in rows:
         row["grades"] = {rev: dict(passed=g["passed"], stage=g["stage"]) for rev, g in row.get("grades", {}).items()}
-    keep = ("id", "scope", "role", "model", "returned_model", "status", "usage", "usd", "seconds", "finish_reason")
+    keep = ("id", "scope", "role", "model", "returned_model", "status", "usage", "usd", "tier", "metered", "seconds",
+            "finish_reason")
     calls = [{k: r.get(k) for k in keep} for r in (json.loads(line) for line in (work / "ledger.jsonl").read_text().splitlines())]
     if arms_filter:
         calls = [c for c in calls if c["scope"].split("/")[0] in arms_filter]
@@ -390,7 +418,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice"))
     parser.add_argument("--work", type=Path, required=True)
-    parser.add_argument("--arms", default="frontier-solo,worker,klp-sol",
+    parser.add_argument("--arms", default="frontier-solo,worker,v2-sol",
                         help="comma-separated: " + ", ".join(ARMS))
     parser.add_argument("--cap", type=float, default=5.0, help="hard USD limit across the whole run")
     parser.add_argument("--jobs", type=int, default=4)
