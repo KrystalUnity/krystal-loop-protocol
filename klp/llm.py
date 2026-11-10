@@ -237,7 +237,8 @@ def _run_command(model: Model, prompt: str, timeout: float) -> str:
 
 
 def reply_from(stdout: str, how: str) -> str:
-    """The model's answer inside a CLI's output, with one surrounding code fence removed."""
+    """The model's answer inside a CLI's output. An agent CLI may talk before it answers, so the answer is
+    what the reply ends with: a fenced block, or one JSON object that runs to the last character."""
     kind, _, name = how.partition(":")
     try:
         if kind == "json":
@@ -250,8 +251,18 @@ def reply_from(stdout: str, how: str) -> str:
         text = text.strip()
     except (ValueError, KeyError, IndexError, TypeError, AttributeError):
         raise ProviderError("command output did not contain a reply") from None
-    fence = re.fullmatch(r"```[A-Za-z]*\n(.*)\n```", text, re.S)
-    return fence.group(1) if fence else text
+    fence = re.search(r"```[A-Za-z]*\n((?:(?!```).)*)\n```$", text, re.S)
+    if fence:
+        return fence.group(1)
+    if not text.startswith("{") and text.endswith("}"):
+        decoder = json.JSONDecoder()
+        for start in (m.start() for m in re.finditer(r"\{", text)):
+            try:
+                if decoder.raw_decode(text, start)[1] == len(text):
+                    return text[start:]
+            except ValueError:
+                continue
+    return text
 
 
 def _http_post(url: str, key: str, body: dict, timeout: float, _attempts: int = 2):

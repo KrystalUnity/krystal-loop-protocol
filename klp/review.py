@@ -80,6 +80,13 @@ Report only new problems that the repair introduced or left behind.
 """
 REREVIEW_KEYS = ',\n "withdrawn": ["id of an earlier finding you withdraw"]'
 
+# A critic reached through an agent CLI is still a text-only reviewer.
+COMMAND_NOTE = """
+You are being run as a command-line agent, but this is a review of the text below and nothing else.
+There is no repository to inspect: do not use tools, read files or run commands. Your whole reply is the
+JSON object.
+"""
+
 # pytest reads its settings from the first of these that has them
 PYTEST_CONFIGS = (("pytest.ini", "pytest"), ("pyproject.toml", ""), ("tox.ini", "pytest"), ("setup.cfg", "tool:pytest"))
 
@@ -180,8 +187,8 @@ def parse_verdict(text: str) -> dict:
 def review(ledger: Ledger, critic: Model, packet: str, *, scope: str, role: str = "critic", acceptance: bool = False,
            rereview: bool = False) -> dict:
     """One critic pass. A malformed reply gets one more attempt; both are billed and recorded."""
-    messages = [{"role": "system", "content": critic_system(acceptance=acceptance, rereview=rereview)},
-                {"role": "user", "content": packet}]
+    system = critic_system(acceptance=acceptance, rereview=rereview) + (COMMAND_NOTE if critic.api == "command" else "")
+    messages = [{"role": "system", "content": system}, {"role": "user", "content": packet}]
     error = None
     for attempt in range(2):
         reply = ledger.chat(critic, messages, role=role, scope=scope, extra={"response_format": {"type": "json_object"}})
@@ -249,7 +256,7 @@ def run_acceptance(sandbox: Sandbox, snapshots: Snapshots, acceptance: dict, hea
     command = under_project_rules(command, rules, sandbox.repo_dir)
     path, result = _stage(sandbox, snapshots, acceptance, command, head, timeout, 8000)
     outcome = disposition(result, command)
-    failed = list(dict.fromkeys(re.findall(r"^FAILED \S+?::(\S+)", result["output"], flags=re.M))) if outcome == "confirmed" else []
+    failed = list(dict.fromkeys(re.findall(r"^FAILED \S*?::(\S+)", result["output"], flags=re.M))) if outcome == "confirmed" else []
     record = dict(file=path, command=command, returncode=result["returncode"], timed_out=result["timed_out"],
                   result={"refuted": "passed", "confirmed": "failed", "unverified": "did not run"}[outcome],
                   failed_tests=failed)

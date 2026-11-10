@@ -111,7 +111,8 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
             settled += found
         if number > 1:
             for finding in settled:  # ids restart in every reply; keep them unique across the run
-                finding["id"] = f"R{number}-{finding['id']}"
+                if not finding["id"].startswith(f"R{number}-"):
+                    finding["id"] = f"R{number}-{finding['id']}"
         withdrawn = [f["id"] for f in still_open if f["id"] in verdict["withdrawn"]]
         settled += [f for f in still_open if f["id"] not in withdrawn]
         receipt["reviews"].append(dict(reviewed_revision=entry["revision"], model=verdict["model"], family=verdict["family"],

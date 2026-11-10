@@ -393,7 +393,7 @@ class Parsing(unittest.TestCase):
 
     def test_each_failing_acceptance_test_is_one_finding(self):
         summary = ("F.F\n=== short test summary info ===\n"
-                   "FAILED ../probes/test_acceptance.py::test_default - assert 1 == 2\n"
+                   "FAILED ::test_default - assert 1 == 2\n"
                    "FAILED ../probes/test_acceptance.py::test_rejects[US-11] - AssertionError\n2 failed, 1 passed\n")
 
         class Box:
@@ -429,6 +429,10 @@ class Parsing(unittest.TestCase):
         lines = '{"role":"meta","type":"v"}\n{"role":"assistant","content":"first"}\n{"role":"assistant","content":"{}"}\n'
         self.assertEqual(reply_from(lines, "ndjson:content"), "{}")
         self.assertEqual(reply_from("```json\n{}\n```\n", "text"), "{}")
+        chatty = 'I could not open the repository, so this is from the packet {see above}.\n\n{"verdict": "PASS", "findings": []}'
+        self.assertEqual(reply_from(chatty, "text"), '{"verdict": "PASS", "findings": []}')
+        self.assertEqual(reply_from("Here it is:\n```json\n{\"a\": 1}\n```", "text"), '{"a": 1}')
+        self.assertEqual(reply_from("no object here", "text"), "no object here")
         for broken in (("not json", "json:response"), ('{"other": 1}', "json:response"), ('{"role":"meta"}', "ndjson:content")):
             with self.assertRaises(ProviderError):
                 reply_from(*broken)
