@@ -227,7 +227,18 @@
           "tasks": 66,
           "usd_per_task": 0.0742,
           "usd_per_solved_task": 0.0859,
-          "usd_total": 4.89
+          "usd_total": 4.89,
+          "review": {
+            "findings_confirmed_by_probe": 69,
+            "findings_fixed_and_verified": 58,
+            "tasks_fixed_by_review": 3,
+            "passing_tasks_broken_by_review": 0,
+            "acceptance_files": {
+              "passed": 59,
+              "failed": 6,
+              "did not run": 1
+            }
+          }
         },
         {
           "label": "KLP Standard with acceptance file, run 3 candidates",
@@ -239,7 +250,18 @@
           "tasks": 66,
           "usd_per_task": 0.0619,
           "usd_per_solved_task": 0.0717,
-          "usd_total": 4.09
+          "usd_total": 4.09,
+          "review": {
+            "findings_confirmed_by_probe": 59,
+            "findings_fixed_and_verified": 53,
+            "tasks_fixed_by_review": 0,
+            "passing_tasks_broken_by_review": 0,
+            "acceptance_files": {
+              "passed": 61,
+              "failed": 4,
+              "did not run": 1
+            }
+          }
         }
       ],
       "klp_cost_reduction_per_task": {
