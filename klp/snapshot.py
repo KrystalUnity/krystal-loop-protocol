@@ -14,11 +14,13 @@ review and are never part of the delivered patch.
 from __future__ import annotations
 
 import copy
+import shutil
 from pathlib import Path
 
 from .sandbox import Sandbox
 
 STORE = "/klp-snapshots"
+SYSTEM_PATH = "/usr/bin:/bin"
 # For repositories the runner created itself and the worker never touched.
 GIT_SAFE = ("git --no-pager --no-replace-objects -c core.hooksPath=/dev/null -c core.fsmonitor=false "
             "-c user.name=klp -c user.email=klp@localhost -c commit.gpgsign=false")
@@ -30,12 +32,18 @@ class Snapshots:
         store = Path(store)
         fresh = not (store / "git").exists()
         store.mkdir(parents=True, exist_ok=True)
+        git = shutil.which("git", path=SYSTEM_PATH)
+        if not git:
+            raise RuntimeError("git must be installed under /usr/bin or /bin")
         self.box = copy.copy(sandbox)  # same sandbox, plus the store; used only for the runner's own commands
         self.box.rw_binds = {**sandbox.rw_binds, str(store.resolve()): STORE}
-        self.git = (f"{GIT_SAFE} -c core.attributesFile=/dev/null -c gc.auto=0 "
+        # The runner's git is the system binary on a system-only PATH, so nothing the worker can
+        # write (a virtualenv, a tools directory in the repository) is ever executed for a snapshot.
+        self.box.env = {**sandbox.env, "PATH": SYSTEM_PATH}
+        self.git = (f"{git}{GIT_SAFE.removeprefix('git')} -c core.attributesFile=/dev/null -c gc.auto=0 "
                     f"--git-dir={STORE}/git --work-tree={sandbox.repo_dir}")
         if fresh:
-            self._run(f"git init -q --bare {STORE}/git")
+            self._run(f"{git} init -q --bare {STORE}/git")
 
     def _run(self, command: str, **kwargs) -> dict:
         done = self.box.run(command, **{"limit": 600, "timeout": 300, **kwargs})

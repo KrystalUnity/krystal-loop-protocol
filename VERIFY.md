@@ -1,8 +1,9 @@
 # Verify KLP Yourself
 
-Run the public examples, inspect their evidence and check the savings arithmetic.
-Everything on this page uses source already in this repository. No API keys,
-model subscription or access to KU infrastructure is needed.
+Run the public examples, inspect their evidence, recompute every published
+figure and rerun the benchmark. Sections 1 to 5 use source already in this
+repository. No API keys, model subscription or access to KU infrastructure is
+needed for them. Section 6 reruns the benchmark with your own keys.
 
 ## Get the Source
 
@@ -77,9 +78,7 @@ env -i PATH="$PATH" LANG=C.UTF-8 python3 -m unittest discover -s examples/semio-
 These tests exercise the public adapter and wake runner with a fake transport,
 including duplicates, stale identities and restart/claim handling. They need
 neither Redis nor a model. Inspect [the tests](examples/semio-coordination/tests)
-to see exactly what is asserted. This verifies the coordination mechanisms;
-it does not independently reproduce the four-scenario paid-model experiment
-or predict the frequency of duplicate messages in your workload.
+to see exactly what is asserted.
 
 ## 3. Recalculate the Published Savings
 
@@ -94,37 +93,56 @@ and **24.64% lower API cost including equal shared evaluation**. The second chec
 seven recorded calls and prints **75.00% fewer coordination input tokens**, four
 calls versus one, and the separate cache-equalized cost calculation.
 
-The scripts recompute costs and totals from the included sanitized usage records
-and recorded rates. They do not call a provider or authenticate those records
-against provider billing. Outcome fields are retained experiment summaries,
-not freshly executed quality checks. This is arithmetic verification,
-not a replay of the private coding task.
+The scripts recompute costs and totals from the included usage records and
+recorded rates. This is arithmetic verification, not a replay of the private
+coding task. Read the [coding case study](case-studies/krystalview-2026-10-20/README.md)
+and [coordination case study](case-studies/semio-coordination-2026-10-20/README.md)
+for the methods.
 
-Read the [coding case study](case-studies/krystalview-2026-10-20/README.md) and
-[coordination case study](case-studies/semio-coordination-2026-10-20/README.md)
-for the methods, quality evidence and cost boundaries. Do not add the percentages:
-worker pricing and avoided coordination calls are different effects.
+## 4. Check the Standard Runner
+
+```bash
+env -i PATH="$PATH" LANG=C.UTF-8 python3 tests/test_standard_runner.py -v
+```
+
+Scripted models drive the real loop inside the real sandbox: a confirmed
+finding is repaired and reviewed again, a refuted finding starts no repair, a
+repair that breaks the checks is discarded, the cost limit stops the run, and
+the critic sees the real change even when the worker tampers with git. The
+sandboxed cases need bubblewrap with user namespaces and skip without it.
+
+## 5. Recompute the Feature Benchmark
+
+```bash
+env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/feature-benchmark-2026-11-10/verify.py
+```
+
+The checker reprices every recorded model call from its token usage, sums the
+calls for each run, and rebuilds the published table from the per-run results.
+It prints the table and `All figures recompute from the receipts.`
+
+## 6. Rerun the Feature Benchmark
+
+```bash
+python3 -m bench.features prepare --work ~/klp-bench
+python3 -m bench.features run --work ~/klp-bench --cap 25
+```
+
+`prepare` builds the task environments and validates all 66 tasks against their
+reference patches and hidden tests without a model call. `run` needs
+`DEEPSEEK_API_KEY` and `OPENAI_API_KEY`, or your own models in
+[`bench/models.json`](bench/models.json), and stops at the spend cap you set.
+See the [benchmark guide](bench/README.md).
 
 ## Share or Extend the Evidence
 
-For a reproduction report, include the commit/diff, Python and Git versions,
-command, exit code, relevant evidence and elapsed time. A failure report is useful
-too. Do not include credentials, customer data or unrelated machine logs.
+For a reproduction report, include the commit, Python and Git versions, the
+command, exit code, `report.json` and elapsed time. A failure report is useful
+too. Leave out credentials, customer data and unrelated machine logs.
 
-A fully repeatable **model-cost comparison** is a separate next step, not one
-of the offline demos above. It needs a public task repository or frozen fixture,
-the same start state and acceptance tests for every arm, published prompts and
-runner configuration, declared budgets, and complete usage for reads, reviews,
-repairs and failures. Record coordinator cost separately when unavailable.
-To attribute savings to Semio, hold task, models and evidence fixed and vary the
-coordination path rather than changing the worker model at the same time.
+To measure your own models, edit [`bench/models.json`](bench/models.json) and
+rerun. To attribute a saving to Semio, hold the task, models and evidence fixed
+and vary only the coordination path.
 
-The separate [KLP Public Coding Challenge](https://github.com/KrystalUnity/klp-public-challenge)
-now provides an original task, fixed checks, an offline demo, three workflow
-instructions and result-record validation. Its demo needs Linux/WSL, Python
-3.12+ and user/network namespace support; no API keys or paid calls are needed.
-Use its run guide to plan a comparison with your own models and budget.
-
-The private KrystalView source is not part of either distribution. The public
-challenge supports new measurements, not a replay of the private experiment or
-a promise of the same savings. No paid benchmark is launched by these commands.
+The [KLP Public Coding Challenge](https://github.com/KrystalUnity/klp-public-challenge)
+is a single original task with fixed checks, useful for a first `klp run`.

@@ -7,9 +7,9 @@ executes commands, edits an artifact, repairs findings or authorizes a lifecycle
 
 It accepts `klp-core/v0.2` and `klp-core/v0.3` packets; the included
 `verdict.schema.json` is used for both.
-It does not accept `klp-standard/v0.1` task records. Keep Standard reviews in your
-existing workflow unless you have a compatible runner; never relabel a record
-or fabricate Mission Contract fields to bypass this boundary.
+Standard (`klp-standard/v0.1`) work is reviewed by the one-command runner,
+`klp run`; this harness is the Critical-path critic. Keep each record under its
+own profile.
 
 ## Prepare the packet
 

@@ -87,6 +87,11 @@ Record identity: **`klp-standard/v0.1`**. This is a documentation-level profile,
 not a claim of Core v0.3 conformance. Its compact record can be a versioned issue
 or one Markdown file using the [Standard task template](examples/standard-task.md).
 
+**Run it in one command.** `klp run "<task>" --check "<command>"` carries out
+the six steps below in a sandbox and writes the record as a receipt: worker,
+executed checks, independent critic, findings settled by probes, one bounded
+repair with re-review, and measured effort. See the [README](README.md#start-here).
+
 1. Record the authorized outcome, product-promise reference, profile reason,
    concrete edit boundary, protected paths, checks, roles and finite limits.
 2. Identify the exact base artifact. For a regression, demonstrate the relevant

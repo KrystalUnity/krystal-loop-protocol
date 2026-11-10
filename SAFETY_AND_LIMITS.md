@@ -140,6 +140,31 @@ own security and reliability models. KLP compatibility does not certify those
 systems. Apply normal authentication, authorization, encryption, backup,
 isolation, and incident-response controls.
 
+## Standard Runner Boundaries
+
+`klp run` enforces these in software:
+
+- **Sandbox.** Worker commands, checks and probes run under bubblewrap with no
+  network, a cleared environment and no view of your home directory or keys.
+  The work happens on a private copy; your working tree is untouched.
+- **Runner-owned record.** Candidates are snapshotted into a store the worker's
+  sandbox never mounts, using the system git on a system-only path. The diff
+  the critic reviews and the patch you apply come from that record, so git
+  configuration, attributes, filters or binaries changed by the worker cannot
+  alter what is reviewed. A snapshot covers what git would track; ignored
+  files are outside review and never part of the delivered patch.
+- **No host file access through the workspace.** Results come back on standard
+  output and files go in on standard input, so a link planted in the workspace
+  cannot redirect a read or a write.
+- **Trusted settings.** Model routes, API key names, spend limits and sandbox
+  mounts come only from your own config. A repository's `klp.json` can declare
+  checks and critical triggers and nothing else.
+- **Independence.** The runner refuses a critic from the worker's model family.
+- **Limits.** Cost, step, repair and time limits stop the run, and the receipt
+  records the state it stopped in.
+- **Authority.** The runner produces a patch and a receipt. Merging, pushing
+  and deploying remain yours.
+
 ## Claim Limits
 
 A passing KLP run supports only the claims tied to its task contract and

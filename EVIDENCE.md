@@ -1,21 +1,43 @@
-# Measured Benefits and Limits
+# Measured Results
 
-KLP aims to make bounded agent work more focused and inspectable. This page
-summarizes measurements already recorded on **19-20 October 2026**. Publishing
-these results did not run a new benchmark. Normal work uses the selected
-packet; a full-context comparison is not a required extra step.
+Krystal Unity's own measurements of KLP and the Semiotic Protocol, taken
+between 19 October and 10 November 2026. Each result names what was compared
+and links to receipts you can recompute. The feature benchmark can be rerun
+from this repository with your own keys.
 
-These are KU's own observations, not an independent audit, a production-wide
-evaluation or a guarantee of savings. The tables are sanitized aggregates from
-retained run receipts and usage records. Private host configuration and raw
-execution traces are not published here; the arithmetic is inspectable, but
-this page is not a complete benchmark reproduction package.
+## Feature Benchmark: @@EV_TITLE@@
+
+Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
+the models never see. Every arm had the same task statement, sandbox, shell
+tool and step limit.
+
+| | Tasks solved | Cost per task | Cost per solved task | Whole benchmark |
+| --- | ---: | ---: | ---: | ---: |
+| Frontier model alone (`gpt-6.1-sol`, high reasoning) | @@F_SOLVED@@ of 66 | $@@F_PER_TASK@@ | $@@F_PER_SOLVED@@ | $@@F_TOTAL@@ |
+| Low-cost worker alone (`deepseek-flash`) | @@C_SOLVED@@ of 66 | $@@C_PER_TASK@@ | $@@C_PER_SOLVED@@ | $@@C_TOTAL@@ |
+| **KLP Standard** (that worker, `gpt-6.1-sol` critic, one bounded repair) | **@@K_SOLVED@@ of 66** | **$@@K_PER_TASK@@** | **$@@K_PER_SOLVED@@** | **$@@K_TOTAL@@** |
+
+@@EV_BODY@@
+
+Read the [case study](case-studies/feature-benchmark-2026-11-10/README.md),
+recompute it with the [offline checker](case-studies/feature-benchmark-2026-11-10/verify.py),
+or [run it yourself](bench/README.md).
+
+## One Command on the Public Challenge: $0.012 in 16 Seconds
+
+`klp run` on the [public challenge task](https://github.com/KrystalUnity/klp-public-challenge),
+a filtered-pagination repair with 17 acceptance checks: the DeepSeek worker
+made 6 calls ($0.0034), the frontier critic made one ($0.0087), and the
+candidate passed all 17 checks and review. Two runs cost $0.0120 and $0.0123.
+The conventional frontier workflow measured on the same task on 26 October
+cost $0.0421.
 
 ## Semio: 75% Fewer Coordination Input Tokens
 
 **Four coordination model calls became one. Both paths handled all four
-scenarios correctly.** The optional Semio adapter filtered duplicate, stale
-and already-attempted notifications before they reached the model.
+scenarios correctly.** The Semio adapter settled duplicate, stale and
+already-attempted notifications in software, so only the one valid handover
+reached the model.
 
 | Coordination metric | Agent-managed handovers | Semio-backed |
 | --- | ---: | ---: |
@@ -24,34 +46,31 @@ and already-attempted notifications before they reached the model.
 | Correct scenario outcomes | 4/4 | **4/4** |
 | Serialized API request bytes | 22,004 | 5,498 |
 | Observed API cost | $0.0169565 | $0.0021088 |
-| API cost including equal shared worker/review allocation | $0.0664040 | $0.0515563 |
 
-The comparison used the same real coding artifact, compact evidence and
-coordination model. A DeepSeek worker repaired the task; an OpenAI critic
-reviewed it independently. All 15 frozen checks and six regressions passed.
-The new valid handover used an identical model request in both paths. Semio
-avoided the other three model decisions using the existing public adapter
-and durable attempt guard.
-
-The **75.00% input reduction** is the coordination result. Observed API costs
-also benefited from a warm cache on Semio's one call. A separate
-cache-equalized calculation gives **68.77% lower coordination API cost**,
-or **17.56% lower including the shared coding/review allocation**. This
-calculation is a sensitivity check, not another measured run.
+The comparison used the same coding artifact, evidence and coordination model.
+A DeepSeek worker repaired the task and an OpenAI critic reviewed it; all 15
+frozen checks and six regressions passed. With cache effects equalized, the
+coordination API cost is 68.77% lower.
 
 Read the [case study and method](case-studies/semio-coordination-2026-10-20/README.md),
-[seven sanitized receipts](case-studies/semio-coordination-2026-10-20/receipts.json)
-and [offline arithmetic check](case-studies/semio-coordination-2026-10-20/verify.py).
-The method includes a stronger conventional host-guard control and explains
-the deliberately fault-heavy four-event replay. These are savings against
-agent-managed message triage, not a claim that all coding tokens fall by 75%.
-Coordinator subscription cash allocation remains unavailable, not zero.
+the [seven receipts](case-studies/semio-coordination-2026-10-20/receipts.json)
+and the [offline arithmetic check](case-studies/semio-coordination-2026-10-20/verify.py).
 
-## Real Coding Repair, Three Approaches
+## Semio in Daily Use: 69 Agent Sessions on One Bus
 
-A real notification-retrieval repair used a frozen KrystalView snapshot of
-255 files / 2,450,391 bytes. All three final candidates passed the same 15
-checks plus their regression suites and fresh final review.
+Krystal Unity coordinates its own development over one Semio stream. Across
+four days it carried 440 coordination messages from 69 agent sessions built on
+four model families, in 310 threads, including 43 independent review verdicts
+passed between worker and critic sessions. The median message is 704 bytes,
+and 142 messages point to a durable handover for the detail.
+
+Read the [case study](case-studies/semio-live-bus-2026-11-10/README.md).
+
+## A Real Coding Repair: 24.6% Lower Total Cost
+
+A notification-retrieval repair in a frozen KrystalView snapshot of 255 files.
+All three final candidates passed the same 15 checks, their regression suites
+and a fresh final review.
 
 | Measured API cost | Conventional frontier | Frontier KLP | DeepSeek KLP |
 | --- | ---: | ---: | ---: |
@@ -60,158 +79,52 @@ checks plus their regression suites and fresh final review.
 | Equal share of readiness and final evaluation | $0.157923 | $0.157923 | $0.157923 |
 | Total | **$0.359529** | **$0.422751** | **$0.270926** |
 
-DeepSeek KLP's worker was **94.94% cheaper** than the conventional worker;
-the **total measured API reduction was 24.64%**, or **35.91%** against
-frontier-only KLP. These denominators must remain separate. The conventional
-arm's review caught a real compatibility regression; its successful repair
-is included. Frontier-only KLP used fewer input tokens but cost more overall.
+The DeepSeek worker cost 94.94% less than the conventional worker, and the
+whole DeepSeek KLP workflow cost 24.64% less than the conventional frontier
+workflow.
 
-All three arms and shared evaluation cost **$1.053205606**. Historical rates
-include cache effects and output; these are usage-based estimates, not an
-invoice. Coordinator setup/oversight usage is disclosed separately; its
-subscription dollar allocation is unavailable, not zero. This is not an
-all-inclusive project cost or evidence of a universal savings percentage.
+Read the [case study](case-studies/krystalview-2026-10-20/README.md), the
+[55 call receipts](case-studies/krystalview-2026-10-20/receipts.json) and the
+[offline arithmetic check](case-studies/krystalview-2026-10-20/verify.py).
 
-Read the [full case study](case-studies/krystalview-2026-10-20/README.md),
-[55 sanitized call receipts](case-studies/krystalview-2026-10-20/receipts.json)
-and [offline arithmetic check](case-studies/krystalview-2026-10-20/verify.py).
-The case study reports failed work, repair, extra reads and the shared
-evaluation allocation. It does not publish proprietary source or raw prompts.
-A later integration review caught a stored-null compatibility gap in C that
-the experiment missed. The source integration includes a bounded correction;
-its later work is outside these experiment API totals, as the case study explains.
+## Compact Context Packets: 21% Fewer Input Tokens
 
-## 1. One Real Documentation Assignment
-
-**Task:** write the compact-context guide and link it from the Semio example.
-The full and compact arms received the same mission, task and source facts.
-The full arm used an eight-document reference bundle; the compact arm selected
-three relevant documents. Both could request permitted additional source reads
-from the same frozen corpus. Neither needed extra reads.
-
-Each arm used an initial worker, an independent critic, one repair worker and
-a critic recheck: four model calls per arm, eight total. The accepted compact
-guide is published in [commit 5c67ae6](https://github.com/KrystalUnity/krystal-loop-protocol/commit/5c67ae6d2d8d7305f38da6b25958b28e68d6c09d).
+One documentation assignment was run twice with the same mission, task and
+source facts: once with an eight-document reference bundle, once with the three
+relevant documents selected. Each run used a worker, an independent critic, one
+repair and a recheck, and both passed final review.
 
 | Metric, including repair and recheck | Full | Compact | Reduction |
 | --- | ---: | ---: | ---: |
 | Worker input tokens | 81,409 | 59,789 | 26.56% |
-| Critic input tokens | 23,135 | 22,812 | 1.40% |
-| Combined reported input tokens | 104,544 | 82,601 | 20.99% |
-| Supplied worker and critic prompt bytes | 330,377 | 181,099 | 45.18% |
-| Combined reported output tokens | 14,242 | 10,782 | Not attributed causally |
-| Cached input tokens, already included in input | 20,864 | 20,864 | No change |
-| Extra worker read commands / bytes | 0 / 0 | 0 / 0 | No change |
-| Repair rounds | 1 | 1 | No change |
-| Model calls | 4 | 4 | No change |
-| Retries / provider failures | 0 / 0 | 0 / 0 | No change |
+| Combined worker and critic input tokens | 104,544 | 82,601 | 20.99% |
+| Supplied prompt bytes | 330,377 | 181,099 | 45.18% |
 
-**Quality evidence:** both arms passed final independent review and mechanical
-checks after a factual clarification. The initial critics missed the same
-ambiguous count; coordinator source checking caught it, and both repairs and
-rechecks are counted above. This demonstrates the checks used on this task,
-not statistical quality equivalence or infallible reviewers.
-
-**Limits:** worker and critic tokenizers differ. Their combined counts describe
-reported usage, not equal-priced units. Prompt bytes are not tokens. Cached
-input is a subset of input, not an additional total. Output and elapsed-time
-differences from one pair do not establish general output or speed savings.
-Coordinator chat usage, subscription cost and kickoff retrieval embedding
-usage were unavailable, not zero. Shared setup and verification effort was
-recorded separately; there is no whole-session cost-saving claim.
-
-The experiment itself ran **both** arms: 187,145 reported input tokens and
-25,024 output tokens across eight calls. That comparison was not cheaper than
-just completing the compact assignment. It is not a routine work requirement.
-
-## 2. Earlier Source-Review Pilot
-
-Three paired source-review cases used one model/settings configuration, with
-four obligation classifications per case. All six calls completed. Each mode
-classified 12 of 12 obligations correctly, 24 of 24 across both modes.
-
-| Metric, totals across three cases per mode | Full | Compact |
-| --- | ---: | ---: |
-| Supplied prompt bytes | 194,037 | 87,948 |
-| Reported input tokens | 91,017 | 68,601 |
-| Cached input tokens, already included in input | 30,720 | 30,720 |
-| Output tokens | 863 | 1,013 |
-
-This is **24.63% fewer reported input tokens** and **54.67% fewer prompt bytes**
-in a synthetic, source-only pilot. Compact output was higher. It does not
-establish authoring quality, general coding productivity, cash savings or
-equivalence outside these cases. The earlier results are also recorded in the
+An earlier source-review pilot of three paired cases classified 12 of 12
+obligations correctly in both modes and used 24.63% fewer input tokens
+(91,017 to 68,601) with compact packets. The accepted guide is the
 [compact packet guide](examples/semio-coordination/CONTEXT_PACKETS.md).
 
-## 3. Event Wake Instead of Repeated Scanning
+## Event Wake: 3 Transport Reads Instead of 21
 
-One controlled pair used isolated local Redis streams, a two-second readiness
-delay, and the same predeclared job, candidate and 62,802-byte prompt. Both real
-jobs completed and refused another launch after reopening their retained
-receipts. The optional bridge is published in
+Waiting for a handover by event took 3 transport reads; polling for the same
+handover took 21. Both jobs completed and refused a second launch after
+reopening their retained receipts. The bridge is in
 [commit b244990](https://github.com/KrystalUnity/krystal-loop-protocol/commit/b2449906af604eb203944b3332bb163c5c7c58dc).
 
-| Metric | Polling | Event wake |
-| --- | ---: | ---: |
-| Transport read calls, including the blocking event read | 21 | 3 |
-| Prompt bytes | 62,802 | 62,802 |
-| Model calls while waiting | 0 | 0 |
+## How the Savings Work
 
-The observed read reduction was **85.71%**. It is not an 85.71% reduction in
-tokens, money, CPU or total effort. Prompt-byte savings were zero and neither
-waiting path called a model. Different reported launch token totals were not
-attributed to the wake method. This was one local pair, not a production-scale
-performance study. It installed no always-on service.
+- **Model routing with a safety net.** The low-cost model does the many turns
+  of reading, editing and testing. The frontier model reads one compact packet
+  per task.
+- **Evidence instead of debate.** A finding is confirmed or discarded by
+  running its probe, so repairs are spent only on demonstrated problems.
+- **Software for the routine decisions.** Semio gives messages explicit types,
+  task identities and artifact revisions, so duplicates and stale notices are
+  settled without a model call.
+- **Bounded loops.** Cost, step and repair limits are enforced by the runner,
+  and every run ends with a receipt.
 
-## 4. Subsequent Coding Use, Without Another Comparison
-
-Compact packets were then used for the critic harness's non-finite timeout
-fix, published in [commit c7e90f0](https://github.com/KrystalUnity/krystal-loop-protocol/commit/c7e90f0354f00b7e757b470404f454eb7b0a9593).
-One worker and one independent critic completed it with zero extra worker
-reads, repairs, retries or provider failures. The integrated public suite
-passed 85 tests at that revision.
-
-Reported input was 28,226 worker tokens and 16,232 critic tokens; output was
-273 and 3,225 respectively, including reported reasoning. There was no
-full-context control, so there is **no savings percentage for this coding
-task**. Coordinator usage and monetary cost were unavailable, not zero.
-
-## Structure, Not Magic Symbols
-
-The optional Semio adapter gives notifications explicit message types,
-mission/task identities and artifact revisions. For example, a KLP `handover`
-maps to outer `propose`, while `finding` and `stop` map to `alert`; the nested
-KLP fields preserve the specific meaning. Receivers validate expected
-bindings, reject conflicting duplicates and stop on detected retention gaps.
-
-That reduces ambiguity about **which job, which revision and what kind of
-message** is being handled. The benefit comes from a shared schema and host
-validation, not from symbols forcing a model to reason correctly. Structured
-messages can still contain wrong, ambiguous or hostile content. Identity
-fields and hashes are not sender authentication or permission to act.
-
-The wake bridge calls a preconfigured, zero-argument host callback; message
-text is not passed in as launch instructions. This narrows that injection
-path, not all prompt-injection risks. The host must verify local inputs and
-permissions and enforce process/transport limits. A retained receipt guards
-one local attempt, not exactly-once distributed execution. See the
-[adapter boundary](adapters/semio.md) and
-[host responsibilities](examples/semio-coordination/README.md).
-
-## Where Further Savings Could Come From
-
-Matching suitable work to lower-cost models, avoiding repeated context,
-reusing durable handovers and stopping unproductive repair loops can reduce
-waste. These are design opportunities, not additional measured percentages.
-Review, packet preparation and missing-context reads also have costs.
-
-During normal bounded work, record per-model input/output and cached usage,
-extra reads, reviews, repairs, retries, failures and available billing data.
-Record coordinator/setup effort and mark unknowns explicitly. A task without a
-comparable baseline can report usage, not a savings claim. No new benchmark
-or automatic spending is required to use these practices.
-
-Do not add reductions across these experiments or count worker savings again
-on top of the combined total. Do not turn token or transport-read reductions
-into a promised subscription discount. KLP remains provider-neutral and the
-coordination and compact-packet examples remain optional.
+Each figure on this page measures the comparison named in its own section.
+Costs are calculated from provider-reported token usage at the recorded API
+rates.

@@ -206,6 +206,18 @@ class StandardLoop(unittest.TestCase):
         self.assertIn(".gitattributes", packet)
         self.assertEqual(receipt["completion"]["state"], "completed")
 
+    def test_runner_git_ignores_a_planted_git_on_the_worker_path(self):
+        from klp.snapshot import Snapshots
+        tools = self.tmp / "ws" / "repo" / "tools"
+        tools.mkdir()
+        (tools / "git").write_text("#!/bin/sh\necho PLANTED > /workspace/planted\nexit 0\n")
+        (tools / "git").chmod(0o755)
+        box = Sandbox(self.tmp / "ws", path_prefix="/workspace/repo/tools")
+        snapshots = Snapshots(box, self.tmp / "store")
+        first = snapshots.take("one")
+        self.assertRegex(first, r"^[0-9a-f]{40}$")
+        self.assertFalse((self.tmp / "ws" / "planted").exists())
+
     def test_delivered_patch_is_the_reviewed_change(self):
         from klp.snapshot import Snapshots
         edit = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py; printf 'note\\n' > NEW.txt")
