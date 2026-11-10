@@ -8,9 +8,11 @@
       "what": "66 single-feature tasks in Click, Jinja and dirty-equals from the public CooperBench dataset (revision 63b9d44d), graded by hidden tests",
       "arms": [
         {
-          "label": "KLP Standard",
+          "label": "KLP Standard, run 1",
+          "arm": "klp",
           "worker": "deepseek-flash",
           "critic": "gpt-6.1-sol",
+          "repair_rounds": 1,
           "solved": 57,
           "tasks": 66,
           "usd_per_task": 0.0552,
@@ -21,11 +23,35 @@
             "findings_fixed_and_verified": 43,
             "findings_refuted_by_probe": 3,
             "tasks_fixed_by_review": 1,
-            "passing_tasks_broken_by_review": 0
+            "passing_tasks_broken_by_review": 0,
+            "runs_completed": 48,
+            "runs_with_open_finding": 18
           }
         },
         {
-          "label": "Low-cost worker alone",
+          "label": "KLP Standard, run 2",
+          "arm": "klp-sol",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-sol",
+          "repair_rounds": 2,
+          "solved": 54,
+          "tasks": 66,
+          "usd_per_task": 0.0607,
+          "usd_per_solved_task": 0.0742,
+          "usd_total": 4.0,
+          "review": {
+            "findings_confirmed_by_probe": 78,
+            "findings_fixed_and_verified": 67,
+            "findings_refuted_by_probe": 2,
+            "tasks_fixed_by_review": 0,
+            "passing_tasks_broken_by_review": 0,
+            "runs_completed": 56,
+            "runs_with_open_finding": 10
+          }
+        },
+        {
+          "label": "Low-cost worker alone, run 1",
+          "arm": "klp:first-candidate",
           "worker": "deepseek-flash",
           "solved": 56,
           "tasks": 66,
@@ -34,7 +60,18 @@
           "usd_total": 1.59
         },
         {
+          "label": "Low-cost worker alone, run 2",
+          "arm": "worker",
+          "worker": "deepseek-flash",
+          "solved": 54,
+          "tasks": 66,
+          "usd_per_task": 0.0274,
+          "usd_per_solved_task": 0.0335,
+          "usd_total": 1.81
+        },
+        {
           "label": "Frontier model alone",
+          "arm": "frontier-solo",
           "worker": "gpt-6.1-sol",
           "solved": 56,
           "tasks": 66,
@@ -44,21 +81,67 @@
         },
         {
           "label": "Heavy model alone",
+          "arm": "astra-solo",
           "worker": "gpt-6-astra",
           "solved": 56,
           "tasks": 66,
           "usd_per_task": 0.7207,
           "usd_per_solved_task": 0.8494,
           "usd_total": 47.57
+        },
+        {
+          "label": "KLP Standard, heavier critic",
+          "arm": "klp-astra",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6-astra",
+          "repair_rounds": 2,
+          "solved": 55,
+          "tasks": 66,
+          "usd_per_task": 0.1645,
+          "usd_per_solved_task": 0.1974,
+          "usd_total": 10.86,
+          "review": {
+            "findings_confirmed_by_probe": 81,
+            "findings_fixed_and_verified": 72,
+            "passing_tasks_broken_by_review": 0,
+            "runs_with_open_finding": 9
+          }
+        },
+        {
+          "label": "KLP Standard, lighter critic",
+          "arm": "klp-terra",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-terra",
+          "repair_rounds": 2,
+          "solved": 52,
+          "tasks": 66,
+          "usd_per_task": 0.075,
+          "usd_per_solved_task": 0.0951,
+          "usd_total": 4.95,
+          "review": {
+            "findings_confirmed_by_probe": 222,
+            "findings_fixed_and_verified": 167,
+            "passing_tasks_broken_by_review": 3,
+            "runs_with_open_finding": 32
+          }
         }
       ],
       "klp_cost_reduction_per_task": {
-        "versus_heavy_model_alone": 0.923,
-        "versus_frontier_model_alone": 0.553
+        "versus_heavy_model_alone": [
+          0.923,
+          0.916
+        ],
+        "versus_frontier_model_alone": [
+          0.553,
+          0.509
+        ]
       },
       "receipts": "case-studies/feature-benchmark-2026-11-10/",
       "verify": "python3 case-studies/feature-benchmark-2026-11-10/verify.py",
-      "rerun": "bench/README.md"
+      "rerun": "bench/README.md",
+      "tasks_failed_by_every_arm": 7,
+      "runs": 462,
+      "model_calls": 6165
     },
     {
       "id": "semio-coordination-2026-10-20",

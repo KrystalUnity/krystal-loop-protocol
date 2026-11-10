@@ -25,6 +25,57 @@
     "unreviewed": 66
    }
   },
+  "Low-cost worker alone (deepseek-flash)": {
+   "arm": "worker",
+   "tasks": 66,
+   "solved": 54,
+   "usd": "1.811226582",
+   "usd_per_task": "0.027442827",
+   "usd_per_solved": "0.033541233",
+   "median_seconds": 113.75,
+   "states": {
+    "unreviewed": 66
+   }
+  },
+  "KLP Standard, gpt-6.1-sol critic": {
+   "arm": "klp-sol",
+   "tasks": 66,
+   "solved": 54,
+   "usd": "4.004289926",
+   "usd_per_task": "0.06067105948484848484848484848",
+   "usd_per_solved": "0.07415351714814814814814814815",
+   "median_seconds": 28.75,
+   "states": {
+    "budget_exhausted": 10,
+    "completed": 56
+   }
+  },
+  "KLP Standard, gpt-6-astra critic": {
+   "arm": "klp-astra",
+   "tasks": 66,
+   "solved": 55,
+   "usd": "10.857654818",
+   "usd_per_task": "0.1645099214848484848484848485",
+   "usd_per_solved": "0.1974119057818181818181818182",
+   "median_seconds": 42.85,
+   "states": {
+    "budget_exhausted": 9,
+    "completed": 57
+   }
+  },
+  "KLP Standard, gpt-6.1-terra critic": {
+   "arm": "klp-terra",
+   "tasks": 66,
+   "solved": 52,
+   "usd": "4.947329218",
+   "usd_per_task": "0.07495953360606060606060606061",
+   "usd_per_solved": "0.0951409465",
+   "median_seconds": 145.3,
+   "states": {
+    "budget_exhausted": 32,
+    "completed": 34
+   }
+  },
   "KLP Standard (single pass)": {
    "arm": "klp",
    "tasks": 66,
@@ -46,6 +97,71 @@
   }
  },
  "reviews": {
+  "klp-sol": {
+   "reviews": 117,
+   "findings": {
+    "confirmed": 78,
+    "refuted": 2,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "repairs": 51,
+   "repairs_kept": 51,
+   "findings_closed": 67,
+   "fixed_by_review": [],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "1.737512",
+    "repair": "0.455551344"
+   }
+  },
+  "klp-astra": {
+   "reviews": 119,
+   "findings": {
+    "confirmed": 81,
+    "refuted": 1,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "repairs": 53,
+   "repairs_kept": 53,
+   "findings_closed": 72,
+   "fixed_by_review": [
+    "pallets_click-task2800-feature3"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "8.58704",
+    "repair": "0.459388236"
+   }
+  },
+  "klp-terra": {
+   "reviews": 159,
+   "findings": {
+    "confirmed": 222,
+    "refuted": 6,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "repairs": 93,
+   "repairs_kept": 93,
+   "findings_closed": 167,
+   "fixed_by_review": [
+    "pallets_click-task2800-feature3"
+   ],
+   "broken_by_review": [
+    "pallets_click-task2956-feature2",
+    "pallets_click-task2956-feature8",
+    "samuelcolvin_dirty_equals-task43-feature9"
+   ],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "2.052469",
+    "repair": "1.083633636"
+   }
+  },
   "klp": {
    "reviews": 102,
    "findings": {

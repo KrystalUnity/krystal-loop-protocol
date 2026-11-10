@@ -4,8 +4,9 @@ Sixty-six real feature tasks in three open-source Python libraries, each graded
 by tests the models never see. Run it yourself and compare a frontier model
 working alone with a low-cost worker under KLP Standard.
 
-Latest result: KLP Standard solved 57 of 66 for $0.055 a task. The heavy model
-alone solved 56 for $0.721 and the frontier model alone solved 56 for $0.123.
+Latest result: across two runs KLP Standard solved 57 and 54 of 66 for $0.055
+and $0.061 a task. The heavy model alone solved 56 for $0.721 and the frontier
+model alone solved 56 for $0.123.
 [Case study and receipts](../case-studies/feature-benchmark-2026-11-10/README.md).
 
 ## What is measured

@@ -258,11 +258,15 @@ class V03DocumentationTests(unittest.TestCase):
         report = json.loads(self.text("case-studies/feature-benchmark-2026-11-10/report.json"))
         published = {row["arm"]: row for row in report["arms"].values()}
         bench = next(r for r in evidence["results"] if r["id"] == "feature-benchmark-2026-11-10")
-        for label, arm in (("KLP Standard", "klp"), ("Low-cost worker alone", "klp:first-candidate"),
-                           ("Frontier model alone", "frontier-solo"), ("Heavy model alone", "astra-solo")):
-            row = next(a for a in bench["arms"] if a["label"] == label)
-            self.assertEqual(row["solved"], published[arm]["solved"], label)
-            self.assertAlmostEqual(row["usd_total"], float(published[arm]["usd"]), places=2, msg=label)
+        for row in bench["arms"]:
+            self.assertEqual(row["solved"], published[row["arm"]]["solved"], row["label"])
+            self.assertAlmostEqual(row["usd_total"], float(published[row["arm"]]["usd"]), places=2, msg=row["label"])
+        reviews = report["reviews"]
+        for row in bench["arms"]:
+            if row["arm"] in reviews:
+                self.assertEqual(row["review"]["findings_confirmed_by_probe"], reviews[row["arm"]]["findings"]["confirmed"])
+                self.assertEqual(row["review"]["findings_fixed_and_verified"], reviews[row["arm"]]["findings_closed"])
+                self.assertEqual(row["review"]["passing_tasks_broken_by_review"], len(reviews[row["arm"]]["broken_by_review"]))
         agents = self.text("AGENTS.md")
         for required in ("evidence.json", "--json", "What to tell your operator", "verify.py"):
             self.assertIn(required, agents)

@@ -9,29 +9,35 @@ from this repository with your own keys.
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see. Every arm had the same task statement, sandbox and shell
-tool.
+tool. 462 runs and 6,165 model calls.
 
 | | Tasks solved | Cost per task | Cost per solved task | Whole benchmark |
 | --- | ---: | ---: | ---: | ---: |
 | Heavy model alone (`gpt-6-astra`, high reasoning) | 56 of 66 | $0.721 | $0.849 | $47.57 |
 | Frontier model alone (`gpt-6.1-sol`, high reasoning) | 56 of 66 | $0.123 | $0.146 | $8.15 |
-| Low-cost worker alone (`deepseek-flash`) | 56 of 66 | $0.024 | $0.028 | $1.59 |
-| **KLP Standard** (that worker, `gpt-6.1-sol` critic, one bounded repair) | **57 of 66** | **$0.055** | **$0.064** | **$3.64** |
+| **KLP Standard, run 1** (`deepseek-flash` worker, `gpt-6.1-sol` critic, one repair round) | **57 of 66** | **$0.055** | **$0.064** | **$3.64** |
+| **KLP Standard, run 2** (same models, two repair rounds) | **54 of 66** | **$0.061** | **$0.074** | **$4.00** |
+| Low-cost worker alone, run 1 / run 2 | 56 / 54 of 66 | $0.024 / $0.027 | $0.028 / $0.034 | $1.59 / $1.81 |
 
-KLP Standard cost 92% less per task than the heavy model alone and 55% less
-than the frontier model alone, and solved one more task than either. The
-low-cost worker alone and KLP Standard are the same worker runs, graded before
-and after review, so the difference between those rows is the review:
+KLP Standard matched the solve rate of both models working alone and cost 92%
+less per task than the heavy model and 51% to 55% less than the frontier
+model. Each KLP row is the same worker runs as the worker row, graded before
+and after review, so the difference is the review:
 
-- the critic confirmed 64 findings by running a failing test against the
-  candidate, and 3 more were discarded when their test passed;
-- 43 of the 44 findings sent to the one bounded repair were fixed and verified;
-- one task went from failing its hidden tests to passing them;
-- all 56 candidates that passed before review still passed after it.
+- the critic confirmed 64 findings in run 1 and 78 in run 2 by running a
+  failing test against the candidate;
+- 43 were fixed and verified before handover with one repair round (67%), and
+  67 with two (86%);
+- one failing task was rescued in run 1, and no repair broke a passing task in
+  either run.
 
-The low-cost model made 94% of the KLP calls. The frontier model was called
-102 times, once per review, on a packet with a median size of 14.5 KB. All 198
-runs and 2,981 calls completed.
+Three critics reviewed the identical run 2 candidates. The standard frontier
+model solved 54 at $0.061 a task. The heavier `gpt-6-astra` solved 55 at
+$0.165. The lighter `gpt-6.1-terra` solved 52 at $0.075, raised three times as
+many findings and broke three passing candidates.
+
+Seven of the 66 tasks were failed by every arm; their hidden tests check
+behaviour the written specification does not state.
 
 Read the [case study](case-studies/feature-benchmark-2026-11-10/README.md),
 recompute it with the [offline checker](case-studies/feature-benchmark-2026-11-10/verify.py),

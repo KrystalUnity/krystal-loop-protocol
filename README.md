@@ -22,14 +22,13 @@ the models never see.**
 | --- | ---: | ---: | ---: |
 | Heavy model working alone (`gpt-6-astra`) | 56 of 66 | $0.721 | not reviewed |
 | Frontier model working alone (`gpt-6.1-sol`) | 56 of 66 | $0.123 | not reviewed |
-| Low-cost worker alone (`deepseek-flash`) | 56 of 66 | $0.024 | not reviewed |
-| **KLP Standard**: that worker, a frontier critic, one bounded repair | **57 of 66** | **$0.055** | **43** |
+| **KLP Standard**, two runs: low-cost worker, frontier critic, bounded repair | **57 and 54 of 66** | **$0.055 and $0.061** | **43 and 67** |
 
-KLP Standard cost 92% less per task than the heavy model working alone and 55%
-less than the frontier model, and solved one more task than either. Its critic
-confirmed 64 findings by running a failing test against the candidate; 43 were
-repaired and verified fixed before handover, and no repair broke a passing
-task. The KLP arm runs in about half an hour for under $4.
+KLP Standard matched the solve rate of both models working alone and cost 92%
+less per task than the heavy model and 51% to 55% less than the frontier
+model. Its critic confirmed 64 and 78 findings by running a failing test
+against the candidate, and no repair broke a passing task. The KLP arm runs in
+about half an hour for $4.
 
 [Results and receipts](case-studies/feature-benchmark-2026-11-10/README.md) ·
 [Run the benchmark yourself](bench/README.md) ·
@@ -127,14 +126,17 @@ included receipts and run the offline checks.
   needed four. Krystal Unity runs its own development this way, with
   [69 agent sessions on one bus](case-studies/semio-live-bus-2026-11-10/README.md).
 - **A stopping point.** Every run has a cost limit, a step limit and a repair
-  limit, and ends with a receipt.
+  limit, and ends with a receipt. On the benchmark no run stopped on its step
+  limit.
 
 ### What We Have Measured
 
-- **Feature benchmark, 66 tasks.** KLP Standard solved 57 for $0.055 a task.
-  The heavy model alone solved 56 for $0.721 and the frontier model alone
-  solved 56 for $0.123. Review confirmed 64 findings by execution and 43 were
-  fixed before handover.
+- **Feature benchmark, 66 tasks.** KLP Standard solved 57 and 54 across two
+  runs for $0.055 and $0.061 a task. The heavy model alone solved 56 for $0.721
+  and the frontier model alone solved 56 for $0.123. With two repair rounds,
+  86% of the findings confirmed by execution were fixed before handover. The
+  standard frontier model is the right critic: a heavier one cost 2.7 times as
+  much for one more task, and a lighter one cost more and broke passing work.
   [Case study and receipts](case-studies/feature-benchmark-2026-11-10/README.md).
 - **Semio coordination.** Four coordination model calls became one, input
   tokens fell from 5,325 to 1,331 (75%), and both paths handled all four
