@@ -20,9 +20,12 @@ python3 -m bench.verify
 ```
 
 ```text
-ok    Feature benchmark, 66 tasks                All figures recompute from the receipts.
-ok    Paired features and Semio, 30 pairs        All figures recompute from the receipts.
-...
+ok    Feature benchmark, 66 tasks
+ok    Paired features and Semio, 30 pairs
+ok    Semio coordination study
+ok    SWE-bench Pro Ansible task
+ok    KrystalView repair
+
 Every published figure recomputes from the receipts.
 ```
 

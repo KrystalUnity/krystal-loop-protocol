@@ -33,9 +33,13 @@ def run(items) -> int:
     failed = 0
     for label, script in items:
         done = subprocess.run([sys.executable, str(ROOT / script)], cwd=ROOT, capture_output=True, text=True)
-        lines = [line for line in (done.stdout + done.stderr).splitlines() if line.strip()]
-        print(f"{'ok  ' if done.returncode == 0 else 'FAIL'}  {label:42s} {lines[-1] if lines else ''}")
-        failed += done.returncode != 0
+        if done.returncode == 0:
+            print(f"ok    {label}")
+        else:
+            failed += 1
+            print(f"FAIL  {label}")
+            for line in (done.stdout + done.stderr).splitlines()[-12:]:
+                print("      " + line)
     return failed
 
 
