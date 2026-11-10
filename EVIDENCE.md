@@ -9,7 +9,7 @@ from this repository with your own keys.
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see. Every arm had the same task statement, sandbox and shell
-tool. 990 runs and 9,696 model calls.
+tool. 1,056 runs and 9,777 model calls.
 
 | | Tasks solved | Cost per task | Cost per solved task | Whole benchmark |
 | --- | ---: | ---: | ---: | ---: |

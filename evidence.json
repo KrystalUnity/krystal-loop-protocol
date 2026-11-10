@@ -285,8 +285,8 @@
       "verify": "python3 case-studies/feature-benchmark-2026-11-10/verify.py",
       "rerun": "bench/README.md",
       "tasks_failed_by_every_arm": 5,
-      "runs": 990,
-      "model_calls": 9696
+      "runs": 1056,
+      "model_calls": 9777
     },
     {
       "id": "ansible-workers-2026-10-27",

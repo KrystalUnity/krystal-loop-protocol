@@ -184,6 +184,21 @@
     "completed": 58
    }
   },
+  "KLP Standard (runner 0.5), Qwen 3.8 Max critic on a subscription CLI": {
+   "arm": "v2-qwen",
+   "candidates_from": "worker",
+   "tasks": 66,
+   "solved": 54,
+   "usd": "1.819058226",
+   "unmetered_review_calls": 69,
+   "usd_per_task": "0.02756148827272727272727272727",
+   "usd_per_solved": "0.03368626344444444444444444444",
+   "median_seconds": 259.65,
+   "states": {
+    "blocked": 3,
+    "completed": 63
+   }
+  },
   "Low-cost worker alone, run 3 (deepseek-flash)": {
    "arm": "worker-3",
    "candidates_from": null,
@@ -484,6 +499,32 @@
     "worker": "1.811226582",
     "critic": "0",
     "repair": "0.045290394"
+   }
+  },
+  "v2-qwen": {
+   "reviews": 66,
+   "findings": {
+    "confirmed": 3,
+    "refuted": 4,
+    "unverified": 0,
+    "advisory": 138
+   },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 2,
+   "repairs": 3,
+   "repairs_kept": 3,
+   "findings_closed": 1,
+   "fixed_by_review": [],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "0",
+    "repair": "0.007831644"
    }
   },
   "klp-3": {

@@ -36063,6 +36063,2917 @@
  },
  {
   "task": "pallets_click-task2068-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "cc120a631ac8fb22f6c11f3c9618ce775e2eab8f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "cc120a631ac8fb22f6c11f3c9618ce775e2eab8f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 211.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 14579,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature10",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "902ecda2ac57ad65252e03619bbb755714039167",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "902ecda2ac57ad65252e03619bbb755714039167": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 122.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10468,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature11",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "0ffae3f7b9d0ce36e6b1eab06d72e2ad22a8e3ea",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0ffae3f7b9d0ce36e6b1eab06d72e2ad22a8e3ea": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 375.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 18505,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature12",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "aa6f58110a0e16ec87ae567175940d7d1c1a3497",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "aa6f58110a0e16ec87ae567175940d7d1c1a3497": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 108.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11214,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "f6d38739146632ede9ad6add1e2a111845ff7d67",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "f6d38739146632ede9ad6add1e2a111845ff7d67": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 222.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11511,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature3",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "ffbec3f3d6638a262929c2597a38150e9bc20a8c",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ffbec3f3d6638a262929c2597a38150e9bc20a8c": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 56.3,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11745,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "be5c6965402c463c30d667d328860e448364f435",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "be5c6965402c463c30d667d328860e448364f435": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 323.3,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 13001,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "e8b6b1608dd6609f4bf03b125e93ea096042af2b",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "e8b6b1608dd6609f4bf03b125e93ea096042af2b": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 202.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 12955,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature6",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "cf0841741ff2a521ce8d02f345f05cdbbd776217",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "cf0841741ff2a521ce8d02f345f05cdbbd776217": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 173.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 15191,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "3350964c0d27e0a9cc14a306822996280e46ccd9",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "3350964c0d27e0a9cc14a306822996280e46ccd9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 75.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10667,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature8",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "9bb7cc949e94e6aa3c5416aaba70337e58bfe756",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9bb7cc949e94e6aa3c5416aaba70337e58bfe756": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 63.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10874,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature9",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "1fc456d7fe348fbf9bf6c5a9005391c6a2c2de0f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1fc456d7fe348fbf9bf6c5a9005391c6a2c2de0f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 107.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 14527,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "d7e65f94b3ce5b33d010a5c7d44128146c29ee67",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d7e65f94b3ce5b33d010a5c7d44128146c29ee67": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 449.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 34701,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "6e0ca5d02a07942986f2a2bef3645573e6e3713b",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "6e0ca5d02a07942986f2a2bef3645573e6e3713b": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 398.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 58883,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature3",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "0997b280616849309b7a61828304ec9391c77454",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "0997b280616849309b7a61828304ec9391c77454": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 325.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 41753,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "ee0c9b5dc0cf5052254f4fdd7053627a2bae38bc",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "ee0c9b5dc0cf5052254f4fdd7053627a2bae38bc": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 311.8,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 41822,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "d1deec0efd4926f2fb934c706517d86ecf19aa6f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d1deec0efd4926f2fb934c706517d86ecf19aa6f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 258.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 35572,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature6",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "1701c73341d5045893ee4f9a54636b2527863bc2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1701c73341d5045893ee4f9a54636b2527863bc2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 407.3,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 41391,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "f31fccdf88815700bd98d2b0a722571cb84e2165",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f31fccdf88815700bd98d2b0a722571cb84e2165": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 243.8,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 38077,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "c664d150cb912f645f6f92faf4ce06b07673feb2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "c664d150cb912f645f6f92faf4ce06b07673feb2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 377.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 59290,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "4be8c15b5673c6d351e257b2fdeb47d4295fbfe8",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "4be8c15b5673c6d351e257b2fdeb47d4295fbfe8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 343.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 28662,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature3",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "eb7ae9b20517da71ecbfdd76e856f7ed3c3f75f0",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "eb7ae9b20517da71ecbfdd76e856f7ed3c3f75f0": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 583.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 47719,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "baf5405d1821a5e0085f2a8ff96b9fa54191be43",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "baf5405d1821a5e0085f2a8ff96b9fa54191be43": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 367.3,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 16445,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "adbf85ed710b739fcaa19fe9a0acbce6945f8444",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "adbf85ed710b739fcaa19fe9a0acbce6945f8444": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 431.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 18049,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature6",
+  "arm": "v2-qwen",
+  "state": "blocked",
+  "final_revision": "c18504c70edcd0069131ad87270c632fe6a19987",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "c18504c70edcd0069131ad87270c632fe6a19987": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 900.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 1,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": [
+   "qwen3.8-max command failed: TimeoutExpired"
+  ]
+ },
+ {
+  "task": "pallets_click-task2956-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "1ebd8f0dba52863c29b96ee05e4234a8d2282923",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "1ebd8f0dba52863c29b96ee05e4234a8d2282923": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 347.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 54782,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature8",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "d17d7ea5a297c8780e5ef7ab0a109392fb22d2b4",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d17d7ea5a297c8780e5ef7ab0a109392fb22d2b4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 377.8,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 20361,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "d7fbf524d34e001fff71e23890a0ef1378d0e8b1",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d7fbf524d34e001fff71e23890a0ef1378d0e8b1": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 197.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7142,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature10",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "22329775ffae3331251698618f497a15f95e2f98",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "22329775ffae3331251698618f497a15f95e2f98": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 142.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8542,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "a8cf795d423b670a3400236805722c3d6166e933",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a8cf795d423b670a3400236805722c3d6166e933": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 68.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 6516,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature3",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "6ac1fadf5353174eb1bd224b9df0a69a5a5a7c05",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "6ac1fadf5353174eb1bd224b9df0a69a5a5a7c05": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 162.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8241,
+    "dispositions": [],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "9515ee3e140cadcc803edfe4df826ba989ff7a63",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9515ee3e140cadcc803edfe4df826ba989ff7a63": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 102.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8150,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "a60a46d6b238a0ae1e3d62f85b9274e08cd052a3",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "a60a46d6b238a0ae1e3d62f85b9274e08cd052a3": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 79.8,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7453,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature6",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "9a983a25bab75a5c59b14f611b04110fabc27e06",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9a983a25bab75a5c59b14f611b04110fabc27e06": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 57.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7067,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "f2001c58c374d8f90990fa7dbbd47b5e8cd7c2f2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f2001c58c374d8f90990fa7dbbd47b5e8cd7c2f2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 175.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 9040,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature8",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "fb4a1d900f101ff384b45764cec7657c0b88df2c",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "8b34ad3ae2bf8db8449a2214c6e84eb387ab9dd0": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "fb4a1d900f101ff384b45764cec7657c0b88df2c": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.002971098",
+  "seconds": 739.3,
+  "effort": {
+   "critic": {
+    "calls": 2,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 2
+   },
+   "repair": {
+    "calls": 5,
+    "input": 176895,
+    "cached": 172416,
+    "write": 0,
+    "output": 2970,
+    "usd": "0.002971098",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 7897,
+    "dispositions": [
+     "confirmed",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10778,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature9",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "51ec40272e4c5680311717ea4e8dce1870bc80a4",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "51ec40272e4c5680311717ea4e8dce1870bc80a4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 459.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 12021,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "454f23e258c3fdc767e428b923ca08eb39668b05",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "454f23e258c3fdc767e428b923ca08eb39668b05": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 230.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 16894,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature10",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "55be49cdac6eb6a3db2f182d88f278f695641c95",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "55be49cdac6eb6a3db2f182d88f278f695641c95": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 48.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 19879,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "a61a6ad70e3713f7bcfec753bd1bec6715a46114",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a61a6ad70e3713f7bcfec753bd1bec6715a46114": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 417.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 24096,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature3",
+  "arm": "v2-qwen",
+  "state": "blocked",
+  "final_revision": "765b757007a8d8aee68ad830eee74985f2bb1a48",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "765b757007a8d8aee68ad830eee74985f2bb1a48": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 900.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 1,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": [
+   "qwen3.8-max command failed: TimeoutExpired"
+  ]
+ },
+ {
+  "task": "pallets_jinja-task1559-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "d5991db5d1995939a11d4d6fb82d3967247308cd",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d5991db5d1995939a11d4d6fb82d3967247308cd": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 364.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 20860,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "48b2e4e1ff15f0219c4fe1627204b0c2fdc982dc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "48b2e4e1ff15f0219c4fe1627204b0c2fdc982dc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 493.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 21117,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature6",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "1a1c63f474dcf200e79cc307ec631bac73cb9630",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1a1c63f474dcf200e79cc307ec631bac73cb9630": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 623.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 23562,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "ad359d9fc6cc672b856d6d9df5bc4c4e97053435",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ad359d9fc6cc672b856d6d9df5bc4c4e97053435": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 229.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 24764,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature8",
+  "arm": "v2-qwen",
+  "state": "blocked",
+  "final_revision": "a1deee6173fb371d0f9864384cebd2941b5729ae",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a1deee6173fb371d0f9864384cebd2941b5729ae": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 900.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 1,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": [
+   "qwen3.8-max command failed: TimeoutExpired"
+  ]
+ },
+ {
+  "task": "pallets_jinja-task1559-feature9",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "9bfd0265c51de6facdd2196033eaae8581564c91",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9bfd0265c51de6facdd2196033eaae8581564c91": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 260.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8330,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "060ba0f93d636962705baf54c86326b0a925dd16",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "060ba0f93d636962705baf54c86326b0a925dd16": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 59.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8979,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature10",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "ff718bbc71839fd9497a2353070a3072ba9ae31c",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ff718bbc71839fd9497a2353070a3072ba9ae31c": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 432.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 19895,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "aea48dac16623430b907962cdb244fce22e5bb54",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "aea48dac16623430b907962cdb244fce22e5bb54": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 154.9,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 14120,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature3",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "aec9c642e9c4a7d1bf902fe0206d8a3528b69426",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "aec9c642e9c4a7d1bf902fe0206d8a3528b69426": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 210.8,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 6146,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "82467d824f1652706bc655a321b3fc916ee28089",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "82467d824f1652706bc655a321b3fc916ee28089": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 92.4,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10227,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "b2f09858280d4e4423b8cba4fb516ce60480584c",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "b2f09858280d4e4423b8cba4fb516ce60480584c": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 183.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 9787,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature6",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "cbb9a961cabefd09ba18f6acc6bfc5bc6b134c41",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "cbb9a961cabefd09ba18f6acc6bfc5bc6b134c41": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 193.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 30326,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "23d9a6ba11d2e38af4479160f13d6cccb7be1642",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "23d9a6ba11d2e38af4479160f13d6cccb7be1642": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 48.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7388,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature8",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "64234757088f153c600505c2fd1a1268f3b220e5",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "64234757088f153c600505c2fd1a1268f3b220e5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 229.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 32278,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature9",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "a05f19f119099af152a6c5a0473ed44478107483",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a05f19f119099af152a6c5a0473ed44478107483": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 456.7,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 14877,
+    "dispositions": [
+     "advisory",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature1",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "e4ead3c87b4a36b383731e6172176907608cc364",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "e4ead3c87b4a36b383731e6172176907608cc364": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 640.8,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8979,
+    "dispositions": [
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature2",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "d0490f14e45c2a967d4ed554bbd8947046a4874a",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d0490f14e45c2a967d4ed554bbd8947046a4874a": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 534.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7603,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature3",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "fe9243bfceb33a0a9a7a8e0aeb57943725b34556",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "fe9243bfceb33a0a9a7a8e0aeb57943725b34556": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 234.6,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 7099,
+    "dispositions": [
+     "refuted",
+     "refuted"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature4",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "3ecf0676ce6739223721f1d16059cb952ac64070",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "3ecf0676ce6739223721f1d16059cb952ac64070": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 476.0,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 8774,
+    "dispositions": [
+     "refuted",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature5",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "98721ef65fc6b9d241429e6c9bb860450320c00b",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "98721ef65fc6b9d241429e6c9bb860450320c00b": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 449.2,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11158,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature6",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "f45f428695e013899f06f50a30257f31e41fff1c",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "f45f428695e013899f06f50a30257f31e41fff1c": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 259.1,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8670,
+    "dispositions": [
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature7",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "3678b71e95a3923493fd01d8cf4e742f1a3c7a1e",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "92556b4c14b4b6559c4fa837b5fa454ad8f7f388": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "3678b71e95a3923493fd01d8cf4e742f1a3c7a1e": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.002961054",
+  "seconds": 313.3,
+  "effort": {
+   "critic": {
+    "calls": 2,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 2
+   },
+   "repair": {
+    "calls": 4,
+    "input": 127377,
+    "cached": 125568,
+    "write": 0,
+    "output": 3855,
+    "usd": "0.002961054",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 8595,
+    "dispositions": [
+     "confirmed",
+     "advisory",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 5469,
+    "dispositions": [],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 1
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 0,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature8",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "817eaed027146b554bbaa054e40324fe6f1321e7",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a8cf2506431dfde9a165267c9e98e03caa18592f": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "817eaed027146b554bbaa054e40324fe6f1321e7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.001899492",
+  "seconds": 588.4,
+  "effort": {
+   "critic": {
+    "calls": 2,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 2
+   },
+   "repair": {
+    "calls": 3,
+    "input": 99198,
+    "cached": 97664,
+    "write": 0,
+    "output": 2294,
+    "usd": "0.001899492",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 7172,
+    "dispositions": [
+     "confirmed",
+     "advisory"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 5293,
+    "dispositions": [],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 1
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 0,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature9",
+  "arm": "v2-qwen",
+  "state": "completed",
+  "final_revision": "ef17ba00f2b7cba3b7d3c4f60fca97dc8d7598b6",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ef17ba00f2b7cba3b7d3c4f60fca97dc8d7598b6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0",
+  "seconds": 477.5,
+  "effort": {
+   "critic": {
+    "calls": 1,
+    "input": 0,
+    "cached": 0,
+    "write": 0,
+    "output": 0,
+    "usd": "0",
+    "unpriced_calls": 0,
+    "unmetered_calls": 1
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 8923,
+    "dispositions": [
+     "refuted"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature1",
   "arm": "v2-sol",
   "state": "completed",
   "final_revision": "5fd0a7e9251881bbfc11cdaebf10f02e35411ee7",

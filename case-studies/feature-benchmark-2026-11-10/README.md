@@ -5,7 +5,7 @@ $0.046 a task. OpenAI's heaviest model working alone solved 56 for $0.721 a
 task, and its standard frontier model solved 56 for $0.123. Across three KLP
 runs the result was 57, 54 and 59 solved at $0.055, $0.061 and $0.046. The
 tasks are single features in Click, Jinja and dirty-equals, each graded by
-tests the models never see. Run on 10 November 2026: 990 runs, 9,696 model
+tests the models never see. Run on 10 November 2026: 1,056 runs, 9,777 model
 calls.
 
 | | Tasks solved | Cost per task | Cost per solved task | All 66 tasks |
@@ -122,8 +122,10 @@ same snapshot and the same worker session, with two repair rounds.
 - **Critics differ in what they catch.** `grok-4.7` confirmed four findings and
   rescued nothing. Kimi K3.1 Pro, on its CLI subscription, reviewed 59 of the
   66 candidates before the subscription's usage window closed: 13 confirmed
-  findings, one rescue and no passing task broken. Its runs are in the results
-  as the arm `v2-kimi`.
+  findings, one rescue and no passing task broken. Qwen 3.8 Max, on its CLI
+  subscription, reviewed 63 of the 66, confirmed three findings and rescued
+  nothing, at about four minutes a review. Their runs are in the results as
+  the arms `v2-kimi` and `v2-qwen`.
 
 ## The acceptance file option
 
@@ -190,10 +192,11 @@ specification does not state. On the other 61 tasks, KLP Standard run 3 solved
   two repair rounds; the longest worker run took 70 steps.
 - **Critic comparisons.** Every critic arm starts from the same recorded
   worker candidates, so the arms differ only in the review.
-- **Subscription critics.** Gemini 4 Argon and Kimi K3.1 Pro were reached
-  through their vendors' agent CLIs, each started in an empty directory and
-  told the review is text-only. The Antigravity CLI ran in its plan mode; the
-  Kimi CLI ran in its default ask-before-acting mode. Their calls are recorded
+- **Subscription critics.** Gemini 4 Argon, Kimi K3.1 Pro and Qwen 3.8 Max
+  were reached through their vendors' agent CLIs, each started in an empty
+  directory and told the review is text-only. The Antigravity and Qwen CLIs
+  ran in their plan modes; the Kimi CLI ran in its default ask-before-acting
+  mode. Their calls are recorded
   as unmetered.
 - **Grading.** Each candidate's patch is applied to a pristine checkout, the
   hidden test files replace the candidate's versions, and the task's test files
@@ -205,7 +208,8 @@ specification does not state. On the other 61 tasks, KLP Standard run 3 solved
 - **Repeated runs.** Three runs that a malformed critic reply stopped were
   repeated, and so were 13 `grok-4.7` runs whose probe file an earlier runner
   build could not locate. The Kimi arm's seven runs stopped by the usage
-  window are reported as they ended.
+  window and the Qwen arm's three reviews that passed the 15-minute limit are
+  reported as they ended.
 - **Code.** Run 1 and `gpt-6.1-sol` alone at runner revision `9f33aa8`; run 2,
   the earlier critic arms and `gpt-6-astra` alone at `33e7ccd`; run 3 and the
   runner 0.5 arms at `f146aef` to `df2e27d`.
