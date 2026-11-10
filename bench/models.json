@@ -1,0 +1,24 @@
+{
+  "worker": {
+    "name": "deepseek-flash",
+    "family": "deepseek",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "params": {"max_tokens": 16384, "thinking": {"type": "enabled"}, "reasoning_effort": "high"}
+  },
+  "frontier": {
+    "name": "gpt-6.1-sol",
+    "family": "openai",
+    "base_url": "https://api.openai.com/v1",
+    "api_key_env": "OPENAI_API_KEY",
+    "api": "responses",
+    "params": {"max_output_tokens": 16384, "reasoning": {"effort": "high"}}
+  },
+  "critic": {
+    "name": "gpt-6.1-sol",
+    "family": "openai",
+    "base_url": "https://api.openai.com/v1",
+    "api_key_env": "OPENAI_API_KEY",
+    "params": {"max_completion_tokens": 16384}
+  }
+}

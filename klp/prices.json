@@ -1,0 +1,8 @@
+{
+  "note": "USD per million tokens. `cached` and `write` are subsets of input. Edit to match your provider's current price list; a model missing here is reported as unpriced, never as free.",
+  "recorded": "2026-11-10",
+  "usd_per_million_tokens": {
+    "deepseek-flash": {"input": 0.30, "cached": 0.006, "write": 0.30, "output": 1.20},
+    "gpt-6.1-sol": {"input": 2.00, "cached": 0.10, "write": 5.00, "output": 10.00}
+  }
+}

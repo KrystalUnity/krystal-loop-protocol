@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "krystal-loop-protocol"
+version = "0.4.0"
+description = "KLP Standard runner: bounded agent work, executed checks, independent review, one receipt."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = []
+
+[project.scripts]
+klp = "klp.cli:main"
+
+[tool.setuptools]
+packages = ["klp"]
+
+[tool.setuptools.package-data]
+klp = ["prices.json"]
