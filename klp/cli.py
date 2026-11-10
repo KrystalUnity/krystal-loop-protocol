@@ -122,19 +122,33 @@ def cmd_run(args) -> int:
     ledger = Ledger(run_dir / "ledger.jsonl", limits.cost_usd)
     worker = Model.from_spec(config["worker"])
     critic = None if args.no_review else Model.from_spec(config["critic"])
-    print(f"KLP Standard: worker {worker.name} via {worker.base_url}, "
-          f"critic {critic.name + ' via ' + critic.base_url if critic else 'none'}, "
-          f"limit ${limits.cost_usd:.2f}, {len(checks)} check(s), sandbox network {'on' if box['network'] else 'off'}")
+    say = (lambda *a, **k: print(*a, file=sys.stderr, **k)) if args.json else print
+    say(f"KLP Standard: worker {worker.name} via {worker.base_url}, "
+        f"critic {critic.name + ' via ' + critic.base_url if critic else 'none'}, "
+        f"limit ${limits.cost_usd:.2f}, {len(checks)} check(s), sandbox network {'on' if box['network'] else 'off'}")
     receipt = run_standard(ledger=ledger, worker=worker, critic=critic, sandbox=sandbox, task=task, checks=checks,
                            scope=slug, limits=limits, out_dir=run_dir, task_id=slug,
                            critical_triggers=config["critical_triggers"], project_revision=head)
     done = receipt["completion"]
     patch = Snapshots(sandbox, run_dir / "snapshots").patch(receipt["base_revision"], done["final_revision"])
     (run_dir / "candidate.patch").write_bytes(patch)
-    print((run_dir / "receipt.md").read_text())
     relative = run_dir.relative_to(root)
-    print(f"Receipt:  {relative}/receipt.md\nPatch:    {relative}/candidate.patch\n"
-          f"Apply it: git apply {relative}/candidate.patch")
+    if args.json:
+        # One JSON object on stdout for a calling agent; everything else went to stderr.
+        print(json.dumps(dict(
+            state=done["state"], checks_passed=done["checks_passed"], usd=done["measured_effort"]["usd"],
+            seconds=done["measured_effort"]["seconds"], reviews=[r["verdict"] for r in receipt["reviews"]],
+            findings_confirmed=sum(f["disposition"] == "confirmed" for r in receipt["reviews"] for f in r["findings"]),
+            findings_fixed=sum(p["closed"] for r in receipt["repairs"] for p in r["probes"]),
+            unresolved_findings=[dict(id=f["id"], claim=f["claim"], disposition=f["disposition"])
+                                 for f in done["unresolved_findings"]],
+            receipt=f"{relative}/receipt.json", receipt_text=f"{relative}/receipt.md",
+            patch=f"{relative}/candidate.patch", apply=f"git apply {relative}/candidate.patch",
+            human_decisions_required=done["human_decisions_required"])))
+    else:
+        print((run_dir / "receipt.md").read_text())
+        print(f"Receipt:  {relative}/receipt.md\nPatch:    {relative}/candidate.patch\n"
+              f"Apply it: git apply {relative}/candidate.patch")
     return 0 if done["state"] == "completed" else 2
 
 
@@ -151,6 +165,7 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--cap", type=float, help="cost limit in USD for this run")
     run.add_argument("--config", help="path to your user config (default ~/.config/klp/config.json)")
     run.add_argument("--no-review", action="store_true", help="worker only, for comparison")
+    run.add_argument("--json", action="store_true", help="print one JSON result object on stdout (for calling agents)")
     run.set_defaults(run=cmd_run)
     args = parser.parse_args(argv)
     return args.run(args)

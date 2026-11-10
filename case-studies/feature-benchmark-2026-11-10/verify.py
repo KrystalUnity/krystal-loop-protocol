@@ -7,6 +7,9 @@ Checks, in order:
 1. each model call's cost equals its reported token usage times the recorded price;
 2. each run's cost equals the sum of its calls;
 3. the report's solve counts and totals equal what the per-run results add up to.
+
+A KLP arm reviews the candidates built by the `worker` arm, so its cost is its own critic and
+repair calls plus the worker calls for the same task.
 """
 from __future__ import annotations
 
@@ -41,30 +44,32 @@ def main() -> int:
             problems.append(f"call {call['id']}: recorded {call['usd']}, recomputed {expected}")
         by_scope[call["scope"]] = by_scope.get(call["scope"], D(0)) + expected
 
+    arms: dict[str, dict] = {}
     for run in results:
         scope = f"{run['arm']}/{run['task']}"
         if by_scope.get(scope, D(0)) != D(run["usd"]):
             problems.append(f"run {scope}: recorded {run['usd']}, calls sum to {by_scope.get(scope, D(0))}")
+        arms.setdefault(run["arm"], {})[run["task"]] = run
 
-    arms = {arm: {r["task"]: r for r in results if r["arm"] == arm} for arm in ("frontier-solo", "klp")}
-    common = sorted(set(arms["frontier-solo"]) & set(arms["klp"]))
-    worker_only = lambda r: D(r["effort"].get("worker", {}).get("usd", "0"))  # noqa: E731
-    table = {
-        "frontier model alone": ([arms["frontier-solo"][t] for t in common], "solved", lambda r: D(r["usd"])),
-        "low-cost worker alone": ([arms["klp"][t] for t in common], "first_candidate_solved", worker_only),
-        "KLP Standard": ([arms["klp"][t] for t in common], "solved", lambda r: D(r["usd"])),
-    }
-    print(f"{len(common)} tasks, {len(calls)} model calls\n")
-    print(f"{'':24s}{'solved':>8s}{'total USD':>12s}{'per task':>11s}{'per solved':>12s}")
-    for name, (rows, key, cost) in table.items():
-        solved = sum(bool(r[key]) for r in rows)
-        total = sum((cost(r) for r in rows), D(0))
-        published = report["arms"][name]
+    common = sorted(set.intersection(*[set(tasks) for tasks in arms.values()]))
+    print(f"{len(common)} tasks, {len(results)} runs, {len(calls)} model calls\n")
+    print(f"{'':50s}{'solved':>8s}{'total USD':>12s}{'per task':>11s}{'per solved':>12s}")
+    for label, published in report["arms"].items():
+        arm = published["arm"]
+        if arm == "klp:first-candidate":  # the single-pass KLP arm's worker, graded before review
+            rows = [arms["klp"][task] for task in common]
+            total = sum((D(r["effort"].get("worker", {}).get("usd", "0")) for r in rows), D(0))
+            solved = sum(bool(r["first_candidate_solved"]) for r in rows)
+        else:
+            rows = [arms[arm][task] for task in common]
+            built = arms.get("worker", {}) if arm.startswith("klp-") else {}
+            total = sum((D(r["usd"]) + (D(built[r["task"]]["usd"]) if r["task"] in built else D(0)) for r in rows), D(0))
+            solved = sum(bool(r["solved"]) for r in rows)
         if (published["solved"], D(published["usd"])) != (solved, total):
-            problems.append(f"{name}: report says {published['solved']} solved / {published['usd']}, "
+            problems.append(f"{label}: report says {published['solved']} solved / {published['usd']}, "
                             f"receipts give {solved} / {total}")
         per_solved = f"{total / solved:.4f}" if solved else "n/a"
-        print(f"{name:24s}{solved:>5d}/{len(rows):<3d}{total:>11.4f}{total / len(rows):>11.4f}{per_solved:>12s}")
+        print(f"{label:50s}{solved:>5d}/{len(rows):<3d}{total:>11.4f}{total / len(rows):>11.4f}{per_solved:>12s}")
     if report["tasks_compared"] != len(common):
         problems.append(f"report compares {report['tasks_compared']} tasks, receipts pair {len(common)}")
 

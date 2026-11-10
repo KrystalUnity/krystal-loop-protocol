@@ -1,62 +1,71 @@
 {
  "tasks_compared": 66,
  "arms": {
-  "frontier model alone": {
+  "Frontier model alone (gpt-6.1-sol)": {
+   "arm": "frontier-solo",
    "tasks": 66,
    "solved": 56,
-   "solve_rate": 0.8485,
-   "usd": "11.3945090",
-   "usd_per_task": "0.1726440757575757575757575758",
-   "usd_per_solved": "0.203473375",
-   "median_seconds": 105.69999999999999
+   "usd": "8.1498465",
+   "usd_per_task": "0.1234825227272727272727272727",
+   "usd_per_solved": "0.1455329732142857142857142857",
+   "median_seconds": 105.69999999999999,
+   "states": {
+    "unreviewed": 66
+   }
   },
-  "low-cost worker alone": {
+  "Heavy model alone (gpt-6-astra)": {
+   "arm": "astra-solo",
    "tasks": 66,
    "solved": 56,
-   "solve_rate": 0.8485,
-   "usd": "1.588689198",
-   "usd_per_task": "0.02407104845454545454545454545",
-   "usd_per_solved": "0.02836944996428571428571428571",
-   "median_seconds": 122.05000000000001
+   "usd": "47.5680890",
+   "usd_per_task": "0.7207286212121212121212121212",
+   "usd_per_solved": "0.8494301607142857142857142857",
+   "median_seconds": 163.5,
+   "states": {
+    "unreviewed": 66
+   }
   },
-  "KLP Standard": {
+  "KLP Standard (single pass)": {
+   "arm": "klp",
    "tasks": 66,
    "solved": 57,
-   "solve_rate": 0.8636,
-   "usd": "4.825327618",
-   "usd_per_task": "0.07311102451515151515151515152",
-   "usd_per_solved": "0.08465487049122807017543859649",
-   "median_seconds": 122.05000000000001
+   "usd": "3.643140118",
+   "usd_per_task": "0.05519909269696969696969696970",
+   "usd_per_solved": "0.06391473891228070175438596491",
+   "median_seconds": 122.05000000000001,
+   "states": {
+    "budget_exhausted": 18,
+    "completed": 48
+   }
+  },
+  "Low-cost worker alone (same runs, before review)": {
+   "arm": "klp:first-candidate",
+   "tasks": 66,
+   "solved": 56,
+   "usd": "1.588689198"
   }
  },
- "klp_review": {
-  "reviews": 102,
-  "fail_verdicts": 57,
-  "findings": {
-   "confirmed": 64,
-   "refuted": 3,
-   "unverified": 0,
-   "advisory": 0
-  },
-  "repairs": 36,
-  "repairs_kept": 36,
-  "fixed_by_review": [
-   "pallets_click-task2956-feature3"
-  ],
-  "broken_by_review": [],
-  "usd_by_role": {
-   "worker": "1.588689198",
-   "critic": "2.914027",
-   "repair": "0.322611420"
-  }
- },
- "states": {
-  "frontier-solo": {
-   "unreviewed": 66
-  },
+ "reviews": {
   "klp": {
-   "completed": 48,
-   "budget_exhausted": 18
+   "reviews": 102,
+   "findings": {
+    "confirmed": 64,
+    "refuted": 3,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "repairs": 36,
+   "repairs_kept": 36,
+   "findings_closed": 43,
+   "fixed_by_review": [
+    "pallets_click-task2956-feature3"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.588689198",
+    "critic": "1.7318395",
+    "repair": "0.322611420"
+   }
   }
  }
 }

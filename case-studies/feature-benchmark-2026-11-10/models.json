@@ -31,7 +31,47 @@
   "base_url": "https://api.openai.com/v1",
   "api_key_env": "OPENAI_API_KEY",
   "params": {
-   "max_completion_tokens": 16384
+   "max_completion_tokens": 16384,
+   "prompt_cache_options": {
+    "mode": "explicit"
+   }
+  }
+ },
+ "astra": {
+  "name": "gpt-6-astra",
+  "family": "openai",
+  "base_url": "https://api.openai.com/v1",
+  "api_key_env": "OPENAI_API_KEY",
+  "api": "responses",
+  "params": {
+   "max_output_tokens": 16384,
+   "reasoning": {
+    "effort": "high"
+   }
+  }
+ },
+ "critic_astra": {
+  "name": "gpt-6-astra",
+  "family": "openai",
+  "base_url": "https://api.openai.com/v1",
+  "api_key_env": "OPENAI_API_KEY",
+  "params": {
+   "max_completion_tokens": 16384,
+   "prompt_cache_options": {
+    "mode": "explicit"
+   }
+  }
+ },
+ "critic_terra": {
+  "name": "gpt-6.1-terra",
+  "family": "openai",
+  "base_url": "https://api.openai.com/v1",
+  "api_key_env": "OPENAI_API_KEY",
+  "params": {
+   "max_completion_tokens": 16384,
+   "prompt_cache_options": {
+    "mode": "explicit"
+   }
   }
  }
 }

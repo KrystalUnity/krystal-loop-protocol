@@ -1,0 +1,129 @@
+{
+  "schema": "klp-evidence/v1",
+  "updated": "2026-11-10",
+  "note": "Machine-readable copy of the facts in AGENTS.md and EVIDENCE.md. Costs are USD, calculated from provider-reported token usage at published rates.",
+  "results": [
+    {
+      "id": "feature-benchmark-2026-11-10",
+      "what": "66 single-feature tasks in Click, Jinja and dirty-equals from the public CooperBench dataset (revision 63b9d44d), graded by hidden tests",
+      "arms": [
+        {
+          "label": "KLP Standard",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-sol",
+          "solved": 57,
+          "tasks": 66,
+          "usd_per_task": 0.0552,
+          "usd_per_solved_task": 0.0639,
+          "usd_total": 3.64,
+          "review": {
+            "findings_confirmed_by_probe": 64,
+            "findings_fixed_and_verified": 43,
+            "findings_refuted_by_probe": 3,
+            "tasks_fixed_by_review": 1,
+            "passing_tasks_broken_by_review": 0
+          }
+        },
+        {
+          "label": "Low-cost worker alone",
+          "worker": "deepseek-flash",
+          "solved": 56,
+          "tasks": 66,
+          "usd_per_task": 0.0241,
+          "usd_per_solved_task": 0.0284,
+          "usd_total": 1.59
+        },
+        {
+          "label": "Frontier model alone",
+          "worker": "gpt-6.1-sol",
+          "solved": 56,
+          "tasks": 66,
+          "usd_per_task": 0.1235,
+          "usd_per_solved_task": 0.1455,
+          "usd_total": 8.15
+        },
+        {
+          "label": "Heavy model alone",
+          "worker": "gpt-6-astra",
+          "solved": 56,
+          "tasks": 66,
+          "usd_per_task": 0.7207,
+          "usd_per_solved_task": 0.8494,
+          "usd_total": 47.57
+        }
+      ],
+      "klp_cost_reduction_per_task": {
+        "versus_heavy_model_alone": 0.923,
+        "versus_frontier_model_alone": 0.553
+      },
+      "receipts": "case-studies/feature-benchmark-2026-11-10/",
+      "verify": "python3 case-studies/feature-benchmark-2026-11-10/verify.py",
+      "rerun": "bench/README.md"
+    },
+    {
+      "id": "semio-coordination-2026-10-20",
+      "what": "four coordination scenarios, agent-managed handovers versus the Semio adapter",
+      "model_calls": {
+        "agent_managed": 4,
+        "semio": 1
+      },
+      "input_tokens": {
+        "agent_managed": 5325,
+        "semio": 1331
+      },
+      "input_token_reduction": 0.75,
+      "correct_outcomes": {
+        "agent_managed": "4/4",
+        "semio": "4/4"
+      },
+      "receipts": "case-studies/semio-coordination-2026-10-20/",
+      "verify": "python3 case-studies/semio-coordination-2026-10-20/verify.py"
+    },
+    {
+      "id": "semio-live-bus-2026-11-10",
+      "what": "operator-reported counts from one Semio coordination stream over four days",
+      "agent_sessions": 69,
+      "coordination_messages": 440,
+      "threads": 310,
+      "review_verdict_messages": 43,
+      "median_message_bytes": 704,
+      "receipts": "case-studies/semio-live-bus-2026-11-10/"
+    },
+    {
+      "id": "krystalview-2026-10-20",
+      "what": "one real repair in a 255-file snapshot, three workflows passing the same 15 checks",
+      "usd_total": {
+        "conventional_frontier": 0.359529,
+        "frontier_klp": 0.422751,
+        "deepseek_klp": 0.270926
+      },
+      "deepseek_klp_reduction_versus_conventional": 0.2464,
+      "receipts": "case-studies/krystalview-2026-10-20/",
+      "verify": "python3 case-studies/krystalview-2026-10-20/verify.py"
+    },
+    {
+      "id": "public-challenge-klp-run",
+      "what": "klp run on the public challenge task queue-pagination-v1",
+      "checks_passed": "17/17",
+      "usd": 0.0106,
+      "seconds": 31.9,
+      "state": "completed"
+    }
+  ],
+  "run": {
+    "install": "pipx install git+https://github.com/KrystalUnity/krystal-loop-protocol",
+    "command": "klp run \"<task>\" --check \"<command>\" --json",
+    "exit_codes": {
+      "0": "completed",
+      "2": "budget_exhausted, blocked or critical_trigger"
+    },
+    "operator_decisions": [
+      "apply the patch",
+      "merge",
+      "push",
+      "deploy",
+      "raise a spend limit",
+      "change model routes"
+    ]
+  }
+}

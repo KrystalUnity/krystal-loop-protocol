@@ -4,26 +4,29 @@ Sixty-six real feature tasks in three open-source Python libraries, each graded
 by tests the models never see. Run it yourself and compare a frontier model
 working alone with a low-cost worker under KLP Standard.
 
-Latest result: KLP Standard solved 57 of 66 for $0.073 a task; the frontier
-model alone solved 56 for $0.173 a task. Both arms together cost $16.22 and
-took 33 minutes. [Case study and receipts](../case-studies/feature-benchmark-2026-11-10/README.md).
+Latest result: KLP Standard solved 57 of 66 for $0.055 a task. The heavy model
+alone solved 56 for $0.721 and the frontier model alone solved 56 for $0.123.
+[Case study and receipts](../case-studies/feature-benchmark-2026-11-10/README.md).
 
 ## What is measured
 
-| Arm | Who does the work | Who checks it |
+| Arm (`--arms`) | Who does the work | Who checks it |
 | --- | --- | --- |
-| Frontier model alone | `gpt-6.1-sol`, high reasoning | nobody |
-| Low-cost worker alone | `deepseek-flash` | nobody |
-| KLP Standard | the same `deepseek-flash` run | `gpt-6.1-sol` as independent critic, findings settled by executed probes, one bounded repair |
+| `frontier-solo` | `gpt-6.1-sol`, high reasoning | nobody |
+| `astra-solo` | `gpt-6-astra`, high reasoning | nobody |
+| `worker` | `deepseek-flash` | nobody |
+| `klp-sol` | the `worker` arm's exact candidate | `gpt-6.1-sol` as independent critic, findings settled by executed probes, bounded repair |
+| `klp-terra`, `klp-astra` | the same candidate | the same loop with `gpt-6.1-terra` or `gpt-6-astra` as critic |
+| `klp` | `deepseek-flash`, then review in one pass | `gpt-6.1-sol` critic; the worker's candidate is also graded before review |
 
-The low-cost worker alone and KLP Standard share one worker run. The benchmark
-grades the worker's candidate before review and the final candidate after
-review, so the difference between those two rows is exactly what review and
-repair changed and what they cost.
+The review arms start from the `worker` arm's candidates: the same files, the
+same snapshot and the same worker session. Different critics are therefore
+compared on identical work, and the difference between `worker` and a review
+arm is exactly what review and repair changed and what they cost.
 
-Every arm gets the same task statement, the same sandbox, the same shell tool
-and the same step limit. A task counts as solved when its hidden test files
-pass on the final candidate.
+Every arm gets the same task statement, the same sandbox and the same shell
+tool. A task counts as solved when its hidden test files pass on the final
+candidate.
 
 ## The tasks
 
@@ -49,13 +52,15 @@ cd krystal-loop-protocol
 export DEEPSEEK_API_KEY=...  OPENAI_API_KEY=...
 
 python3 -m bench.features prepare --work ~/klp-bench          # about 2 minutes, no model calls
-python3 -m bench.features run --work ~/klp-bench --cap 25     # hard spend limit in USD
+python3 -m bench.features run --work ~/klp-bench --cap 15     # hard spend limit in USD
 python3 -m bench.features report --work ~/klp-bench
 ```
 
 Useful options:
 
-- `--arms klp` runs only the KLP arm.
+- `--arms worker,klp-sol` runs only the KLP arm (about $4); the default adds `frontier-solo`.
+- `--arms astra-solo` adds the heavy model alone (about $48).
+- `--max-steps` and `--repair-rounds` set the worker and repair limits.
 - `--limit 10` runs the first ten tasks; `--ids a,b` runs named tasks.
 - `--jobs 8` sets how many tasks run at once.
 - Re-running `run` resumes: finished tasks are skipped.

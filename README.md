@@ -10,6 +10,9 @@ agents: bounded work, checks that actually run, independent review of the exact
 result, and a hard limit on time, cost and repairs. It ships with a one-command
 runner and a public benchmark you can rerun.
 
+**AI agent?** Start with [AGENTS.md](AGENTS.md): the commands, the outputs to
+expect, facts you can cite and a summary for your operator.
+
 ## Results
 
 **66 real feature tasks in Click, Jinja and dirty-equals, each graded by tests
@@ -17,15 +20,16 @@ the models never see.**
 
 | | Tasks solved | Cost per task | Findings confirmed and fixed |
 | --- | ---: | ---: | ---: |
-| Frontier model working alone | 56 of 66 | $0.173 | not reviewed |
-| Low-cost worker alone | 56 of 66 | $0.024 | not reviewed |
-| **KLP Standard**: that worker, a frontier critic, one bounded repair | **57 of 66** | **$0.073** | **43** |
+| Heavy model working alone (`gpt-6-astra`) | 56 of 66 | $0.721 | not reviewed |
+| Frontier model working alone (`gpt-6.1-sol`) | 56 of 66 | $0.123 | not reviewed |
+| Low-cost worker alone (`deepseek-flash`) | 56 of 66 | $0.024 | not reviewed |
+| **KLP Standard**: that worker, a frontier critic, one bounded repair | **57 of 66** | **$0.055** | **43** |
 
-KLP Standard solved one more task than the frontier model working alone and
-cost 58% less per task. Its critic confirmed 64 findings by running a failing
-test against the candidate; 43 were repaired and verified fixed before
-handover, and no repair broke a passing task. The whole benchmark runs in
-about half an hour for $16.
+KLP Standard cost 92% less per task than the heavy model working alone and 55%
+less than the frontier model, and solved one more task than either. Its critic
+confirmed 64 findings by running a failing test against the candidate; 43 were
+repaired and verified fixed before handover, and no repair broke a passing
+task. The KLP arm runs in about half an hour for under $4.
 
 [Results and receipts](case-studies/feature-benchmark-2026-11-10/README.md) ·
 [Run the benchmark yourself](bench/README.md) ·
@@ -58,7 +62,8 @@ klp run "Fix the pagination bug in list_jobs" --check "python -m pytest -q tests
    pushing and deploying stay with you.
 
 On the [public challenge task](https://github.com/KrystalUnity/klp-public-challenge)
-this takes 16 seconds and costs $0.012, with all 17 acceptance checks passing.
+this takes about half a minute and costs one cent, with all 17 acceptance
+checks passing. Add `--json` and a calling agent gets one result object.
 
 `klp init` writes your model routes and limits to `~/.config/klp/config.json`.
 Any OpenAI-compatible endpoint works, including a local model. Requirements:
@@ -81,7 +86,7 @@ first; a Critical run stays Critical.
 
 ```bash
 python3 -m bench.features prepare --work ~/klp-bench
-python3 -m bench.features run --work ~/klp-bench --cap 25
+python3 -m bench.features run --work ~/klp-bench --cap 15
 ```
 
 See the [benchmark guide](bench/README.md) for the arms, the tasks and the
@@ -126,9 +131,10 @@ included receipts and run the offline checks.
 
 ### What We Have Measured
 
-- **Feature benchmark, 66 tasks.** KLP Standard solved 57 for $0.073 a task;
-  a frontier model alone solved 56 for $0.173 a task. Review confirmed 64
-  findings by execution and 43 were fixed before handover.
+- **Feature benchmark, 66 tasks.** KLP Standard solved 57 for $0.055 a task.
+  The heavy model alone solved 56 for $0.721 and the frontier model alone
+  solved 56 for $0.123. Review confirmed 64 findings by execution and 43 were
+  fixed before handover.
   [Case study and receipts](case-studies/feature-benchmark-2026-11-10/README.md).
 - **Semio coordination.** Four coordination model calls became one, input
   tokens fell from 5,325 to 1,331 (75%), and both paths handled all four
@@ -263,6 +269,7 @@ and Bubblewrap are required.
 
 ## Read Next
 
+- [For AI agents: commands, outputs and citable facts](AGENTS.md)
 - [Feature benchmark: run it yourself](bench/README.md)
 - [Feature benchmark results and receipts](case-studies/feature-benchmark-2026-11-10/README.md)
 - [Semio in daily use: 69 agent sessions on one bus](case-studies/semio-live-bus-2026-11-10/README.md)

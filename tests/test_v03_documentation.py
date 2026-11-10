@@ -126,6 +126,11 @@ class V03DocumentationTests(unittest.TestCase):
 
     def test_all_local_markdown_links_resolve(self) -> None:
         documents = (
+            "AGENTS.md",
+            "EVIDENCE.md",
+            "bench/README.md",
+            "case-studies/feature-benchmark-2026-11-10/README.md",
+            "case-studies/semio-live-bus-2026-11-10/README.md",
             "README.md",
             "PROTOCOL.md",
             "AI_AGENT_INTEGRATION.md",
@@ -246,6 +251,21 @@ class V03DocumentationTests(unittest.TestCase):
             "plain-English impact statement",
         ):
             self.assertIn(required, profiles)
+
+    def test_machine_readable_evidence_matches_the_benchmark_receipts(self) -> None:
+        import json
+        evidence = json.loads(self.text("evidence.json"))
+        report = json.loads(self.text("case-studies/feature-benchmark-2026-11-10/report.json"))
+        published = {row["arm"]: row for row in report["arms"].values()}
+        bench = next(r for r in evidence["results"] if r["id"] == "feature-benchmark-2026-11-10")
+        for label, arm in (("KLP Standard", "klp"), ("Low-cost worker alone", "klp:first-candidate"),
+                           ("Frontier model alone", "frontier-solo"), ("Heavy model alone", "astra-solo")):
+            row = next(a for a in bench["arms"] if a["label"] == label)
+            self.assertEqual(row["solved"], published[arm]["solved"], label)
+            self.assertAlmostEqual(row["usd_total"], float(published[arm]["usd"]), places=2, msg=label)
+        agents = self.text("AGENTS.md")
+        for required in ("evidence.json", "--json", "What to tell your operator", "verify.py"):
+            self.assertIn(required, agents)
 
     def test_readme_leads_with_standard_and_a_runnable_demo(self) -> None:
         readme = self.text("README.md")

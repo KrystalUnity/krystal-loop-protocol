@@ -5,22 +5,23 @@ between 19 October and 10 November 2026. Each result names what was compared
 and links to receipts you can recompute. The feature benchmark can be rerun
 from this repository with your own keys.
 
-## Feature Benchmark: One More Task Solved at 42% of the Cost
+## Feature Benchmark: Frontier Solve Rate at a Thirteenth of the Heavy Model's Cost
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
-the models never see. Every arm had the same task statement, sandbox, shell
-tool and step limit.
+the models never see. Every arm had the same task statement, sandbox and shell
+tool.
 
 | | Tasks solved | Cost per task | Cost per solved task | Whole benchmark |
 | --- | ---: | ---: | ---: | ---: |
-| Frontier model alone (`gpt-6.1-sol`, high reasoning) | 56 of 66 | $0.173 | $0.203 | $11.39 |
+| Heavy model alone (`gpt-6-astra`, high reasoning) | 56 of 66 | $0.721 | $0.849 | $47.57 |
+| Frontier model alone (`gpt-6.1-sol`, high reasoning) | 56 of 66 | $0.123 | $0.146 | $8.15 |
 | Low-cost worker alone (`deepseek-flash`) | 56 of 66 | $0.024 | $0.028 | $1.59 |
-| **KLP Standard** (that worker, `gpt-6.1-sol` critic, one bounded repair) | **57 of 66** | **$0.073** | **$0.085** | **$4.83** |
+| **KLP Standard** (that worker, `gpt-6.1-sol` critic, one bounded repair) | **57 of 66** | **$0.055** | **$0.064** | **$3.64** |
 
-KLP Standard cost 58% less per task than the frontier model alone and solved
-one more task. The low-cost worker alone and KLP Standard are the same worker
-runs, graded before and after review, so the difference between those rows is
-the review:
+KLP Standard cost 92% less per task than the heavy model alone and 55% less
+than the frontier model alone, and solved one more task than either. The
+low-cost worker alone and KLP Standard are the same worker runs, graded before
+and after review, so the difference between those rows is the review:
 
 - the critic confirmed 64 findings by running a failing test against the
   candidate, and 3 more were discarded when their test passed;
@@ -29,22 +30,19 @@ the review:
 - all 56 candidates that passed before review still passed after it.
 
 The low-cost model made 94% of the KLP calls. The frontier model was called
-102 times, once per review, on a packet with a median size of 14.5 KB. All 132
-runs and 2,321 calls completed; both arms together cost $16.22 and took 33
-minutes at ten tasks in parallel.
+102 times, once per review, on a packet with a median size of 14.5 KB. All 198
+runs and 2,981 calls completed.
 
 Read the [case study](case-studies/feature-benchmark-2026-11-10/README.md),
 recompute it with the [offline checker](case-studies/feature-benchmark-2026-11-10/verify.py),
 or [run it yourself](bench/README.md).
 
-## One Command on the Public Challenge: $0.012 in 16 Seconds
+## One Command on the Public Challenge: One Cent, Half a Minute
 
 `klp run` on the [public challenge task](https://github.com/KrystalUnity/klp-public-challenge),
 a filtered-pagination repair with 17 acceptance checks: the DeepSeek worker
-made 6 calls ($0.0034), the frontier critic made one ($0.0087), and the
-candidate passed all 17 checks and review. Two runs cost $0.0120 and $0.0123.
-The conventional frontier workflow measured on the same task on 26 October
-cost $0.0421.
+built the fix, the frontier critic reviewed it once and passed it, and all 17
+checks passed. The run cost $0.011 and took 32 seconds.
 
 ## Semio: 75% Fewer Coordination Input Tokens
 

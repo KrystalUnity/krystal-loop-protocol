@@ -8,10 +8,10 @@
 - declared checks on final revision: passed
 - worker: deepseek-flash
 - critic: gpt-6.1-sol
-- elapsed: 193.8s, cost: $0.0761
+- elapsed: 193.8s, cost: $0.0629
 
   - worker: 17 calls, 229,120 input tokens (211,584 cached), 8,526 output, $0.0168
-  - critic: 2 calls, 5,302 input tokens (0 cached), 2,299 output, $0.0495
+  - critic: 2 calls, 5,302 input tokens (0 cached), 2,299 output, $0.0362
   - repair: 7 calls, 219,887 input tokens (216,320 cached), 6,269 output, $0.0099
 
 ## Review 1: FAIL on `b0a1a2a41cad` (gpt-6.1-sol, profile eligible)

@@ -8,10 +8,10 @@
 - declared checks on final revision: passed
 - worker: deepseek-flash
 - critic: gpt-6.1-sol
-- elapsed: 344.4s, cost: $0.0544
+- elapsed: 344.4s, cost: $0.0480
 
   - worker: 17 calls, 359,611 input tokens (339,968 cached), 24,788 output, $0.0377
-  - critic: 1 calls, 2,577 input tokens (0 cached), 388 output, $0.0168
+  - critic: 1 calls, 2,577 input tokens (0 cached), 388 output, $0.0103
 
 ## Review 1: FAIL on `370cad3c665a` (gpt-6.1-sol, profile eligible)
 - [refuted] F1: Constructing IsURL() raises NameError because plain_repr is not defined or imported, breaking basic URL validation and the required IsURL(*) representation.

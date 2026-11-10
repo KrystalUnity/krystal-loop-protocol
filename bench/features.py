@@ -398,6 +398,7 @@ def main() -> None:
     parser.add_argument("--ids", default="")
     parser.add_argument("--max-steps", type=int, default=100)
     parser.add_argument("--task-cap", type=float, default=2.0)
+    parser.add_argument("--repair-rounds", type=int, default=2)
     parser.add_argument("--out", type=Path, help="export: destination folder")
     parser.add_argument("--examples", default="", help="export: task ids whose receipts to include")
     args = parser.parse_args()
@@ -406,7 +407,7 @@ def main() -> None:
         prepare(args.work, args.jobs)
     elif args.command == "run":
         run(args.work, args.arms.split(","), args.cap, args.jobs, args.limit,
-            [i for i in args.ids.split(",") if i], Limits(max_steps=args.max_steps, cost_usd=args.task_cap))
+            [i for i in args.ids.split(",") if i], Limits(max_steps=args.max_steps, cost_usd=args.task_cap, repair_rounds=args.repair_rounds))
     elif args.command == "reprice":
         reprice(args.work)
     elif args.command == "export":
