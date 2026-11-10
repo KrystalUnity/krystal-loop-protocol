@@ -1,0 +1,103 @@
+{
+  "note": "USD per million tokens, standard tier, prompts up to 272K tokens (200K for grok-4.7). `cached` and `write` are subsets of input. `write` is the default 30-minute cache-write rate. A model with `off_peak` rates is priced by the UTC hour of each call; `peak_utc` lists the peak weekdays (0 = Monday) and hour ranges. Edit to match your provider's current price list; a model missing here is reported as unpriced, never as free.",
+  "recorded": "2026-11-10",
+  "sources": [
+    "https://developers.openai.com/api/docs/pricing",
+    "https://api-docs.deepseek.com/quick_start/pricing",
+    "https://docs.x.ai/docs/models"
+  ],
+  "usd_per_million_tokens": {
+    "deepseek-flash": {
+      "input": 0.3,
+      "cached": 0.006,
+      "write": 0.3,
+      "output": 1.2,
+      "off_peak": {
+        "input": 0.15,
+        "cached": 0.003,
+        "write": 0.15,
+        "output": 0.6
+      },
+      "peak_utc": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "hours": [
+          [
+            1,
+            4
+          ],
+          [
+            6,
+            10
+          ]
+        ]
+      }
+    },
+    "deepseek-v4-pro": {
+      "input": 1.32,
+      "cached": 0.044,
+      "write": 1.32,
+      "output": 3.96,
+      "off_peak": {
+        "input": 0.66,
+        "cached": 0.022,
+        "write": 0.66,
+        "output": 1.98
+      },
+      "peak_utc": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "hours": [
+          [
+            1,
+            4
+          ],
+          [
+            6,
+            10
+          ]
+        ]
+      }
+    },
+    "gpt-6.1-sol": {
+      "input": 2.0,
+      "cached": 0.1,
+      "write": 2.5,
+      "output": 10.0
+    },
+    "gpt-6.1-terra": {
+      "input": 1.0,
+      "cached": 0.05,
+      "write": 1.25,
+      "output": 5.0
+    },
+    "gpt-6-luna": {
+      "input": 0.1,
+      "cached": 0.01,
+      "write": 0.125,
+      "output": 0.5
+    },
+    "gpt-6-astra": {
+      "input": 10.0,
+      "cached": 1.0,
+      "write": 12.5,
+      "output": 50.0
+    },
+    "grok-4.7": {
+      "input": 2.0,
+      "cached": 0.5,
+      "write": 2.0,
+      "output": 6.0
+    }
+  }
+}

@@ -134,6 +134,13 @@ included receipts and run the offline checks.
 
 ### What We Have Measured
 
+- **Paired features, 30 conflicting pairs.** Two low-cost workers under KLP
+  Standard, integrated through Semio, delivered 28 pairs passing both hidden
+  test sets for $0.103 a pair. The frontier model building both features alone
+  delivered 22 for $0.196. Against agent-managed chat on the same work, Semio
+  reached the same 28 with 43% fewer model calls and 61% lower integration
+  cost. [Case study and receipts](case-studies/paired-features-2026-11-10/README.md).
+
 - **Feature benchmark, 66 tasks.** KLP Standard solved 59 for $0.046 a task,
   and 57 and 54 in two earlier runs for $0.055 and $0.061. The heavy model
   alone solved 56 for $0.721 and the frontier model alone solved 56 for $0.123.

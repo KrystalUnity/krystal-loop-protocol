@@ -1,0 +1,266 @@
+{
+ "pallets_click-task2068-feature1": {
+  "klp-3": "0.027573656",
+  "worker-3": "0.007389672"
+ },
+ "pallets_click-task2068-feature10": {
+  "klp-3": "0.00631",
+  "worker-3": "0.004443456"
+ },
+ "pallets_click-task2068-feature11": {
+  "klp-3": "0.029444298",
+  "worker-3": "0.010181034"
+ },
+ "pallets_click-task2068-feature12": {
+  "klp-3": "0.007028",
+  "worker-3": "0.011193234"
+ },
+ "pallets_click-task2068-feature2": {
+  "klp-3": "0.059955320",
+  "worker-3": "0.005432526"
+ },
+ "pallets_click-task2068-feature3": {
+  "klp-3": "0.00746",
+  "worker-3": "0.009555354"
+ },
+ "pallets_click-task2068-feature4": {
+  "klp-3": "0.060788730",
+  "worker-3": "0.015746466"
+ },
+ "pallets_click-task2068-feature5": {
+  "klp-3": "0.009226",
+  "worker-3": "0.007543662"
+ },
+ "pallets_click-task2068-feature6": {
+  "klp-3": "0.022112292",
+  "worker-3": "0.012683904"
+ },
+ "pallets_click-task2068-feature7": {
+  "klp-3": "0.008934",
+  "worker-3": "0.006201132"
+ },
+ "pallets_click-task2068-feature8": {
+  "klp-3": "0.00639",
+  "worker-3": "0.004013892"
+ },
+ "pallets_click-task2068-feature9": {
+  "klp-3": "0.012648",
+  "worker-3": "0.011415120"
+ },
+ "pallets_click-task2800-feature1": {
+  "klp-3": "0.030471916",
+  "worker-3": "0.006655644"
+ },
+ "pallets_click-task2800-feature2": {
+  "klp-3": "0.062297710",
+  "worker-3": "0.026081052"
+ },
+ "pallets_click-task2800-feature3": {
+  "klp-3": "0.072802208",
+  "worker-3": "0.026767968"
+ },
+ "pallets_click-task2800-feature4": {
+  "klp-3": "0.094741698",
+  "worker-3": "0.033179682"
+ },
+ "pallets_click-task2800-feature5": {
+  "klp-3": "0.064870616",
+  "worker-3": "0.025767714"
+ },
+ "pallets_click-task2800-feature6": {
+  "klp-3": "0.087512002",
+  "worker-3": "0.014926566"
+ },
+ "pallets_click-task2800-feature7": {
+  "klp-3": "0.052761748",
+  "worker-3": "0.013485048"
+ },
+ "pallets_click-task2956-feature1": {
+  "klp-3": "0.024707936",
+  "worker-3": "0.021505143"
+ },
+ "pallets_click-task2956-feature2": {
+  "klp-3": "0.043187786",
+  "worker-3": "0.028911006"
+ },
+ "pallets_click-task2956-feature3": {
+  "klp-3": "0.060668692",
+  "worker-3": "0.023198022"
+ },
+ "pallets_click-task2956-feature4": {
+  "klp-3": "0.051416712",
+  "worker-3": "0.033707139"
+ },
+ "pallets_click-task2956-feature5": {
+  "klp-3": "0.053043166",
+  "worker-3": "0.019074894"
+ },
+ "pallets_click-task2956-feature6": {
+  "klp-3": "0.087149118",
+  "worker-3": "0.025578372"
+ },
+ "pallets_click-task2956-feature7": {
+  "klp-3": "0.109284296",
+  "worker-3": "0.025601388"
+ },
+ "pallets_click-task2956-feature8": {
+  "klp-3": "0.067618664",
+  "worker-3": "0.019551252"
+ },
+ "pallets_jinja-task1465-feature1": {
+  "klp-3": "0.00519",
+  "worker-3": "0.003188190"
+ },
+ "pallets_jinja-task1465-feature10": {
+  "klp-3": "0.006026",
+  "worker-3": "0.004528242"
+ },
+ "pallets_jinja-task1465-feature2": {
+  "klp-3": "0.004128",
+  "worker-3": "0.002131260"
+ },
+ "pallets_jinja-task1465-feature3": {
+  "klp-3": "0.00544",
+  "worker-3": "0.004791816"
+ },
+ "pallets_jinja-task1465-feature4": {
+  "klp-3": "0.004742",
+  "worker-3": "0.002383626"
+ },
+ "pallets_jinja-task1465-feature5": {
+  "klp-3": "0.005278",
+  "worker-3": "0.003512898"
+ },
+ "pallets_jinja-task1465-feature6": {
+  "klp-3": "0.0049",
+  "worker-3": "0.003246174"
+ },
+ "pallets_jinja-task1465-feature7": {
+  "klp-3": "0.031186214",
+  "worker-3": "0.004621488"
+ },
+ "pallets_jinja-task1465-feature8": {
+  "klp-3": "0.00584",
+  "worker-3": "0.009968745"
+ },
+ "pallets_jinja-task1465-feature9": {
+  "klp-3": "0.011988",
+  "worker-3": "0.011528514"
+ },
+ "pallets_jinja-task1559-feature1": {
+  "klp-3": "0.008848",
+  "worker-3": "0.005397918"
+ },
+ "pallets_jinja-task1559-feature10": {
+  "klp-3": "0.009816",
+  "worker-3": "0.003080994"
+ },
+ "pallets_jinja-task1559-feature2": {
+  "klp-3": "0.026238286",
+  "worker-3": "0.027917790"
+ },
+ "pallets_jinja-task1559-feature3": {
+  "klp-3": "0.080639530",
+  "worker-3": "0.063680208"
+ },
+ "pallets_jinja-task1559-feature4": {
+  "klp-3": "0.013888",
+  "worker-3": "0.009543774"
+ },
+ "pallets_jinja-task1559-feature5": {
+  "klp-3": "0.014014",
+  "worker-3": "0.016559754"
+ },
+ "pallets_jinja-task1559-feature6": {
+  "klp-3": "0.073608424",
+  "worker-3": "0.021597762"
+ },
+ "pallets_jinja-task1559-feature7": {
+  "klp-3": "0.051216182",
+  "worker-3": "0.017989884"
+ },
+ "pallets_jinja-task1559-feature8": {
+  "klp-3": "0.066947764",
+  "worker-3": "0.025437204"
+ },
+ "pallets_jinja-task1559-feature9": {
+  "klp-3": "0.006708",
+  "worker-3": "0.005873550"
+ },
+ "pallets_jinja-task1621-feature1": {
+  "klp-3": "0.00541",
+  "worker-3": "0.002173464"
+ },
+ "pallets_jinja-task1621-feature10": {
+  "klp-3": "0.077456056",
+  "worker-3": "0.023819250"
+ },
+ "pallets_jinja-task1621-feature2": {
+  "klp-3": "0.030723708",
+  "worker-3": "0.004630968"
+ },
+ "pallets_jinja-task1621-feature3": {
+  "klp-3": "0.004172",
+  "worker-3": "0.002968524"
+ },
+ "pallets_jinja-task1621-feature4": {
+  "klp-3": "0.007992",
+  "worker-3": "0.009204708"
+ },
+ "pallets_jinja-task1621-feature5": {
+  "klp-3": "0.039553508",
+  "worker-3": "0.003599862"
+ },
+ "pallets_jinja-task1621-feature6": {
+  "klp-3": "0.059253184",
+  "worker-3": "0.016010070"
+ },
+ "pallets_jinja-task1621-feature7": {
+  "klp-3": "0.00541",
+  "worker-3": "0.001605252"
+ },
+ "pallets_jinja-task1621-feature8": {
+  "klp-3": "0.060127564",
+  "worker-3": "0.030584796"
+ },
+ "pallets_jinja-task1621-feature9": {
+  "klp-3": "0.038104970",
+  "worker-3": "0.019413018"
+ },
+ "samuelcolvin_dirty_equals-task43-feature1": {
+  "klp-3": "0.019642014",
+  "worker-3": "0.008305146"
+ },
+ "samuelcolvin_dirty_equals-task43-feature2": {
+  "klp-3": "0.00741",
+  "worker-3": "0.007178634"
+ },
+ "samuelcolvin_dirty_equals-task43-feature3": {
+  "klp-3": "0.007032",
+  "worker-3": "0.010750914"
+ },
+ "samuelcolvin_dirty_equals-task43-feature4": {
+  "klp-3": "0.009016",
+  "worker-3": "0.006050136"
+ },
+ "samuelcolvin_dirty_equals-task43-feature5": {
+  "klp-3": "0.013074",
+  "worker-3": "0.030300492"
+ },
+ "samuelcolvin_dirty_equals-task43-feature6": {
+  "klp-3": "0.017788784",
+  "worker-3": "0.017581530"
+ },
+ "samuelcolvin_dirty_equals-task43-feature7": {
+  "klp-3": "0.00879",
+  "worker-3": "0.012444768"
+ },
+ "samuelcolvin_dirty_equals-task43-feature8": {
+  "klp-3": "0.00967",
+  "worker-3": "0.011067198"
+ },
+ "samuelcolvin_dirty_equals-task43-feature9": {
+  "klp-3": "0.018457332",
+  "worker-3": "0.011791608"
+ }
+}

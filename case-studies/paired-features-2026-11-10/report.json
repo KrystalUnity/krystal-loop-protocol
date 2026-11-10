@@ -1,0 +1,91 @@
+{
+ "pairs_compared": 30,
+ "source_arm": "klp-3",
+ "arms": {
+  "Plain git merge, no coordination": {
+   "arm": "merge",
+   "pairs": 30,
+   "solved": 2,
+   "integration_usd": "0",
+   "features_usd": "2.869188683",
+   "usd": "2.869188683",
+   "usd_per_pair": "0.09563962276666666666666666667",
+   "usd_per_solved_pair": "1.4345943415",
+   "model_calls": 0,
+   "sessions_woken": 0,
+   "messages": 0,
+   "pairs_without_a_model_call": 30,
+   "double_integrations": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_seconds": 0.4,
+   "states": {
+    "completed": 2,
+    "merge_conflict": 28
+   }
+  },
+  "Agent-managed: both workers woken, free-text messages": {
+   "arm": "chat",
+   "pairs": 30,
+   "solved": 28,
+   "integration_usd": "0.566657304",
+   "features_usd": "2.869188683",
+   "usd": "3.435845987",
+   "usd_per_pair": "0.1145281995666666666666666667",
+   "usd_per_solved_pair": "0.12270878525",
+   "model_calls": 581,
+   "sessions_woken": 60,
+   "messages": 80,
+   "pairs_without_a_model_call": 0,
+   "double_integrations": 0,
+   "input_tokens": 31216336,
+   "output_tokens": 262389,
+   "median_seconds": 62.6,
+   "states": {
+    "completed": 30
+   }
+  },
+  "Semio: typed handovers, software merges, one worker woken when needed": {
+   "arm": "semio",
+   "pairs": 30,
+   "solved": 28,
+   "integration_usd": "0.221599206",
+   "features_usd": "2.869188683",
+   "usd": "3.090787889",
+   "usd_per_pair": "0.1030262629666666666666666667",
+   "usd_per_solved_pair": "0.11038528175",
+   "model_calls": 333,
+   "sessions_woken": 28,
+   "messages": 116,
+   "pairs_without_a_model_call": 2,
+   "double_integrations": 0,
+   "input_tokens": 20897821,
+   "output_tokens": 186279,
+   "median_seconds": 43.85,
+   "states": {
+    "completed": 30
+   }
+  },
+  "Frontier model alone builds both features (gpt-6.1-sol)": {
+   "arm": "solo",
+   "pairs": 30,
+   "solved": 22,
+   "integration_usd": "5.8653863",
+   "features_usd": "0",
+   "usd": "5.8653863",
+   "usd_per_pair": "0.1955128766666666666666666667",
+   "usd_per_solved_pair": "0.2666084681818181818181818182",
+   "model_calls": 358,
+   "sessions_woken": 30,
+   "messages": 0,
+   "pairs_without_a_model_call": 0,
+   "double_integrations": 0,
+   "input_tokens": 5952921,
+   "output_tokens": 325156,
+   "median_seconds": 183.05,
+   "states": {
+    "completed": 30
+   }
+  }
+ }
+}

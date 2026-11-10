@@ -5,7 +5,7 @@ $0.046 a task. OpenAI's heaviest model working alone solved 56 for $0.721 a
 task, and its standard frontier model solved 56 for $0.123. Across three KLP
 runs the result was 57, 54 and 59 solved at $0.055, $0.061 and $0.046. The
 tasks are single features in Click, Jinja and dirty-equals, each graded by
-tests the models never see. Run on 10 November 2026: 1,056 runs, 9,777 model
+tests the models never see. Run on 10 November 2026: 1,056 runs, 9,788 model
 calls.
 
 | | Tasks solved | Cost per task | Cost per solved task | All 66 tasks |
@@ -102,6 +102,7 @@ same snapshot and the same worker session, with two repair rounds.
 | --- | ---: | ---: | ---: | ---: | ---: |
 | `gpt-6.1-sol` (API) | 56 | $0.060 | 86 | 2 | 0 |
 | Gemini 4 Argon, on an Antigravity CLI subscription | 56 | $0.028 | 5 | 2 | 0 |
+| Kimi K3.1 Pro, on a Kimi CLI subscription | 55 | $0.028 | 16 | 1 | 0 |
 | `grok-4.7` (API) | 54 | $0.058 | 4 | 0 | 0 |
 
 | Critic, earlier runner | Tasks solved after review | Cost per task, worker included | Findings confirmed | Fixed | Runs with a finding still open | Passing tasks broken |
@@ -119,10 +120,10 @@ same snapshot and the same worker session, with two repair rounds.
   critic with five precise findings. The review adds no metered cost, so the
   whole loop costs $0.028 a task in metered spend: 96% below the heavy model
   alone, with the same solve count.
-- **Critics differ in what they catch.** `grok-4.7` confirmed four findings and
-  rescued nothing. Kimi K3.1 Pro, on its CLI subscription, reviewed 59 of the
-  66 candidates before the subscription's usage window closed: 13 confirmed
-  findings, one rescue and no passing task broken. Qwen 3.8 Max, on its CLI
+- **Critics differ in what they catch.** Kimi K3.1 Pro, on its CLI
+  subscription, solved 55 at $0.028 a task in metered spend: 16 confirmed
+  findings, one rescue and no passing task broken. `grok-4.7` confirmed four
+  findings and rescued nothing. Qwen 3.8 Max, on its CLI
   subscription, reviewed 63 of the 66, confirmed three findings and rescued
   nothing, at about four minutes a review. Their runs are in the results as
   the arms `v2-kimi` and `v2-qwen`.
@@ -207,9 +208,9 @@ specification does not state. On the other 61 tasks, KLP Standard run 3 solved
   in its off-peak hours; each call carries the tier it was billed at.
 - **Repeated runs.** Three runs that a malformed critic reply stopped were
   repeated, and so were 13 `grok-4.7` runs whose probe file an earlier runner
-  build could not locate. The Kimi arm's seven runs stopped by the usage
-  window and the Qwen arm's three reviews that passed the 15-minute limit are
-  reported as they ended.
+  build could not locate. The Kimi arm's seven runs stopped by its usage
+  window were repeated once the window reset. The Qwen arm's three reviews
+  that passed the 15-minute limit are reported as they ended.
 - **Code.** Run 1 and `gpt-6.1-sol` alone at runner revision `9f33aa8`; run 2,
   the earlier critic arms and `gpt-6-astra` alone at `33e7ccd`; run 3 and the
   runner 0.5 arms at `f146aef` to `df2e27d`.

@@ -46,6 +46,7 @@ jobs:
           git config --global init.defaultBranch main
           python3 tests/test_standard_runner.py -v
           python3 tests/test_feature_benchmark.py -v
+          python3 tests/test_pair_benchmark.py -v
           # Hosted runners can deny unprivileged namespaces; repeat the sandboxed cases elevated.
           sudo -n env PATH="$PATH" python3 tests/test_standard_runner.py -v
       - name: Verify published receipt arithmetic
@@ -53,6 +54,7 @@ jobs:
           python3 case-studies/krystalview-2026-10-20/verify.py
           python3 case-studies/semio-coordination-2026-10-20/verify.py
           python3 case-studies/feature-benchmark-2026-11-10/verify.py
+          python3 case-studies/paired-features-2026-11-10/verify.py
       - name: Check launcher syntax
         run: bash -n examples/deepseek-codex-worker/run.sh
       - name: Check optional Semio adapter offline

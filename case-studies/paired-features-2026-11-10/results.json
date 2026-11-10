@@ -1,0 +1,4386 @@
+[
+ {
+  "pair": "pallets_click-task2068-f2+f8",
+  "arm": "chat",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2068-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.013978110",
+  "model_calls": 14,
+  "effort": {
+   "chat": {
+    "calls": 14,
+    "input": 451021,
+    "cached": 398720,
+    "write": 0,
+    "output": 8228,
+    "usd": "0.013978110",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 75.7,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 11,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f4+f7",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.017886774",
+  "model_calls": 13,
+  "effort": {
+   "chat": {
+    "calls": 13,
+    "input": 448685,
+    "cached": 363008,
+    "write": 0,
+    "output": 6577,
+    "usd": "0.017886774",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 51.1,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 4,
+   "b": 9
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f11",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.008326128",
+  "model_calls": 17,
+  "effort": {
+   "chat": {
+    "calls": 17,
+    "input": 518008,
+    "cached": 501376,
+    "write": 0,
+    "output": 7212,
+    "usd": "0.008326128",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 55.5,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 13,
+   "b": 4
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f8",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.007323270",
+  "model_calls": 11,
+  "effort": {
+   "chat": {
+    "calls": 11,
+    "input": 239813,
+    "cached": 211840,
+    "write": 0,
+    "output": 4153,
+    "usd": "0.007323270",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 34.6,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 8,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f8+f11",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.010802460",
+  "model_calls": 14,
+  "effort": {
+   "chat": {
+    "calls": 14,
+    "input": 316350,
+    "cached": 277120,
+    "write": 0,
+    "output": 6811,
+    "usd": "0.010802460",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 50.5,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 11,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f1+f3",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.022824900",
+  "model_calls": 17,
+  "effort": {
+   "chat": {
+    "calls": 17,
+    "input": 788682,
+    "cached": 672000,
+    "write": 0,
+    "output": 5511,
+    "usd": "0.022824900",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 53.7,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 13,
+   "b": 4
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f3",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.010646958",
+  "model_calls": 20,
+  "effort": {
+   "chat": {
+    "calls": 20,
+    "input": 1551357,
+    "cached": 1537536,
+    "write": 0,
+    "output": 6602,
+    "usd": "0.010646958",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 62.8,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 17,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f5",
+  "arm": "chat",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.032711514",
+  "model_calls": 19,
+  "effort": {
+   "chat": {
+    "calls": 19,
+    "input": 1560531,
+    "cached": 1401088,
+    "write": 0,
+    "output": 7653,
+    "usd": "0.032711514",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 69.6,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 5,
+   "b": 14
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f7",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.017433456",
+  "model_calls": 24,
+  "effort": {
+   "chat": {
+    "calls": 24,
+    "input": 1718460,
+    "cached": 1661952,
+    "write": 0,
+    "output": 6619,
+    "usd": "0.017433456",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 66.9,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 19,
+   "b": 5
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f3+f7",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.013032690",
+  "model_calls": 21,
+  "effort": {
+   "chat": {
+    "calls": 21,
+    "input": 1712615,
+    "cached": 1694080,
+    "write": 0,
+    "output": 8617,
+    "usd": "0.013032690",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 73.6,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 18,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f2",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.035282634",
+  "model_calls": 23,
+  "effort": {
+   "chat": {
+    "calls": 23,
+    "input": 1685799,
+    "cached": 1536128,
+    "write": 0,
+    "output": 13706,
+    "usd": "0.035282634",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 105.6,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 15,
+   "b": 8
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f5",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.041798100",
+  "model_calls": 45,
+  "effort": {
+   "chat": {
+    "calls": 45,
+    "input": 3255890,
+    "cached": 3142400,
+    "write": 0,
+    "output": 25579,
+    "usd": "0.041798100",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 215.5,
+  "sessions_woken": 2,
+  "messages": 5,
+  "double_integration": false,
+  "steps": {
+   "a": 7,
+   "b": 38
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f4",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.031632126",
+  "model_calls": 21,
+  "effort": {
+   "chat": {
+    "calls": 21,
+    "input": 1551541,
+    "cached": 1390592,
+    "write": 0,
+    "output": 5530,
+    "usd": "0.031632126",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 65.7,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 17,
+   "b": 4
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f6",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.020869626",
+  "model_calls": 17,
+  "effort": {
+   "chat": {
+    "calls": 17,
+    "input": 1240879,
+    "cached": 1153792,
+    "write": 0,
+    "output": 7242,
+    "usd": "0.020869626",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 62.5,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 13,
+   "b": 4
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f1+f10",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.008593818",
+  "model_calls": 14,
+  "effort": {
+   "chat": {
+    "calls": 14,
+    "input": 228447,
+    "cached": 195456,
+    "write": 0,
+    "output": 5098,
+    "usd": "0.008593818",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 48.4,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 11,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f6",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.008419242",
+  "model_calls": 15,
+  "effort": {
+   "chat": {
+    "calls": 15,
+    "input": 266599,
+    "cached": 235264,
+    "write": 0,
+    "output": 5022,
+    "usd": "0.008419242",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 46.3,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 12,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f7",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.008908440",
+  "model_calls": 13,
+  "effort": {
+   "chat": {
+    "calls": 13,
+    "input": 273432,
+    "cached": 241280,
+    "write": 0,
+    "output": 5603,
+    "usd": "0.008908440",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 45.7,
+  "sessions_woken": 2,
+  "messages": 1,
+  "double_integration": false,
+  "steps": {
+   "a": 11,
+   "b": 2
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f9",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012762612",
+  "model_calls": 16,
+  "effort": {
+   "chat": {
+    "calls": 16,
+    "input": 481174,
+    "cached": 440704,
+    "write": 0,
+    "output": 8950,
+    "usd": "0.012762612",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 62.7,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 4,
+   "b": 12
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f1+f2",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.029550966",
+  "model_calls": 25,
+  "effort": {
+   "chat": {
+    "calls": 25,
+    "input": 1656737,
+    "cached": 1558272,
+    "write": 0,
+    "output": 16844,
+    "usd": "0.029550966",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 110.7,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 5,
+   "b": 20
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f2+f4",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.018954540",
+  "model_calls": 25,
+  "effort": {
+   "chat": {
+    "calls": 25,
+    "input": 1204302,
+    "cached": 1153280,
+    "write": 0,
+    "output": 13069,
+    "usd": "0.018954540",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 107.1,
+  "sessions_woken": 2,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "a": 6,
+   "b": 19
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f6+f10",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.017314182",
+  "model_calls": 10,
+  "effort": {
+   "chat": {
+    "calls": 10,
+    "input": 580697,
+    "cached": 489344,
+    "write": 0,
+    "output": 3572,
+    "usd": "0.017314182",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 42.5,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 7,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f8+f9",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.018412782",
+  "model_calls": 10,
+  "effort": {
+   "chat": {
+    "calls": 10,
+    "input": 580553,
+    "cached": 476544,
+    "write": 0,
+    "output": 2303,
+    "usd": "0.018412782",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 34.8,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 6,
+   "b": 4
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f1+f9",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012947028",
+  "model_calls": 28,
+  "effort": {
+   "chat": {
+    "calls": 28,
+    "input": 693694,
+    "cached": 667776,
+    "write": 0,
+    "output": 11760,
+    "usd": "0.012947028",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 105.0,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 25,
+   "b": 3
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f2+f9",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.026521548",
+  "model_calls": 35,
+  "effort": {
+   "chat": {
+    "calls": 35,
+    "input": 1573226,
+    "cached": 1478016,
+    "write": 0,
+    "output": 13010,
+    "usd": "0.026521548",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 132.5,
+  "sessions_woken": 2,
+  "messages": 7,
+  "double_integration": false,
+  "steps": {
+   "a": 19,
+   "b": 16
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f10",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.038649660",
+  "model_calls": 29,
+  "effort": {
+   "chat": {
+    "calls": 29,
+    "input": 2522354,
+    "cached": 2421120,
+    "write": 0,
+    "output": 27002,
+    "usd": "0.038649660",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 193.9,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 7,
+   "b": 22
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f8",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.033476220",
+  "model_calls": 28,
+  "effort": {
+   "chat": {
+    "calls": 28,
+    "input": 2349550,
+    "cached": 2202240,
+    "write": 0,
+    "output": 7955,
+    "usd": "0.033476220",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 89.3,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 5,
+   "b": 23
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f1+f8",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012031086",
+  "model_calls": 17,
+  "effort": {
+   "chat": {
+    "calls": 17,
+    "input": 585901,
+    "cached": 547712,
+    "write": 0,
+    "output": 7766,
+    "usd": "0.012031086",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 58.6,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 5,
+   "b": 12
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f8",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.011299932",
+  "model_calls": 16,
+  "effort": {
+   "chat": {
+    "calls": 16,
+    "input": 478558,
+    "cached": 438144,
+    "write": 0,
+    "output": 6539,
+    "usd": "0.011299932",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 56.4,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 13,
+   "b": 3
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f9",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012003858",
+  "model_calls": 12,
+  "effort": {
+   "chat": {
+    "calls": 12,
+    "input": 341463,
+    "cached": 279936,
+    "write": 0,
+    "output": 3225,
+    "usd": "0.012003858",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 34.0,
+  "sessions_woken": 2,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {
+   "a": 9,
+   "b": 3
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f4+f7",
+  "arm": "chat",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012262644",
+  "model_calls": 12,
+  "effort": {
+   "chat": {
+    "calls": 12,
+    "input": 360018,
+    "cached": 302848,
+    "write": 0,
+    "output": 4631,
+    "usd": "0.012262644",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 40.5,
+  "sessions_woken": 2,
+  "messages": 3,
+  "double_integration": false,
+  "steps": {
+   "a": 5,
+   "b": 7
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f2+f8",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2068-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2068-f4+f7",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2068-feature4": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2068-feature7": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f11",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f8",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2068-f8+f11",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2068-feature8": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2800-f1+f3",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2800-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f3",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f5",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2800-feature5": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f7",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2800-f3+f7",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2800-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f2",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2956-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f5",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2956-feature5": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f4",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2956-feature4": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f6",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_click-task2956-feature6": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1465-f1+f10",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1465-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1465-feature10": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f6",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1465-feature6": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f7",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1465-feature7": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f9",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1465-feature9": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1559-f1+f2",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1559-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1559-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1559-f2+f4",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1559-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1559-feature4": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1559-f6+f10",
+  "arm": "merge",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 2.7,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": true
+ },
+ {
+  "pair": "pallets_jinja-task1559-f8+f9",
+  "arm": "merge",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 2.6,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": true
+ },
+ {
+  "pair": "pallets_jinja-task1621-f1+f9",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1621-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1621-f2+f9",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1621-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f10",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1621-feature10": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f8",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "pallets_jinja-task1621-feature8": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.5,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f1+f8",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature1": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f8",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.3,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f9",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "samuelcolvin_dirty_equals-task43-feature9": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.3,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f4+f7",
+  "arm": "merge",
+  "state": "merge_conflict",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature4": {
+    "passed": false,
+    "stage": "no tree"
+   },
+   "samuelcolvin_dirty_equals-task43-feature7": {
+    "passed": false,
+    "stage": "no tree"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 0.4,
+  "sessions_woken": 0,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": false
+ },
+ {
+  "pair": "pallets_click-task2068-f2+f8",
+  "arm": "semio",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2068-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.005952792",
+  "model_calls": 8,
+  "effort": {
+   "integrate": {
+    "calls": 8,
+    "input": 154836,
+    "cached": 145664,
+    "write": 0,
+    "output": 6900,
+    "usd": "0.005952792",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 49.0,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 8
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2068-f4+f7",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.005988306",
+  "model_calls": 12,
+  "effort": {
+   "integrate": {
+    "calls": 12,
+    "input": 279755,
+    "cached": 269952,
+    "write": 0,
+    "output": 6180,
+    "usd": "0.005988306",
+    "unpriced_calls": 1,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 345.8,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 11
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f11",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.006507342",
+  "model_calls": 10,
+  "effort": {
+   "integrate": {
+    "calls": 10,
+    "input": 361641,
+    "cached": 350464,
+    "write": 0,
+    "output": 6299,
+    "usd": "0.006507342",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 44.9,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 10
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f8",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.003832302",
+  "model_calls": 8,
+  "effort": {
+   "integrate": {
+    "calls": 8,
+    "input": 156105,
+    "cached": 147584,
+    "write": 0,
+    "output": 3519,
+    "usd": "0.003832302",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 25.0,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 8
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2068-f8+f11",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.005165010",
+  "model_calls": 8,
+  "effort": {
+   "integrate": {
+    "calls": 8,
+    "input": 266363,
+    "cached": 257920,
+    "write": 0,
+    "output": 5208,
+    "usd": "0.005165010",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 40.3,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 8
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2800-f1+f3",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.003600930",
+  "model_calls": 6,
+  "effort": {
+   "integrate": {
+    "calls": 6,
+    "input": 485343,
+    "cached": 479360,
+    "write": 0,
+    "output": 2109,
+    "usd": "0.003600930",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 23.4,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 6
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f3",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.007013820",
+  "model_calls": 8,
+  "effort": {
+   "integrate": {
+    "calls": 8,
+    "input": 681954,
+    "cached": 672640,
+    "write": 0,
+    "output": 5998,
+    "usd": "0.007013820",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 43.7,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 8
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f5",
+  "arm": "semio",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.006789108",
+  "model_calls": 9,
+  "effort": {
+   "integrate": {
+    "calls": 9,
+    "input": 747754,
+    "cached": 740736,
+    "write": 0,
+    "output": 5857,
+    "usd": "0.006789108",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 44.0,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 9
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f7",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.005196342",
+  "model_calls": 8,
+  "effort": {
+   "integrate": {
+    "calls": 8,
+    "input": 375561,
+    "cached": 369664,
+    "write": 0,
+    "output": 5338,
+    "usd": "0.005196342",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 37.6,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 8
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2800-f3+f7",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.008097156",
+  "model_calls": 15,
+  "effort": {
+   "integrate": {
+    "calls": 15,
+    "input": 759626,
+    "cached": 749952,
+    "write": 0,
+    "output": 7327,
+    "usd": "0.008097156",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 55.0,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 15
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f2",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.011238420",
+  "model_calls": 16,
+  "effort": {
+   "integrate": {
+    "calls": 16,
+    "input": 1317122,
+    "cached": 1299840,
+    "write": 0,
+    "output": 7911,
+    "usd": "0.011238420",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 61.6,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 16
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f5",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.010969902",
+  "model_calls": 24,
+  "effort": {
+   "integrate": {
+    "calls": 24,
+    "input": 1509089,
+    "cached": 1494784,
+    "write": 0,
+    "output": 7233,
+    "usd": "0.010969902",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 68.3,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 24
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f4",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012036762",
+  "model_calls": 16,
+  "effort": {
+   "integrate": {
+    "calls": 16,
+    "input": 1554935,
+    "cached": 1535104,
+    "write": 0,
+    "output": 7428,
+    "usd": "0.012036762",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 59.5,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 16
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f6",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.008980320",
+  "model_calls": 13,
+  "effort": {
+   "integrate": {
+    "calls": 13,
+    "input": 1061768,
+    "cached": 1050240,
+    "write": 0,
+    "output": 6834,
+    "usd": "0.008980320",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 53.1,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 13
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1465-f1+f10",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.002901552",
+  "model_calls": 5,
+  "effort": {
+   "integrate": {
+    "calls": 5,
+    "input": 88364,
+    "cached": 83584,
+    "write": 0,
+    "output": 3223,
+    "usd": "0.002901552",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 25.5,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 5
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f6",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.002922024",
+  "model_calls": 7,
+  "effort": {
+   "integrate": {
+    "calls": 7,
+    "input": 103140,
+    "cached": 97408,
+    "write": 0,
+    "output": 2950,
+    "usd": "0.002922024",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 25.1,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 7
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f7",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.005395662",
+  "model_calls": 11,
+  "effort": {
+   "integrate": {
+    "calls": 11,
+    "input": 343617,
+    "cached": 331904,
+    "write": 0,
+    "output": 4405,
+    "usd": "0.005395662",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 39.6,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 11
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f9",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.006086622",
+  "model_calls": 9,
+  "effort": {
+   "integrate": {
+    "calls": 9,
+    "input": 308357,
+    "cached": 301824,
+    "write": 0,
+    "output": 7002,
+    "usd": "0.006086622",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 45.7,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 9
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1559-f1+f2",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.012892236",
+  "model_calls": 16,
+  "effort": {
+   "integrate": {
+    "calls": 16,
+    "input": 1224650,
+    "cached": 1213312,
+    "write": 0,
+    "output": 12586,
+    "usd": "0.012892236",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 78.4,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 16
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1559-f2+f4",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.016382640",
+  "model_calls": 21,
+  "effort": {
+   "integrate": {
+    "calls": 21,
+    "input": 1054480,
+    "cached": 1028480,
+    "write": 0,
+    "output": 15662,
+    "usd": "0.016382640",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 103.1,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 21
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1559-f6+f10",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 2.5,
+  "sessions_woken": 0,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": true,
+  "transport_reads": 1
+ },
+ {
+  "pair": "pallets_jinja-task1559-f8+f9",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0",
+  "model_calls": 0,
+  "effort": {},
+  "seconds": 2.9,
+  "sessions_woken": 0,
+  "messages": 2,
+  "double_integration": false,
+  "steps": {},
+  "merge_clean": true,
+  "transport_reads": 1
+ },
+ {
+  "pair": "pallets_jinja-task1621-f1+f9",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.006197640",
+  "model_calls": 7,
+  "effort": {
+   "integrate": {
+    "calls": 7,
+    "input": 473704,
+    "cached": 465280,
+    "write": 0,
+    "output": 5897,
+    "usd": "0.006197640",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 48.3,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 7
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1621-f2+f9",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.003985980",
+  "model_calls": 7,
+  "effort": {
+   "integrate": {
+    "calls": 7,
+    "input": 455410,
+    "cached": 450560,
+    "write": 0,
+    "output": 3178,
+    "usd": "0.003985980",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 34.8,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 7
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f10",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.028321752",
+  "model_calls": 31,
+  "effort": {
+   "integrate": {
+    "calls": 31,
+    "input": 3213068,
+    "cached": 3177984,
+    "write": 0,
+    "output": 22542,
+    "usd": "0.028321752",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 153.5,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 31
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f8",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.017494230",
+  "model_calls": 29,
+  "effort": {
+   "integrate": {
+    "calls": 29,
+    "input": 2819769,
+    "cached": 2792960,
+    "write": 0,
+    "output": 8490,
+    "usd": "0.017494230",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 94.7,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 29
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f1+f8",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.006331896",
+  "model_calls": 9,
+  "effort": {
+   "integrate": {
+    "calls": 9,
+    "input": 369548,
+    "cached": 357632,
+    "write": 0,
+    "output": 5786,
+    "usd": "0.006331896",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 43.0,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 9
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f8",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.003690036",
+  "model_calls": 6,
+  "effort": {
+   "integrate": {
+    "calls": 6,
+    "input": 215266,
+    "cached": 208512,
+    "write": 0,
+    "output": 3419,
+    "usd": "0.003690036",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 25.6,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 6
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f9",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.004083144",
+  "model_calls": 7,
+  "effort": {
+   "integrate": {
+    "calls": 7,
+    "input": 262684,
+    "cached": 254848,
+    "write": 0,
+    "output": 3572,
+    "usd": "0.004083144",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 28.1,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 7
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f4+f7",
+  "arm": "semio",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": true,
+  "usd": "0.003545280",
+  "model_calls": 7,
+  "effort": {
+   "integrate": {
+    "calls": 7,
+    "input": 253912,
+    "cached": 248960,
+    "write": 0,
+    "output": 3426,
+    "usd": "0.003545280",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 25.7,
+  "sessions_woken": 1,
+  "messages": 4,
+  "double_integration": false,
+  "steps": {
+   "b": 7
+  },
+  "merge_clean": false,
+  "transport_reads": 4
+ },
+ {
+  "pair": "pallets_click-task2068-f2+f8",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2068-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1442855",
+  "model_calls": 12,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 131951,
+    "cached": 111685,
+    "write": 20230,
+    "output": 8247,
+    "usd": "0.1442855",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 177.3,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 12
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f4+f7",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1455458",
+  "model_calls": 11,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 134851,
+    "cached": 112923,
+    "write": 21895,
+    "output": 7945,
+    "usd": "0.1455458",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 155.2,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 11
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f11",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1759166",
+  "model_calls": 11,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 136635,
+    "cached": 113881,
+    "write": 22721,
+    "output": 10766,
+    "usd": "0.1759166",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 181.7,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 11
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f5+f8",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature5": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1382132",
+  "model_calls": 9,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 89903,
+    "cached": 71467,
+    "write": 18409,
+    "output": 8499,
+    "usd": "0.1382132",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 137.3,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 9
+  }
+ },
+ {
+  "pair": "pallets_click-task2068-f8+f11",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2068-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2068-feature11": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1831952",
+  "model_calls": 11,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 134805,
+    "cached": 110917,
+    "write": 23855,
+    "output": 11240,
+    "usd": "0.1831952",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 282.0,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 11
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f1+f3",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1691690",
+  "model_calls": 12,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 199130,
+    "cached": 172380,
+    "write": 25742,
+    "output": 8556,
+    "usd": "0.1691690",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 156.7,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 12
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f3",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1775020",
+  "model_calls": 12,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 170954,
+    "cached": 144470,
+    "write": 25514,
+    "output": 9733,
+    "usd": "0.1775020",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 173.7,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 12
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f5",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 0,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature5": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2217460",
+  "model_calls": 14,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 245606,
+    "cached": 213060,
+    "write": 31536,
+    "output": 11958,
+    "usd": "0.2217460",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 230.5,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 14
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f2+f7",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2800-feature2": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2201478",
+  "model_calls": 14,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 255764,
+    "cached": 223013,
+    "write": 32709,
+    "output": 11599,
+    "usd": "0.2201478",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 198.4,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 14
+  }
+ },
+ {
+  "pair": "pallets_click-task2800-f3+f7",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2800-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2800-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2691704",
+  "model_calls": 19,
+  "effort": {
+   "worker": {
+    "calls": 19,
+    "input": 425005,
+    "cached": 386814,
+    "write": 38134,
+    "output": 13504,
+    "usd": "0.2691704",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 243.8,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 19
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f2",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2084509",
+  "model_calls": 11,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 181046,
+    "cached": 149224,
+    "write": 31789,
+    "output": 11399,
+    "usd": "0.2084509",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 184.4,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 11
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f1+f5",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2956-feature1": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2798444",
+  "model_calls": 15,
+  "effort": {
+   "worker": {
+    "calls": 15,
+    "input": 318517,
+    "cached": 278294,
+    "write": 40178,
+    "output": 15148,
+    "usd": "0.2798444",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 254.2,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 15
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f4",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.3378909",
+  "model_calls": 20,
+  "effort": {
+   "worker": {
+    "calls": 20,
+    "input": 445179,
+    "cached": 401599,
+    "write": 42602,
+    "output": 18927,
+    "usd": "0.3378909",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 342.4,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 20
+  }
+ },
+ {
+  "pair": "pallets_click-task2956-f3+f6",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "pallets_click-task2956-feature3": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "pallets_click-task2956-feature6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.3100357",
+  "model_calls": 16,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 392525,
+    "cached": 347697,
+    "write": 44780,
+    "output": 16322,
+    "usd": "0.3100357",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 331.0,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 16
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f1+f10",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.0912579",
+  "model_calls": 7,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 62084,
+    "cached": 45884,
+    "write": 16179,
+    "output": 4618,
+    "usd": "0.0912579",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 75.2,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 7
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f6",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.0751091",
+  "model_calls": 8,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 54900,
+    "cached": 41736,
+    "write": 12275,
+    "output": 3847,
+    "usd": "0.0751091",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 75.0,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 8
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f7",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1329343",
+  "model_calls": 8,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 94890,
+    "cached": 73653,
+    "write": 20310,
+    "output": 7294,
+    "usd": "0.1329343",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 125.7,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 8
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1465-f3+f9",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1465-feature3": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1465-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1442851",
+  "model_calls": 10,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 123445,
+    "cached": 102501,
+    "write": 20914,
+    "output": 8169,
+    "usd": "0.1442851",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 144.1,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 10
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f1+f2",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2485523",
+  "model_calls": 13,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 272974,
+    "cached": 236943,
+    "write": 35992,
+    "output": 13480,
+    "usd": "0.2485523",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 226.9,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 13
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f2+f4",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2153243",
+  "model_calls": 13,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 240234,
+    "cached": 206563,
+    "write": 33632,
+    "output": 11051,
+    "usd": "0.2153243",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 178.3,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 13
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f6+f10",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2346571",
+  "model_calls": 14,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 243845,
+    "cached": 211431,
+    "write": 32372,
+    "output": 13250,
+    "usd": "0.2346571",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 237.8,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 14
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1559-f8+f9",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1559-feature8": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1559-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2542742",
+  "model_calls": 13,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 255833,
+    "cached": 221062,
+    "write": 34732,
+    "output": 14526,
+    "usd": "0.2542742",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 249.3,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 13
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f1+f9",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature1": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2199817",
+  "model_calls": 11,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 187178,
+    "cached": 159007,
+    "write": 28138,
+    "output": 13367,
+    "usd": "0.2199817",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 240.3,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 11
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f2+f9",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1826246",
+  "model_calls": 11,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 172291,
+    "cached": 147136,
+    "write": 25122,
+    "output": 10504,
+    "usd": "0.1826246",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 224.5,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 11
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f10",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature10": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.3090607",
+  "model_calls": 14,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 263865,
+    "cached": 226792,
+    "write": 37031,
+    "output": 19372,
+    "usd": "0.3090607",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 381.4,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 14
+  }
+ },
+ {
+  "pair": "pallets_jinja-task1621-f6+f8",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "pallets_jinja-task1621-feature6": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "pallets_jinja-task1621-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.2880664",
+  "model_calls": 13,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 297123,
+    "cached": 256984,
+    "write": 40100,
+    "output": 16204,
+    "usd": "0.2880664",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 283.5,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 13
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f1+f8",
+  "arm": "solo",
+  "state": "completed",
+  "solved": false,
+  "features_passing": 1,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature1": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1387768",
+  "model_calls": 9,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 119823,
+    "cached": 98303,
+    "write": 21493,
+    "output": 7516,
+    "usd": "0.1387768",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 124.7,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 9
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f8",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1038600",
+  "model_calls": 9,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 100943,
+    "cached": 82010,
+    "write": 18906,
+    "output": 4834,
+    "usd": "0.1038600",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 79.4,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 9
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f2+f9",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature2": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1294153",
+  "model_calls": 8,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 96389,
+    "cached": 75823,
+    "write": 20542,
+    "output": 7043,
+    "usd": "0.1294153",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 112.4,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 8
+  }
+ },
+ {
+  "pair": "samuelcolvin_dirty_equals-task43-f4+f7",
+  "arm": "solo",
+  "state": "completed",
+  "solved": true,
+  "features_passing": 2,
+  "grades": {
+   "samuelcolvin_dirty_equals-task43-feature4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "samuelcolvin_dirty_equals-task43-feature7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "checks_passed": false,
+  "usd": "0.1160931",
+  "model_calls": 10,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 105233,
+    "cached": 87231,
+    "write": 17972,
+    "output": 6238,
+    "usd": "0.1160931",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
+   }
+  },
+  "seconds": 104.7,
+  "sessions_woken": 1,
+  "messages": 0,
+  "double_integration": false,
+  "steps": {
+   "solo": 10
+  }
+ }
+]

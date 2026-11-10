@@ -1,0 +1,157 @@
+{
+ "source_arm": "klp-3",
+ "seed": 20261110,
+ "eligible": 162,
+ "pairs": [
+  {
+   "id": "pallets_click-task2068-f4+f7",
+   "a": "pallets_click-task2068-feature4",
+   "b": "pallets_click-task2068-feature7"
+  },
+  {
+   "id": "pallets_click-task2800-f2+f5",
+   "a": "pallets_click-task2800-feature2",
+   "b": "pallets_click-task2800-feature5"
+  },
+  {
+   "id": "pallets_click-task2956-f1+f2",
+   "a": "pallets_click-task2956-feature1",
+   "b": "pallets_click-task2956-feature2"
+  },
+  {
+   "id": "pallets_jinja-task1465-f3+f6",
+   "a": "pallets_jinja-task1465-feature3",
+   "b": "pallets_jinja-task1465-feature6"
+  },
+  {
+   "id": "pallets_jinja-task1559-f6+f10",
+   "a": "pallets_jinja-task1559-feature6",
+   "b": "pallets_jinja-task1559-feature10"
+  },
+  {
+   "id": "pallets_jinja-task1621-f6+f8",
+   "a": "pallets_jinja-task1621-feature6",
+   "b": "pallets_jinja-task1621-feature8"
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-f2+f9",
+   "a": "samuelcolvin_dirty_equals-task43-feature2",
+   "b": "samuelcolvin_dirty_equals-task43-feature9"
+  },
+  {
+   "id": "pallets_click-task2068-f2+f8",
+   "a": "pallets_click-task2068-feature2",
+   "b": "pallets_click-task2068-feature8"
+  },
+  {
+   "id": "pallets_click-task2800-f1+f3",
+   "a": "pallets_click-task2800-feature1",
+   "b": "pallets_click-task2800-feature3"
+  },
+  {
+   "id": "pallets_click-task2956-f3+f4",
+   "a": "pallets_click-task2956-feature3",
+   "b": "pallets_click-task2956-feature4"
+  },
+  {
+   "id": "pallets_jinja-task1465-f1+f10",
+   "a": "pallets_jinja-task1465-feature1",
+   "b": "pallets_jinja-task1465-feature10"
+  },
+  {
+   "id": "pallets_jinja-task1559-f8+f9",
+   "a": "pallets_jinja-task1559-feature8",
+   "b": "pallets_jinja-task1559-feature9"
+  },
+  {
+   "id": "pallets_jinja-task1621-f2+f9",
+   "a": "pallets_jinja-task1621-feature2",
+   "b": "pallets_jinja-task1621-feature9"
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-f2+f8",
+   "a": "samuelcolvin_dirty_equals-task43-feature2",
+   "b": "samuelcolvin_dirty_equals-task43-feature8"
+  },
+  {
+   "id": "pallets_click-task2068-f8+f11",
+   "a": "pallets_click-task2068-feature8",
+   "b": "pallets_click-task2068-feature11"
+  },
+  {
+   "id": "pallets_click-task2800-f2+f7",
+   "a": "pallets_click-task2800-feature2",
+   "b": "pallets_click-task2800-feature7"
+  },
+  {
+   "id": "pallets_click-task2956-f1+f5",
+   "a": "pallets_click-task2956-feature1",
+   "b": "pallets_click-task2956-feature5"
+  },
+  {
+   "id": "pallets_jinja-task1465-f3+f7",
+   "a": "pallets_jinja-task1465-feature3",
+   "b": "pallets_jinja-task1465-feature7"
+  },
+  {
+   "id": "pallets_jinja-task1559-f1+f2",
+   "a": "pallets_jinja-task1559-feature1",
+   "b": "pallets_jinja-task1559-feature2"
+  },
+  {
+   "id": "pallets_jinja-task1621-f6+f10",
+   "a": "pallets_jinja-task1621-feature6",
+   "b": "pallets_jinja-task1621-feature10"
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-f4+f7",
+   "a": "samuelcolvin_dirty_equals-task43-feature4",
+   "b": "samuelcolvin_dirty_equals-task43-feature7"
+  },
+  {
+   "id": "pallets_click-task2068-f5+f8",
+   "a": "pallets_click-task2068-feature5",
+   "b": "pallets_click-task2068-feature8"
+  },
+  {
+   "id": "pallets_click-task2800-f2+f3",
+   "a": "pallets_click-task2800-feature2",
+   "b": "pallets_click-task2800-feature3"
+  },
+  {
+   "id": "pallets_click-task2956-f3+f6",
+   "a": "pallets_click-task2956-feature3",
+   "b": "pallets_click-task2956-feature6"
+  },
+  {
+   "id": "pallets_jinja-task1465-f3+f9",
+   "a": "pallets_jinja-task1465-feature3",
+   "b": "pallets_jinja-task1465-feature9"
+  },
+  {
+   "id": "pallets_jinja-task1559-f2+f4",
+   "a": "pallets_jinja-task1559-feature2",
+   "b": "pallets_jinja-task1559-feature4"
+  },
+  {
+   "id": "pallets_jinja-task1621-f1+f9",
+   "a": "pallets_jinja-task1621-feature1",
+   "b": "pallets_jinja-task1621-feature9"
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-f1+f8",
+   "a": "samuelcolvin_dirty_equals-task43-feature1",
+   "b": "samuelcolvin_dirty_equals-task43-feature8"
+  },
+  {
+   "id": "pallets_click-task2068-f5+f11",
+   "a": "pallets_click-task2068-feature5",
+   "b": "pallets_click-task2068-feature11"
+  },
+  {
+   "id": "pallets_click-task2800-f3+f7",
+   "a": "pallets_click-task2800-feature3",
+   "b": "pallets_click-task2800-feature7"
+  }
+ ]
+}

@@ -73,6 +73,23 @@ The run stops making model calls when the cap is reached. Spend is priced from
 each provider's reported token usage with the rates in
 [`klp/prices.json`](../klp/prices.json); edit that file if your prices differ.
 
+## Paired features and Semio
+
+[`pairs.py`](pairs.py) takes pairs of features whose reference patches conflict
+and measures getting both into one tree: plain git merge, agent-managed chat
+between two woken workers, typed handovers through the Semio adapter, and the
+frontier model building both alone. It starts from the finished `worker-3` and
+`klp-3` arms.
+
+```bash
+python3 -m bench.pairs select --work ~/klp-bench --pairs 30
+python3 -m bench.pairs run --work ~/klp-bench --arms merge,chat,semio,solo --cap 16
+```
+
+Latest result: Semio 28 of 30 at $0.103 a pair with 333 model calls; chat 28 of
+30 with 581; the frontier model alone 22 of 30 at $0.196.
+[Case study](../case-studies/paired-features-2026-11-10/README.md).
+
 ## Use other models
 
 Edit [`models.json`](models.json). Any OpenAI-compatible chat endpoint works

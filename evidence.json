@@ -262,6 +262,24 @@
               "did not run": 1
             }
           }
+        },
+        {
+          "label": "KLP Standard (runner 0.5), Kimi K3.1 Pro critic on a subscription CLI",
+          "arm": "v2-kimi",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "k3.1-pro",
+          "critic_metered": false,
+          "solved": 55,
+          "tasks": 66,
+          "usd_per_task": 0.0282,
+          "usd_total": 1.86,
+          "review": {
+            "findings_confirmed_by_probe": 16,
+            "findings_fixed_and_verified": 14,
+            "tasks_fixed_by_review": 1,
+            "passing_tasks_broken_by_review": 0
+          }
         }
       ],
       "klp_cost_reduction_per_task": {
@@ -286,7 +304,62 @@
       "rerun": "bench/README.md",
       "tasks_failed_by_every_arm": 5,
       "runs": 1056,
-      "model_calls": 9777
+      "model_calls": 9788
+    },
+    {
+      "id": "paired-features-2026-11-10",
+      "what": "30 pairs of conflicting features (CooperBench conflict report, Click, Jinja, dirty-equals); both features in one tree, graded by both hidden test sets",
+      "arms": [
+        {
+          "label": "Two deepseek-flash workers under KLP Standard, integrated through Semio",
+          "arm": "semio",
+          "pairs_passing": 28,
+          "pairs": 30,
+          "usd_per_pair": 0.103,
+          "usd_per_passing_pair": 0.11,
+          "integration_usd": 0.222,
+          "model_calls": 333,
+          "worker_sessions_woken": 28,
+          "pairs_settled_without_a_model_call": 2
+        },
+        {
+          "label": "Same work, agent-managed chat",
+          "arm": "chat",
+          "pairs_passing": 28,
+          "pairs": 30,
+          "usd_per_pair": 0.1145,
+          "integration_usd": 0.567,
+          "model_calls": 581,
+          "worker_sessions_woken": 60
+        },
+        {
+          "label": "Frontier model alone builds both features",
+          "arm": "solo",
+          "model": "gpt-6.1-sol",
+          "pairs_passing": 22,
+          "pairs": 30,
+          "usd_per_pair": 0.1955,
+          "usd_per_passing_pair": 0.267
+        },
+        {
+          "label": "Plain git merge",
+          "arm": "merge",
+          "pairs_passing": 2,
+          "pairs": 30
+        }
+      ],
+      "semio_versus_chat": {
+        "model_call_reduction": 0.427,
+        "integration_cost_reduction": 0.609,
+        "sessions_woken_reduction": 0.533
+      },
+      "klp_semio_versus_frontier_alone": {
+        "cost_per_pair_reduction": 0.473,
+        "more_pairs_passing": 6
+      },
+      "receipts": "case-studies/paired-features-2026-11-10/",
+      "verify": "python3 case-studies/paired-features-2026-11-10/verify.py",
+      "rerun": "bench/README.md"
     },
     {
       "id": "ansible-workers-2026-10-27",

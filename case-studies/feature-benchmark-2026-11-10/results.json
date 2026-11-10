@@ -35185,35 +35185,74 @@
  {
   "task": "pallets_jinja-task1559-feature6",
   "arm": "v2-kimi",
-  "state": "blocked",
-  "final_revision": "1a1c63f474dcf200e79cc307ec631bac73cb9630",
+  "state": "completed",
+  "final_revision": "08cffe8b14efed1cb06a40d0101127f6d7eeccd1",
   "solved": true,
   "first_candidate_solved": true,
   "grades": {
    "1a1c63f474dcf200e79cc307ec631bac73cb9630": {
     "passed": true,
     "stage": "tests"
+   },
+   "08cffe8b14efed1cb06a40d0101127f6d7eeccd1": {
+    "passed": true,
+    "stage": "tests"
    }
   },
-  "usd": "0",
-  "seconds": 4.4,
+  "usd": "0.007560204",
+  "seconds": 335.7,
   "effort": {
    "critic": {
-    "calls": 1,
+    "calls": 2,
     "input": 0,
     "cached": 0,
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
-    "unmetered_calls": 1
+    "unpriced_calls": 0,
+    "unmetered_calls": 2
+   },
+   "repair": {
+    "calls": 10,
+    "input": 550958,
+    "cached": 544768,
+    "write": 0,
+    "output": 8329,
+    "usd": "0.007560204",
+    "unpriced_calls": 0,
+    "unmetered_calls": 0
    }
   },
-  "reviews": [],
-  "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 23562,
+    "dispositions": [
+     "confirmed",
+     "confirmed",
+     "confirmed"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 26724,
+    "dispositions": [],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 3,
+    "probes": 3
+   }
+  ],
+  "errors": []
  },
  {
   "task": "pallets_jinja-task1559-feature7",
@@ -35740,7 +35779,7 @@
  {
   "task": "samuelcolvin_dirty_equals-task43-feature1",
   "arm": "v2-kimi",
-  "state": "blocked",
+  "state": "completed",
   "final_revision": "e4ead3c87b4a36b383731e6172176907608cc364",
   "solved": true,
   "first_candidate_solved": true,
@@ -35751,7 +35790,7 @@
    }
   },
   "usd": "0",
-  "seconds": 5.2,
+  "seconds": 29.0,
   "effort": {
    "critic": {
     "calls": 1,
@@ -35760,15 +35799,22 @@
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
+    "unpriced_calls": 0,
     "unmetered_calls": 1
    }
   },
-  "reviews": [],
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8979,
+    "dispositions": [],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
   "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "errors": []
  },
  {
   "task": "samuelcolvin_dirty_equals-task43-feature2",
@@ -35899,7 +35945,7 @@
  {
   "task": "samuelcolvin_dirty_equals-task43-feature5",
   "arm": "v2-kimi",
-  "state": "blocked",
+  "state": "completed",
   "final_revision": "98721ef65fc6b9d241429e6c9bb860450320c00b",
   "solved": false,
   "first_candidate_solved": false,
@@ -35910,7 +35956,7 @@
    }
   },
   "usd": "0",
-  "seconds": 4.1,
+  "seconds": 50.9,
   "effort": {
    "critic": {
     "calls": 1,
@@ -35919,20 +35965,29 @@
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
+    "unpriced_calls": 0,
     "unmetered_calls": 1
    }
   },
-  "reviews": [],
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 11158,
+    "dispositions": [
+     "refuted"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
   "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "errors": []
  },
  {
   "task": "samuelcolvin_dirty_equals-task43-feature6",
   "arm": "v2-kimi",
-  "state": "blocked",
+  "state": "completed",
   "final_revision": "f45f428695e013899f06f50a30257f31e41fff1c",
   "solved": false,
   "first_candidate_solved": false,
@@ -35943,7 +35998,7 @@
    }
   },
   "usd": "0",
-  "seconds": 4.3,
+  "seconds": 68.9,
   "effort": {
    "critic": {
     "calls": 1,
@@ -35952,20 +36007,29 @@
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
+    "unpriced_calls": 0,
     "unmetered_calls": 1
    }
   },
-  "reviews": [],
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 8670,
+    "dispositions": [
+     "refuted"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
   "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "errors": []
  },
  {
   "task": "samuelcolvin_dirty_equals-task43-feature7",
   "arm": "v2-kimi",
-  "state": "blocked",
+  "state": "completed",
   "final_revision": "92556b4c14b4b6559c4fa837b5fa454ad8f7f388",
   "solved": true,
   "first_candidate_solved": true,
@@ -35976,7 +36040,7 @@
    }
   },
   "usd": "0",
-  "seconds": 3.5,
+  "seconds": 23.6,
   "effort": {
    "critic": {
     "calls": 1,
@@ -35985,20 +36049,29 @@
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
+    "unpriced_calls": 0,
     "unmetered_calls": 1
    }
   },
-  "reviews": [],
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 8595,
+    "dispositions": [
+     "refuted"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
   "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "errors": []
  },
  {
   "task": "samuelcolvin_dirty_equals-task43-feature8",
   "arm": "v2-kimi",
-  "state": "blocked",
+  "state": "completed",
   "final_revision": "a8cf2506431dfde9a165267c9e98e03caa18592f",
   "solved": true,
   "first_candidate_solved": true,
@@ -36009,7 +36082,7 @@
    }
   },
   "usd": "0",
-  "seconds": 3.4,
+  "seconds": 17.8,
   "effort": {
    "critic": {
     "calls": 1,
@@ -36018,20 +36091,27 @@
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
+    "unpriced_calls": 0,
     "unmetered_calls": 1
    }
   },
-  "reviews": [],
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7172,
+    "dispositions": [],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
   "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "errors": []
  },
  {
   "task": "samuelcolvin_dirty_equals-task43-feature9",
   "arm": "v2-kimi",
-  "state": "blocked",
+  "state": "completed",
   "final_revision": "ef17ba00f2b7cba3b7d3c4f60fca97dc8d7598b6",
   "solved": true,
   "first_candidate_solved": true,
@@ -36042,7 +36122,7 @@
    }
   },
   "usd": "0",
-  "seconds": 3.4,
+  "seconds": 56.4,
   "effort": {
    "critic": {
     "calls": 1,
@@ -36051,15 +36131,24 @@
     "write": 0,
     "output": 0,
     "usd": "0",
-    "unpriced_calls": 1,
+    "unpriced_calls": 0,
     "unmetered_calls": 1
    }
   },
-  "reviews": [],
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 8923,
+    "dispositions": [
+     "refuted"
+    ],
+    "acceptance": null,
+    "acceptance_findings": 0,
+    "withdrawn": 0
+   }
+  ],
   "repairs": [],
-  "errors": [
-   "k3.1-pro command exit 1: \" failed to run prompt: provider.api_error: You've reached your 5-hour usage limit. Your quota will reset when the current 5-hour window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota\\nSee log: /root/.kimi-code/logs/kimi-code.log\\n\""
-  ]
+  "errors": []
  },
  {
   "task": "pallets_click-task2068-feature1",

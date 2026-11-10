@@ -121,6 +121,7 @@ sandboxed cases need bubblewrap with user namespaces and skip without it.
 
 ```bash
 env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/feature-benchmark-2026-11-10/verify.py
+env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/paired-features-2026-11-10/verify.py
 ```
 
 The checker reprices every recorded model call from its token usage, sums the

@@ -9,7 +9,7 @@ from this repository with your own keys.
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see. Every arm had the same task statement, sandbox and shell
-tool. 1,056 runs and 9,777 model calls.
+tool. 1,056 runs and 9,788 model calls.
 
 | | Tasks solved | Cost per task | Cost per solved task | Whole benchmark |
 | --- | ---: | ---: | ---: | ---: |
@@ -40,7 +40,8 @@ candidates, the same critic went from 54 solved to 56 at the same cost.
 
 Critics compared on identical candidates: `gpt-6.1-sol` solved 56 at $0.060 a
 task. Gemini 4 Argon, reached through a CLI subscription, also solved 56, with
-no metered review cost: $0.028 a task. `grok-4.7` solved 54 at $0.058. With
+no metered review cost: $0.028 a task. Kimi K3.1 Pro on its CLI subscription
+solved 55. `grok-4.7` solved 54 at $0.058. With
 the earlier runner the heavier `gpt-6-astra` solved 55 at $0.165, and the
 lighter `gpt-6.1-terra` solved 52 at $0.075 and broke three passing
 candidates.
@@ -51,6 +52,33 @@ behaviour the written specification does not state.
 Read the [case study](case-studies/feature-benchmark-2026-11-10/README.md),
 recompute it with the [offline checker](case-studies/feature-benchmark-2026-11-10/verify.py),
 or [run it yourself](bench/README.md).
+
+## Paired Features: Two Low-Cost Workers and Semio Beat the Frontier Model Alone
+
+Thirty pairs of features whose reference patches conflict when merged. Two
+`deepseek-flash` workers each built one feature under KLP Standard, and Semio
+carried the handover that brought both into one tree.
+
+| | Pairs passing both hidden test sets | Cost per pair |
+| --- | ---: | ---: |
+| Frontier model alone, both features (`gpt-6.1-sol`) | 22 of 30 | $0.196 |
+| **Two workers under KLP Standard, integrated through Semio** | **28 of 30** | **$0.103** |
+
+On the same finished features, Semio was compared with agent-managed chat,
+where both workers are woken and agree in free text who integrates:
+
+| Integration of 30 conflicting pairs | Agent-managed chat | Semio |
+| --- | ---: | ---: |
+| Pairs passing | 28 | 28 |
+| Model calls | 581 | **333** |
+| Worker sessions woken | 60 | **28** |
+| Integration cost | $0.567 | **$0.222** |
+
+Semio settled two pairs with no model call and woke one worker for each of the
+others, with the peer's exact artifact. Plain git merge passed 2 of 30.
+
+Read the [case study](case-studies/paired-features-2026-11-10/README.md) and
+recompute it with the [offline checker](case-studies/paired-features-2026-11-10/verify.py).
 
 ## One Command on the Public Challenge: One Cent, Half a Minute
 
