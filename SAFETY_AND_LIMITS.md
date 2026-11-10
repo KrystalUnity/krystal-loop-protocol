@@ -165,10 +165,14 @@ isolation, and incident-response controls.
   confirmed finding stays open until its probe passes or the critic withdraws
   it, and the receipt lists every finding still open.
 - **Subscription critics.** A critic route can be a local agent CLI on a
-  subscription you already hold. The runner starts it in an empty directory,
-  tells it the review is text-only, and records its calls as unmetered. The
-  CLI still runs as you on your machine, so start it in its read-only or plan
-  mode, as the examples in [`bench/models.json`](bench/models.json) do.
+  subscription you already hold. The runner starts it in an empty directory
+  with a minimal environment, tells it the review is text-only, and records
+  its calls as unmetered. The CLI still runs as you on your machine and reads
+  a packet that contains model-written code, so give it the CLI's read-only or
+  plan mode where it has one, as the Antigravity and Qwen examples in
+  [`bench/models.json`](bench/models.json) do. A CLI with no such mode for
+  one-shot prompts, such as Kimi's, relies on its own ask-before-acting
+  default; run it inside a container or as an unprivileged user.
 - **Limits.** Cost, step, repair and time limits stop the run, and the receipt
   records the state it stopped in.
 - **Authority.** The runner produces a patch and a receipt. Merging, pushing

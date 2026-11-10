@@ -438,6 +438,16 @@ class Parsing(unittest.TestCase):
         self.assertEqual(findings[0]["probe"]["command"], "python -m pytest -q /workspace/probes/test_acceptance.py::test_default")
         self.assertIn("'/workspace/probes/test_acceptance.py::test_rejects[US-11]'", box.commands[2])
 
+    def test_command_critic_gets_a_minimal_environment(self):
+        from klp.llm import _run_command
+        os.environ["KLP_TEST_SECRET"] = "must-not-leak"
+        self.addCleanup(os.environ.pop, "KLP_TEST_SECRET", None)
+        model = Model("seat", "", "", "gamma", api="command", command=("sh", "-c", "env; pwd; ls -A"))
+        out = _run_command(model, "ignored", 20)
+        self.assertNotIn("KLP_TEST_SECRET", out)
+        self.assertIn("PATH=", out)
+        self.assertTrue(out.strip().splitlines()[-1].startswith("/") and "klp-command-" in out)  # its own empty directory
+
     def test_command_replies(self):
         self.assertEqual(reply_from('{"response": "{\\"a\\": 1}\\n"}', "json:response"), '{"a": 1}')
         lines = '{"role":"meta","type":"v"}\n{"role":"assistant","content":"first"}\n{"role":"assistant","content":"{}"}\n'

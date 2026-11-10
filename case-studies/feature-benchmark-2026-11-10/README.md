@@ -191,8 +191,10 @@ specification does not state. On the other 61 tasks, KLP Standard run 3 solved
 - **Critic comparisons.** Every critic arm starts from the same recorded
   worker candidates, so the arms differ only in the review.
 - **Subscription critics.** Gemini 4 Argon and Kimi K3.1 Pro were reached
-  through their vendors' agent CLIs in read-only mode, in an empty directory.
-  Their calls are recorded as unmetered.
+  through their vendors' agent CLIs, each started in an empty directory and
+  told the review is text-only. The Antigravity CLI ran in its plan mode; the
+  Kimi CLI ran in its default ask-before-acting mode. Their calls are recorded
+  as unmetered.
 - **Grading.** Each candidate's patch is applied to a pristine checkout, the
   hidden test files replace the candidate's versions, and the task's test files
   must pass. Models never see the hidden tests or their results.

@@ -219,8 +219,13 @@ class Ledger:
 COMMAND_PROMPT_LIMIT = 120_000  # one argv string; Linux allows 128 KiB
 
 
+COMMAND_ENV = ("HOME", "PATH", "LANG", "LC_ALL", "TERM", "USER", "LOGNAME", "XDG_CONFIG_HOME", "XDG_DATA_HOME",
+               "XDG_CACHE_HOME", "XDG_STATE_HOME")
+
+
 def _run_command(model: Model, prompt: str, timeout: float) -> str:
-    """Run the CLI in an empty directory, so an agentic tool starts with nothing to read or change."""
+    """Run the CLI in an empty directory with a minimal environment: it finds its own sign-in under HOME and
+    nothing else of yours, such as API keys exported in the shell that started the run."""
     in_argv = any("{prompt}" in part for part in model.command)
     if in_argv and len(prompt.encode()) > COMMAND_PROMPT_LIMIT:
         raise ProviderError(f"{model.name}: prompt too large for a command argument")
@@ -228,7 +233,8 @@ def _run_command(model: Model, prompt: str, timeout: float) -> str:
     with tempfile.TemporaryDirectory(prefix="klp-command-") as empty:
         try:
             done = subprocess.run(argv, input=None if in_argv else prompt, capture_output=True, text=True,
-                                  timeout=timeout, cwd=empty, stdin=subprocess.DEVNULL if in_argv else None)
+                                  timeout=timeout, cwd=empty, stdin=subprocess.DEVNULL if in_argv else None,
+                                  env={k: os.environ[k] for k in COMMAND_ENV if k in os.environ})
         except (OSError, subprocess.TimeoutExpired) as error:
             raise ProviderError(f"{model.name} command failed: {type(error).__name__}") from None
     if done.returncode:
