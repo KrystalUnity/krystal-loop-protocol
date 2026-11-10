@@ -120,13 +120,3 @@ class Sandbox:
                         stdin=content, cwd="/workspace", limit=400)
         if done["returncode"] != 0:
             raise RuntimeError(f"could not write {inside_path} in the sandbox: {done['output']}")
-
-
-def git(repo: Path, *args: str, check: bool = True, stdin: str | None = None) -> str:
-    """Host-side git on a repository the runner owns. Never run on untrusted hooks: hooks are disabled."""
-    result = subprocess.run(["git", "-c", "core.hooksPath=/dev/null", "-c", "user.name=klp", "-c",
-                             "user.email=klp@localhost", "-c", "commit.gpgsign=false", "-c", "safe.directory=*",
-                             "-C", str(repo), *args], input=stdin, capture_output=True, text=True)
-    if check and result.returncode:
-        raise RuntimeError(f"git {' '.join(args[:3])} failed: {result.stderr.strip()[:400]}")
-    return result.stdout

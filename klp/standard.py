@@ -17,8 +17,9 @@ from decimal import Decimal as D
 from pathlib import Path
 
 from .llm import BudgetExceeded, Ledger, Model, ProviderError
-from .review import GIT, adjudicate, build_packet, candidate_diff, review
+from .review import adjudicate, build_packet, candidate_diff, review
 from .sandbox import Sandbox, clip
+from .snapshot import Snapshots
 from .worker import run_worker
 
 PROTOCOL = "klp-standard/v0.1"
@@ -33,11 +34,6 @@ class Limits:
     check_timeout: float = 900
     cost_usd: float = 2.0        # per task, all roles
     time_seconds: float = 3600
-
-
-def _commit(sandbox: Sandbox, message: str) -> str:
-    sandbox.run(f"{GIT} add -A && {GIT} commit -q --allow-empty -m '{message}'", limit=500)
-    return sandbox.run(f"{GIT} rev-parse HEAD", limit=100)["output"].strip()
 
 
 def _run_checks(sandbox: Sandbox, checks: list[str], timeout: float) -> list:
@@ -64,7 +60,7 @@ def _repair_prompt(failed_checks: list, confirmed: list) -> str:
 
 def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox: Sandbox, task: str,
                  checks: list[str], scope: str, limits: Limits, out_dir: Path, task_id: str = "",
-                 critical_triggers: list[str] | None = None) -> dict:
+                 critical_triggers: list[str] | None = None, project_revision: str = "") -> dict:
     """Run one task. `critic=None` runs the worker alone (no review, no repair) for comparison arms."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -72,9 +68,10 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
     ledger.scope_caps[scope] = D(str(limits.cost_usd))
     if critic is not None and critic.family == worker.family:
         raise ValueError("worker and critic must be different model families for an independent review")
-    base = sandbox.run(f"{GIT} rev-parse HEAD", limit=100)["output"].strip()
+    snapshots = Snapshots(sandbox, out_dir / "snapshots")
+    base = snapshots.take("base")
     receipt: dict = dict(
-        protocol=PROTOCOL, task_id=task_id or scope, base_revision=base,
+        protocol=PROTOCOL, task_id=task_id or scope, base_revision=base, project_revision=project_revision,
         before_work=dict(task=task, checks=checks, limits=asdict(limits), critical_triggers=list(critical_triggers or []),
                          worker=dict(model=worker.name, family=worker.family),
                          critic=None if critic is None else dict(model=critic.name, family=critic.family),
@@ -83,7 +80,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
     state, session, final = "completed", None, base
 
     def record_candidate(label: str, handover: str | None) -> dict:
-        revision = _commit(sandbox, f"klp {label}")
+        revision = snapshots.take(label)
         entry = dict(label=label, revision=revision, checks=_run_checks(sandbox, checks, limits.check_timeout),
                      handover=handover)
         entry["checks_passed"] = all(c["passed"] for c in entry["checks"])
@@ -91,11 +88,11 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         return entry
 
     def review_candidate(entry: dict, since: str, prior: list | None) -> list:
-        diff = candidate_diff(sandbox, since, entry["revision"])
+        diff = candidate_diff(snapshots, since, entry["revision"])
         packet = build_packet(task, diff, entry["checks"], entry["handover"], prior=prior, triggers=critical_triggers)
         (out_dir / f"review-packet-{len(receipt['reviews']) + 1}.md").write_text(packet)
         verdict = review(ledger, critic, packet, scope=scope)
-        settled = adjudicate(sandbox, verdict, entry["revision"])
+        settled = adjudicate(sandbox, snapshots, verdict, entry["revision"])
         receipt["reviews"].append(dict(reviewed_revision=entry["revision"], model=verdict["model"], family=verdict["family"],
                                        verdict=verdict["verdict"], profile_assessment=verdict["profile_assessment"],
                                        attempts=verdict["attempts"], packet_bytes=verdict["packet_bytes"],
@@ -130,7 +127,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
                 probes = []
                 for finding in confirmed:
                     again = sandbox.run(finding["probe"]["command"], timeout=180, limit=2000)
-                    sandbox.run(f"{GIT} reset -q --hard {repaired['revision']} && {GIT} clean -fdq", limit=200)
+                    snapshots.restore(repaired["revision"])
                     probes.append(dict(id=finding["id"], command=finding["probe"]["command"],
                                        returncode=again["returncode"], closed=again["returncode"] == 0))
                 receipt["repairs"].append(dict(round=rounds, from_revision=candidate["revision"],
@@ -138,7 +135,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
                                                checks_passed=repaired["checks_passed"]))
                 if candidate["checks_passed"] and not repaired["checks_passed"]:
                     # Never trade a candidate that passes its checks for one that does not.
-                    sandbox.run(f"{GIT} reset -q --hard {candidate['revision']} && {GIT} clean -fdq", limit=200)
+                    snapshots.restore(candidate["revision"])
                     receipt["repairs"][-1]["kept"] = False
                     state = "budget_exhausted"
                     break
@@ -161,7 +158,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
     if receipt["candidates"] and final == base:
         final = receipt["candidates"][-1]["revision"]
     elif not receipt["candidates"]:
-        final = _commit(sandbox, "klp partial")  # whatever the worker left behind, for inspection
+        final = snapshots.take("partial")  # whatever the worker left behind, for inspection
     if session:
         (out_dir / "worker-transcript.json").write_text(json.dumps(session["messages"], indent=1))
     last_review = receipt["reviews"][-1] if receipt["reviews"] else None
@@ -182,7 +179,8 @@ def render_receipt(receipt: dict) -> str:
     done, effort = receipt["completion"], receipt["completion"]["measured_effort"]
     lines = [f"# KLP Standard receipt: {receipt['task_id']}", "",
              f"- protocol: {receipt['protocol']}", f"- state: **{done['state']}**",
-             f"- base revision: `{receipt['base_revision']}`", f"- final revision: `{done['final_revision']}`",
+             f"- project revision: `{receipt.get('project_revision') or 'not recorded'}`",
+             f"- base snapshot: `{receipt['base_revision']}`", f"- final snapshot: `{done['final_revision']}`",
              f"- declared checks on final revision: {'passed' if done['checks_passed'] else 'NOT passed'}",
              f"- worker: {receipt['before_work']['worker']['model']}",
              f"- critic: {(receipt['before_work']['critic'] or {}).get('model', 'none (unreviewed run)')}",

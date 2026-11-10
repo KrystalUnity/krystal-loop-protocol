@@ -22,8 +22,8 @@ import time
 from pathlib import Path
 
 from .llm import Ledger, Model
-from .review import GIT
 from .sandbox import Sandbox
+from .snapshot import Snapshots
 from .standard import Limits, run_standard
 
 USER_CONFIG = {
@@ -101,6 +101,7 @@ def cmd_run(args) -> int:
     checks = args.check or config["checks"]
     if not checks:
         sys.exit('klp: declare at least one check, e.g. --check "python -m pytest -q"')
+    head = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     dirty = subprocess.run(["git", "-C", str(root), "status", "--porcelain"], capture_output=True, text=True).stdout.strip()
     if dirty:
         print("note: uncommitted changes are not part of the run; it starts from HEAD", file=sys.stderr)
@@ -124,10 +125,10 @@ def cmd_run(args) -> int:
           f"limit ${limits.cost_usd:.2f}, {len(checks)} check(s), sandbox network {'on' if box['network'] else 'off'}")
     receipt = run_standard(ledger=ledger, worker=worker, critic=critic, sandbox=sandbox, task=task, checks=checks,
                            scope=slug, limits=limits, out_dir=run_dir, task_id=slug,
-                           critical_triggers=config["critical_triggers"])
+                           critical_triggers=config["critical_triggers"], project_revision=head)
     done = receipt["completion"]
-    patch = sandbox.run(f"{GIT} diff --binary {receipt['base_revision']} {done['final_revision']}", limit=None)
-    (run_dir / "candidate.patch").write_bytes(patch["raw"])
+    patch = Snapshots(sandbox, run_dir / "snapshots").patch(receipt["base_revision"], done["final_revision"])
+    (run_dir / "candidate.patch").write_bytes(patch)
     print((run_dir / "receipt.md").read_text())
     relative = run_dir.relative_to(root)
     print(f"Receipt:  {relative}/receipt.md\nPatch:    {relative}/candidate.patch\n"

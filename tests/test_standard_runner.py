@@ -193,6 +193,32 @@ class StandardLoop(unittest.TestCase):
         self.assertNotIn("host secret", packet)
 
 
+    def test_review_sees_the_real_change_whatever_the_worker_does_to_git(self):
+        # The worker hides its edit behind a binary attribute, an external diff driver and a text
+        # converter, then deletes the repository's own history. The critic must still see the edit.
+        hide = bash("printf 'def double(x):\\n    return x * 2  # HIDDEN-EDIT\\n' > calc.py; "
+                    "printf '*.py -diff diff=fake\\n' > .gitattributes; "
+                    "git config diff.external /bin/true; git config diff.fake.textconv /bin/true; "
+                    "git config diff.fake.command /bin/true; rm -rf .git")
+        receipt, script, _ = self.run_loop([hide, say("done")], [verdict()])
+        packet = script.requests[2]["messages"][1]["content"]
+        self.assertIn("HIDDEN-EDIT", packet)
+        self.assertIn(".gitattributes", packet)
+        self.assertEqual(receipt["completion"]["state"], "completed")
+
+    def test_delivered_patch_is_the_reviewed_change(self):
+        from klp.snapshot import Snapshots
+        edit = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py; printf 'note\\n' > NEW.txt")
+        receipt, _, _ = self.run_loop([edit, say("done")], [verdict()])
+        patch = Snapshots(Sandbox(self.tmp / "ws"), self.tmp / "out" / "snapshots").patch(
+            receipt["base_revision"], receipt["completion"]["final_revision"])
+        clone = self.tmp / "clone"
+        subprocess.run(["git", "clone", "-q", str(self.tmp / "ws/repo"), str(clone)], check=True)
+        subprocess.run(["git", "-C", str(clone), "apply", "--binary"], input=patch, check=True)
+        self.assertIn("x * 2", (clone / "calc.py").read_text())
+        self.assertEqual((clone / "NEW.txt").read_text(), "note\n")
+
+
 class Config(unittest.TestCase):
     def test_repository_config_cannot_set_routes_limits_or_sandbox(self):
         from klp import cli

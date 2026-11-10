@@ -31,8 +31,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from klp.llm import Ledger, Model  # noqa: E402
-from klp.review import GIT  # noqa: E402
 from klp.sandbox import Sandbox  # noqa: E402
+from klp.snapshot import GIT_SAFE as GIT, Snapshots  # noqa: E402
 from klp.standard import Limits, run_standard  # noqa: E402
 
 DATASET_URL = "https://github.com/cooperbench/CooperBench.git"
@@ -112,19 +112,20 @@ def fresh_workspace(env_dir: Path, target: Path) -> Path:
     return target
 
 
-def hidden_grade(env_dir: Path, scratch: Path, task: dict, revision: str | None, source: Path | None = None,
-                 extra_patch: Path | None = None) -> dict:
-    """Apply the hidden test patch to one revision and run the task's test files. Models never see this."""
+def hidden_grade(env_dir: Path, scratch: Path, task: dict, candidate: bytes | None = None,
+                 reference: Path | None = None) -> dict:
+    """Grade one candidate patch on a pristine checkout with the hidden tests. Models never see this."""
     ws = scratch
     shutil.rmtree(ws, ignore_errors=True)
     ws.mkdir(parents=True)
-    sh("cp", "-a", str(source or env_dir / "ws/repo"), str(ws / "repo"))
+    sh("cp", "-a", str(env_dir / "ws/repo"), str(ws / "repo"))
     shutil.copy(task["tests_patch"], ws / "tests.patch")
-    if extra_patch:
-        shutil.copy(extra_patch, ws / "feature.patch")
-    sandbox = box(ws, env_dir)
-    steps = [f"{GIT} reset -q --hard {revision or 'HEAD'}", f"{GIT} clean -fdq"]
-    if extra_patch:
+    steps = ["true"]
+    if candidate:
+        (ws / "candidate.patch").write_bytes(candidate)
+        steps.append(f"{GIT} apply --binary --whitespace=nowarn /workspace/candidate.patch")
+    if reference:
+        shutil.copy(reference, ws / "feature.patch")
         steps.append("(git apply --ignore-whitespace --ignore-space-change /workspace/feature.patch "
                      "|| git apply --3way /workspace/feature.patch)")
     # Hidden tests replace whatever the candidate did to the same test files.
@@ -133,6 +134,7 @@ def hidden_grade(env_dir: Path, scratch: Path, task: dict, revision: str | None,
                      f"|| rm -f {path})")
     steps.append("(git apply --ignore-whitespace --ignore-space-change /workspace/tests.patch "
                  "|| git apply --3way /workspace/tests.patch)")
+    sandbox = box(ws, env_dir)
     setup = sandbox.run(" && ".join(steps), limit=1500)
     if setup["returncode"] != 0:
         return dict(passed=False, stage="apply", output=setup["output"])
@@ -163,8 +165,8 @@ def prepare(work: Path, jobs: int) -> None:
         env_dir, scratch = work / "envs" / task["env"], work / "scratch" / task["id"]
         base = box(fresh_workspace(env_dir, scratch / "base"), env_dir).run(
             f"{PYTEST} {' '.join(task['test_files'])}", timeout=1200, limit=600)
-        without = hidden_grade(env_dir, scratch / "without", task, None)
-        gold = hidden_grade(env_dir, scratch / "gold", task, None, extra_patch=Path(task["gold_patch"]))
+        without = hidden_grade(env_dir, scratch / "without", task)
+        gold = hidden_grade(env_dir, scratch / "gold", task, reference=Path(task["gold_patch"]))
         shutil.rmtree(scratch, ignore_errors=True)
         task["validation"] = dict(base_tests_pass=base["returncode"] == 0, hidden_fail_without_feature=not without["passed"],
                                   hidden_pass_with_reference=gold["passed"])
@@ -200,16 +202,17 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
         receipt = run_standard(ledger=ledger, worker=Model.from_spec(MODELS[worker_key]),
                                critic=Model.from_spec(MODELS[critic_key]) if critic_key else None,
                                sandbox=box(ws, env_dir), task=prompt, checks=[check], scope=scope, limits=limits,
-                               out_dir=out, task_id=task["id"])
+                               out_dir=out, task_id=task["id"], project_revision=task["commit"])
     except Exception as error:  # a harness fault is a recorded failure, never a silent skip
         result = dict(task=task["id"], arm=arm, state="harness_error", error=f"{type(error).__name__}: {error}"[:400],
                       grades={}, usd=str(ledger.spent(scope=scope)), effort=ledger.summary(scope=scope))
         (out / "result.json").write_text(json.dumps(result, indent=1))
         return result
-    grades = {}
+    grades, snapshots = {}, Snapshots(box(ws, env_dir), out / "snapshots")
     for candidate in receipt["candidates"]:
         if candidate["revision"] not in grades:
-            grades[candidate["revision"]] = hidden_grade(env_dir, out / "grade", task, candidate["revision"], source=ws / "repo")
+            patch = snapshots.patch(receipt["base_revision"], candidate["revision"])
+            grades[candidate["revision"]] = hidden_grade(env_dir, out / "grade", task, candidate=patch)
     done = receipt["completion"]
     first = receipt["candidates"][0]["revision"] if receipt["candidates"] else None
     result = dict(task=task["id"], arm=arm, state=done["state"], final_revision=done["final_revision"],
@@ -308,6 +311,7 @@ def export(work: Path, out: Path, examples: list[str]) -> None:
                     commit=t["commit"], test_files=t["test_files"], validation=t["validation"]) for t in tasks["tasks"]]),
         indent=1) + "\n")
     (out / "models.json").write_text(json.dumps(MODELS, indent=1) + "\n")
+    shutil.copy(Path(__file__).resolve().parents[1] / "klp" / "prices.json", out / "prices.json")
     for name in examples:
         source = work / "runs" / "klp" / name / "receipt.md"
         if source.exists():
