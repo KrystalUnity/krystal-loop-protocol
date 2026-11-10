@@ -290,9 +290,35 @@ def report(work: Path) -> dict:
     return out
 
 
+def export(work: Path, out: Path, examples: list[str]) -> None:
+    """Write the public evidence pack: per-run results, the call ledger and the report. No prompts or model text."""
+    out.mkdir(parents=True, exist_ok=True)
+    tasks = json.loads((work / "tasks.json").read_text())
+    rows = [json.loads(p.read_text()) for p in sorted((work / "runs").glob("*/*/result.json"))]
+    for row in rows:
+        row["grades"] = {rev: dict(passed=g["passed"], stage=g["stage"]) for rev, g in row.get("grades", {}).items()}
+    keep = ("id", "scope", "role", "model", "returned_model", "status", "usage", "usd", "seconds", "finish_reason")
+    calls = [{k: r.get(k) for k in keep} for r in (json.loads(line) for line in (work / "ledger.jsonl").read_text().splitlines())]
+    (out / "results.json").write_text(json.dumps(rows, indent=1) + "\n")
+    (out / "ledger.jsonl").write_text("".join(json.dumps(c) + "\n" for c in calls))
+    (out / "report.json").write_text(json.dumps(report(work), indent=1) + "\n")
+    (out / "tasks.json").write_text(json.dumps(dict(
+        dataset=tasks["dataset"], revision=tasks["revision"],
+        tasks=[dict(id=t["id"], repository=json.loads((work / "envs" / t["env"] / "env.json").read_text())["url"],
+                    commit=t["commit"], test_files=t["test_files"], validation=t["validation"]) for t in tasks["tasks"]]),
+        indent=1) + "\n")
+    (out / "models.json").write_text(json.dumps(MODELS, indent=1) + "\n")
+    for name in examples:
+        source = work / "runs" / "klp" / name / "receipt.md"
+        if source.exists():
+            (out / "receipts").mkdir(exist_ok=True)
+            shutil.copy(source, out / "receipts" / f"{name}.md")
+    print(f"exported {len(rows)} run results and {len(calls)} call receipts to {out}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=("prepare", "run", "report"))
+    parser.add_argument("command", choices=("prepare", "run", "report", "export"))
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--arms", default="frontier-solo,klp")
     parser.add_argument("--cap", type=float, default=5.0, help="hard USD limit across the whole run")
@@ -301,6 +327,8 @@ def main() -> None:
     parser.add_argument("--ids", default="")
     parser.add_argument("--max-steps", type=int, default=40)
     parser.add_argument("--task-cap", type=float, default=2.0)
+    parser.add_argument("--out", type=Path, help="export: destination folder")
+    parser.add_argument("--examples", default="", help="export: task ids whose receipts to include")
     args = parser.parse_args()
     args.work.mkdir(parents=True, exist_ok=True)
     if args.command == "prepare":
@@ -308,6 +336,8 @@ def main() -> None:
     elif args.command == "run":
         run(args.work, args.arms.split(","), args.cap, args.jobs, args.limit,
             [i for i in args.ids.split(",") if i], Limits(max_steps=args.max_steps, cost_usd=args.task_cap))
+    elif args.command == "export":
+        export(args.work, args.out, [i for i in args.examples.split(",") if i])
     else:
         report(args.work)
 

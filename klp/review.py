@@ -47,9 +47,7 @@ Non-blocking notes use "blocking": false and "probe": null. Be brief."""
 def candidate_diff(sandbox: Sandbox, base: str, head: str) -> dict:
     """Diff with whole enclosing functions when it fits, plain context otherwise."""
     for flags in ("-W", "-U10", "-U3"):
-        out = sandbox.run(f"{GIT} diff {flags} --no-color {base} {head} > /workspace/.klp-diff; wc -c < /workspace/.klp-diff",
-                          limit=200)
-        text = (sandbox.workspace / ".klp-diff").read_text(errors="replace")
+        text = sandbox.run(f"{GIT} diff {flags} --no-color {base} {head}", limit=None)["output"]
         if len(text) <= DIFF_LIMIT:
             return dict(text=text, flags=flags, truncated=False, bytes=len(text))
     return dict(text=clip(text, DIFF_LIMIT), flags="-U3", truncated=True, bytes=len(text))
@@ -127,10 +125,11 @@ def disposition(result: dict, command: str) -> str:
 def run_probe(sandbox: Sandbox, finding: dict, head: str, *, timeout: float = 180) -> dict:
     probe = finding["probe"]
     name = re.sub(r"[^A-Za-z0-9_.-]", "_", Path(probe["filename"]).name) or "probe.txt"
-    folder = sandbox.workspace / "probes"
-    folder.mkdir(exist_ok=True)
-    (folder / name).write_text(probe["content"])
-    result = sandbox.run(probe["command"], timeout=timeout, limit=3000)
+    try:
+        sandbox.write_file(f"/workspace/probes/{name}", probe["content"])
+        result = sandbox.run(probe["command"], timeout=timeout, limit=3000)
+    except RuntimeError as error:  # the probe could not be staged; nothing was proven
+        result = dict(returncode=None, timed_out=True, output=str(error))
     # A probe must not leave the candidate changed.
     sandbox.run(f"{GIT} reset -q --hard {head} && {GIT} clean -fdq", limit=200)
     return dict(command=probe["command"], file=f"/workspace/probes/{name}", returncode=result["returncode"],

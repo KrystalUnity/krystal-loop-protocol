@@ -41,6 +41,13 @@ jobs:
           cp -R examples/capability-audit/. "$audit_dir/"
           /usr/bin/python3 -m unittest discover -s "$audit_dir/tests" -v
           SH
+      - name: Run Standard runner tests (scripted models, no provider calls)
+        run: |
+          git config --global init.defaultBranch main
+          python3 tests/test_standard_runner.py -v
+          python3 tests/test_feature_benchmark.py -v
+          # Hosted runners can deny unprivileged namespaces; repeat the sandboxed cases elevated.
+          sudo -n env PATH="$PATH" python3 tests/test_standard_runner.py -v
       - name: Verify published receipt arithmetic
         run: |
           python3 case-studies/krystalview-2026-10-20/verify.py
