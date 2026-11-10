@@ -160,6 +160,15 @@ isolation, and incident-response controls.
   mounts come only from your own config. A repository's `klp.json` can declare
   checks and critical triggers and nothing else.
 - **Independence.** The runner refuses a critic from the worker's model family.
+- **Findings settled by execution.** A probe runs under the project's own test
+  configuration, so project rules such as warnings-as-errors apply to it. A
+  confirmed finding stays open until its probe passes or the critic withdraws
+  it, and the receipt lists every finding still open.
+- **Subscription critics.** A critic route can be a local agent CLI on a
+  subscription you already hold. The runner starts it in an empty directory,
+  tells it the review is text-only, and records its calls as unmetered. The
+  CLI still runs as you on your machine, so start it in its read-only or plan
+  mode, as the examples in [`bench/models.json`](bench/models.json) do.
 - **Limits.** Cost, step, repair and time limits stop the run, and the receipt
   records the state it stopped in.
 - **Authority.** The runner produces a patch and a receipt. Merging, pushing

@@ -165,8 +165,14 @@ def parse_verdict(text: str, *, open_earlier: bool = False) -> dict:
 
     `open_earlier` says an earlier finding is still open, which is the one case where FAIL needs no new finding."""
     try:
-        data = json.loads(text)
-    except (TypeError, ValueError) as error:
+        data, end = json.JSONDecoder().raw_decode(text.strip())
+        rest = text.strip()[end:].strip()
+        while rest:  # some providers emit the same object twice; anything else after it is rejected
+            again, end = json.JSONDecoder().raw_decode(rest)
+            if again != data:
+                raise ValueError("more than one JSON object")
+            rest = rest[end:].strip()
+    except (AttributeError, TypeError, ValueError) as error:
         raise ValueError(f"critic reply is not JSON: {error}") from None
     if not isinstance(data, dict) or data.get("verdict") not in ("PASS", "FAIL") or not isinstance(data.get("findings"), list):
         raise ValueError("critic reply lacks verdict or findings")

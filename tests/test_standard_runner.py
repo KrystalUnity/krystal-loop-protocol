@@ -346,6 +346,10 @@ class Parsing(unittest.TestCase):
     def test_verdict_is_strict(self):
         ok = parse_verdict(json.dumps({"verdict": "PASS", "profile_assessment": "eligible", "findings": []}))
         self.assertEqual(ok["verdict"], "PASS")
+        twice = json.dumps({"verdict": "PASS", "findings": []}) * 2  # the same object emitted twice is one answer
+        self.assertEqual(parse_verdict(twice)["verdict"], "PASS")
+        with self.assertRaises(ValueError):
+            parse_verdict(json.dumps({"verdict": "PASS", "findings": []}) + json.dumps({"verdict": "FAIL", "findings": []}))
         for bad in ("looks fine {\"verdict\": \"PASS\", \"findings\": []}", "{}",
                     json.dumps({"verdict": "PASS", "findings": [{"claim": "x", "blocking": True}]}),
                     json.dumps({"verdict": "FAIL", "findings": []})):
