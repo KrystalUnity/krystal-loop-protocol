@@ -43,9 +43,10 @@ effect:
 - **Probes run under the project's own test rules.** Click treats warnings as
   errors. A timeout feature that leaves a child process unreaped shows up only
   as a warning, so under the earlier runner the candidate passed every probe
-  and failed the hidden tests. With the project's rules applied to probes, the
-  problem fails a probe, the repair fixes it, and the task passes.
-  [Receipt](receipts/klp-3--pallets_click-task2068-feature2.md).
+  and failed the hidden tests. Runner 0.5 applies the project's rules to
+  probes and shows them to the critic, whose finding now names the rule; the
+  repair reaps the process and the task passes.
+  [Receipt](receipts/v2-argon--pallets_click-task2068-feature2.md).
 - **A confirmed finding stays open until its probe passes.** The repair is
   re-run against every open probe, and a finding the repair did not close is
   carried into the next round. The critic can withdraw a finding when the
@@ -218,11 +219,11 @@ specification does not state. On the other 61 tasks, KLP Standard run 3 solved
 To repeat run 3:
 
 ```bash
-python3 -m bench.features run --work ~/klp-bench --cap 15 --arms frontier-solo,worker-3,klp-3
+python3 -m bench.features run --work ~/klp-bench --preset headline --cap 15
 ```
 
-Add `astra-solo` (about $48) for the heavy model, `v2-sol`, `v2-grok` or
-`v2-argon` for the critic comparison, and `klp-3a` for the acceptance file.
+`--preset heavy` adds the heavy model alone (about $48), `--preset critics`
+the critic comparison and `--preset acceptance` the acceptance file.
 
 ## Check it and run it
 
@@ -237,5 +238,7 @@ calls for each run in [`results.json`](results.json) and rebuilds the table in
 [`tasks.json`](tasks.json) lists every task with its repository, commit and
 validation result, and [`models.json`](models.json) holds the model settings.
 
-To rerun it with your own keys or your own models, follow the
-[benchmark guide](../../bench/README.md). The KLP arm alone costs about $3.
+A receipt for each of the 66 runs of run 3 is in [`receipts/run-3`](receipts/run-3).
+
+To rerun it with your own keys or your own models, follow
+[BENCHMARKS.md](../../BENCHMARKS.md). The KLP arm alone costs about $3.

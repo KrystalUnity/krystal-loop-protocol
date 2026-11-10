@@ -5,6 +5,16 @@ figure and rerun the benchmark. Sections 1 to 5 use source already in this
 repository. No API keys, model subscription or access to KU infrastructure is
 needed for them. Section 6 reruns the benchmark with your own keys.
 
+## One Command
+
+```bash
+python3 -m bench.verify --tests
+```
+
+This runs every case study's checker and the offline test suites, and prints
+one line for each. The sections below explain what each one proves and how to
+run it on its own.
+
 ## Get the Source
 
 Use Python 3.12 or newer, Git, and a POSIX shell (Linux, macOS or WSL).
@@ -139,7 +149,8 @@ python3 -m bench.features run --work ~/klp-bench --cap 25
 reference patches and hidden tests without a model call. `run` needs
 `DEEPSEEK_API_KEY` and `OPENAI_API_KEY`, or your own models in
 [`bench/models.json`](bench/models.json), and stops at the spend cap you set.
-See the [benchmark guide](bench/README.md).
+[BENCHMARKS.md](BENCHMARKS.md) has the presets, costs and the paired-features
+benchmark; the [harness guide](bench/README.md) has every option.
 
 ## Share or Extend the Evidence
 

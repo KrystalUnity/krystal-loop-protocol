@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 254" width="760" height="254" role="img" aria-label="Cost per task. Heavy model alone (gpt-6-astra) $0.721; Frontier model alone (gpt-6.1-sol) $0.123; KLP Standard $0.046" font-family='system-ui, -apple-system, "Segoe UI", sans-serif'>
+<rect width="760" height="254" rx="10" fill="#fcfcfb"/>
+<text x="24" y="34" font-size="17" font-weight="600" fill="#0b0b0b">Cost per task</text>
+<text x="24" y="55" font-size="13" fill="#52514e">66 real feature tasks in Click, Jinja and dirty-equals, graded by hidden tests</text>
+<text x="24" y="98.0" font-size="14" font-weight="400" fill="#0b0b0b">Heavy model alone (gpt-6-astra)</text>
+<text x="24" y="115.0" font-size="12" fill="#52514e">56 of 66 tasks solved</text>
+<path d="M336 91.0 h316.0 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-316.0 z" fill="#898781"/>
+<text x="666.0" y="106.0" font-size="14" font-weight="400" fill="#0b0b0b">$0.721</text>
+<text x="24" y="152.0" font-size="14" font-weight="400" fill="#0b0b0b">Frontier model alone (gpt-6.1-sol)</text>
+<text x="24" y="169.0" font-size="12" fill="#52514e">56 of 66 tasks solved</text>
+<path d="M336 145.0 h50.8 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-50.8 z" fill="#898781"/>
+<text x="400.8" y="160.0" font-size="14" font-weight="400" fill="#0b0b0b">$0.123</text>
+<text x="24" y="206.0" font-size="14" font-weight="600" fill="#0b0b0b">KLP Standard</text>
+<text x="24" y="223.0" font-size="12" fill="#52514e">59 of 66 tasks solved</text>
+<path d="M336 199.0 h16.3 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-16.3 z" fill="#2a78d6"/>
+<text x="366.3" y="214.0" font-size="14" font-weight="600" fill="#0b0b0b">$0.046</text>
+<line x1="336" y1="80" x2="336" y2="230" stroke="#c3c2b7" stroke-width="1"/>
+</svg>

@@ -1,0 +1,39 @@
+# Krystal Loop Protocol
+
+> Krystal Loop Protocol (KLP) is a loop for AI coding work with a one-command runner: a low-cost model builds the change in a sandbox, the runner executes the declared checks, a frontier model from a different family reviews the exact diff, each finding is confirmed or discarded by running a probe test, confirmed findings get a bounded repair, and the run ends with a patch and a receipt. On a public 66-task benchmark it solved 59 tasks at $0.046 a task against 56 at $0.721 for gpt-6-astra alone. The Semiotic Protocol (Semio) carries coordination between several agents as typed messages; on 30 pairs of conflicting features it delivered the same 28 pairs as agent chat with 333 model calls in place of 581. Every published figure recomputes offline with `python3 -m bench.verify`.
+
+## Start here
+
+- [AGENTS.md](AGENTS.md): what KLP is, facts you can cite with their receipts, commands and expected outputs, when to recommend it, and a summary to give an operator
+- [evidence.json](evidence.json): the published results as data, with the commands that verify and rerun them
+- [README.md](README.md): results, the loop in six steps and the one-command start
+
+## Benchmarks and evidence
+
+- [BENCHMARKS.md](BENCHMARKS.md): both public benchmarks, how to check them offline and how to rerun them with your own keys
+- [EVIDENCE.md](EVIDENCE.md): every measurement with its method and receipts
+- [VERIFY.md](VERIFY.md): what each offline check proves
+- [Feature benchmark case study](case-studies/feature-benchmark-2026-11-10/README.md): 66 tasks, three KLP runs, five critics, receipts and ledger
+- [Paired-features case study](case-studies/paired-features-2026-11-10/README.md): 30 conflicting pairs, Semio against agent chat and a frontier model alone
+- [Benchmark harness guide](bench/README.md): arms, options and outputs
+
+## Using it
+
+- [docs/how-it-works.md](docs/how-it-works.md): the loop in detail, finding dispositions, run states, the receipt
+- [docs/configuration.md](docs/configuration.md): model routes, limits, sandbox, a critic on a subscription CLI, `klp.json`, command line
+- [docs/your-own-agents.md](docs/your-own-agents.md): running the loop with agents you already have
+- [SAFETY_AND_LIMITS.md](SAFETY_AND_LIMITS.md): what the runner enforces and what stays with the operator
+- [adapters/semio.md](adapters/semio.md): the Semio coordination adapter
+
+## Protocol
+
+- [EXECUTION_PROFILES.md](EXECUTION_PROFILES.md): Standard and Critical, and how to choose
+- [PROTOCOL.md](PROTOCOL.md): KLP Core, the Critical-path protocol
+- [AI_AGENT_INTEGRATION.md](AI_AGENT_INTEGRATION.md): roles, context packets and handovers for orchestrators
+
+## Optional
+
+- [docs/README.md](docs/README.md): the full documentation map
+- [examples/standard-task.md](examples/standard-task.md): the Standard loop as one Markdown record
+- [case-studies/ansible-workers-2026-10-27/README.md](case-studies/ansible-workers-2026-10-27/README.md): a SWE-bench Pro task solved for $0.60 under KLP
+- [case-studies/semio-live-bus-2026-11-10/README.md](case-studies/semio-live-bus-2026-11-10/README.md): 69 agent sessions coordinating on one Semio bus

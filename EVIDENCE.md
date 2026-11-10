@@ -2,8 +2,9 @@
 
 Krystal Unity's own measurements of KLP and the Semiotic Protocol, taken
 between 19 October and 10 November 2026. Each result names what was compared
-and links to receipts you can recompute. The feature benchmark can be rerun
-from this repository with your own keys.
+and links to receipts you can recompute with `python3 -m bench.verify`. The two
+benchmarks can be rerun from this repository with your own keys:
+[BENCHMARKS.md](BENCHMARKS.md).
 
 ## Feature Benchmark: More Tasks Solved Than the Heavy Model, at a Sixteenth of Its Cost
 

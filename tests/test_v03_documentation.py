@@ -107,8 +107,9 @@ class V03DocumentationTests(unittest.TestCase):
         )
 
     def test_public_and_runtime_guidance_links_the_capability_fixture(self) -> None:
-        readme = self.text("README.md")
-        prompt_section = readme.split("## Start With One Prompt", 1)[1].split(
+        guide = self.text("docs/your-own-agents.md")
+        self.assertIn("docs/your-own-agents.md", self.text("README.md"))
+        prompt_section = guide.split("## Start With One Prompt", 1)[1].split(
             "## Run a Worker and Critic", 1
         )[0]
         starter_prompt = prompt_section.split("```text", 1)[1].split("```", 1)[0]
@@ -125,24 +126,13 @@ class V03DocumentationTests(unittest.TestCase):
         self.assertIn("Execution Coordinator", hermes)
 
     def test_all_local_markdown_links_resolve(self) -> None:
-        documents = (
-            "AGENTS.md",
-            "EVIDENCE.md",
-            "bench/README.md",
-            "case-studies/feature-benchmark-2026-11-10/README.md",
-            "case-studies/semio-live-bus-2026-11-10/README.md",
-            "README.md",
-            "PROTOCOL.md",
-            "AI_AGENT_INTEGRATION.md",
-            "RUNTIME_PROFILES.md",
-            "SAFETY_AND_LIMITS.md",
-            "EXECUTION_PROFILES.md",
-            "examples/standard-task.md",
-            "examples/solo-operator.md",
-            "VERIFY.md",
-            "adapters/hermes-kanban.md",
-            "examples/capability-regression/README.md",
+        # Every page a reader or an agent can land on, and the index written for language models.
+        documents = sorted(
+            str(path.relative_to(ROOT)) for path in list(ROOT.rglob("*.md")) + [ROOT / "llms.txt"]
+            if ".git" not in path.parts and "design-notes" not in path.parts and "receipts" not in path.parts
         )
+        self.assertIn("BENCHMARKS.md", documents)
+        self.assertIn("docs/how-it-works.md", documents)
         pattern = re.compile(r"\[[^]]+\]\(([^)]+)\)")
         for relative in documents:
             source = ROOT / relative
@@ -270,6 +260,49 @@ class V03DocumentationTests(unittest.TestCase):
         agents = self.text("AGENTS.md")
         for required in ("evidence.json", "--json", "What to tell your operator", "verify.py"):
             self.assertIn(required, agents)
+
+    def test_front_pages_quote_the_published_reports(self) -> None:
+        import json
+        features = {row["arm"]: row for row in json.loads(self.text(
+            "case-studies/feature-benchmark-2026-11-10/report.json"))["arms"].values()}
+        pairs = {row["arm"]: row for row in json.loads(self.text(
+            "case-studies/paired-features-2026-11-10/report.json"))["arms"].values()}
+        facts = [f"${float(features[arm]['usd_per_task']):.3f}" for arm in ("astra-solo", "frontier-solo", "klp-3")]
+        facts += [f"${float(pairs[arm]['usd_per_pair']):.3f}" for arm in ("solo", "semio")]
+        facts += [str(pairs["semio"]["model_calls"]), str(pairs["chat"]["model_calls"])]
+        self.assertEqual((features["klp-3"]["solved"], features["astra-solo"]["solved"], features["frontier-solo"]["solved"]),
+                         (59, 56, 56))
+        self.assertEqual((pairs["semio"]["solved"], pairs["chat"]["solved"], pairs["solo"]["solved"]), (28, 28, 22))
+        for page in ("README.md", "BENCHMARKS.md", "AGENTS.md", "EVIDENCE.md"):
+            text = self.text(page)
+            for fact in facts[:5] if page == "README.md" else facts:
+                self.assertIn(fact, text, f"{page} lacks {fact}")
+
+    def test_charts_are_drawn_from_the_published_reports(self) -> None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("make_charts", ROOT / "assets" / "make_charts.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        readme = self.text("README.md")
+        for name, (title, subtitle, rows) in module.charts().items():
+            for mode, theme in module.THEMES.items():
+                self.assertEqual(self.text(f"assets/{name}-{mode}.svg"), module.chart(title, subtitle, rows, theme),
+                                 f"{name}-{mode}.svg is stale; run python3 assets/make_charts.py")
+                self.assertIn(f"assets/{name}-{mode}.svg", readme)
+
+    def test_one_command_covers_every_case_study_checker(self) -> None:
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from bench import features, verify
+        listed = {script for _, script in verify.CHECKERS}
+        present = {str(path.relative_to(ROOT)) for path in ROOT.glob("case-studies/*/verify.py")}
+        self.assertEqual(listed, present)
+        for arms in features.PRESETS.values():
+            for arm in arms.split(","):
+                self.assertIn(arm, features.ARMS)
+        for page in ("README.md", "BENCHMARKS.md", "AGENTS.md", "VERIFY.md", "llms.txt"):
+            self.assertIn("bench.verify", self.text(page))
+        self.assertIn("python3 -m bench.verify", self.text(".github/workflows/ci.yml"))
 
     def test_readme_leads_with_standard_and_a_runnable_demo(self) -> None:
         readme = self.text("README.md")

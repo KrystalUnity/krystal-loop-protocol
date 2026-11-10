@@ -1,7 +1,7 @@
 {
   "schema": "klp-evidence/v1",
   "updated": "2026-11-10",
-  "note": "Machine-readable copy of the facts in AGENTS.md and EVIDENCE.md. Costs are USD, calculated from provider-reported token usage at published rates.",
+  "note": "Machine-readable copy of the facts in AGENTS.md, BENCHMARKS.md and EVIDENCE.md, with the commands that verify and rerun them. Costs are USD, calculated from provider-reported token usage at published rates.",
   "results": [
     {
       "id": "feature-benchmark-2026-11-10",
@@ -304,7 +304,66 @@
       "rerun": "bench/README.md",
       "tasks_failed_by_every_arm": 5,
       "runs": 1056,
-      "model_calls": 9788
+      "model_calls": 9788,
+      "reproduce": {
+        "requirements": [
+          "Linux",
+          "Python 3.11+",
+          "git",
+          "uv",
+          "bubblewrap"
+        ],
+        "dataset": {
+          "name": "CooperBench",
+          "url": "https://github.com/cooperbench/CooperBench",
+          "revision": "63b9d44d9f39a02fccf5bf0052db48a917a011fd"
+        },
+        "models": "bench/models.json",
+        "prices": "klp/prices.json",
+        "guide": "BENCHMARKS.md",
+        "api_keys": [
+          "DEEPSEEK_API_KEY",
+          "OPENAI_API_KEY"
+        ],
+        "commands": [
+          "python3 -m bench.features prepare --work ~/klp-bench",
+          "python3 -m bench.features run --work ~/klp-bench --preset headline --cap 15",
+          "python3 -m bench.features report --work ~/klp-bench"
+        ],
+        "presets": {
+          "headline": "frontier-solo,worker-3,klp-3",
+          "heavy": "astra-solo",
+          "critics": "worker,v2-sol,v2-grok,v2-argon,v2-kimi,v2-qwen",
+          "acceptance": "worker-3,klp-3,klp-3a"
+        },
+        "our_usd": {
+          "frontier-solo": 8.15,
+          "worker-3 plus klp-3": 3.02,
+          "astra-solo": 47.57
+        },
+        "minutes_at_6_jobs": {
+          "worker-3 plus klp-3": 40
+        },
+        "run_to_run": {
+          "klp_solved": [
+            57,
+            54,
+            59
+          ],
+          "worker_alone_solved": [
+            56,
+            54,
+            57
+          ]
+        },
+        "limits": {
+          "max_steps": 100,
+          "repair_steps": 40,
+          "repair_rounds": 2,
+          "cost_usd_per_task": 2.0
+        }
+      },
+      "receipts_per_run": "case-studies/feature-benchmark-2026-11-10/receipts/run-3/"
     },
     {
       "id": "paired-features-2026-11-10",
@@ -359,7 +418,42 @@
       },
       "receipts": "case-studies/paired-features-2026-11-10/",
       "verify": "python3 case-studies/paired-features-2026-11-10/verify.py",
-      "rerun": "bench/README.md"
+      "rerun": "bench/README.md",
+      "reproduce": {
+        "requirements": [
+          "Linux",
+          "Python 3.11+",
+          "git",
+          "uv",
+          "bubblewrap"
+        ],
+        "dataset": {
+          "name": "CooperBench",
+          "url": "https://github.com/cooperbench/CooperBench",
+          "revision": "63b9d44d9f39a02fccf5bf0052db48a917a011fd"
+        },
+        "models": "bench/models.json",
+        "prices": "klp/prices.json",
+        "guide": "BENCHMARKS.md",
+        "api_keys": [
+          "DEEPSEEK_API_KEY",
+          "OPENAI_API_KEY"
+        ],
+        "needs_first": "the worker-3 and klp-3 arms of the feature benchmark in the same --work folder",
+        "commands": [
+          "python3 -m bench.pairs select --work ~/klp-bench --pairs 30",
+          "python3 -m bench.pairs run --work ~/klp-bench --arms merge,chat,semio,solo --cap 16",
+          "python3 -m bench.pairs report --work ~/klp-bench"
+        ],
+        "seed": 20261110,
+        "eligible_pairs": 162,
+        "our_usd": {
+          "chat": 0.57,
+          "semio": 0.22,
+          "solo": 5.87
+        },
+        "minutes_at_8_jobs": 22
+      }
     },
     {
       "id": "ansible-workers-2026-10-27",
@@ -447,5 +541,11 @@
       "raise a spend limit",
       "change model routes"
     ]
+  },
+  "verify_all": {
+    "command": "python3 -m bench.verify --tests",
+    "needs": "Python 3.11+, git; bubblewrap for the sandboxed runner tests",
+    "api_keys": "none",
+    "expected_last_line": "Every published figure recomputes from the receipts."
   }
 }

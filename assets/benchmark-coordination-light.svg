@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="760" height="200" role="img" aria-label="Model calls to integrate the same 30 pairs. Agents coordinate by chat 581 calls; Semio typed handovers 333 calls" font-family='system-ui, -apple-system, "Segoe UI", sans-serif'>
+<rect width="760" height="200" rx="10" fill="#fcfcfb"/>
+<text x="24" y="34" font-size="17" font-weight="600" fill="#0b0b0b">Model calls to integrate the same 30 pairs</text>
+<text x="24" y="55" font-size="13" fill="#52514e">Same finished features, same workers; only the coordination differs</text>
+<text x="24" y="98.0" font-size="14" font-weight="400" fill="#0b0b0b">Agents coordinate by chat</text>
+<text x="24" y="115.0" font-size="12" fill="#52514e">28 of 30 pairs pass, 60 worker sessions woken</text>
+<path d="M336 91.0 h316.0 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-316.0 z" fill="#898781"/>
+<text x="666.0" y="106.0" font-size="14" font-weight="400" fill="#0b0b0b">581 calls</text>
+<text x="24" y="152.0" font-size="14" font-weight="600" fill="#0b0b0b">Semio typed handovers</text>
+<text x="24" y="169.0" font-size="12" fill="#52514e">28 of 30 pairs pass, 28 worker sessions woken</text>
+<path d="M336 145.0 h179.4 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-179.4 z" fill="#2a78d6"/>
+<text x="529.4" y="160.0" font-size="14" font-weight="600" fill="#0b0b0b">333 calls</text>
+<line x1="336" y1="80" x2="336" y2="176" stroke="#c3c2b7" stroke-width="1"/>
+</svg>

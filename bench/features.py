@@ -211,6 +211,15 @@ ARMS = {
 }
 
 
+# what to pass as --preset to repeat a published row
+PRESETS = {
+    "headline": "frontier-solo,worker-3,klp-3",                       # frontier alone against KLP Standard
+    "heavy": "astra-solo",                                            # the heavy model alone (about $48)
+    "critics": "worker,v2-sol,v2-grok,v2-argon,v2-kimi,v2-qwen",      # five critics on identical candidates
+    "acceptance": "worker-3,klp-3,klp-3a",                            # with and without the acceptance file
+}
+
+
 def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) -> dict:
     out = work / "runs" / arm / task["id"]
     if (out / "result.json").exists():
@@ -418,8 +427,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice"))
     parser.add_argument("--work", type=Path, required=True)
-    parser.add_argument("--arms", default="frontier-solo,worker,v2-sol",
-                        help="comma-separated: " + ", ".join(ARMS))
+    parser.add_argument("--arms", default=PRESETS["headline"], help="comma-separated: " + ", ".join(ARMS))
+    parser.add_argument("--preset", choices=sorted(PRESETS), help="a named set of arms: "
+                        + "; ".join(f"{k} = {v}" for k, v in PRESETS.items()))
     parser.add_argument("--cap", type=float, default=5.0, help="hard USD limit across the whole run")
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--limit", type=int)
@@ -430,6 +440,8 @@ def main() -> None:
     parser.add_argument("--out", type=Path, help="export: destination folder")
     parser.add_argument("--examples", default="", help="export: task ids whose receipts to include")
     args = parser.parse_args()
+    if args.preset:
+        args.arms = PRESETS[args.preset]
     args.work.mkdir(parents=True, exist_ok=True)
     if args.command == "prepare":
         prepare(args.work, args.jobs)

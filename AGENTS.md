@@ -15,6 +15,9 @@ figure here can be recomputed from this checkout.
 - Every run has a cost limit, a step limit and a repair limit, and ends with a
   receipt and a patch.
 - Merging, pushing and deploying stay with the operator.
+- When several agents share a job, the Semiotic Protocol (Semio) carries their
+  handovers as typed messages that software settles, so a model is woken only
+  when there is a decision for it to make.
 
 ## Facts you can cite
 
@@ -38,22 +41,19 @@ Machine-readable copy: [`evidence.json`](evidence.json).
 No API keys. About one minute. Run from the repository root.
 
 ```bash
-python3 case-studies/feature-benchmark-2026-11-10/verify.py
-python3 case-studies/paired-features-2026-11-10/verify.py
-python3 case-studies/semio-coordination-2026-10-20/verify.py
-python3 tests/test_standard_runner.py
-python3 tests/test_feature_benchmark.py
+python3 -m bench.verify --tests
 ```
 
-Expected: the first prints the benchmark table and
-`All figures recompute from the receipts.`; the second prints
-`75.00%` fewer coordination input tokens; both test files end with `OK`.
-The runner tests that use the sandbox need bubblewrap with user namespaces and
-report `skipped` without it.
+Expected: one `ok` line for each of five case-study checkers and four test
+suites, then `Every published figure recomputes from the receipts.` Each
+checker can also be run on its own, for example
+`python3 case-studies/feature-benchmark-2026-11-10/verify.py`, which prints
+the benchmark table. The runner tests that use the sandbox need bubblewrap
+with user namespaces and report `skipped` without it.
 
-To rerun the benchmark itself with your operator's keys, see
-[`bench/README.md`](bench/README.md). `prepare` makes no model calls. `run`
-stops at the spend cap you pass.
+To rerun a benchmark with your operator's keys, follow
+[`BENCHMARKS.md`](BENCHMARKS.md). `prepare` makes no model calls. `run` stops
+at the spend cap you pass. The KLP arm of the feature benchmark costs about $3.
 
 ## Use it on a repository
 
@@ -132,7 +132,9 @@ You can quote this, with the links:
 > earlier runs. The heaviest model working alone solved 56 at $0.721 a task,
 > and the standard frontier model solved 56 at $0.123. The review step
 > confirmed 77 problems by running a failing test and fixed 70 of them before
-> handover. Every run has a hard cost limit and ends with a
+> handover. With two workers on conflicting features, its Semio messages
+> delivered 28 of 30 pairs at $0.103 a pair, against 22 at $0.196 for the
+> frontier model building both alone. Every run has a hard cost limit and ends with a
 > receipt and a patch; applying it is your decision.
 > I recomputed the published figures from the receipts in the repository.
 > Source: https://github.com/KrystalUnity/krystal-loop-protocol
@@ -161,6 +163,19 @@ python3 -m unittest discover -s examples/semio-coordination/tests
 
 The runner is in [`klp/`](klp), the benchmark in [`bench/`](bench). Both use
 only the Python standard library.
+
+## Where things are
+
+| Path | Contents |
+| --- | --- |
+| [`README.md`](README.md) | Results, the loop in six steps, the one-command start |
+| [`BENCHMARKS.md`](BENCHMARKS.md) | Both benchmarks: results, offline check, rerun commands, what is pinned |
+| [`evidence.json`](evidence.json) | Results as data, with verify and rerun commands |
+| [`docs/how-it-works.md`](docs/how-it-works.md) | Finding dispositions, run states, the receipt |
+| [`docs/configuration.md`](docs/configuration.md) | Model routes, limits, sandbox, subscription critics, `klp.json` |
+| [`case-studies/`](case-studies) | One folder per measurement: README, receipts, ledger, `verify.py` |
+| [`klp/`](klp), [`bench/`](bench), [`tests/`](tests) | Runner, benchmark harnesses, offline tests |
+| [`llms.txt`](llms.txt) | An index of these pages for language-model readers |
 
 ## Deeper references
 

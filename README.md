@@ -2,40 +2,94 @@
 
 ![Krystal Loop Protocol](assets/krystal-loop-protocol-banner.jpg)
 
-Hand the coding to a fast, low-cost model. Have a frontier model check the
-exact result. Keep the decision yourself.
+**A low-cost model does the coding. A frontier model checks the exact result.
+You get frontier-level work at a fraction of the price, with a receipt.**
 
-Krystal Loop Protocol (KLP) is an operating pattern for building with AI
-agents: bounded work, checks that actually run, independent review of the exact
-result, and a hard limit on time, cost and repairs. It ships with a one-command
-runner and a public benchmark you can rerun.
+Krystal Loop Protocol (KLP) is a loop for AI coding work, with a one-command
+runner. On a public benchmark of 66 real feature tasks it solved more tasks
+than OpenAI's heaviest model working alone, at a sixteenth of the cost. Every
+figure on this page recomputes from receipts in this repository, and you can
+rerun the KLP arm of the benchmark yourself for about $3.
 
-**AI agent?** Start with [AGENTS.md](AGENTS.md): the commands, the outputs to
-expect, facts you can cite and a summary for your operator.
+**AI agent?** Read [AGENTS.md](AGENTS.md): commands, expected outputs, facts
+you can cite and a summary for your operator.
 
 ## Results
 
-**66 real feature tasks in Click, Jinja and dirty-equals, each graded by tests
-the models never see.**
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark-features-dark.svg">
+  <img alt="Cost per task: heavy model alone $0.721, frontier model alone $0.123, KLP Standard $0.046" src="assets/benchmark-features-light.svg">
+</picture>
 
-| | Tasks solved | Cost per task | Findings confirmed and fixed |
-| --- | ---: | ---: | ---: |
-| Heavy model working alone (`gpt-6-astra`) | 56 of 66 | $0.721 | not reviewed |
-| Frontier model working alone (`gpt-6.1-sol`) | 56 of 66 | $0.123 | not reviewed |
-| **KLP Standard**: low-cost worker, frontier critic, bounded repair | **59 of 66** | **$0.046** | **70 of 77** |
-| KLP Standard, two earlier runs | 57 and 54 of 66 | $0.055 and $0.061 | 43 of 64 and 67 of 78 |
+| 66 real feature tasks, graded by tests the models never see | Tasks solved | Cost per task |
+| --- | ---: | ---: |
+| Heavy model working alone (`gpt-6-astra`) | 56 | $0.721 |
+| Frontier model working alone (`gpt-6.1-sol`) | 56 | $0.123 |
+| **KLP Standard** (`deepseek-flash` builds, `gpt-6.1-sol` reviews) | **59** | **$0.046** |
 
-KLP Standard solved three more tasks than either model working alone and cost
-94% less per task than the heavy model and 63% less than the frontier model.
-Its critic confirmed 77 findings by running a failing test against the
-candidate, 70 were fixed before handover, and no repair broke a passing task.
-With the review done by a model on a subscription you already hold, the
-metered cost falls to $0.028 a task. The KLP arm runs in about half an hour
-for $3.
+Three more tasks solved than either model alone, for 94% less than the heavy
+model and 63% less than the frontier model. Across three runs KLP Standard
+solved 54 to 59 tasks at $0.046 to $0.061 each. Its critic confirmed 77
+problems by running a failing test, 70 were fixed before handover, and no
+repair broke a passing task.
 
-[Results and receipts](case-studies/feature-benchmark-2026-11-10/README.md) ·
-[Run the benchmark yourself](bench/README.md) ·
-[All measurements](EVIDENCE.md)
+**Several agents on one job?** The Semiotic Protocol (Semio) carries their
+handovers as short typed messages that software can settle.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark-pairs-dark.svg">
+  <img alt="Cost per pair: frontier model alone $0.196, two KLP workers joined by Semio $0.103" src="assets/benchmark-pairs-light.svg">
+</picture>
+
+| 30 pairs of features whose patches conflict | Pairs delivered, both test sets passing | Cost per pair |
+| --- | ---: | ---: |
+| Frontier model alone builds both features | 22 | $0.196 |
+| **Two KLP workers, joined by Semio** | **28** | **$0.103** |
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark-coordination-dark.svg">
+  <img alt="Model calls to integrate the same 30 pairs: agents coordinating by chat 581, Semio typed handovers 333" src="assets/benchmark-coordination-light.svg">
+</picture>
+
+On the same finished work, Semio delivered the same 28 pairs as agents
+coordinating by chat, with 43% fewer model calls and 61% lower integration
+cost.
+
+[Benchmarks: results, method and how to rerun them](BENCHMARKS.md) ·
+[Every measurement](EVIDENCE.md)
+
+## How It Works
+
+```mermaid
+flowchart LR
+    T["Your task<br/>and its checks"] --> W["Low-cost worker<br/>builds in a sandbox"]
+    W --> C["Runner executes<br/>the checks"]
+    C --> R["Frontier critic<br/>reviews the exact diff"]
+    R --> P{"Each finding's<br/>probe test runs"}
+    P -- "fails: confirmed" --> F["Bounded repair"]
+    F --> C
+    P -- "passes: discarded" --> D["Receipt and patch"]
+    R -- "no findings" --> D
+    D --> Y["You decide:<br/>merge, push, deploy"]
+```
+
+1. **A low-cost worker builds the change** in a sandboxed copy of your
+   repository. Your working tree is untouched.
+2. **The runner executes your checks.** A check that did not run is not a pass.
+3. **An independent critic reviews the exact result.** It is a different model
+   family from the worker and reads one compact packet: the task, the diff and
+   the check output.
+4. **Findings are settled by evidence.** Every blocking finding comes with a
+   probe test. A probe that fails confirms the finding; a probe that passes
+   discards it.
+5. **Confirmed findings get a bounded repair,** which is checked and reviewed
+   again. A finding stays open until its probe passes.
+6. **You get a patch, a plain-English receipt and the decision.** Merging,
+   pushing and deploying stay with you.
+
+The saving comes from who reads what. The low-cost model makes about 94% of
+the calls. The frontier model reads one packet per review, for about one and a
+half cents. [The loop in detail](docs/how-it-works.md).
 
 ## Start Here
 
@@ -50,52 +104,68 @@ klp init
 klp run "Fix the pagination bug in list_jobs" --check "python -m pytest -q tests/test_queue.py"
 ```
 
-1. **A worker builds the change** in a sandboxed copy of your repository. Your
-   working tree is untouched.
-2. **The runner executes your checks.** A check that did not run is not a pass.
-3. **An independent critic reviews the exact result.** It is a different model
-   family from the worker and sees the task, the diff and the check output.
-4. **Findings are settled by evidence.** Every blocking finding comes with a
-   probe test. A probe that fails confirms the finding; a probe that passes
-   discards it.
-5. **Confirmed findings get one bounded repair,** which is checked and reviewed
-   again.
-6. **You get a patch, a plain-English receipt and the decision.** Merging,
-   pushing and deploying stay with you.
+You get a patch and a receipt. This one is shortened from the benchmark:
 
-On the [public challenge task](https://github.com/KrystalUnity/klp-public-challenge)
-this takes about half a minute and costs one cent, with all 17 acceptance
-checks passing. Add `--json` and a calling agent gets one result object.
+```text
+# KLP Standard receipt: pallets_click-task2956-feature2
+- state: completed
+- declared checks on final revision: passed
+- worker: deepseek-flash
+- critic: gpt-6.1-sol
+- elapsed: 36.3s, cost: $0.0432
 
-`klp init` writes your model routes and limits to `~/.config/klp/config.json`.
-Any OpenAI-compatible endpoint works, including a local model. Requirements:
-Linux or WSL, Python 3.11+, Git and bubblewrap.
+## Review 1: FAIL (gpt-6.1-sol)
+- [confirmed] F1: Adding validators before nargs in Parameter.__init__ breaks
+  existing positional constructor calls. Append the new parameter without
+  shifting existing positional arguments.
+## Review 2: PASS (gpt-6.1-sol)
+## Repair 1: 1/1 confirmed findings closed, checks passed, kept
 
-Running the loop by hand or with your own agents? Standard is also a single
-[task record](examples/standard-task.md): one worker, one separate reviewer and
-Git. [Working solo? Here is the role setup](examples/solo-operator.md).
+Still yours to decide: merge, push and deploy.
+```
+
+- **Requirements:** Linux or WSL, Python 3.11+, Git and bubblewrap.
+- **Models:** any OpenAI-compatible endpoint for the worker and the critic,
+  including a local model. The critic can also be an agent CLI on a
+  subscription you already hold. `klp init` writes your routes and limits to
+  `~/.config/klp/config.json`. [Configuration](docs/configuration.md).
+- **Calling it from an agent:** add `--json` for one result object on standard
+  output.
+- **Without the runner:** Standard is also a single
+  [task record](examples/standard-task.md) for one worker, one separate
+  reviewer and Git. [Working solo? Here is the role setup](examples/solo-operator.md).
+  [Wiring it into your own agents](docs/your-own-agents.md).
 
 **Changing saves, security, money or a protected core capability?** Use the
 [Critical path](EXECUTION_PROFILES.md#critical-preserve-the-existing-core-gate).
 It proves the product still does its main job before and after the change.
 List your project's critical triggers in `klp.json` and the critic checks every
-change against them. Read [profile selection](EXECUTION_PROFILES.md#select-before-editing)
-first; a Critical run stays Critical.
+change against them. Shipping follows the
+[routine release gate](EXECUTION_PROFILES.md#routine-release-gate).
 
 ## Try the Demo
 
-**Rerun the benchmark.** About two minutes of setup, no Docker:
+**Check every published number.** No API keys, about a minute:
 
 ```bash
-python3 -m bench.features prepare --work ~/klp-bench
-python3 -m bench.features run --work ~/klp-bench --cap 15
+git clone https://github.com/KrystalUnity/krystal-loop-protocol.git
+cd krystal-loop-protocol
+python3 -m bench.verify
 ```
 
-See the [benchmark guide](bench/README.md) for the arms, the tasks and the
-receipts you get back.
+It reprices every recorded model call, sums each run and rebuilds each table.
+[What each check proves](VERIFY.md).
 
-**Watch KLP catch a broken product even when ordinary tests pass.** No API keys
-needed. From a checkout, with Python 3.12+, Git and a POSIX shell:
+**Rerun the benchmark with your own keys.** No Docker:
+
+```bash
+python3 -m bench.features prepare --work ~/klp-bench          # about 2 minutes, no model calls
+python3 -m bench.features run --work ~/klp-bench --cap 15     # frontier model alone, then KLP Standard
+```
+
+[Benchmark guide: arms, costs and your own models](BENCHMARKS.md).
+
+**Watch KLP catch a broken product while ordinary tests pass.** Offline:
 
 ```bash
 output="$(mktemp -d)/klp-demo"
@@ -103,215 +173,46 @@ python3 examples/capability-regression/run_fixture.py --out-dir "$output" &&
 python3 -m json.tool "$output/final-receipt.json"
 ```
 
-The demo makes a tiny program stop responding correctly to different inputs.
-Its ordinary checks stay green. The capability gate catches the regression,
-blocks acceptance, then verifies one repair. The receipt's `capability_report`
-reads `before: passed`, `intermediate: failed`, `after: passed`.
-
-**[Verify it yourself](VERIFY.md):** recompute every published figure from the
-included receipts and run the offline checks.
-
 ## What You Gain
 
-- **Frontier-level checking at low-cost-model prices.** The frontier model
-  reads one compact review packet per task; the low-cost model does the many
-  turns of reading, editing and testing. On the benchmark the low-cost model
-  made 94% of the calls.
+- **Frontier-level results at low-cost-model prices.** 59 of 66 tasks for
+  $0.046 each, against 56 for $0.721 with the heavy model alone.
 - **Findings you can trust.** A reviewer's opinion does not start a repair. A
   failing probe does, and the receipt shows which findings were confirmed,
-  which were refuted and which were closed.
-- **Less repeated explanation.** Each agent gets the material for its
-  assignment. Compact packets cut reported input tokens by 21% on a real
-  documentation assignment with the same review outcome.
-- **Agents that coordinate themselves.** With the optional Semio adapter,
-  duplicate, stale and already-handled notifications are settled by software
-  before they reach a model: one model call where agent-managed handovers
-  needed four. Krystal Unity runs its own development this way, with
+  which were discarded and which were closed.
+- **Review on a subscription you already pay for.** With Gemini 4 Argon
+  reviewing through its CLI, the loop solved the same number of tasks as with
+  the metered frontier critic, for $0.028 a task in metered spend.
+- **Agents that coordinate without spending model calls on it.** Semio settled
+  the handover in software and woke one worker where chat woke two. Krystal
+  Unity runs its own development this way, with
   [69 agent sessions on one bus](case-studies/semio-live-bus-2026-11-10/README.md).
 - **A stopping point.** Every run has a cost limit, a step limit and a repair
-  limit, and ends with a receipt. On the benchmark no run stopped on its step
-  limit.
+  limit, and ends with a receipt. With the default limits no benchmark run
+  stopped on its step limit.
 
-### What We Have Measured
+## Find Your Way
 
-- **Paired features, 30 conflicting pairs.** Two low-cost workers under KLP
-  Standard, integrated through Semio, delivered 28 pairs passing both hidden
-  test sets for $0.103 a pair. The frontier model building both features alone
-  delivered 22 for $0.196. Against agent-managed chat on the same work, Semio
-  reached the same 28 with 43% fewer model calls and 61% lower integration
-  cost. [Case study and receipts](case-studies/paired-features-2026-11-10/README.md).
-
-- **Feature benchmark, 66 tasks.** KLP Standard solved 59 for $0.046 a task,
-  and 57 and 54 in two earlier runs for $0.055 and $0.061. The heavy model
-  alone solved 56 for $0.721 and the frontier model alone solved 56 for $0.123.
-  In the latest run 91% of the findings confirmed by execution were fixed
-  before handover. The standard frontier model is the right metered critic: a
-  heavier one cost 2.7 times as much for one more task, and a lighter one cost
-  more and broke passing work. Gemini 4 Argon on a CLI subscription matched the
-  frontier critic's solve count with no metered review cost.
-  [Case study and receipts](case-studies/feature-benchmark-2026-11-10/README.md).
-- **Semio coordination.** Four coordination model calls became one, input
-  tokens fell from 5,325 to 1,331 (75%), and both paths handled all four
-  scenarios correctly.
-  [Case study and receipts](case-studies/semio-coordination-2026-10-20/README.md).
-- **A real coding repair in a 255-file snapshot.** A DeepSeek worker with
-  frontier review cost $0.2709 against $0.3595 for the conventional frontier
-  workflow, 24.6% lower, with all candidates passing the same 15 checks.
-  [Case study and receipts](case-studies/krystalview-2026-10-20/README.md).
-- **Compact context packets.** 21% fewer reported input tokens on a
-  documentation assignment and 24.6% fewer on a source-review pilot, with the
-  same review outcomes.
-- **Event wake.** Waiting for a handover took 3 transport reads in place of 21.
-
-[Every measurement, with its method and receipts](EVIDENCE.md).
-
-## What This Prevents
-
-| Common agent failure | KLP response |
+| You want to | Go to |
 | --- | --- |
-| Two agents edit the same shared file. | Give each worker an explicit file and action boundary. |
-| A worker says its own work is complete. | Separate factual handover from independent acceptance. |
-| A critic reviews an outdated build. | Bind every verdict to an exact artifact revision. |
-| A critic confidently reports a false problem. | Confirm or refute every finding with direct evidence. |
-| Agents keep looping without improvement. | Stop on repeated findings, exhausted budgets, or a plateau. |
-| New tooling creates more work than the requested change. | Reassess whether the tooling is necessary; simplify the approach inside delegation. |
-| Unit changes pass but break when combined. | Review integration as a new artifact. |
-| A test or agent message is treated as permission to deploy. | Keep live actions behind an explicit human decision. |
-
-## Start With One Prompt
-
-Give this to the lead agent before a multi-agent build:
-
-```text
-Work under Krystal Loop Protocol.
-Read EXECUTION_PROFILES.md, select the profile and record why before editing.
-For Standard, follow its complete checklist using examples/standard-task.md:
-one record, bounded work, relevant checks, independent review and integration.
-For Critical, follow PROTOCOL.md in full. Do not downgrade existing gates.
-Follow AI_AGENT_INTEGRATION.md and SAFETY_AND_LIMITS.md for context, isolation,
-evidence and authority. Reuse checks; do not invent extra process machinery.
-Finish when the required proof is met. If proof is missing, preserve the work,
-state the exact blocker and smallest next action, then stop affected work.
-Keep routine shipping behind EXECUTION_PROFILES.md's routine-release-gate.
-No profile grants deployment, spending or publication authority.
-Runnable offline references: examples/capability-regression/README.md and
-examples/fail-review-repair/README.md. See VERIFY.md for what each proves.
-```
-
-KLP does not require a special model, database, vector store, or message bus.
-You can start with Git and Markdown files, then add durable coordination when
-the project needs it.
-
-## Run a Worker and Critic
-
-`klp run` drives this whole path for you. The included examples show each
-stage on its own, for teams wiring KLP into their own agents:
-
-```text
-DeepSeek Flash worker
-  -> exact revision and deterministic checks
-  -> controller-redacted, sealed review packet
-  -> different-family read-only critic
-  -> evidence-backed finding dispositions
-  -> bounded repair or integration
-```
-
-Start with the [DeepSeek Codex worker](examples/deepseek-codex-worker/README.md),
-then use the
-[OpenAI-compatible critic harness](examples/openai-compatible-critic/README.md).
-The worker launcher uses an isolated Codex profile and a reviewed assignment.
-The critic makes one request by default, validates its structured verdict locally,
-and cannot edit or authorize any action. Its optional bounded evidence-read mode
-can retrieve selected generated source from the sealed packet. The examples do not automatically connect
-worker output to critic input; the controller must inspect and redact the
-review packet first.
-
-### Review Generated Source
-
-Use the [maintained critic quick-start](examples/openai-compatible-critic/README.md#review-generated-source)
-when a task includes generated code. Supply the exact retained source, keep the
-complete diff and required checks, and explicitly select which generated excerpts
-may move out of the initial prompt. The runner verifies retained text and gives
-the critic bounded reads; it does not let the model browse your filesystem.
-
-Malformed JSON, schema failures and a pass with blocking findings are rejected.
-Keep failed receipts; never extract an apparent verdict from a malformed reply.
-Count all calls, later reads, repairs and failures using the runner's effort
-records, not just the initial packet size. No benchmark is needed to use it.
-
-The harness reviews `klp-core/v0.2` and `klp-core/v0.3` packets for Critical
-work. Standard work is reviewed by `klp run`.
-
-## Run the Offline Lifecycle Proof
-
-The [fail-review-repair fixture](examples/fail-review-repair/README.md) proves a
-complete bounded lifecycle without provider egress or model spend:
-
-```bash
-output="$(mktemp -d)/klp-fixture"
-python3 examples/fail-review-repair/run_fixture.py --out-dir "$output"
-python3 -m json.tool "$output/final-receipt.json"
-```
-
-It creates a temporary Git project, records a deliberately incomplete worker
-revision, captures a failed check, runs the sealed critic harness against a
-loopback fake provider, confirms one real finding, refutes one false finding,
-applies one authorized repair, and re-checks the integrated artifact. A second
-test proves a zero-round repair budget stops instead of overrunning authority.
-
-The [capability-regression fixture](examples/capability-regression/README.md)
-proves the v0.3 product-truth gate. It establishes an accepted baseline,
-deliberately regresses an adaptive capability while task checks pass, blocks
-completion, repairs within the declared limit, and proves the repaired
-integrated artifact. Both lifecycle fixtures run offline.
-
-## Let Software Run the Repetitive Checks
-
-An AI reviewer should judge the evidence, not spend turn after turn launching
-the same tests. The optional [capability audit runner](examples/capability-audit/README.md)
-runs approved checks against frozen before-and-after versions, isolates each
-execution, and prepares a compact evidence packet for independent review.
-
-The collector makes no model calls. It retains failed checks and incomplete
-evidence instead of converting them into a green result. Use it when a task
-already needs a capability audit; ordinary Standard work stays lightweight.
-
-The runner has been exercised on a real, asset-heavy game repository: 42 probe
-executions including preflight and a bounded correction. See the
-[validation note](examples/capability-audit/VALIDATION.md). Linux, Python, Git
-and Bubblewrap are required.
-
-## Read Next
-
-- [For AI agents: commands, outputs and citable facts](AGENTS.md)
-- [Feature benchmark: run it yourself](bench/README.md)
-- [Feature benchmark results and receipts](case-studies/feature-benchmark-2026-11-10/README.md)
-- [Semio in daily use: 69 agent sessions on one bus](case-studies/semio-live-bus-2026-11-10/README.md)
-- [Standard and Critical execution profiles](EXECUTION_PROFILES.md)
-- [Compact Standard task record](examples/standard-task.md)
-- [Solo-operator role example](examples/solo-operator.md)
-- [Public demo and evidence verification](VERIFY.md)
-- [Public coding challenge for your own agents](https://github.com/KrystalUnity/klp-public-challenge)
-- [KLP Core protocol for Critical work](PROTOCOL.md)
-- [Recovering missing capability proof](PROTOCOL.md#recovering-missing-capability-proof)
-- [Instructions for AI agents and orchestrators](AI_AGENT_INTEGRATION.md)
-- [Optional runtime profiles](RUNTIME_PROFILES.md)
-- [Safety and limits](SAFETY_AND_LIMITS.md)
-- [DeepSeek Codex worker example](examples/deepseek-codex-worker/README.md)
-- [OpenAI-compatible critic example](examples/openai-compatible-critic/README.md)
-- [Offline fail-review-repair fixture](examples/fail-review-repair/README.md)
-- [Offline capability-regression fixture](examples/capability-regression/README.md)
-- [Optional deterministic capability audit runner](examples/capability-audit/README.md)
-- [Hermes Kanban adapter example](adapters/hermes-kanban.md)
-- [Optional Semio agent-coordination adapter](adapters/semio.md)
-- [Compact context packet guide](examples/semio-coordination/CONTEXT_PACKETS.md)
-- [Measured results](EVIDENCE.md)
+| Run it on your repository | [Start Here](#start-here), [configuration](docs/configuration.md) |
+| Understand the loop | [How it works](docs/how-it-works.md) |
+| Check or rerun the benchmarks | [BENCHMARKS.md](BENCHMARKS.md), [VERIFY.md](VERIFY.md) |
+| See every measurement and its receipts | [EVIDENCE.md](EVIDENCE.md), [case studies](case-studies) |
+| Hand it to your AI agent | [AGENTS.md](AGENTS.md), [evidence.json](evidence.json), [llms.txt](llms.txt) |
+| Wire it into agents you already run | [Your own agents](docs/your-own-agents.md), [agent integration](AI_AGENT_INTEGRATION.md) |
+| Coordinate several agents | [Semio adapter](adapters/semio.md), [paired-features study](case-studies/paired-features-2026-11-10/README.md) |
+| Protect saves, security, money or a core capability | [Execution profiles](EXECUTION_PROFILES.md), [KLP Core protocol](PROTOCOL.md) |
+| Know what the runner enforces | [Safety and limits](SAFETY_AND_LIMITS.md) |
+| Browse everything | [Documentation map](docs/README.md) |
 
 ## Where KLP Fits
 
-KLP is a portable way to bound multi-agent work, keep useful evidence and make
-every acceptance traceable to a check that ran and a review of the exact
-result. It works with the models, Git workflow and CI you already have.
+KLP is a portable way to bound agent work, keep useful evidence and make every
+acceptance traceable to a check that ran and a review of the exact result. It
+works with the models, Git workflow and CI you already have. It needs no
+special model, database or message bus: start with the runner or with Git and
+Markdown, and add Semio when several agents share a project.
 
 **KLP checks how software changes earn acceptance; runtime controls govern what
 that software can do after deployment.** The two layers complement each other.
@@ -323,9 +224,9 @@ working across many changes.
 
 ## Project Status
 
-Runner **0.4.0** with protocol profile **v0.3.3-draft**. Standard
-(`klp-standard/v0.1`) now has a one-command runner, `klp run`, and a public
-benchmark. Critical keeps `klp-core/v0.3` with its capability gate, sealed
+Runner **0.5.0** with protocol profile **v0.3.3-draft**. Standard
+(`klp-standard/v0.1`) has the one-command runner, `klp run`, and two public
+benchmarks. Critical keeps `klp-core/v0.3` with its capability gate, sealed
 critic harness and offline lifecycle fixtures.
 
 ## License

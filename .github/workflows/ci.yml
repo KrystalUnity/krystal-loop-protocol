@@ -55,6 +55,8 @@ jobs:
           python3 case-studies/semio-coordination-2026-10-20/verify.py
           python3 case-studies/feature-benchmark-2026-11-10/verify.py
           python3 case-studies/paired-features-2026-11-10/verify.py
+          python3 case-studies/ansible-workers-2026-10-27/verify.py
+          python3 -m bench.verify
       - name: Check launcher syntax
         run: bash -n examples/deepseek-codex-worker/run.sh
       - name: Check optional Semio adapter offline
