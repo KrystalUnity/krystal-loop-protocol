@@ -4,9 +4,9 @@ Sixty-six real feature tasks in three open-source Python libraries, each graded
 by tests the models never see. Run it yourself and compare a frontier model
 working alone with a low-cost worker under KLP Standard.
 
-Latest result: across two runs KLP Standard solved 57 and 54 of 66 for $0.055
-and $0.061 a task. The heavy model alone solved 56 for $0.721 and the frontier
-model alone solved 56 for $0.123.
+Latest result: KLP Standard solved 59 of 66 for $0.046 a task, and 57 and 54
+in two earlier runs. The heavy model alone solved 56 for $0.721 and the
+frontier model alone solved 56 for $0.123.
 [Case study and receipts](../case-studies/feature-benchmark-2026-11-10/README.md).
 
 ## What is measured
@@ -16,8 +16,11 @@ model alone solved 56 for $0.123.
 | `frontier-solo` | `gpt-6.1-sol`, high reasoning | nobody |
 | `astra-solo` | `gpt-6-astra`, high reasoning | nobody |
 | `worker` | `deepseek-flash` | nobody |
-| `klp-sol` | the `worker` arm's exact candidate | `gpt-6.1-sol` as independent critic, findings settled by executed probes, bounded repair |
-| `klp-terra`, `klp-astra` | the same candidate | the same loop with `gpt-6.1-terra` or `gpt-6-astra` as critic |
+| `v2-sol` | the `worker` arm's exact candidate | `gpt-6.1-sol` as independent critic, findings settled by executed probes, bounded repair |
+| `v2-grok`, `v2-argon`, `v2-kimi`, `v2-qwen` | the same candidate | the same loop with `grok-4.7`, or with Gemini 4 Argon, Kimi K3.1 Pro or Qwen 3.8 Max through their agent CLIs on a subscription |
+| `v2a-sol` | the same candidate | `v2-sol` plus an acceptance test file written from the task statement |
+| `worker-3`, `klp-3`, `klp-3a` | a second set of `deepseek-flash` candidates | `gpt-6.1-sol` critic, without and with the acceptance file |
+| `klp-sol`, `klp-terra`, `klp-astra` | the `worker` arm's candidate | the published comparison of three OpenAI critics, made with the earlier runner |
 | `klp` | `deepseek-flash`, then review in one pass | `gpt-6.1-sol` critic; the worker's candidate is also graded before review |
 
 The review arms start from the `worker` arm's candidates: the same files, the
@@ -59,7 +62,7 @@ python3 -m bench.features report --work ~/klp-bench
 
 Useful options:
 
-- `--arms worker,klp-sol` runs only the KLP arm (about $4); the default adds `frontier-solo`.
+- `--arms worker,v2-sol` runs only the KLP arm (about $3 off-peak, $4 at DeepSeek's peak rate); the default adds `frontier-solo`.
 - `--arms astra-solo` adds the heavy model alone (about $48).
 - `--max-steps` and `--repair-rounds` set the worker and repair limits.
 - `--limit 10` runs the first ten tasks; `--ids a,b` runs named tasks.
@@ -73,7 +76,9 @@ each provider's reported token usage with the rates in
 ## Use other models
 
 Edit [`models.json`](models.json). Any OpenAI-compatible chat endpoint works
-for the worker and the critic, including a local model. The worker and critic
+for the worker and the critic, including a local model. A critic can also be
+an agent CLI on a subscription (`"api": "command"`); those arms need the CLI
+installed and signed in, and `v2-grok` needs `XAI_API_KEY`. The worker and critic
 must be different model families; the runner refuses a same-family critic.
 
 ## What you get

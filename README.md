@@ -22,13 +22,16 @@ the models never see.**
 | --- | ---: | ---: | ---: |
 | Heavy model working alone (`gpt-6-astra`) | 56 of 66 | $0.721 | not reviewed |
 | Frontier model working alone (`gpt-6.1-sol`) | 56 of 66 | $0.123 | not reviewed |
-| **KLP Standard**, two runs: low-cost worker, frontier critic, bounded repair | **57 and 54 of 66** | **$0.055 and $0.061** | **43 and 67** |
+| **KLP Standard**: low-cost worker, frontier critic, bounded repair | **59 of 66** | **$0.046** | **70 of 77** |
+| KLP Standard, two earlier runs | 57 and 54 of 66 | $0.055 and $0.061 | 43 of 64 and 67 of 78 |
 
-KLP Standard matched the solve rate of both models working alone and cost 92%
-less per task than the heavy model and 51% to 55% less than the frontier
-model. Its critic confirmed 64 and 78 findings by running a failing test
-against the candidate, and no repair broke a passing task. The KLP arm runs in
-about half an hour for $4.
+KLP Standard solved three more tasks than either model working alone and cost
+94% less per task than the heavy model and 63% less than the frontier model.
+Its critic confirmed 77 findings by running a failing test against the
+candidate, 70 were fixed before handover, and no repair broke a passing task.
+With the review done by a model on a subscription you already hold, the
+metered cost falls to $0.028 a task. The KLP arm runs in about half an hour
+for $3.
 
 [Results and receipts](case-studies/feature-benchmark-2026-11-10/README.md) ·
 [Run the benchmark yourself](bench/README.md) ·
@@ -131,12 +134,14 @@ included receipts and run the offline checks.
 
 ### What We Have Measured
 
-- **Feature benchmark, 66 tasks.** KLP Standard solved 57 and 54 across two
-  runs for $0.055 and $0.061 a task. The heavy model alone solved 56 for $0.721
-  and the frontier model alone solved 56 for $0.123. With two repair rounds,
-  86% of the findings confirmed by execution were fixed before handover. The
-  standard frontier model is the right critic: a heavier one cost 2.7 times as
-  much for one more task, and a lighter one cost more and broke passing work.
+- **Feature benchmark, 66 tasks.** KLP Standard solved 59 for $0.046 a task,
+  and 57 and 54 in two earlier runs for $0.055 and $0.061. The heavy model
+  alone solved 56 for $0.721 and the frontier model alone solved 56 for $0.123.
+  In the latest run 91% of the findings confirmed by execution were fixed
+  before handover. The standard frontier model is the right metered critic: a
+  heavier one cost 2.7 times as much for one more task, and a lighter one cost
+  more and broke passing work. Gemini 4 Argon on a CLI subscription matched the
+  frontier critic's solve count with no metered review cost.
   [Case study and receipts](case-studies/feature-benchmark-2026-11-10/README.md).
 - **Semio coordination.** Four coordination model calls became one, input
   tokens fell from 5,325 to 1,331 (75%), and both paths handled all four

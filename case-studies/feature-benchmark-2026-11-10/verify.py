@@ -40,12 +40,13 @@ def main() -> int:
     by_scope: dict[str, D] = {}
     unmetered: dict[str, int] = {}
     for call in calls:
-        if call["status"] != "completed":
-            continue
         arm = call["scope"].split("/")[0]
         if call.get("metered") is False:
-            expected = D(0)
             unmetered[arm] = unmetered.get(arm, 0) + 1
+        if call["status"] != "completed":
+            continue
+        if call.get("metered") is False:
+            expected = D(0)
         else:
             rates = prices[call["model"]]
             expected = price(call["usage"], rates["off_peak"] if call.get("tier") == "off_peak" else rates)

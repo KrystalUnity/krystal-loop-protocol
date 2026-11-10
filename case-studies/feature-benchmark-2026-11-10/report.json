@@ -3,9 +3,11 @@
  "arms": {
   "Frontier model alone (gpt-6.1-sol)": {
    "arm": "frontier-solo",
+   "candidates_from": null,
    "tasks": 66,
    "solved": 56,
    "usd": "8.1498465",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.1234825227272727272727272727",
    "usd_per_solved": "0.1455329732142857142857142857",
    "median_seconds": 105.69999999999999,
@@ -15,9 +17,11 @@
   },
   "Heavy model alone (gpt-6-astra)": {
    "arm": "astra-solo",
+   "candidates_from": null,
    "tasks": 66,
    "solved": 56,
    "usd": "47.5680890",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.7207286212121212121212121212",
    "usd_per_solved": "0.8494301607142857142857142857",
    "median_seconds": 163.5,
@@ -27,9 +31,11 @@
   },
   "Low-cost worker alone (deepseek-flash)": {
    "arm": "worker",
+   "candidates_from": null,
    "tasks": 66,
    "solved": 54,
    "usd": "1.811226582",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.027442827",
    "usd_per_solved": "0.033541233",
    "median_seconds": 113.75,
@@ -39,9 +45,11 @@
   },
   "KLP Standard, gpt-6.1-sol critic": {
    "arm": "klp-sol",
+   "candidates_from": "worker",
    "tasks": 66,
    "solved": 54,
    "usd": "4.004289926",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.06067105948484848484848484848",
    "usd_per_solved": "0.07415351714814814814814814815",
    "median_seconds": 28.75,
@@ -52,9 +60,11 @@
   },
   "KLP Standard, gpt-6-astra critic": {
    "arm": "klp-astra",
+   "candidates_from": "worker",
    "tasks": 66,
    "solved": 55,
    "usd": "10.857654818",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.1645099214848484848484848485",
    "usd_per_solved": "0.1974119057818181818181818182",
    "median_seconds": 42.85,
@@ -65,9 +75,11 @@
   },
   "KLP Standard, gpt-6.1-terra critic": {
    "arm": "klp-terra",
+   "candidates_from": "worker",
    "tasks": 66,
    "solved": 52,
    "usd": "4.947329218",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.07495953360606060606060606061",
    "usd_per_solved": "0.0951409465",
    "median_seconds": 145.3,
@@ -78,9 +90,11 @@
   },
   "KLP Standard (single pass)": {
    "arm": "klp",
+   "candidates_from": null,
    "tasks": 66,
    "solved": 57,
    "usd": "3.643140118",
+   "unmetered_review_calls": 0,
    "usd_per_task": "0.05519909269696969696969696970",
    "usd_per_solved": "0.06391473891228070175438596491",
    "median_seconds": 122.05000000000001,
@@ -94,6 +108,125 @@
    "tasks": 66,
    "solved": 56,
    "usd": "1.588689198"
+  },
+  "KLP Standard (runner 0.5), gpt-6.1-sol critic": {
+   "arm": "v2-sol",
+   "candidates_from": "worker",
+   "tasks": 66,
+   "solved": 56,
+   "usd": "3.926533138",
+   "unmetered_review_calls": 0,
+   "usd_per_task": "0.05949292633333333333333333333",
+   "usd_per_solved": "0.07011666317857142857142857143",
+   "median_seconds": 38.3,
+   "states": {
+    "budget_exhausted": 8,
+    "completed": 58
+   }
+  },
+  "KLP Standard (runner 0.5) with acceptance file, gpt-6.1-sol critic": {
+   "arm": "v2a-sol",
+   "candidates_from": "worker",
+   "tasks": 66,
+   "solved": 57,
+   "usd": "4.894089310",
+   "unmetered_review_calls": 0,
+   "usd_per_task": "0.07415286833333333333333333333",
+   "usd_per_solved": "0.08586121596491228070175438596",
+   "median_seconds": 39.7,
+   "states": {
+    "budget_exhausted": 10,
+    "completed": 56
+   }
+  },
+  "KLP Standard (runner 0.5), grok-4.7 critic": {
+   "arm": "v2-grok",
+   "candidates_from": "worker",
+   "tasks": 66,
+   "solved": 54,
+   "usd": "3.859790424",
+   "unmetered_review_calls": 0,
+   "usd_per_task": "0.05848167309090909090909090909",
+   "usd_per_solved": "0.07147760044444444444444444444",
+   "median_seconds": 31.3,
+   "states": {
+    "budget_exhausted": 2,
+    "completed": 64
+   }
+  },
+  "KLP Standard (runner 0.5), Gemini 4 Argon critic on a subscription CLI": {
+   "arm": "v2-argon",
+   "candidates_from": "worker",
+   "tasks": 66,
+   "solved": 56,
+   "usd": "1.826768316",
+   "unmetered_review_calls": 70,
+   "usd_per_task": "0.02767830781818181818181818182",
+   "usd_per_solved": "0.03262086278571428571428571429",
+   "median_seconds": 42.15,
+   "states": {
+    "completed": 66
+   }
+  },
+  "KLP Standard (runner 0.5), Kimi K3.1 Pro critic on a subscription CLI": {
+   "arm": "v2-kimi",
+   "candidates_from": "worker",
+   "tasks": 66,
+   "solved": 55,
+   "usd": "1.856516976",
+   "unmetered_review_calls": 77,
+   "usd_per_task": "0.02812904509090909090909090909",
+   "usd_per_solved": "0.03375485410909090909090909091",
+   "median_seconds": 31.3,
+   "states": {
+    "blocked": 7,
+    "budget_exhausted": 1,
+    "completed": 58
+   }
+  },
+  "Low-cost worker alone, run 3 (deepseek-flash)": {
+   "arm": "worker-3",
+   "candidates_from": null,
+   "tasks": 66,
+   "solved": 57,
+   "usd": "0.926250471",
+   "unmetered_review_calls": 0,
+   "usd_per_task": "0.01403409804545454545454545455",
+   "usd_per_solved": "0.01625000826315789473684210526",
+   "median_seconds": 101.75,
+   "states": {
+    "unreviewed": 66
+   }
+  },
+  "KLP Standard, run 3, gpt-6.1-sol critic": {
+   "arm": "klp-3",
+   "candidates_from": "worker-3",
+   "tasks": 66,
+   "solved": 59,
+   "usd": "3.022380555",
+   "unmetered_review_calls": 0,
+   "usd_per_task": "0.04579364477272727272727272727",
+   "usd_per_solved": "0.05122678906779661016949152542",
+   "median_seconds": 33.55,
+   "states": {
+    "budget_exhausted": 8,
+    "completed": 58
+   }
+  },
+  "KLP Standard with acceptance file, run 3, gpt-6.1-sol critic": {
+   "arm": "klp-3a",
+   "candidates_from": "worker-3",
+   "tasks": 66,
+   "solved": 57,
+   "usd": "4.085608225",
+   "unmetered_review_calls": 0,
+   "usd_per_task": "0.06190315492424242424242424242",
+   "usd_per_solved": "0.07167733728070175438596491228",
+   "median_seconds": 40.75,
+   "states": {
+    "budget_exhausted": 6,
+    "completed": 60
+   }
   }
  },
  "reviews": {
@@ -105,6 +238,13 @@
     "unverified": 0,
     "advisory": 0
    },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 0,
    "repairs": 51,
    "repairs_kept": 51,
    "findings_closed": 67,
@@ -124,6 +264,13 @@
     "unverified": 0,
     "advisory": 0
    },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 0,
    "repairs": 53,
    "repairs_kept": 53,
    "findings_closed": 72,
@@ -145,6 +292,13 @@
     "unverified": 0,
     "advisory": 0
    },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 0,
    "repairs": 93,
    "repairs_kept": 93,
    "findings_closed": 167,
@@ -170,6 +324,13 @@
     "unverified": 0,
     "advisory": 0
    },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 0,
    "repairs": 36,
    "repairs_kept": 36,
    "findings_closed": 43,
@@ -181,6 +342,203 @@
     "worker": "1.588689198",
     "critic": "1.7318395",
     "repair": "0.322611420"
+   }
+  },
+  "v2-sol": {
+   "reviews": 123,
+   "findings": {
+    "confirmed": 86,
+    "refuted": 3,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 2,
+   "repairs": 57,
+   "repairs_kept": 57,
+   "findings_closed": 76,
+   "fixed_by_review": [
+    "pallets_click-task2068-feature2",
+    "pallets_click-task2800-feature3"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "1.857130",
+    "repair": "0.258176556"
+   }
+  },
+  "v2a-sol": {
+   "reviews": 107,
+   "findings": {
+    "confirmed": 69,
+    "refuted": 2,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "acceptance": {
+    "passed": 59,
+    "failed": 6,
+    "did not run": 1
+   },
+   "acceptance_findings": 7,
+   "withdrawn": 1,
+   "repairs": 42,
+   "repairs_kept": 41,
+   "findings_closed": 58,
+   "fixed_by_review": [
+    "pallets_click-task2068-feature2",
+    "pallets_click-task2800-feature3",
+    "samuelcolvin_dirty_equals-task43-feature5"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "2.880124",
+    "repair": "0.202738728"
+   }
+  },
+  "v2-grok": {
+   "reviews": 72,
+   "findings": {
+    "confirmed": 4,
+    "refuted": 6,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 1,
+   "repairs": 6,
+   "repairs_kept": 6,
+   "findings_closed": 1,
+   "fixed_by_review": [],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "2.027178",
+    "repair": "0.021385842"
+   }
+  },
+  "v2-argon": {
+   "reviews": 70,
+   "findings": {
+    "confirmed": 5,
+    "refuted": 0,
+    "unverified": 0,
+    "advisory": 1
+   },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 2,
+   "repairs": 4,
+   "repairs_kept": 4,
+   "findings_closed": 3,
+   "fixed_by_review": [
+    "pallets_click-task2068-feature2",
+    "pallets_click-task2800-feature3"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "0",
+    "repair": "0.015541734"
+   }
+  },
+  "v2-kimi": {
+   "reviews": 69,
+   "findings": {
+    "confirmed": 13,
+    "refuted": 7,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 1,
+   "repairs": 10,
+   "repairs_kept": 10,
+   "findings_closed": 11,
+   "fixed_by_review": [
+    "pallets_click-task2800-feature3"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "1.811226582",
+    "critic": "0",
+    "repair": "0.045290394"
+   }
+  },
+  "klp-3": {
+   "reviews": 119,
+   "findings": {
+    "confirmed": 77,
+    "refuted": 3,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "acceptance": {
+    "passed": 0,
+    "failed": 0,
+    "did not run": 0
+   },
+   "acceptance_findings": 0,
+   "withdrawn": 0,
+   "repairs": 54,
+   "repairs_kept": 53,
+   "findings_closed": 70,
+   "fixed_by_review": [
+    "pallets_click-task2068-feature2",
+    "pallets_click-task2800-feature2"
+   ],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "0.926250471",
+    "critic": "1.846074",
+    "repair": "0.250056084"
+   }
+  },
+  "klp-3a": {
+   "reviews": 111,
+   "findings": {
+    "confirmed": 59,
+    "refuted": 2,
+    "unverified": 1,
+    "advisory": 1
+   },
+   "acceptance": {
+    "passed": 61,
+    "failed": 4,
+    "did not run": 1
+   },
+   "acceptance_findings": 5,
+   "withdrawn": 0,
+   "repairs": 45,
+   "repairs_kept": 45,
+   "findings_closed": 53,
+   "fixed_by_review": [],
+   "broken_by_review": [],
+   "usd_by_role": {
+    "worker": "0.926250471",
+    "critic": "2.968348",
+    "repair": "0.191009754"
    }
   }
  }

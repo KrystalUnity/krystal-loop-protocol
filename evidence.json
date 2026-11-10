@@ -8,6 +8,29 @@
       "what": "66 single-feature tasks in Click, Jinja and dirty-equals from the public CooperBench dataset (revision 63b9d44d), graded by hidden tests",
       "arms": [
         {
+          "label": "KLP Standard, run 3",
+          "arm": "klp-3",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-sol",
+          "repair_rounds": 2,
+          "solved": 59,
+          "tasks": 66,
+          "usd_per_task": 0.0458,
+          "usd_per_solved_task": 0.0512,
+          "usd_total": 3.02,
+          "worker_price_tier": "off_peak",
+          "review": {
+            "findings_confirmed_by_probe": 77,
+            "findings_fixed_and_verified": 70,
+            "findings_refuted_by_probe": 3,
+            "tasks_fixed_by_review": 2,
+            "passing_tasks_broken_by_review": 0,
+            "runs_completed": 58,
+            "runs_with_open_finding": 8
+          }
+        },
+        {
           "label": "KLP Standard, run 1",
           "arm": "klp",
           "worker": "deepseek-flash",
@@ -124,24 +147,124 @@
             "passing_tasks_broken_by_review": 3,
             "runs_with_open_finding": 32
           }
+        },
+        {
+          "label": "Low-cost worker alone, run 3",
+          "arm": "worker-3",
+          "worker": "deepseek-flash",
+          "solved": 57,
+          "tasks": 66,
+          "usd_per_task": 0.014,
+          "usd_per_solved_task": 0.0163,
+          "usd_total": 0.93,
+          "worker_price_tier": "off_peak"
+        },
+        {
+          "label": "KLP Standard (runner 0.5) on the run 2 candidates",
+          "arm": "v2-sol",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-sol",
+          "solved": 56,
+          "tasks": 66,
+          "usd_per_task": 0.0595,
+          "usd_per_solved_task": 0.0701,
+          "usd_total": 3.93,
+          "review": {
+            "findings_confirmed_by_probe": 86,
+            "findings_fixed_and_verified": 76,
+            "tasks_fixed_by_review": 2,
+            "passing_tasks_broken_by_review": 0,
+            "runs_with_open_finding": 8
+          }
+        },
+        {
+          "label": "KLP Standard (runner 0.5), Gemini 4 Argon critic on a subscription CLI",
+          "arm": "v2-argon",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "gemini-4-argon-high",
+          "critic_metered": false,
+          "solved": 56,
+          "tasks": 66,
+          "usd_per_task": 0.0277,
+          "usd_per_solved_task": 0.0326,
+          "usd_total": 1.83,
+          "review": {
+            "findings_confirmed_by_probe": 5,
+            "tasks_fixed_by_review": 2,
+            "passing_tasks_broken_by_review": 0,
+            "runs_with_open_finding": 0,
+            "findings_fixed_and_verified": 3
+          }
+        },
+        {
+          "label": "KLP Standard (runner 0.5), grok-4.7 critic",
+          "arm": "v2-grok",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "grok-4.7",
+          "solved": 54,
+          "tasks": 66,
+          "usd_per_task": 0.0585,
+          "usd_per_solved_task": 0.0715,
+          "usd_total": 3.86,
+          "review": {
+            "findings_confirmed_by_probe": 4,
+            "tasks_fixed_by_review": 0,
+            "passing_tasks_broken_by_review": 0,
+            "runs_with_open_finding": 2,
+            "findings_fixed_and_verified": 1
+          }
+        },
+        {
+          "label": "KLP Standard (runner 0.5) with acceptance file, run 2 candidates",
+          "arm": "v2a-sol",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-sol",
+          "solved": 57,
+          "tasks": 66,
+          "usd_per_task": 0.0742,
+          "usd_per_solved_task": 0.0859,
+          "usd_total": 4.89
+        },
+        {
+          "label": "KLP Standard with acceptance file, run 3 candidates",
+          "arm": "klp-3a",
+          "runner": "0.5.0",
+          "worker": "deepseek-flash",
+          "critic": "gpt-6.1-sol",
+          "solved": 57,
+          "tasks": 66,
+          "usd_per_task": 0.0619,
+          "usd_per_solved_task": 0.0717,
+          "usd_total": 4.09
         }
       ],
       "klp_cost_reduction_per_task": {
         "versus_heavy_model_alone": [
+          0.936,
           0.923,
           0.916
         ],
         "versus_frontier_model_alone": [
+          0.629,
           0.553,
           0.509
+        ],
+        "runs": [
+          "run 3",
+          "run 1",
+          "run 2"
         ]
       },
       "receipts": "case-studies/feature-benchmark-2026-11-10/",
       "verify": "python3 case-studies/feature-benchmark-2026-11-10/verify.py",
       "rerun": "bench/README.md",
-      "tasks_failed_by_every_arm": 7,
-      "runs": 462,
-      "model_calls": 6165
+      "tasks_failed_by_every_arm": 5,
+      "runs": 990,
+      "model_calls": 9696
     },
     {
       "id": "ansible-workers-2026-10-27",
