@@ -1,0 +1,905 @@
+{
+ "dataset": "https://github.com/cooperbench/CooperBench.git",
+ "revision": "63b9d44d9f39a02fccf5bf0052db48a917a011fd",
+ "tasks": [
+  {
+   "id": "pallets_click-task2068-feature1",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature2",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature3",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature4",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature5",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature6",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature7",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature8",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature9",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature10",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature11",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2068-feature12",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d791537317947448a3960662d00acf160eff2602",
+   "test_files": [
+    "tests/test_termui.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature1",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature2",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature3",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature4",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature5",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature6",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2800-feature7",
+   "repository": "https://github.com/pallets/click",
+   "commit": "d8763b93021c416549b5f8b4b5497234619410db",
+   "test_files": [
+    "tests/test_shell_completion.py",
+    "tests/test_context.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature1",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature2",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature3",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature4",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature5",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature6",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature7",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_click-task2956-feature8",
+   "repository": "https://github.com/pallets/click",
+   "commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+   "test_files": [
+    "tests/test_arguments.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature1",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature2",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature3",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature4",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature5",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature6",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature7",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature8",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature9",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1465-feature10",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+   "test_files": [
+    "tests/test_async_filters.py",
+    "tests/test_filters.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature1",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature2",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature3",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature4",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature5",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature6",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature7",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature8",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature9",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1559-feature10",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+   "test_files": [
+    "tests/test_ext.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature1",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature2",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature3",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature4",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature5",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature6",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature7",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature8",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature9",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "pallets_jinja-task1621-feature10",
+   "repository": "https://github.com/pallets/jinja",
+   "commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+   "test_files": [
+    "tests/test_loader.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature1",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature2",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature3",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature4",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature5",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature6",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature7",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature8",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  },
+  {
+   "id": "samuelcolvin_dirty_equals-task43-feature9",
+   "repository": "https://github.com/samuelcolvin/dirty-equals",
+   "commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+   "test_files": [
+    "tests/test_other.py"
+   ],
+   "validation": {
+    "base_tests_pass": true,
+    "hidden_fail_without_feature": true,
+    "hidden_pass_with_reference": true
+   }
+  }
+ ]
+}

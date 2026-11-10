@@ -1,0 +1,5950 @@
+[
+ {
+  "task": "pallets_click-task2068-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "fd7a65a1ca375cb70c230d1e16338c9e9ee09d12",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "fd7a65a1ca375cb70c230d1e16338c9e9ee09d12": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2010032",
+  "seconds": 137.9,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 147753,
+    "cached": 124792,
+    "write": 22344,
+    "output": 7557,
+    "usd": "0.2010032",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature10",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "7caf36dd1152073550f07cbfc4a8d778f8e2fd0d",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7caf36dd1152073550f07cbfc4a8d778f8e2fd0d": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0885442",
+  "seconds": 50.2,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 57486,
+    "cached": 45562,
+    "write": 11370,
+    "output": 2603,
+    "usd": "0.0885442",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature11",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "a8ce1df25c4dc91d9c02037436ffaa9540189904",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a8ce1df25c4dc91d9c02037436ffaa9540189904": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1826200",
+  "seconds": 130.7,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 113141,
+    "cached": 93340,
+    "write": 19098,
+    "output": 7639,
+    "usd": "0.1826200",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature12",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "28ce85dce4d116658198d74530cde12921ddf18e",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "28ce85dce4d116658198d74530cde12921ddf18e": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1364153",
+  "seconds": 77.7,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 86161,
+    "cached": 68903,
+    "write": 16543,
+    "output": 4538,
+    "usd": "0.1364153",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "10511001451a593656fd7468408f8f7396389ad2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "10511001451a593656fd7468408f8f7396389ad2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1570038",
+  "seconds": 102.9,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 110204,
+    "cached": 91408,
+    "write": 18157,
+    "output": 5580,
+    "usd": "0.1570038",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "33b900c61aaf9fb46cdaa5f238fd0b6bda046760",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "33b900c61aaf9fb46cdaa5f238fd0b6bda046760": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1002450",
+  "seconds": 59.1,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 51511,
+    "cached": 38830,
+    "write": 11970,
+    "output": 3509,
+    "usd": "0.1002450",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "d416e9818b33c22c4c10a9db2e7543b92d1bd65a",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d416e9818b33c22c4c10a9db2e7543b92d1bd65a": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1758184",
+  "seconds": 136.5,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 99456,
+    "cached": 80114,
+    "write": 18511,
+    "output": 7359,
+    "usd": "0.1758184",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "71751858718b4fcae9a0d4cb218fa731b360eb00",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "71751858718b4fcae9a0d4cb218fa731b360eb00": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1730986",
+  "seconds": 117.8,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 116219,
+    "cached": 97206,
+    "write": 18244,
+    "output": 7062,
+    "usd": "0.1730986",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "7f84b009f399a4560a71dd35ce296d933664ae04",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7f84b009f399a4560a71dd35ce296d933664ae04": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1326855",
+  "seconds": 112.2,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 52413,
+    "cached": 38555,
+    "write": 13078,
+    "output": 6188,
+    "usd": "0.1326855",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "7d753bf6984b6d3cd93ea1546a82a535f95d0615",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7d753bf6984b6d3cd93ea1546a82a535f95d0615": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1324885",
+  "seconds": 86.8,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 70048,
+    "cached": 53835,
+    "write": 15613,
+    "output": 4784,
+    "usd": "0.1324885",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature8",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "658ea8a3048510ba91bf84c616e19d1a60478d02",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "658ea8a3048510ba91bf84c616e19d1a60478d02": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1043619",
+  "seconds": 60.9,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 68276,
+    "cached": 54819,
+    "write": 12832,
+    "output": 3347,
+    "usd": "0.1043619",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature9",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "60af9a37cc2b41ac7a2027687b17e572f3194113",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "60af9a37cc2b41ac7a2027687b17e572f3194113": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1661844",
+  "seconds": 135.1,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 69528,
+    "cached": 51924,
+    "write": 16998,
+    "output": 7479,
+    "usd": "0.1661844",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "a2e06f8ddcda2986ed1e76de6e390cb0c61ea222",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a2e06f8ddcda2986ed1e76de6e390cb0c61ea222": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1423510",
+  "seconds": 86.1,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 120186,
+    "cached": 101940,
+    "write": 17625,
+    "output": 4279,
+    "usd": "0.1423510",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "18a1c4ede0e42092315acb29c2e5d4df2eb07726",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "18a1c4ede0e42092315acb29c2e5d4df2eb07726": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2301678",
+  "seconds": 146.4,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 204431,
+    "cached": 177598,
+    "write": 26244,
+    "output": 8001,
+    "usd": "0.2301678",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "96c41d2295baec798f8a2a463c95dbd22139328a",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "96c41d2295baec798f8a2a463c95dbd22139328a": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2097392",
+  "seconds": 134.5,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 240158,
+    "cached": 216962,
+    "write": 22597,
+    "output": 7386,
+    "usd": "0.2097392",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "76e23def3562e24d40fdb69f96f159139439a272",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "76e23def3562e24d40fdb69f96f159139439a272": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3009219",
+  "seconds": 234.1,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 230663,
+    "cached": 198129,
+    "write": 31937,
+    "output": 12023,
+    "usd": "0.3009219",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "a1688332e4c7f5e51a309a7e3cb588148ef76566",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a1688332e4c7f5e51a309a7e3cb588148ef76566": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1987422",
+  "seconds": 124.2,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 174832,
+    "cached": 150952,
+    "write": 23259,
+    "output": 6611,
+    "usd": "0.1987422",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "96324724e0c89c475112e1a46adebb6e6636060d",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "96324724e0c89c475112e1a46adebb6e6636060d": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2267240",
+  "seconds": 148.6,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 174714,
+    "cached": 148010,
+    "write": 25705,
+    "output": 8140,
+    "usd": "0.2267240",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "74b9673c7d16c73ffe22b3fd47de60347dae92e7",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "74b9673c7d16c73ffe22b3fd47de60347dae92e7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3595368",
+  "seconds": 275.1,
+  "effort": {
+   "worker": {
+    "calls": 17,
+    "input": 334817,
+    "cached": 298978,
+    "write": 34957,
+    "output": 15309,
+    "usd": "0.3595368",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "980d6813bed89b63735731078737a114f456b1b7",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "980d6813bed89b63735731078737a114f456b1b7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2629100",
+  "seconds": 137.6,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 195056,
+    "cached": 161970,
+    "write": 32417,
+    "output": 8329,
+    "usd": "0.2629100",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "5a29065454a07914fded8d74d5e0fe1bfd34b8c1",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "5a29065454a07914fded8d74d5e0fe1bfd34b8c1": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2370371",
+  "seconds": 131.2,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 196904,
+    "cached": 167201,
+    "write": 29097,
+    "output": 7362,
+    "usd": "0.2370371",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "2a3db7a0dbfdb351b25c696baa2fe3cd6178ba07",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "2a3db7a0dbfdb351b25c696baa2fe3cd6178ba07": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2418774",
+  "seconds": 161.6,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 181098,
+    "cached": 152534,
+    "write": 27962,
+    "output": 8561,
+    "usd": "0.2418774",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "30cc0b83bee5e902ae730f51186c1a9f3dd99460",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "30cc0b83bee5e902ae730f51186c1a9f3dd99460": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2425011",
+  "seconds": 148.7,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 187848,
+    "cached": 160081,
+    "write": 27203,
+    "output": 8935,
+    "usd": "0.2425011",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "684299e94b29c6cf1b9b4d7f4a2ded4237224754",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "684299e94b29c6cf1b9b4d7f4a2ded4237224754": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2526725",
+  "seconds": 168.3,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 205241,
+    "cached": 177495,
+    "write": 26997,
+    "output": 9844,
+    "usd": "0.2526725",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "b78226346ebffe42e5ff0553d80aaed51410d4be",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "b78226346ebffe42e5ff0553d80aaed51410d4be": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3342178",
+  "seconds": 227.6,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 270773,
+    "cached": 234598,
+    "write": 36136,
+    "output": 13000,
+    "usd": "0.3342178",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "a3843d6cc905ccb00c6aa90b6340f614e73ee42d",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "a3843d6cc905ccb00c6aa90b6340f614e73ee42d": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2584046",
+  "seconds": 181.8,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 158602,
+    "cached": 127586,
+    "write": 30158,
+    "output": 9314,
+    "usd": "0.2584046",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature8",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "071e47e396cf1b7e0c0857ba601c9fbf575b220f",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "071e47e396cf1b7e0c0857ba601c9fbf575b220f": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3430077",
+  "seconds": 223.7,
+  "effort": {
+   "worker": {
+    "calls": 15,
+    "input": 317987,
+    "cached": 278697,
+    "write": 38296,
+    "output": 12167,
+    "usd": "0.3430077",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "f5c120a16d954a5520aa58075ed217125b97125d",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f5c120a16d954a5520aa58075ed217125b97125d": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1021098",
+  "seconds": 50.6,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 62421,
+    "cached": 48528,
+    "write": 13327,
+    "output": 2949,
+    "usd": "0.1021098",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature10",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "5ca4616b7ba28731957fed7566f9ac822a738d43",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "5ca4616b7ba28731957fed7566f9ac822a738d43": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1211956",
+  "seconds": 64.4,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 65092,
+    "cached": 48396,
+    "write": 15848,
+    "output": 3542,
+    "usd": "0.1211956",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "d4f37a00b4707225265217ce2d51278a97c78c3c",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d4f37a00b4707225265217ce2d51278a97c78c3c": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0741674",
+  "seconds": 40.6,
+  "effort": {
+   "worker": {
+    "calls": 6,
+    "input": 32999,
+    "cached": 22154,
+    "write": 9454,
+    "output": 2190,
+    "usd": "0.0741674",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "5e409aff3abbe41fd2f32b2d5d0d4ab19d4be03a",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "5e409aff3abbe41fd2f32b2d5d0d4ab19d4be03a": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1030715",
+  "seconds": 62.3,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 65694,
+    "cached": 51985,
+    "write": 13165,
+    "output": 3096,
+    "usd": "0.1030715",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "c43e9cc4df018a5c7494d5d2b973a43b6f184448",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "c43e9cc4df018a5c7494d5d2b973a43b6f184448": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0635511",
+  "seconds": 42.9,
+  "effort": {
+   "worker": {
+    "calls": 5,
+    "input": 23905,
+    "cached": 15261,
+    "write": 8089,
+    "output": 2047,
+    "usd": "0.0635511",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "a2fa52abba9f08b0b2cbcd7b69415c0914439735",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "a2fa52abba9f08b0b2cbcd7b69415c0914439735": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1021031",
+  "seconds": 53.5,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 55289,
+    "cached": 40061,
+    "write": 13827,
+    "output": 2616,
+    "usd": "0.1021031",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "00a8f1282a93a22c5f049a819e496b83f7461c04",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "00a8f1282a93a22c5f049a819e496b83f7461c04": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0710719",
+  "seconds": 45.1,
+  "effort": {
+   "worker": {
+    "calls": 6,
+    "input": 33592,
+    "cached": 24369,
+    "write": 8693,
+    "output": 2411,
+    "usd": "0.0710719",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "c38d7eee9907dad057453d6208d867bc2c240ef6",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "c38d7eee9907dad057453d6208d867bc2c240ef6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1161139",
+  "seconds": 81.7,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 69512,
+    "cached": 55009,
+    "write": 13929,
+    "output": 3982,
+    "usd": "0.1161139",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature8",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "38f48ef0a5d0f883827ea9a3c2b8194d8ff28c70",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "38f48ef0a5d0f883827ea9a3c2b8194d8ff28c70": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1030808",
+  "seconds": 58.3,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 51694,
+    "cached": 37638,
+    "write": 12575,
+    "output": 3348,
+    "usd": "0.1030808",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature9",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "19d2dfdb68341b6807a70b7260d3de2cd53b83df",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "19d2dfdb68341b6807a70b7260d3de2cd53b83df": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1327485",
+  "seconds": 82.1,
+  "effort": {
+   "worker": {
+    "calls": 6,
+    "input": 52982,
+    "cached": 36535,
+    "write": 15517,
+    "output": 4965,
+    "usd": "0.1327485",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "1a47b0658ea6bfdbb2caff25d5a07bfff19e421a",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1a47b0658ea6bfdbb2caff25d5a07bfff19e421a": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1270741",
+  "seconds": 63.3,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 84079,
+    "cached": 65601,
+    "write": 17896,
+    "output": 2987,
+    "usd": "0.1270741",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature10",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "9bb53ef7010eecfa6114edb9b4d443c8893a8a24",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9bb53ef7010eecfa6114edb9b4d443c8893a8a24": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0849574",
+  "seconds": 45.1,
+  "effort": {
+   "worker": {
+    "calls": 6,
+    "input": 38137,
+    "cached": 26274,
+    "write": 10908,
+    "output": 2588,
+    "usd": "0.0849574",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "8de0daaac86c6db651e812a509192dc4a7d507d2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "8de0daaac86c6db651e812a509192dc4a7d507d2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2340097",
+  "seconds": 149.7,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 180283,
+    "cached": 152467,
+    "write": 26967,
+    "output": 8223,
+    "usd": "0.2340097",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "e11f0a432612d3c2bc4bdced60a8b2f068460049",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "e11f0a432612d3c2bc4bdced60a8b2f068460049": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3152698",
+  "seconds": 234.4,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 291598,
+    "cached": 259338,
+    "write": 32212,
+    "output": 12818,
+    "usd": "0.3152698",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "57b340c626554bf546e2e64be1794b50959b5c60",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "57b340c626554bf546e2e64be1794b50959b5c60": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1609877",
+  "seconds": 104.1,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 90631,
+    "cached": 71987,
+    "write": 18617,
+    "output": 6065,
+    "usd": "0.1609877",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "dec058c1d0b4198d1593224f83128fc7fa481f60",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "dec058c1d0b4198d1593224f83128fc7fa481f60": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1702021",
+  "seconds": 108.1,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 92775,
+    "cached": 70811,
+    "write": 20971,
+    "output": 5628,
+    "usd": "0.1702021",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "9a0cdc0ff1bb3e8f43b16657c7669f11f4fd74c4",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9a0cdc0ff1bb3e8f43b16657c7669f11f4fd74c4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3937615",
+  "seconds": 341.2,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 322714,
+    "cached": 283315,
+    "write": 38634,
+    "output": 17073,
+    "usd": "0.3937615",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "d50f5a79a97b4bca4c8bd2fab96edf25a2ef94be",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d50f5a79a97b4bca4c8bd2fab96edf25a2ef94be": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1903864",
+  "seconds": 125.4,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 125665,
+    "cached": 104314,
+    "write": 21321,
+    "output": 7329,
+    "usd": "0.1903864",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature8",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "094bf0f495e5601f66d9e6bbb6b1033c3695c6dc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "094bf0f495e5601f66d9e6bbb6b1033c3695c6dc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3105391",
+  "seconds": 219.0,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 196322,
+    "cached": 162931,
+    "write": 33358,
+    "output": 12739,
+    "usd": "0.3105391",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature9",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "1d9431384a19713519908b1b0ccda8fa025da6af",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1d9431384a19713519908b1b0ccda8fa025da6af": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1143102",
+  "seconds": 67.5,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 68855,
+    "cached": 54472,
+    "write": 14359,
+    "output": 3702,
+    "usd": "0.1143102",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "f827f85d000541a6664296c348bdaa0c0922bacc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f827f85d000541a6664296c348bdaa0c0922bacc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0925804",
+  "seconds": 57.0,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 46419,
+    "cached": 34624,
+    "write": 10846,
+    "output": 3299,
+    "usd": "0.0925804",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature10",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "7fbb77e500580a422c031ad4b28efb9f7d9bd425",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7fbb77e500580a422c031ad4b28efb9f7d9bd425": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.3251777",
+  "seconds": 258.8,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 268408,
+    "cached": 232987,
+    "write": 34549,
+    "output": 12739,
+    "usd": "0.3251777",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "c54e7855defc1c4e180d304d4dc60f2c2629ea78",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "c54e7855defc1c4e180d304d4dc60f2c2629ea78": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0917273",
+  "seconds": 51.4,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 55273,
+    "cached": 41883,
+    "write": 12563,
+    "output": 2307,
+    "usd": "0.0917273",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "46aa55c9e60ba65f5e68f30860262ed74de5134e",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "46aa55c9e60ba65f5e68f30860262ed74de5134e": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0804415",
+  "seconds": 42.5,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 45365,
+    "cached": 33775,
+    "write": 10718,
+    "output": 2173,
+    "usd": "0.0804415",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "96d6c87f0de3fc6c3318bc88dba63c14031d63f6",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "96d6c87f0de3fc6c3318bc88dba63c14031d63f6": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0915175",
+  "seconds": 62.3,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 48554,
+    "cached": 36755,
+    "write": 11778,
+    "output": 2891,
+    "usd": "0.0915175",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "1194079c3aeeacabe622382fdd025f5740dbf5c7",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1194079c3aeeacabe622382fdd025f5740dbf5c7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1731781",
+  "seconds": 170.7,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 94064,
+    "cached": 76761,
+    "write": 16292,
+    "output": 8202,
+    "usd": "0.1731781",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "1a5245ac5ca406ecc251a50ff1e4da9baf7215bd",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1a5245ac5ca406ecc251a50ff1e4da9baf7215bd": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2268594",
+  "seconds": 151.6,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 177706,
+    "cached": 151674,
+    "write": 25996,
+    "output": 8164,
+    "usd": "0.2268594",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "1a0fd01900f12f610dc5c74efb8708fb2fce3ce6",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1a0fd01900f12f610dc5c74efb8708fb2fce3ce6": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0978631",
+  "seconds": 57.9,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 60038,
+    "cached": 46821,
+    "write": 12449,
+    "output": 2940,
+    "usd": "0.0978631",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature8",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "7f73813e4a16475fef5d674b3de2cade6e6cf913",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7f73813e4a16475fef5d674b3de2cade6e6cf913": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2194241",
+  "seconds": 147.9,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 166485,
+    "cached": 141231,
+    "write": 25221,
+    "output": 7913,
+    "usd": "0.2194241",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature9",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "26e037a8d5dab4cf7f7e5b4a75192bd2407875fa",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "26e037a8d5dab4cf7f7e5b4a75192bd2407875fa": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.2144855",
+  "seconds": 192.7,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 118555,
+    "cached": 96305,
+    "write": 21335,
+    "output": 9635,
+    "usd": "0.2144855",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature1",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "e1415262c287ccc5f5e8c01cc986a135932016e0",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "e1415262c287ccc5f5e8c01cc986a135932016e0": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1723977",
+  "seconds": 107.3,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 94234,
+    "cached": 73947,
+    "write": 19443,
+    "output": 6610,
+    "usd": "0.1723977",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature2",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "0f52ede6fd2c190186541763d1975c58ebc1d8f8",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0f52ede6fd2c190186541763d1975c58ebc1d8f8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1061520",
+  "seconds": 58.7,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 74461,
+    "cached": 60680,
+    "write": 13064,
+    "output": 3333,
+    "usd": "0.1061520",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature3",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "0ed89662c707aede6ea35a9a74aa4f47603f1f3b",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0ed89662c707aede6ea35a9a74aa4f47603f1f3b": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1006104",
+  "seconds": 56.7,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 63642,
+    "cached": 50444,
+    "write": 12560,
+    "output": 3149,
+    "usd": "0.1006104",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature4",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "8b3ac8b11424339edd948b78aac43772a5b7e6d4",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "8b3ac8b11424339edd948b78aac43772a5b7e6d4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0889549",
+  "seconds": 45.9,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 53107,
+    "cached": 40829,
+    "write": 11592,
+    "output": 2554,
+    "usd": "0.0889549",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature5",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "f424058220cf29bc75db187118c5c041027ed94f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f424058220cf29bc75db187118c5c041027ed94f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1387332",
+  "seconds": 103.7,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 66061,
+    "cached": 49392,
+    "write": 15722,
+    "output": 5329,
+    "usd": "0.1387332",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature6",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "f9d7a0443d4ecbc491f5b4cf9c3ff4d9559412a3",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "f9d7a0443d4ecbc491f5b4cf9c3ff4d9559412a3": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1710553",
+  "seconds": 120.4,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 114567,
+    "cached": 95273,
+    "write": 18700,
+    "output": 6684,
+    "usd": "0.1710553",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature7",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "ba3ff46aa4ff3f8372c8bcfea571e4f86f01a1e5",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ba3ff46aa4ff3f8372c8bcfea571e4f86f01a1e5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0911519",
+  "seconds": 52.0,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 51415,
+    "cached": 38999,
+    "write": 11780,
+    "output": 2708,
+    "usd": "0.0911519",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature8",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "6e47351be13b9030a7bb1b57e7deba4ec42ca7d5",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "6e47351be13b9030a7bb1b57e7deba4ec42ca7d5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.0829871",
+  "seconds": 46.7,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 49893,
+    "cached": 38311,
+    "write": 10874,
+    "output": 2337,
+    "usd": "0.0829871",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature9",
+  "arm": "frontier-solo",
+  "state": "unreviewed",
+  "final_revision": "da295d32dc881d87dfd2b06ee9834a021e5f926f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "da295d32dc881d87dfd2b06ee9834a021e5f926f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.1472204",
+  "seconds": 99.2,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 73505,
+    "cached": 55444,
+    "write": 17368,
+    "output": 5345,
+    "usd": "0.1472204",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "dfaac344c202809c93ecaaef02e74c46e3f16a86",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "85570e0f4d9189e2bc9653a7ea45e89b6ac4c99c": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "dfaac344c202809c93ecaaef02e74c46e3f16a86": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.053550452",
+  "seconds": 118.9,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 129653,
+    "cached": 118016,
+    "write": 0,
+    "output": 4894,
+    "usd": "0.010071996",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 4432,
+    "cached": 0,
+    "write": 4426,
+    "output": 1395,
+    "usd": "0.036092",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 116082,
+    "cached": 114176,
+    "write": 0,
+    "output": 5108,
+    "usd": "0.007386456",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 10552,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 4675,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature10",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "7a030eadc0fc5d508861bfbb8a1f11d1bfd2d31f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7a030eadc0fc5d508861bfbb8a1f11d1bfd2d31f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.028708596",
+  "seconds": 66.4,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 180657,
+    "cached": 166016,
+    "write": 0,
+    "output": 7266,
+    "usd": "0.014107596",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2754,
+    "cached": 0,
+    "write": 2751,
+    "output": 84,
+    "usd": "0.014601",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10417,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature11",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "eda9bed9377ecd63e0562fac30eb10c0f5df2e0b",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9e93146c90e97c34320bb2c0ca60734b2336811f": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "eda9bed9377ecd63e0562fac30eb10c0f5df2e0b": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.121227320",
+  "seconds": 550.9,
+  "effort": {
+   "worker": {
+    "calls": 31,
+    "input": 773517,
+    "cached": 754048,
+    "write": 0,
+    "output": 23845,
+    "usd": "0.038978988",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 8156,
+    "cached": 0,
+    "write": 8150,
+    "output": 1981,
+    "usd": "0.060572",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 12,
+    "input": 623241,
+    "cached": 617472,
+    "write": 0,
+    "output": 13534,
+    "usd": "0.021676332",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 17940,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 14448,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature12",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "dc2f1f8994cc103d5e6ab80f70632048e31703c3",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "dc2f1f8994cc103d5e6ab80f70632048e31703c3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.022426360",
+  "seconds": 37.3,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 63966,
+    "cached": 56960,
+    "write": 0,
+    "output": 4239,
+    "usd": "0.007530360",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2877,
+    "cached": 0,
+    "write": 2874,
+    "output": 52,
+    "usd": "0.014896",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11269,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature2",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "59f3ce337a72cd0445b6e5de6047a53954c71123",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "b0a1a2a41cad536a6b262bd899cd4a8bd19a1301": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "59f3ce337a72cd0445b6e5de6047a53954c71123": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.076134324",
+  "seconds": 193.8,
+  "effort": {
+   "worker": {
+    "calls": 17,
+    "input": 229120,
+    "cached": 211584,
+    "write": 0,
+    "output": 8526,
+    "usd": "0.016761504",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 5302,
+    "cached": 0,
+    "write": 5296,
+    "output": 2299,
+    "usd": "0.049482",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 7,
+    "input": 219887,
+    "cached": 216320,
+    "write": 0,
+    "output": 6269,
+    "usd": "0.009890820",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 10882,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 9355,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature3",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "1d344696d3deb538b76e01d653c5bb4fac309541",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "1d344696d3deb538b76e01d653c5bb4fac309541": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.028312164",
+  "seconds": 64.5,
+  "effort": {
+   "worker": {
+    "calls": 13,
+    "input": 103283,
+    "cached": 95744,
+    "write": 0,
+    "output": 6850,
+    "usd": "0.011056164",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2993,
+    "cached": 0,
+    "write": 2990,
+    "output": 230,
+    "usd": "0.017256",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11439,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature4",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "90474b5146a6c083d65035072fbb8a1620368a63",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f586a0c7658358a20d2ff13dbb7d63840736d141": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "90474b5146a6c083d65035072fbb8a1620368a63": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.095664828",
+  "seconds": 245.0,
+  "effort": {
+   "worker": {
+    "calls": 28,
+    "input": 535847,
+    "cached": 518144,
+    "write": 0,
+    "output": 17012,
+    "usd": "0.028834164",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 7225,
+    "cached": 0,
+    "write": 7219,
+    "output": 2143,
+    "usd": "0.057537",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 226640,
+    "cached": 223744,
+    "write": 0,
+    "output": 5902,
+    "usd": "0.009293664",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 16529,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 9844,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature5",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "2f25ec0d52db65467dbf5e0f51cd5653a62d3189",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "2f25ec0d52db65467dbf5e0f51cd5653a62d3189": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.038821508",
+  "seconds": 102.2,
+  "effort": {
+   "worker": {
+    "calls": 15,
+    "input": 191163,
+    "cached": 179968,
+    "write": 0,
+    "output": 12606,
+    "usd": "0.019565508",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 3539,
+    "cached": 0,
+    "write": 3536,
+    "output": 157,
+    "usd": "0.019256",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 13883,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature6",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "09dc1c2c81809e33c992da079da1e8dc9a7595dc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d932339726aa40bf4ddb1fb39fd3a070b5028777": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "09dc1c2c81809e33c992da079da1e8dc9a7595dc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.065887332",
+  "seconds": 139.2,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 136488,
+    "cached": 125312,
+    "write": 0,
+    "output": 9394,
+    "usd": "0.015377472",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 5925,
+    "cached": 0,
+    "write": 5919,
+    "output": 1893,
+    "usd": "0.048537",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 3,
+    "input": 65665,
+    "cached": 63360,
+    "write": 0,
+    "output": 751,
+    "usd": "0.001972860",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 13796,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 9843,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature7",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "bc0d157139da96e62e50b74487772f27937bf762",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "bc0d157139da96e62e50b74487772f27937bf762": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.027366724",
+  "seconds": 59.3,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 91503,
+    "cached": 82304,
+    "write": 0,
+    "output": 6031,
+    "usd": "0.010490724",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2911,
+    "cached": 0,
+    "write": 2908,
+    "output": 233,
+    "usd": "0.016876",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 11136,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature8",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "29761a375474f2824d48e1459cadb1bc1db8f9ae",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "29761a375474f2824d48e1459cadb1bc1db8f9ae": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.023846388",
+  "seconds": 45.6,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 74535,
+    "cached": 66048,
+    "write": 0,
+    "output": 5465,
+    "usd": "0.009500388",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2767,
+    "cached": 0,
+    "write": 2764,
+    "output": 52,
+    "usd": "0.014346",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10403,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2068-feature9",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "8c3fdbb82104693eb28b6cacfce23a2e604e2526",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "8c3fdbb82104693eb28b6cacfce23a2e604e2526": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.051593232",
+  "seconds": 130.1,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 191942,
+    "cached": 166272,
+    "write": 0,
+    "output": 16603,
+    "usd": "0.028622232",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 4160,
+    "cached": 0,
+    "write": 4157,
+    "output": 218,
+    "usd": "0.022971",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 15572,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "ad30bb931fa84b8843a659658295ea1a2a247497",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ad30bb931fa84b8843a659658295ea1a2a247497": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.049615868",
+  "seconds": 44.8,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 151855,
+    "cached": 137728,
+    "write": 0,
+    "output": 4417,
+    "usd": "0.010364868",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 7648,
+    "cached": 0,
+    "write": 7645,
+    "output": 102,
+    "usd": "0.039251",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 34696,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature2",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "6dbf7b702a119eb7cbdd7b60f59389809bcee630",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "ea9dc59d4860ca77095699c9bbd2917adefcf340": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "6dbf7b702a119eb7cbdd7b60f59389809bcee630": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.146191980",
+  "seconds": 266.9,
+  "effort": {
+   "worker": {
+    "calls": 39,
+    "input": 1283077,
+    "cached": 1243520,
+    "write": 0,
+    "output": 22125,
+    "usd": "0.045878220",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 15588,
+    "cached": 0,
+    "write": 15582,
+    "output": 1395,
+    "usd": "0.091872",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 379364,
+    "cached": 376960,
+    "write": 0,
+    "output": 4549,
+    "usd": "0.008441760",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 59023,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 12305,
+    "dispositions": [
+     "refuted"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature3",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "af9ce249b51d68e66cf01d045065fde33df0e35a",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "cb5910756563f49b5d3b240b75460f4645e2c04e": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "af9ce249b51d68e66cf01d045065fde33df0e35a": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.139856568",
+  "seconds": 281.8,
+  "effort": {
+   "worker": {
+    "calls": 40,
+    "input": 1089006,
+    "cached": 1059712,
+    "write": 0,
+    "output": 27733,
+    "usd": "0.048426072",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 15375,
+    "cached": 0,
+    "write": 15369,
+    "output": 1116,
+    "usd": "0.088017",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 4,
+    "input": 221398,
+    "cached": 220416,
+    "write": 0,
+    "output": 1497,
+    "usd": "0.003413496",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 36099,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 34344,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature4",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "80dea4a8d35cb6ac2b4ca389c01c5dc3a486778f",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "fb1626cdea9388dbaa1702e24c2f573e7623279f": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "80dea4a8d35cb6ac2b4ca389c01c5dc3a486778f": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.184916580",
+  "seconds": 365.5,
+  "effort": {
+   "worker": {
+    "calls": 40,
+    "input": 1145566,
+    "cached": 1107840,
+    "write": 0,
+    "output": 18384,
+    "usd": "0.040025640",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 17772,
+    "cached": 0,
+    "write": 17766,
+    "output": 2826,
+    "usd": "0.117102",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 20,
+    "input": 1341669,
+    "cached": 1331840,
+    "write": 0,
+    "output": 14041,
+    "usd": "0.027788940",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 36585,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 45592,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 2
+   }
+  ],
+  "errors": [
+   "worker used all its steps without handing over"
+  ]
+ },
+ {
+  "task": "pallets_click-task2800-feature5",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "dda8024d8565090c76a452e886e86b6722dff5b1",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9dc34e24faa1bb47d28d9eedff86a460b43fa53a": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "dda8024d8565090c76a452e886e86b6722dff5b1": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.143313716",
+  "seconds": 329.1,
+  "effort": {
+   "worker": {
+    "calls": 40,
+    "input": 1208048,
+    "cached": 1171584,
+    "write": 0,
+    "output": 19812,
+    "usd": "0.041743104",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 11077,
+    "cached": 0,
+    "write": 11071,
+    "output": 1983,
+    "usd": "0.075197",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 20,
+    "input": 1359861,
+    "cached": 1348352,
+    "write": 0,
+    "output": 12359,
+    "usd": "0.026373612",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 35174,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 14620,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 2,
+    "probes": 2
+   }
+  ],
+  "errors": [
+   "worker used all its steps without handing over"
+  ]
+ },
+ {
+  "task": "pallets_click-task2800-feature6",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "dbb69830acf905a6c49a12fad64160397a69069b",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "ee4738043ce5fc76ee7b0292700b91df8b1b03e4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "dbb69830acf905a6c49a12fad64160397a69069b": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.147903864",
+  "seconds": 279.3,
+  "effort": {
+   "worker": {
+    "calls": 31,
+    "input": 918902,
+    "cached": 894080,
+    "write": 0,
+    "output": 23743,
+    "usd": "0.041302680",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 16735,
+    "cached": 0,
+    "write": 16729,
+    "output": 1264,
+    "usd": "0.096297",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 11,
+    "input": 560702,
+    "cached": 555264,
+    "write": 0,
+    "output": 4451,
+    "usd": "0.010304184",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 40700,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 36166,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2800-feature7",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "4e21ade5bca3da21da2de1f5d0f94e25322c56d2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0f1e804bf8276a702c5a9fc0942ef94bc5e9cd6b": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "4e21ade5bca3da21da2de1f5d0f94e25322c56d2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.108704996",
+  "seconds": 113.9,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 266991,
+    "cached": 247808,
+    "write": 0,
+    "output": 8003,
+    "usd": "0.016845348",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 15355,
+    "cached": 0,
+    "write": 15349,
+    "output": 1302,
+    "usd": "0.089777",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 4,
+    "input": 112222,
+    "cached": 110208,
+    "write": 0,
+    "output": 681,
+    "usd": "0.002082648",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 36499,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 34023,
+    "dispositions": [
+     "refuted"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "ae02727be9347c8f61fb2b249c1c3657f84c8f13",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "b6135d3d13017b024afee87f866b2bb6ac2c0d56": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "ae02727be9347c8f61fb2b249c1c3657f84c8f13": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.159145394",
+  "seconds": 296.8,
+  "effort": {
+   "worker": {
+    "calls": 33,
+    "input": 1222840,
+    "cached": 1183995,
+    "write": 0,
+    "output": 27825,
+    "usd": "0.052147470",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 18530,
+    "cached": 0,
+    "write": 18524,
+    "output": 499,
+    "usd": "0.097622",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 5,
+    "input": 347179,
+    "cached": 344704,
+    "write": 0,
+    "output": 5471,
+    "usd": "0.009375924",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 36014,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 48371,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature2",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "39b555acc148b77ebb593aa55b49f96053825b25",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "3a95d6bb297881e727e6e0b1cd1c2c1b8a7dd017": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "39b555acc148b77ebb593aa55b49f96053825b25": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.162043624",
+  "seconds": 442.6,
+  "effort": {
+   "worker": {
+    "calls": 34,
+    "input": 995252,
+    "cached": 965120,
+    "write": 0,
+    "output": 22151,
+    "usd": "0.041411520",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 18194,
+    "cached": 0,
+    "write": 18188,
+    "output": 1188,
+    "usd": "0.102832",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 11,
+    "input": 647006,
+    "cached": 640384,
+    "write": 0,
+    "output": 9976,
+    "usd": "0.017800104",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 51467,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 29973,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature3",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "057894829858ab40b151f041d3b9ffa80557ebef",
+  "solved": true,
+  "first_candidate_solved": false,
+  "grades": {
+   "959c74e52ada9c95af0b84adcac529ee0048bcee": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "057894829858ab40b151f041d3b9ffa80557ebef": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.158825160",
+  "seconds": 332.0,
+  "effort": {
+   "worker": {
+    "calls": 40,
+    "input": 1175527,
+    "cached": 1138560,
+    "write": 0,
+    "output": 24625,
+    "usd": "0.047471460",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 16456,
+    "cached": 0,
+    "write": 16450,
+    "output": 1270,
+    "usd": "0.094962",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 15,
+    "input": 1007763,
+    "cached": 998400,
+    "write": 0,
+    "output": 6327,
+    "usd": "0.016391700",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 46027,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 28500,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 2,
+    "probes": 2
+   }
+  ],
+  "errors": [
+   "worker used all its steps without handing over"
+  ]
+ },
+ {
+  "task": "pallets_click-task2956-feature4",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "d9e2d1c071772196620aded176ed47f36383e54d",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "2fc557341a386a9d489e9924cca6f44925c1b97f": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "d9e2d1c071772196620aded176ed47f36383e54d": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.124821860",
+  "seconds": 331.4,
+  "effort": {
+   "worker": {
+    "calls": 38,
+    "input": 1533456,
+    "cached": 1492480,
+    "write": 0,
+    "output": 30016,
+    "usd": "0.057266880",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 9527,
+    "cached": 0,
+    "write": 9521,
+    "output": 1696,
+    "usd": "0.064577",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 3,
+    "input": 206977,
+    "cached": 206080,
+    "write": 0,
+    "output": 1227,
+    "usd": "0.002977980",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 16765,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 24238,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature5",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "63b5ba912a544a7ce73dd146a1f94a9d441e47dc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "043024d649871975d99a3a22fdb3ad146beef81d": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "63b5ba912a544a7ce73dd146a1f94a9d441e47dc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.109319524",
+  "seconds": 187.0,
+  "effort": {
+   "worker": {
+    "calls": 21,
+    "input": 429303,
+    "cached": 409088,
+    "write": 0,
+    "output": 15803,
+    "usd": "0.027482628",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 13468,
+    "cached": 0,
+    "write": 13462,
+    "output": 1091,
+    "usd": "0.078232",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 4,
+    "input": 145596,
+    "cached": 143616,
+    "write": 0,
+    "output": 1791,
+    "usd": "0.003604896",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 47104,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 12501,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature6",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "09608604f12e45ab2584536e7c8c8fbab4e9016f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0895f81a50ed61d49a4a44791db875dfe28d417d": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "09608604f12e45ab2584536e7c8c8fbab4e9016f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.136130212",
+  "seconds": 311.0,
+  "effort": {
+   "worker": {
+    "calls": 39,
+    "input": 1538651,
+    "cached": 1499520,
+    "write": 0,
+    "output": 28593,
+    "usd": "0.055048020",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 12976,
+    "cached": 0,
+    "write": 12970,
+    "output": 1073,
+    "usd": "0.075592",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 398072,
+    "cached": 396032,
+    "write": 0,
+    "output": 2085,
+    "usd": "0.005490192",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 24246,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 33786,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature7",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "1fbf29184c411b9dfc0d456670f9297917adac79",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "0c966c8e388e795370d64ba73be643cf1d003fa0": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "1fbf29184c411b9dfc0d456670f9297917adac79": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.150851148",
+  "seconds": 249.5,
+  "effort": {
+   "worker": {
+    "calls": 31,
+    "input": 769292,
+    "cached": 742656,
+    "write": 0,
+    "output": 17956,
+    "usd": "0.033993936",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 18681,
+    "cached": 0,
+    "write": 18675,
+    "output": 1314,
+    "usd": "0.106527",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 8,
+    "input": 393843,
+    "cached": 385152,
+    "write": 0,
+    "output": 4510,
+    "usd": "0.010330212",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 54424,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 32625,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_click-task2956-feature8",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "34866761f099e53d9379f747c846f29735bef719",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7cdea9aa61ec60daec79f707ab9e4851e79bd2dc": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "34866761f099e53d9379f747c846f29735bef719": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.159249624",
+  "seconds": 321.3,
+  "effort": {
+   "worker": {
+    "calls": 40,
+    "input": 1509427,
+    "cached": 1465088,
+    "write": 0,
+    "output": 24332,
+    "usd": "0.051290628",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 16255,
+    "cached": 0,
+    "write": 16249,
+    "output": 1360,
+    "usd": "0.094857",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 10,
+    "input": 712797,
+    "cached": 706816,
+    "write": 0,
+    "output": 5889,
+    "usd": "0.013101996",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 16979,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 56004,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": [
+   "worker used all its steps without handing over"
+  ]
+ },
+ {
+  "task": "pallets_jinja-task1465-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "f7106b018e2f8800577392430cacc1e8c4e285cc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "f7106b018e2f8800577392430cacc1e8c4e285cc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.017453964",
+  "seconds": 30.9,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 69097,
+    "cached": 60544,
+    "write": 0,
+    "output": 2924,
+    "usd": "0.006437964",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2107,
+    "cached": 0,
+    "write": 2104,
+    "output": 49,
+    "usd": "0.011016",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7010,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature10",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "66211272d5ccfdc0bbf23bcb28ccb937131ac266",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "66211272d5ccfdc0bbf23bcb28ccb937131ac266": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.021500012",
+  "seconds": 42.4,
+  "effort": {
+   "worker": {
+    "calls": 12,
+    "input": 91517,
+    "cached": 81152,
+    "write": 0,
+    "output": 4323,
+    "usd": "0.008784012",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2417,
+    "cached": 0,
+    "write": 2414,
+    "output": 64,
+    "usd": "0.012716",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8507,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature2",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "d4f804d03307f83317c1e4307641c69e898a67f2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d4f804d03307f83317c1e4307641c69e898a67f2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.018440216",
+  "seconds": 28.9,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 67026,
+    "cached": 59136,
+    "write": 0,
+    "output": 2527,
+    "usd": "0.005754216",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2495,
+    "cached": 0,
+    "write": 2492,
+    "output": 22,
+    "usd": "0.012686",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8434,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature3",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "0984c0f96869a9aa3da715393c56eb569458cfcc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0984c0f96869a9aa3da715393c56eb569458cfcc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.026980280",
+  "seconds": 56.2,
+  "effort": {
+   "worker": {
+    "calls": 17,
+    "input": 159204,
+    "cached": 148480,
+    "write": 0,
+    "output": 6276,
+    "usd": "0.011639280",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2936,
+    "cached": 0,
+    "write": 2933,
+    "output": 67,
+    "usd": "0.015341",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10756,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature4",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "811bf234b3d33229803ae59b7d09790adbcd9afa",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "811bf234b3d33229803ae59b7d09790adbcd9afa": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.016590896",
+  "seconds": 27.0,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 61928,
+    "cached": 54016,
+    "write": 0,
+    "output": 2831,
+    "usd": "0.006094896",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2057,
+    "cached": 0,
+    "write": 2054,
+    "output": 22,
+    "usd": "0.010496",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 6819,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature5",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "aed25c2d648cc11784bf03e4f56640d919e3df3b",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "aed25c2d648cc11784bf03e4f56640d919e3df3b": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.017923240",
+  "seconds": 37.6,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 59622,
+    "cached": 51840,
+    "write": 0,
+    "output": 3493,
+    "usd": "0.006837240",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2057,
+    "cached": 0,
+    "write": 2054,
+    "output": 81,
+    "usd": "0.011086",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 6935,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature6",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "becf1da3769ed3f6f92c3bf2a5672cde1c329d32",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d703b053e99637fa129b13d94581273fe9c138e4": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "becf1da3769ed3f6f92c3bf2a5672cde1c329d32": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.032322220",
+  "seconds": 55.9,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 45607,
+    "cached": 40576,
+    "write": 0,
+    "output": 2525,
+    "usd": "0.004782756",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 3989,
+    "cached": 0,
+    "write": 3983,
+    "output": 540,
+    "usd": "0.025327",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 49488,
+    "cached": 47744,
+    "write": 0,
+    "output": 1169,
+    "usd": "0.002212464",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 6704,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7050,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature7",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "02bc5f672bc8d350985646a291c2f5ed1fea487b",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "24af285cfc81f4e4bf2dd83ba36817467fea97fa": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "02bc5f672bc8d350985646a291c2f5ed1fea487b": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.036529416",
+  "seconds": 55.8,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 35225,
+    "cached": 29696,
+    "write": 0,
+    "output": 2832,
+    "usd": "0.005235276",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 4302,
+    "cached": 0,
+    "write": 4296,
+    "output": 741,
+    "usd": "0.028902",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 3,
+    "input": 31433,
+    "cached": 29440,
+    "write": 0,
+    "output": 1348,
+    "usd": "0.002392140",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 7041,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8093,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature8",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "6975ec95b314a1f57b445fb6f72687cfe2905b22",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "6975ec95b314a1f57b445fb6f72687cfe2905b22": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.027701272",
+  "seconds": 75.3,
+  "effort": {
+   "worker": {
+    "calls": 19,
+    "input": 194426,
+    "cached": 182912,
+    "write": 0,
+    "output": 9028,
+    "usd": "0.015385272",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2347,
+    "cached": 0,
+    "write": 2344,
+    "output": 59,
+    "usd": "0.012316",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7934,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1465-feature9",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "562e88eae5b473ed303f28526f678ffc72de26a1",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "562e88eae5b473ed303f28526f678ffc72de26a1": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.047529572",
+  "seconds": 150.7,
+  "effort": {
+   "worker": {
+    "calls": 24,
+    "input": 421093,
+    "cached": 400512,
+    "write": 0,
+    "output": 16701,
+    "usd": "0.028618572",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 3518,
+    "cached": 0,
+    "write": 3515,
+    "output": 133,
+    "usd": "0.018911",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 12683,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "298b8eeefcdecc3f0ab0701d55975931b1b224b4",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "298b8eeefcdecc3f0ab0701d55975931b1b224b4": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.034141144",
+  "seconds": 67.3,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 247210,
+    "cached": 228224,
+    "write": 0,
+    "output": 5925,
+    "usd": "0.014175144",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 3831,
+    "cached": 0,
+    "write": 3828,
+    "output": 82,
+    "usd": "0.019966",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 16597,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature10",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "d6f102b3fd0a141a223627e5ba64aaebe8e202e1",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "d6f102b3fd0a141a223627e5ba64aaebe8e202e1": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.029493348",
+  "seconds": 32.9,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 61439,
+    "cached": 52608,
+    "write": 0,
+    "output": 3102,
+    "usd": "0.006687348",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 4401,
+    "cached": 0,
+    "write": 4398,
+    "output": 81,
+    "usd": "0.022806",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 19938,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature2",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "0825dfab395242a7ea3c8de67f22a9926d000ed2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "34c3da557d8dbbde5ac3eb922b64d45a8cad4c9e": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "0825dfab395242a7ea3c8de67f22a9926d000ed2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.103476860",
+  "seconds": 229.7,
+  "effort": {
+   "worker": {
+    "calls": 25,
+    "input": 714317,
+    "cached": 685440,
+    "write": 0,
+    "output": 23418,
+    "usd": "0.040877340",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 9925,
+    "cached": 0,
+    "write": 9919,
+    "output": 852,
+    "usd": "0.058127",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 5,
+    "input": 262674,
+    "cached": 261120,
+    "write": 0,
+    "output": 2033,
+    "usd": "0.004472520",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 23693,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 21600,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature3",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "51b56698593a19e33fdc7e9a4e2f37bdd05b9f18",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "82558928922980c42d2f5b89fbdc7d5fc79bbc11": {
+    "passed": false,
+    "stage": "tests"
+   },
+   "51b56698593a19e33fdc7e9a4e2f37bdd05b9f18": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.170291132",
+  "seconds": 469.4,
+  "effort": {
+   "worker": {
+    "calls": 40,
+    "input": 1605878,
+    "cached": 1573120,
+    "write": 0,
+    "output": 41144,
+    "usd": "0.068638920",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 12495,
+    "cached": 0,
+    "write": 12489,
+    "output": 2642,
+    "usd": "0.088877",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 7,
+    "input": 540917,
+    "cached": 535552,
+    "write": 0,
+    "output": 6627,
+    "usd": "0.012775212",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 27249,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 30572,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 2,
+    "probes": 2
+   }
+  ],
+  "errors": [
+   "worker used all its steps without handing over"
+  ]
+ },
+ {
+  "task": "pallets_jinja-task1559-feature4",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "dbbc6e3611b9eb25abe545318f8d3885c46a93a2",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "8dd6e76c72a8e4bb9aba47e0d7ddd463e4f1c029": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "dbbc6e3611b9eb25abe545318f8d3885c46a93a2": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.070941084",
+  "seconds": 99.2,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 120714,
+    "cached": 108672,
+    "write": 0,
+    "output": 6277,
+    "usd": "0.011797032",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 9114,
+    "cached": 0,
+    "write": 9108,
+    "output": 1179,
+    "usd": "0.057342",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 2,
+    "input": 37739,
+    "cached": 36992,
+    "write": 0,
+    "output": 1130,
+    "usd": "0.001802052",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 20626,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 20591,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature5",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "2a46dd6e8cafbfc69ffc39403480424073e85aa3",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "2a46dd6e8cafbfc69ffc39403480424073e85aa3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.057880636",
+  "seconds": 136.1,
+  "effort": {
+   "worker": {
+    "calls": 26,
+    "input": 698017,
+    "cached": 669056,
+    "write": 0,
+    "output": 13260,
+    "usd": "0.028614636",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 4791,
+    "cached": 0,
+    "write": 4788,
+    "output": 532,
+    "usd": "0.029266",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 21845,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature6",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "a846971e41c71678810ab68399bd6e4c25ebadfc",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "828849e5c91474e0be193a9ec3803922a8b36b77": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "a846971e41c71678810ab68399bd6e4c25ebadfc": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.124584392",
+  "seconds": 287.6,
+  "effort": {
+   "worker": {
+    "calls": 25,
+    "input": 699833,
+    "cached": 673664,
+    "write": 0,
+    "output": 22482,
+    "usd": "0.038871084",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 10545,
+    "cached": 0,
+    "write": 10539,
+    "output": 2246,
+    "usd": "0.075167",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 5,
+    "input": 265451,
+    "cached": 263168,
+    "write": 0,
+    "output": 6902,
+    "usd": "0.010546308",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 21622,
+    "dispositions": [
+     "confirmed",
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 24862,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 3,
+    "probes": 3
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature7",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "cfbae4d9d621f926213bc62e857addfae47c2098",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "9a194928d632a526b33267aaac48c7187b2e148a": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "cfbae4d9d621f926213bc62e857addfae47c2098": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.067717272",
+  "seconds": 112.8,
+  "effort": {
+   "worker": {
+    "calls": 15,
+    "input": 168039,
+    "cached": 156160,
+    "write": 0,
+    "output": 8073,
+    "usd": "0.014188260",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 8069,
+    "cached": 0,
+    "write": 8063,
+    "output": 764,
+    "usd": "0.047967",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 141597,
+    "cached": 135552,
+    "write": 0,
+    "output": 2446,
+    "usd": "0.005562012",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 25199,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8364,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature8",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "cc20b2ddbac786b4dc89f770b78f2e5d43f935eb",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "84c276906b8c2c3bd06494575158b2cb703e2954": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "cc20b2ddbac786b4dc89f770b78f2e5d43f935eb": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.128918060",
+  "seconds": 293.0,
+  "effort": {
+   "worker": {
+    "calls": 28,
+    "input": 822654,
+    "cached": 796416,
+    "write": 0,
+    "output": 22766,
+    "usd": "0.039969096",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 11005,
+    "cached": 0,
+    "write": 10999,
+    "output": 2370,
+    "usd": "0.078707",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 315061,
+    "cached": 310144,
+    "write": 0,
+    "output": 5755,
+    "usd": "0.010241964",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 17091,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 32560,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 2,
+    "probes": 2
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1559-feature9",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "75547e7f22ceb26bb0709d571efa4ded17512a76",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7bf5d8a5e87d2d5e461017cb0930762b765e9879": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "75547e7f22ceb26bb0709d571efa4ded17512a76": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.055886076",
+  "seconds": 109.2,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 136972,
+    "cached": 121984,
+    "write": 0,
+    "output": 5909,
+    "usd": "0.012319104",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 5517,
+    "cached": 0,
+    "write": 5511,
+    "output": 897,
+    "usd": "0.036537",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 7,
+    "input": 170751,
+    "cached": 166912,
+    "write": 0,
+    "output": 4064,
+    "usd": "0.007029972",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 12354,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8879,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "7a2558a98bc2b796a4e306cc26d24bafa7fbdd76",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7a2558a98bc2b796a4e306cc26d24bafa7fbdd76": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.017830020",
+  "seconds": 27.0,
+  "effort": {
+   "worker": {
+    "calls": 7,
+    "input": 36519,
+    "cached": 30720,
+    "write": 0,
+    "output": 2950,
+    "usd": "0.005464020",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2357,
+    "cached": 0,
+    "write": 2354,
+    "output": 59,
+    "usd": "0.012366",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 9082,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature10",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "5383e13dbb1f86c70df3fac355b26eaf3f1642eb",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "a9f2334f0d188ea6d78fe1f0d7b0eb3beec8c661": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "5383e13dbb1f86c70df3fac355b26eaf3f1642eb": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.145939576",
+  "seconds": 406.6,
+  "effort": {
+   "worker": {
+    "calls": 25,
+    "input": 688145,
+    "cached": 663552,
+    "write": 0,
+    "output": 26992,
+    "usd": "0.043749612",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 11136,
+    "cached": 0,
+    "write": 11130,
+    "output": 1435,
+    "usd": "0.070012",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 16,
+    "input": 1059525,
+    "cached": 1049344,
+    "write": 0,
+    "output": 19023,
+    "usd": "0.032177964",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 30926,
+    "dispositions": [
+     "confirmed",
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 16781,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 2,
+    "probes": 2
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature2",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "4953cfef54caf70b5b4b2da8a851b01b4b43d770",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "e1b1541ea51508d8e01c6ace9d4ea2d4108c68b9": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "4953cfef54caf70b5b4b2da8a851b01b4b43d770": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.062585504",
+  "seconds": 116.2,
+  "effort": {
+   "worker": {
+    "calls": 11,
+    "input": 78669,
+    "cached": 70656,
+    "write": 0,
+    "output": 5329,
+    "usd": "0.009222636",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 6656,
+    "cached": 0,
+    "write": 6650,
+    "output": 1486,
+    "usd": "0.048122",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 7,
+    "input": 111839,
+    "cached": 108928,
+    "write": 0,
+    "output": 3095,
+    "usd": "0.005240868",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 13681,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 14636,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature3",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "0c8c3d045229fa83c917806c69e997ec625c95ec",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "0c8c3d045229fa83c917806c69e997ec625c95ec": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.015818008",
+  "seconds": 30.0,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 57020,
+    "cached": 48768,
+    "write": 0,
+    "output": 2599,
+    "usd": "0.005887008",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 1826,
+    "cached": 0,
+    "write": 1823,
+    "output": 81,
+    "usd": "0.009931",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 6135,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature4",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "289a17d708d32e9586b324e705fa2e7e75aba99f",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "289a17d708d32e9586b324e705fa2e7e75aba99f": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.023651136",
+  "seconds": 46.3,
+  "effort": {
+   "worker": {
+    "calls": 9,
+    "input": 65094,
+    "cached": 57856,
+    "write": 0,
+    "output": 4268,
+    "usd": "0.007640136",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2834,
+    "cached": 0,
+    "write": 2831,
+    "output": 185,
+    "usd": "0.016011",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 10992,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature5",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "51103f6b9bbd60339294c5d854118f60266d19c3",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "fe9d1364443cf00d611569f91d7cac2716096f7f": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "51103f6b9bbd60339294c5d854118f60266d19c3": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.040712960",
+  "seconds": 58.9,
+  "effort": {
+   "worker": {
+    "calls": 8,
+    "input": 49001,
+    "cached": 41216,
+    "write": 0,
+    "output": 2426,
+    "usd": "0.005493996",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 4749,
+    "cached": 0,
+    "write": 4743,
+    "output": 1019,
+    "usd": "0.033917",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 3,
+    "input": 32881,
+    "cached": 31744,
+    "write": 0,
+    "output": 642,
+    "usd": "0.001301964",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 9391,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 9475,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature6",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "f77f47350c1a2c00c7c4e53f4337ea30a967aacf",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "7413739a49fc051753c0b6c65a507f675dc98dfc": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "f77f47350c1a2c00c7c4e53f4337ea30a967aacf": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.101735160",
+  "seconds": 193.2,
+  "effort": {
+   "worker": {
+    "calls": 24,
+    "input": 504683,
+    "cached": 481920,
+    "write": 0,
+    "output": 14808,
+    "usd": "0.027490020",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 11265,
+    "cached": 0,
+    "write": 11259,
+    "output": 774,
+    "usd": "0.064047",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 6,
+    "input": 244961,
+    "cached": 240640,
+    "write": 0,
+    "output": 6215,
+    "usd": "0.010198140",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 30501,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 18811,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature7",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "23ed3eb1cc6a0569afc8c3eefd3aaa3bbd12d4e7",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "23ed3eb1cc6a0569afc8c3eefd3aaa3bbd12d4e7": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.018051296",
+  "seconds": 25.1,
+  "effort": {
+   "worker": {
+    "calls": 10,
+    "input": 64886,
+    "cached": 57216,
+    "write": 0,
+    "output": 2105,
+    "usd": "0.005170296",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2534,
+    "cached": 0,
+    "write": 2531,
+    "output": 22,
+    "usd": "0.012881",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 9509,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature8",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "81d1b8674260920b8a8dc7213d829b039b869e0d",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "cecbd3f6b4c3687b030f91b2ef023d3b489b7426": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "81d1b8674260920b8a8dc7213d829b039b869e0d": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.086538604",
+  "seconds": 125.2,
+  "effort": {
+   "worker": {
+    "calls": 15,
+    "input": 220246,
+    "cached": 202368,
+    "write": 0,
+    "output": 8262,
+    "usd": "0.016492008",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 10975,
+    "cached": 0,
+    "write": 10969,
+    "output": 1247,
+    "usd": "0.067327",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 4,
+    "input": 106129,
+    "cached": 105216,
+    "write": 0,
+    "output": 1512,
+    "usd": "0.002719596",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 31905,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 17133,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "pallets_jinja-task1621-feature9",
+  "arm": "klp",
+  "state": "budget_exhausted",
+  "final_revision": "c2f8466931bbeb335e7f2da5367ece7cb1eba62f",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "4285ab23a60aa4bc46f21f5554b40498c0264597": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "c2f8466931bbeb335e7f2da5367ece7cb1eba62f": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.073849256",
+  "seconds": 171.8,
+  "effort": {
+   "worker": {
+    "calls": 19,
+    "input": 348734,
+    "cached": 329856,
+    "write": 0,
+    "output": 14487,
+    "usd": "0.025026936",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 6658,
+    "cached": 0,
+    "write": 6652,
+    "output": 1305,
+    "usd": "0.046322",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 3,
+    "input": 98984,
+    "cached": 97920,
+    "write": 0,
+    "output": 1328,
+    "usd": "0.002500320",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 14203,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 14464,
+    "dispositions": [
+     "confirmed"
+    ]
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature1",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "3eea98d3a040144725c6915b82e74646fccdcac5",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "3eea98d3a040144725c6915b82e74646fccdcac5": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.032729324",
+  "seconds": 67.5,
+  "effort": {
+   "worker": {
+    "calls": 14,
+    "input": 234905,
+    "cached": 213504,
+    "write": 0,
+    "output": 7860,
+    "usd": "0.017133324",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2709,
+    "cached": 0,
+    "write": 2706,
+    "output": 206,
+    "usd": "0.015596",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8788,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature2",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "33838818fa1ad275be2db330d9077ea4b7c20ad8",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "33838818fa1ad275be2db330d9077ea4b7c20ad8": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.035759044",
+  "seconds": 98.9,
+  "effort": {
+   "worker": {
+    "calls": 20,
+    "input": 316643,
+    "cached": 298624,
+    "write": 0,
+    "output": 11138,
+    "usd": "0.020563044",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2639,
+    "cached": 0,
+    "write": 2636,
+    "output": 201,
+    "usd": "0.015196",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 8263,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature3",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "575e5fbb52b4d6e05c1a06ace4ad0b86a59bda57",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "575e5fbb52b4d6e05c1a06ace4ad0b86a59bda57": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.038679808",
+  "seconds": 281.8,
+  "effort": {
+   "worker": {
+    "calls": 19,
+    "input": 373030,
+    "cached": 346368,
+    "write": 0,
+    "output": 12660,
+    "usd": "0.025268808",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2148,
+    "cached": 0,
+    "write": 2145,
+    "output": 268,
+    "usd": "0.013411",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 6991,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature4",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "370cad3c665a4444873baae21d243956d616300c",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "370cad3c665a4444873baae21d243956d616300c": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.054434308",
+  "seconds": 344.4,
+  "effort": {
+   "worker": {
+    "calls": 17,
+    "input": 359611,
+    "cached": 339968,
+    "write": 0,
+    "output": 24788,
+    "usd": "0.037678308",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2577,
+    "cached": 0,
+    "write": 2574,
+    "output": 388,
+    "usd": "0.016756",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 9315,
+    "dispositions": [
+     "refuted"
+    ]
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature5",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "afe10955c20612169eb0aa298140d29bb014dfa9",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "dd35ed8392c50ac408683ba1a00530e8ed5d390e": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "afe10955c20612169eb0aa298140d29bb014dfa9": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.068006976",
+  "seconds": 336.7,
+  "effort": {
+   "worker": {
+    "calls": 21,
+    "input": 454659,
+    "cached": 434048,
+    "write": 0,
+    "output": 18247,
+    "usd": "0.030683988",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 4966,
+    "cached": 0,
+    "write": 4960,
+    "output": 1006,
+    "usd": "0.034872",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 3,
+    "input": 114809,
+    "cached": 114048,
+    "write": 0,
+    "output": 1282,
+    "usd": "0.002450988",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 11405,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 5641,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature6",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "e8b7178144ffbb34d04e6f23147ae8772880f1f1",
+  "solved": false,
+  "first_candidate_solved": false,
+  "grades": {
+   "e8b7178144ffbb34d04e6f23147ae8772880f1f1": {
+    "passed": false,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.055773384",
+  "seconds": 190.5,
+  "effort": {
+   "worker": {
+    "calls": 25,
+    "input": 706352,
+    "cached": 680064,
+    "write": 0,
+    "output": 22363,
+    "usd": "0.038802384",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2720,
+    "cached": 0,
+    "write": 2717,
+    "output": 338,
+    "usd": "0.016971",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 9335,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature7",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "21814447172040ffc7be63dfc34e3aa42f22ea14",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "21814447172040ffc7be63dfc34e3aa42f22ea14": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.037779944",
+  "seconds": 117.6,
+  "effort": {
+   "worker": {
+    "calls": 20,
+    "input": 393060,
+    "cached": 369024,
+    "write": 0,
+    "output": 13045,
+    "usd": "0.025078944",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2400,
+    "cached": 0,
+    "write": 2397,
+    "output": 71,
+    "usd": "0.012701",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7775,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature8",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "6d0a8379a3047a2ad3de56b2dbde5aa48534e1ba",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "6d0a8379a3047a2ad3de56b2dbde5aa48534e1ba": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.039070168",
+  "seconds": 118.9,
+  "effort": {
+   "worker": {
+    "calls": 24,
+    "input": 463466,
+    "cached": 441728,
+    "write": 0,
+    "output": 12152,
+    "usd": "0.023754168",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 1,
+    "input": 2237,
+    "cached": 0,
+    "write": 2234,
+    "output": 414,
+    "usd": "0.015316",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7490,
+    "dispositions": []
+   }
+  ],
+  "repairs": [],
+  "errors": []
+ },
+ {
+  "task": "samuelcolvin_dirty_equals-task43-feature9",
+  "arm": "klp",
+  "state": "completed",
+  "final_revision": "02cd9252e503b81807fc1542f7909fb0f61aff2b",
+  "solved": true,
+  "first_candidate_solved": true,
+  "grades": {
+   "91870aa6867354a06f889b5dac29a2c463bab360": {
+    "passed": true,
+    "stage": "tests"
+   },
+   "02cd9252e503b81807fc1542f7909fb0f61aff2b": {
+    "passed": true,
+    "stage": "tests"
+   }
+  },
+  "usd": "0.055652704",
+  "seconds": 131.2,
+  "effort": {
+   "worker": {
+    "calls": 16,
+    "input": 227132,
+    "cached": 212224,
+    "write": 0,
+    "output": 12534,
+    "usd": "0.020786544",
+    "unpriced_calls": 0
+   },
+   "critic": {
+    "calls": 2,
+    "input": 5199,
+    "cached": 0,
+    "write": 5193,
+    "output": 760,
+    "usd": "0.033577",
+    "unpriced_calls": 0
+   },
+   "repair": {
+    "calls": 2,
+    "input": 54350,
+    "cached": 53760,
+    "write": 0,
+    "output": 658,
+    "usd": "0.001289160",
+    "unpriced_calls": 0
+   }
+  },
+  "reviews": [
+   {
+    "verdict": "FAIL",
+    "packet_bytes": 9174,
+    "dispositions": [
+     "confirmed"
+    ]
+   },
+   {
+    "verdict": "PASS",
+    "packet_bytes": 7547,
+    "dispositions": []
+   }
+  ],
+  "repairs": [
+   {
+    "kept": true,
+    "closed": 1,
+    "probes": 1
+   }
+  ],
+  "errors": []
+ }
+]

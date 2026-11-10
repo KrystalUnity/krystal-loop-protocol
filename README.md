@@ -15,12 +15,17 @@ runner and a public benchmark you can rerun.
 **66 real feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see.**
 
-| | Tasks solved | Cost per task | Whole benchmark |
+| | Tasks solved | Cost per task | Findings confirmed and fixed |
 | --- | ---: | ---: | ---: |
-| Frontier model working alone | @@F_SOLVED@@ of 66 | $@@F_PER_TASK@@ | $@@F_TOTAL@@ |
-| **KLP Standard**: low-cost worker, frontier critic | **@@K_SOLVED@@ of 66** | **$@@K_PER_TASK@@** | **$@@K_TOTAL@@** |
+| Frontier model working alone | 56 of 66 | $0.173 | not reviewed |
+| Low-cost worker alone | 56 of 66 | $0.024 | not reviewed |
+| **KLP Standard**: that worker, a frontier critic, one bounded repair | **57 of 66** | **$0.073** | **43** |
 
-@@HEADLINE@@
+KLP Standard solved one more task than the frontier model working alone and
+cost 58% less per task. Its critic confirmed 64 findings by running a failing
+test against the candidate; 43 were repaired and verified fixed before
+handover, and no repair broke a passing task. The whole benchmark runs in
+about half an hour for $16.
 
 [Results and receipts](case-studies/feature-benchmark-2026-11-10/README.md) ·
 [Run the benchmark yourself](bench/README.md) ·
@@ -101,9 +106,10 @@ included receipts and run the offline checks.
 
 ## What You Gain
 
-- **Frontier-level checking at low-cost-model prices.** The expensive model
+- **Frontier-level checking at low-cost-model prices.** The frontier model
   reads one compact review packet per task; the low-cost model does the many
-  turns of reading, editing and testing.
+  turns of reading, editing and testing. On the benchmark the low-cost model
+  made 94% of the calls.
 - **Findings you can trust.** A reviewer's opinion does not start a repair. A
   failing probe does, and the receipt shows which findings were confirmed,
   which were refuted and which were closed.
@@ -120,7 +126,9 @@ included receipts and run the offline checks.
 
 ### What We Have Measured
 
-- **Feature benchmark, 66 tasks.** @@MEASURED_BENCH@@
+- **Feature benchmark, 66 tasks.** KLP Standard solved 57 for $0.073 a task;
+  a frontier model alone solved 56 for $0.173 a task. Review confirmed 64
+  findings by execution and 43 were fixed before handover.
   [Case study and receipts](case-studies/feature-benchmark-2026-11-10/README.md).
 - **Semio coordination.** Four coordination model calls became one, input
   tokens fell from 5,325 to 1,331 (75%), and both paths handled all four

@@ -1,0 +1,62 @@
+{
+ "tasks_compared": 66,
+ "arms": {
+  "frontier model alone": {
+   "tasks": 66,
+   "solved": 56,
+   "solve_rate": 0.8485,
+   "usd": "11.3945090",
+   "usd_per_task": "0.1726440757575757575757575758",
+   "usd_per_solved": "0.203473375",
+   "median_seconds": 105.69999999999999
+  },
+  "low-cost worker alone": {
+   "tasks": 66,
+   "solved": 56,
+   "solve_rate": 0.8485,
+   "usd": "1.588689198",
+   "usd_per_task": "0.02407104845454545454545454545",
+   "usd_per_solved": "0.02836944996428571428571428571",
+   "median_seconds": 122.05000000000001
+  },
+  "KLP Standard": {
+   "tasks": 66,
+   "solved": 57,
+   "solve_rate": 0.8636,
+   "usd": "4.825327618",
+   "usd_per_task": "0.07311102451515151515151515152",
+   "usd_per_solved": "0.08465487049122807017543859649",
+   "median_seconds": 122.05000000000001
+  }
+ },
+ "klp_review": {
+  "reviews": 102,
+  "fail_verdicts": 57,
+  "findings": {
+   "confirmed": 64,
+   "refuted": 3,
+   "unverified": 0,
+   "advisory": 0
+  },
+  "repairs": 36,
+  "repairs_kept": 36,
+  "fixed_by_review": [
+   "pallets_click-task2956-feature3"
+  ],
+  "broken_by_review": [],
+  "usd_by_role": {
+   "worker": "1.588689198",
+   "critic": "2.914027",
+   "repair": "0.322611420"
+  }
+ },
+ "states": {
+  "frontier-solo": {
+   "unreviewed": 66
+  },
+  "klp": {
+   "completed": 48,
+   "budget_exhausted": 18
+  }
+ }
+}

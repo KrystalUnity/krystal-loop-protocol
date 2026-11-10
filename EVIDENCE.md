@@ -5,7 +5,7 @@ between 19 October and 10 November 2026. Each result names what was compared
 and links to receipts you can recompute. The feature benchmark can be rerun
 from this repository with your own keys.
 
-## Feature Benchmark: @@EV_TITLE@@
+## Feature Benchmark: One More Task Solved at 42% of the Cost
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see. Every arm had the same task statement, sandbox, shell
@@ -13,11 +13,25 @@ tool and step limit.
 
 | | Tasks solved | Cost per task | Cost per solved task | Whole benchmark |
 | --- | ---: | ---: | ---: | ---: |
-| Frontier model alone (`gpt-6.1-sol`, high reasoning) | @@F_SOLVED@@ of 66 | $@@F_PER_TASK@@ | $@@F_PER_SOLVED@@ | $@@F_TOTAL@@ |
-| Low-cost worker alone (`deepseek-flash`) | @@C_SOLVED@@ of 66 | $@@C_PER_TASK@@ | $@@C_PER_SOLVED@@ | $@@C_TOTAL@@ |
-| **KLP Standard** (that worker, `gpt-6.1-sol` critic, one bounded repair) | **@@K_SOLVED@@ of 66** | **$@@K_PER_TASK@@** | **$@@K_PER_SOLVED@@** | **$@@K_TOTAL@@** |
+| Frontier model alone (`gpt-6.1-sol`, high reasoning) | 56 of 66 | $0.173 | $0.203 | $11.39 |
+| Low-cost worker alone (`deepseek-flash`) | 56 of 66 | $0.024 | $0.028 | $1.59 |
+| **KLP Standard** (that worker, `gpt-6.1-sol` critic, one bounded repair) | **57 of 66** | **$0.073** | **$0.085** | **$4.83** |
 
-@@EV_BODY@@
+KLP Standard cost 58% less per task than the frontier model alone and solved
+one more task. The low-cost worker alone and KLP Standard are the same worker
+runs, graded before and after review, so the difference between those rows is
+the review:
+
+- the critic confirmed 64 findings by running a failing test against the
+  candidate, and 3 more were discarded when their test passed;
+- 43 of the 44 findings sent to the one bounded repair were fixed and verified;
+- one task went from failing its hidden tests to passing them;
+- all 56 candidates that passed before review still passed after it.
+
+The low-cost model made 94% of the KLP calls. The frontier model was called
+102 times, once per review, on a packet with a median size of 14.5 KB. All 132
+runs and 2,321 calls completed; both arms together cost $16.22 and took 33
+minutes at ten tasks in parallel.
 
 Read the [case study](case-studies/feature-benchmark-2026-11-10/README.md),
 recompute it with the [offline checker](case-studies/feature-benchmark-2026-11-10/verify.py),
