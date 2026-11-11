@@ -125,6 +125,8 @@ Still yours to decide: merge, push and deploy.
 ```
 
 - **Requirements:** Linux or WSL, Python 3.11+, Git and bubblewrap.
+- **Licence:** free for individuals and small businesses; anyone can evaluate
+  it and rerun the benchmarks. [Terms](#license).
 - **Models:** any OpenAI-compatible endpoint for the worker and the critic,
   including a local model. The critic can also be an agent CLI on a
   subscription you already hold. `klp init` writes your routes and limits to
@@ -231,11 +233,19 @@ critic harness and offline lifecycle fixtures.
 
 ## License
 
-Krystal Loop Protocol uses split licensing:
+**Free for individuals and small businesses.** Larger organisations can
+evaluate it freely, benchmarks included, and need a commercial licence to use
+it in their work.
 
-- software, scripts, schemas, configuration examples, and tests are licensed
-  under [Apache License 2.0](LICENSE-APACHE-2.0) (`Apache-2.0`);
-- protocol and documentation text are licensed under
+- Software, scripts, schemas, configuration examples, and tests are licensed
+  under the
+  [PolyForm Small Business License 1.0.0](LICENSE-PolyForm-Small-Business-1.0.0)
+  (`PolyForm-Small-Business-1.0.0`): free for companies with fewer than 100
+  people and under $1M revenue.
+- Protocol and documentation text are licensed under
   [Creative Commons Attribution 4.0](LICENSE-CC-BY-4.0) (`CC-BY-4.0`).
+- Commercial licences: sales@krystalunity.com.
 
-See the [licensing map](LICENSE) for the file-level boundary.
+See the [licensing map](LICENSE) for the file-level boundary, the extra
+permissions for personal use, evaluation and research, and the licence of
+earlier versions.

@@ -547,5 +547,13 @@
     "needs": "Python 3.11+, git; bubblewrap for the sandboxed runner tests",
     "api_keys": "none",
     "expected_last_line": "Every published figure recomputes from the receipts."
+  },
+  "license": {
+    "software": "PolyForm-Small-Business-1.0.0",
+    "documentation": "CC-BY-4.0",
+    "free_for": "individuals, and companies with fewer than 100 people and under 1,000,000 USD (2019, inflation-adjusted) revenue in the prior tax year",
+    "anyone_may": "evaluate the software and rerun the published benchmarks; use it for teaching and non-commercial research",
+    "commercial_licence": "sales@krystalunity.com",
+    "details": "LICENSE"
   }
 }

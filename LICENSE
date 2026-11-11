@@ -1,11 +1,43 @@
 # Krystal Loop Protocol Licensing
 
+Free for individuals and small businesses. Larger organisations can evaluate
+it freely and need a commercial licence to use it in their work.
+
 This repository uses separate licences for software and documentation.
 
 ## Software
 
 Source code, scripts, configuration examples, schemas, and tests are licensed
-under the Apache License, Version 2.0. See `LICENSE-APACHE-2.0`.
+under the PolyForm Small Business License 1.0.0. See
+`LICENSE-PolyForm-Small-Business-1.0.0`.
+
+Required Notice: Copyright Krystal Unity (https://krystalunity.com)
+
+In short: your company may use, change and share the software at no charge if
+it has fewer than 100 people working for it and had less than 1,000,000 USD
+(2019, adjusted for inflation) revenue in the prior tax year. The licence text
+governs.
+
+### Additional Permissions
+
+For an individual or an organisation of any size, each of these is also a
+permitted purpose under that licence:
+
+- personal use that is not for the benefit of a company;
+- evaluating the software, including verifying and rerunning the published
+  benchmarks, but not using it for production work;
+- teaching and non-commercial research.
+
+### Commercial Licences
+
+Organisations above the small-business limits can license the software for
+their work. Write to sales@krystalunity.com.
+
+### Earlier Versions
+
+Revisions of this repository up to and including commit `d225053`
+(2 November 2026) were published under the Apache License, Version 2.0, and
+remain available under that licence.
 
 ## Documentation
 
