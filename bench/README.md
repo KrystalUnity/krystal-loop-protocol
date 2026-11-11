@@ -74,6 +74,19 @@ applied to a pristine checkout, the hidden test files replace the candidate's
 versions, and the task's test files must pass. Models never see the hidden
 tests or their results.
 
+### Grade a tool of your own
+
+```bash
+python3 -m bench.features tasks --work ~/klp-bench --out ~/my-run
+python3 -m bench.features grade --work ~/klp-bench --patches ~/my-run --name my-setup --usd 4.10
+```
+
+`tasks` writes a clean checkout and `TASK.md` for each task. `grade` collects
+what changed in each `<task-id>/repo`, or reads `<task-id>.patch`, and grades it
+as above. Results go to `external/<name>/results.json`; a task with no patch is
+unsolved. `--ids` limits either command to named tasks.
+[Guide](../BENCHMARKS.md#grade-your-own-setup).
+
 ## Paired features: `bench.pairs`
 
 ```bash

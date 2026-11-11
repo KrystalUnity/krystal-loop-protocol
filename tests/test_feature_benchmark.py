@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -80,6 +81,85 @@ class TaskFolder(unittest.TestCase):
         self.assertEqual(spec, dict(url="https://github.com/pallets/click", python="3.11",
                                     commit="d8763b93021c416549b5f8b4b5497234619410db",
                                     test_files=["tests/test_a.py", "tests/test_b.py"]))
+
+
+class GradeYourOwn(unittest.TestCase):
+    """Grading patches made outside the harness. Real Git; the hidden-test run itself needs a prepared benchmark."""
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="klp-bench-test-"))
+        self.work, self.source = self.root / "work", self.root / "mine"
+        origin = self.work / "envs" / "env1" / "ws" / "repo"
+        origin.mkdir(parents=True)
+        self.git(origin, "init", "-q")
+        (origin / "app.py").write_text("def greet():\n    return 'hello'\n")
+        (origin / ".gitignore").write_text("__pycache__/\n")
+        self.git(origin, "add", "-A")
+        self.git(origin, "commit", "-q", "-m", "base")
+        commit = self.git(origin, "rev-parse", "HEAD").strip()
+        statement = self.root / "feature.md"
+        statement.write_text("Add a farewell function.\n")
+        task = dict(env="env1", commit=commit, test_files=["tests/test_app.py"], statement=str(statement), valid=True)
+        (self.work / "tasks.json").write_text(json.dumps(dict(tasks=[
+            dict(task, id="t-edited"), dict(task, id="t-committed"), dict(task, id="t-file"), dict(task, id="t-untouched"),
+            dict(task, id="t-absent"), dict(task, id="t-invalid", valid=False)])))
+
+    def git(self, repo, *args):
+        return subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@localhost", "-C", str(repo), *args],
+                              check=True, capture_output=True, text=True).stdout
+
+    def test_handout_then_grade_collects_every_kind_of_work(self):
+        features.handout(self.work, self.source, ["t-edited", "t-committed", "t-file", "t-untouched"])
+        self.assertEqual((self.source / "t-edited" / "TASK.md").read_text(),
+                         "Add a farewell function.\n\nExisting tests that must keep passing:\n"
+                         "$ python -m pytest -q -p no:cacheprovider -x tests/test_app.py\n")
+        edited = self.source / "t-edited" / "repo"
+        (edited / "app.py").write_text("def greet():\n    return 'hello'\n\ndef farewell():\n    return 'bye'\n")
+        (edited / "notes.txt").write_text("a new file\n")                      # untracked files are part of the work
+        (edited / "__pycache__").mkdir()
+        (edited / "__pycache__" / "app.pyc").write_text("ignored")              # ignored files are not
+        committed = self.source / "t-committed" / "repo"
+        (committed / "app.py").write_text("def greet():\n    return 'hi'\n")
+        self.git(committed, "commit", "-q", "-am", "the tool committed its work")
+        before = self.git(edited, "status", "--porcelain")
+        pristine = self.work / "envs" / "env1" / "ws" / "repo"
+        # a tool that plants a filter in its checkout's own Git config must not get it run on the host
+        marker = self.root / "filter-ran"
+        self.git(edited, "config", "filter.planted.clean", f"sh -c 'touch {marker}; cat'")
+        (edited / ".gitattributes").write_text("* filter=planted\n")
+        (self.source / "t-file.patch").write_bytes(
+            features.workspace_patch(edited, self.git(edited, "rev-parse", "HEAD").strip(), pristine))
+        self.assertFalse(marker.exists())
+        features.handout(self.work, self.source, ["t-edited"])                    # a second handout keeps the work
+        self.assertIn("farewell", (edited / "app.py").read_text())
+
+        seen = {}
+
+        def grader(env_dir, scratch, task, candidate=None):
+            seen[task["id"]] = candidate.decode()
+            return dict(passed="farewell" in seen[task["id"]], stage="tests", output="1 failed")
+
+        summary = features.grade(self.work, self.source, "my-setup", 2, None, 2.5, grader=grader)
+        self.assertFalse(marker.exists())
+        (edited / ".gitattributes").unlink()
+        self.git(edited, "config", "--unset", "filter.planted.clean")
+        self.assertEqual(self.git(edited, "status", "--porcelain"), before)      # grading leaves the checkout alone
+        self.assertIn("+def farewell():", seen["t-edited"])
+        self.assertIn("notes.txt", seen["t-edited"])
+        self.assertNotIn("__pycache__", seen["t-edited"])
+        self.assertIn("+    return 'hi'", seen["t-committed"])
+        self.assertEqual(seen["t-file"], seen["t-edited"])
+        rows = {r["task"]: r for r in summary["results"]}
+        self.assertEqual({k: (v["solved"], v["stage"]) for k, v in rows.items()}, {
+            "t-edited": (True, "tests"), "t-committed": (False, "tests"), "t-file": (True, "tests"),
+            "t-untouched": (False, "no patch"), "t-absent": (False, "no patch")})   # the invalid task is never graded
+        self.assertEqual((summary["tasks"], summary["patches"], summary["solved"]), (5, 3, 2))
+        self.assertEqual(summary["usd_per_task_self_reported"], "0.5000")
+        self.assertEqual(json.loads((self.work / "external" / "my-setup" / "results.json").read_text()), summary)
+
+    def test_name_cannot_leave_the_results_folder(self):
+        with self.assertRaises(SystemExit):
+            features.grade(self.work, self.source, "../elsewhere", 1, None, None, grader=None)
 
 
 if __name__ == "__main__":

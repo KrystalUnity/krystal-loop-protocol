@@ -8,6 +8,10 @@ commit, with a written specification and a test patch the models never see.
     python -m bench.features run --work ~/klp-bench --cap 60     # spend, with a hard cap
     python -m bench.features report --work ~/klp-bench
 
+Grade a coding tool of your own on the same tasks and hidden tests:
+    python -m bench.features tasks --work ~/klp-bench --out ~/my-run      # clean checkouts and task statements
+    python -m bench.features grade --work ~/klp-bench --patches ~/my-run --name my-setup
+
 Arms:
     frontier-solo   a frontier model works alone
     klp             a low-cost worker under KLP Standard with a frontier critic
@@ -18,12 +22,16 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures
+import hashlib
 import json
+import os
 import re
+import shlex
 import shutil
 import statistics
 import subprocess
 import sys
+import tempfile
 import time
 from decimal import Decimal as D
 from pathlib import Path
@@ -227,8 +235,7 @@ def run_one(work: Path, ledger: Ledger, task: dict, arm: str, limits: Limits) ->
     env_dir = work / "envs" / task["env"]
     worker_key, critic_key, reuse, _, acceptance = ARMS[arm]
     check = f"{PYTEST} -x {' '.join(task['test_files'])}"
-    statement = Path(task["statement"]).read_text().strip()
-    prompt = f"{statement}\n\nExisting tests that must keep passing:\n$ {check}"
+    prompt = task_prompt(task)
     scope = f"{arm}/{task['id']}"
     resume, known = None, {}
     try:
@@ -423,9 +430,101 @@ def export(work: Path, out: Path, examples: list[str], arms_filter: list[str] | 
     print(f"exported {len(rows)} run results and {len(calls)} call receipts to {out}")
 
 
+# ---------------------------------------------------------------- grade your own setup
+
+def task_prompt(task: dict) -> str:
+    """The task exactly as every arm receives it."""
+    check = f"{PYTEST} -x {' '.join(task['test_files'])}"
+    return f"{Path(task['statement']).read_text().strip()}\n\nExisting tests that must keep passing:\n$ {check}"
+
+
+def selected_tasks(work: Path, ids: list[str] | None) -> list[dict]:
+    tasks = [t for t in json.loads((work / "tasks.json").read_text())["tasks"] if t["valid"]]
+    return [t for t in tasks if t["id"] in ids] if ids else tasks
+
+
+def handout(work: Path, out: Path, ids: list[str] | None) -> None:
+    """Write each task for a coding tool outside this harness: a clean checkout and the task statement."""
+    tasks, written = selected_tasks(work, ids), 0
+    for task in tasks:
+        folder = out / task["id"]
+        if (folder / "repo").exists():  # never overwrite work in progress
+            continue
+        folder.mkdir(parents=True, exist_ok=True)
+        sh("cp", "-a", str(work / "envs" / task["env"] / "ws/repo"), str(folder / "repo"))
+        (folder / "TASK.md").write_text(task_prompt(task) + "\n")
+        written += 1
+    print(f"{written} tasks written to {out} ({len(tasks) - written} already there). For each one, give your tool "
+          f"TASK.md and let it work in repo/. Then:\n"
+          f"  python3 -m bench.features grade --work {work} --patches {out} --name my-setup")
+
+
+def workspace_patch(repo: Path, commit: str, pristine: Path) -> bytes:
+    """Everything in a checkout that differs from the task's commit: commits, edits and new files.
+
+    The checkout was written by an outside tool, so its own .git is never read: no config, hooks, filters or
+    attributes from it can run. The files are compared in a fresh store that borrows the commit from the
+    benchmark's pristine checkout.
+    """
+    with tempfile.TemporaryDirectory() as scratch:
+        store = Path(scratch) / "git"
+        env = {**{k: v for k, v in os.environ.items() if not k.startswith("GIT_")},
+               "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_ATTR_NOSYSTEM": "1",
+               "GIT_ALTERNATE_OBJECT_DIRECTORIES": sh("git", "-C", str(pristine), "rev-parse", "--absolute-git-dir").strip() + "/objects"}
+        base = [*shlex.split(GIT), "-c", "core.attributesFile=/dev/null", "-c", "gc.auto=0"]
+        subprocess.run([*base, "init", "-q", "--bare", str(store)], env=env, check=True, capture_output=True)
+        git = [*base, f"--git-dir={store}", f"--work-tree={repo}"]
+        subprocess.run([*git, "add", "-A"], env=env, check=True, capture_output=True)
+        return subprocess.run([*git, "diff", "--cached", "--binary", "--no-color", "--no-ext-diff", "--no-textconv", commit],
+                              env=env, check=True, capture_output=True).stdout
+
+
+def find_patch(source: Path, task: dict, pristine: Path) -> bytes | None:
+    """A challenger's work on one task: <task-id>.patch, or the checkout at <task-id>/repo."""
+    patch_file, repo = source / f"{task['id']}.patch", source / task["id"] / "repo"
+    if patch_file.exists():
+        return patch_file.read_bytes()
+    if repo.is_dir():
+        return workspace_patch(repo, task["commit"], pristine)
+    return None
+
+
+def grade(work: Path, source: Path, name: str, jobs: int, ids: list[str] | None, usd: float | None,
+          grader=hidden_grade) -> dict:
+    """Grade patches made by any tool with the hidden tests our own arms are graded by. A task with no patch is unsolved."""
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", name):
+        raise SystemExit("--name: letters, digits, dot, dash and underscore only")
+    tasks, out = selected_tasks(work, ids), work / "external" / name
+
+    def one(task: dict) -> dict:
+        patch = find_patch(source, task, work / "envs" / task["env"] / "ws" / "repo")
+        if not patch or not patch.strip():
+            row = dict(task=task["id"], solved=False, stage="no patch")
+        else:
+            got = grader(work / "envs" / task["env"], out / "grade" / task["id"], task, candidate=patch)
+            row = dict(task=task["id"], solved=bool(got["passed"]), stage=got["stage"],
+                       patch_sha256=hashlib.sha256(patch).hexdigest())
+            if not got["passed"]:
+                row["output"] = got["output"][-600:]
+        print(f"  {row['task']:38s} {'solved' if row['solved'] else 'not solved (' + row['stage'] + ')'}", flush=True)
+        return row
+
+    with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
+        rows = list(pool.map(one, tasks))
+    solved, patches = sum(r["solved"] for r in rows), sum(r["stage"] != "no patch" for r in rows)
+    summary = dict(name=name, dataset=DATASET_URL, revision=DATASET_REVISION, tasks=len(rows), patches=patches, solved=solved,
+                   usd_self_reported=None if usd is None else str(usd),
+                   usd_per_task_self_reported=None if usd is None or not rows else f"{usd / len(rows):.4f}", results=rows)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "results.json").write_text(json.dumps(summary, indent=1) + "\n")
+    cost = "" if usd is None else f", ${usd / len(rows):.3f} a task (self-reported)"
+    print(f"{name}: {solved} of {len(rows)} tasks solved, {patches} patches graded{cost} -> {out / 'results.json'}")
+    return summary
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice"))
+    parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice", "tasks", "grade"))
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--arms", default=PRESETS["headline"], help="comma-separated: " + ", ".join(ARMS))
     parser.add_argument("--preset", choices=sorted(PRESETS), help="a named set of arms: "
@@ -437,7 +536,10 @@ def main() -> None:
     parser.add_argument("--max-steps", type=int, default=100)
     parser.add_argument("--task-cap", type=float, default=2.0)
     parser.add_argument("--repair-rounds", type=int, default=2)
-    parser.add_argument("--out", type=Path, help="export: destination folder")
+    parser.add_argument("--out", type=Path, help="export, tasks: destination folder")
+    parser.add_argument("--patches", type=Path, help="grade: folder holding <task-id>.patch files or <task-id>/repo checkouts")
+    parser.add_argument("--name", default="my-setup", help="grade: a label for your setup")
+    parser.add_argument("--usd", type=float, help="grade: what the whole run cost you, recorded as self-reported")
     parser.add_argument("--examples", default="", help="export: task ids whose receipts to include")
     args = parser.parse_args()
     if args.preset:
@@ -450,6 +552,16 @@ def main() -> None:
             [i for i in args.ids.split(",") if i], Limits(max_steps=args.max_steps, cost_usd=args.task_cap, repair_rounds=args.repair_rounds))
     elif args.command == "reprice":
         reprice(args.work)
+    elif args.command in ("tasks", "grade"):
+        ids = [i for i in args.ids.split(",") if i]
+        if args.command == "tasks":
+            if not args.out:
+                parser.error("tasks needs --out")
+            handout(args.work, args.out, ids)
+        else:
+            if not args.patches:
+                parser.error("grade needs --patches")
+            grade(args.work, args.patches, args.name, args.jobs, ids, args.usd)
     elif args.command == "export":
         export(args.work, args.out, [i for i in args.examples.split(",") if i],
                [a for a in args.arms.split(",") if a] if args.arms != parser.get_default("arms") else None)

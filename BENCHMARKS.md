@@ -107,6 +107,38 @@ Antigravity, Kimi and Qwen CLIs installed and signed in; leave an arm out of
 - **Prices are in [`klp/prices.json`](klp/prices.json),** taken from the
   providers' pricing pages on 10 November 2026. Edit the file if yours differ.
 
+### Grade your own setup
+
+Run any coding tool on the same 66 tasks and grade it with the same hidden
+tests: Claude Code, Cursor, Codex, Aider or your own agent. `prepare` needs no
+API keys.
+
+```bash
+python3 -m bench.features prepare --work ~/klp-bench
+python3 -m bench.features tasks --work ~/klp-bench --out ~/my-run
+# for each folder in ~/my-run: give your tool TASK.md and let it work in repo/
+python3 -m bench.features grade --work ~/klp-bench --patches ~/my-run --name my-setup --usd 4.10
+```
+
+`tasks` writes one folder per task: `repo/`, a clean checkout at the task's
+commit, and `TASK.md`, the statement exactly as our arms receive it. `grade`
+takes everything your tool changed in `repo/` (commits, edits and new files),
+or a `<task-id>.patch` file in the same folder, applies it to a pristine
+checkout, swaps in the hidden tests and runs them in the sandbox with no
+network. A task with no patch counts as unsolved. `--usd` records what the
+whole run cost you, as self-reported.
+
+```text
+my-setup: 41 of 66 tasks solved, 64 patches graded, $0.062 a task (self-reported) -> ~/klp-bench/external/my-setup/results.json
+```
+
+For a like-for-like run, give your tool what ours had: the task statement, the
+checkout and a shell, with no network and no sight of the dataset folder. Each
+`repo/` needs its own environment to run the existing tests
+(`pip install -e ".[test]"` on Python 3.11).
+To compare with the table above, post your solve count, your cost per task and
+your `results.json`.
+
 ## Paired features: 30 conflicting pairs
 
 Pairs of features in the same three libraries whose reference patches conflict
