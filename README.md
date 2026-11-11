@@ -189,6 +189,17 @@ python3 -m json.tool "$output/final-receipt.json"
   the handover in software and woke one worker where chat woke two. Krystal
   Unity runs its own development this way, with
   [69 agent sessions on one bus](case-studies/semio-live-bus-2026-11-10/README.md).
+- **Smaller briefs.** Compact context packets give each agent only the
+  material for its assignment. On a real assignment they cut worker and critic
+  input tokens by 21%, repairs included.
+  [Compact packet guide](examples/semio-coordination/CONTEXT_PACKETS.md).
+- **Agents that wake on events.** Waiting for a handover by event took 3
+  transport reads where polling took 21.
+- **It holds on large repositories.** On a SWE-bench Pro task in Ansible
+  (5,501 files), a DeepSeek worker under KLP was scored solved for $0.60. On a
+  real repair in a 255-file product snapshot, total cost was 24.6% lower than
+  the conventional frontier workflow.
+  [Every measurement](EVIDENCE.md).
 - **A stopping point.** Every run has a cost limit, a step limit and a repair
   limit, and ends with a receipt. With the default limits no benchmark run
   stopped on its step limit.
@@ -226,10 +237,10 @@ working across many changes.
 
 ## Project Status
 
-Runner **0.5.0** with protocol profile **v0.3.3-draft**. Standard
-(`klp-standard/v0.1`) has the one-command runner, `klp run`, and two public
-benchmarks. Critical keeps `klp-core/v0.3` with its capability gate, sealed
-critic harness and offline lifecycle fixtures.
+Release **0.5.0**. Standard (`klp-standard/v0.1`) has the one-command runner,
+`klp run`, and two public benchmarks. Critical keeps `klp-core/v0.3` with its
+capability gate, sealed critic harness and offline lifecycle fixtures; its
+protocol document is at version 0.3.3 draft.
 
 ## License
 
