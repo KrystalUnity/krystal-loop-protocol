@@ -1,0 +1,802 @@
+{
+ "dataset": "https://github.com/cooperbench/CooperBench.git",
+ "revision": "63b9d44d9f39a02fccf5bf0052db48a917a011fd",
+ "measures": {
+  "reference": "the dataset's reference solution (feature.patch): files changed and lines added and removed",
+  "hidden_tests": "the hidden test patch (tests.patch): files, test functions added and lines added"
+ },
+ "tasks": {
+  "pallets_click-task2068-feature1": {
+   "reference": {
+    "files": 2,
+    "added": 43,
+    "removed": 6
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 119
+   }
+  },
+  "pallets_click-task2068-feature2": {
+   "reference": {
+    "files": 2,
+    "added": 27,
+    "removed": 8
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 4,
+    "added": 40
+   }
+  },
+  "pallets_click-task2068-feature3": {
+   "reference": {
+    "files": 2,
+    "added": 22,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 122
+   }
+  },
+  "pallets_click-task2068-feature4": {
+   "reference": {
+    "files": 2,
+    "added": 29,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 73
+   }
+  },
+  "pallets_click-task2068-feature5": {
+   "reference": {
+    "files": 2,
+    "added": 117,
+    "removed": 14
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 8,
+    "added": 216
+   }
+  },
+  "pallets_click-task2068-feature6": {
+   "reference": {
+    "files": 2,
+    "added": 73,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 85
+   }
+  },
+  "pallets_click-task2068-feature7": {
+   "reference": {
+    "files": 2,
+    "added": 16,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 3,
+    "added": 139
+   }
+  },
+  "pallets_click-task2068-feature8": {
+   "reference": {
+    "files": 2,
+    "added": 27,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 3,
+    "added": 208
+   }
+  },
+  "pallets_click-task2068-feature9": {
+   "reference": {
+    "files": 2,
+    "added": 59,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 4,
+    "added": 176
+   }
+  },
+  "pallets_click-task2068-feature10": {
+   "reference": {
+    "files": 2,
+    "added": 7,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 3,
+    "added": 124
+   }
+  },
+  "pallets_click-task2068-feature11": {
+   "reference": {
+    "files": 2,
+    "added": 104,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 5,
+    "added": 95
+   }
+  },
+  "pallets_click-task2068-feature12": {
+   "reference": {
+    "files": 2,
+    "added": 26,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 4,
+    "added": 141
+   }
+  },
+  "pallets_click-task2800-feature1": {
+   "reference": {
+    "files": 2,
+    "added": 37,
+    "removed": 33
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 1,
+    "added": 26
+   }
+  },
+  "pallets_click-task2800-feature2": {
+   "reference": {
+    "files": 1,
+    "added": 30,
+    "removed": 7
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 15,
+    "added": 222
+   }
+  },
+  "pallets_click-task2800-feature3": {
+   "reference": {
+    "files": 2,
+    "added": 37,
+    "removed": 6
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 5,
+    "added": 131
+   }
+  },
+  "pallets_click-task2800-feature4": {
+   "reference": {
+    "files": 1,
+    "added": 67,
+    "removed": 7
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 11,
+    "added": 169
+   }
+  },
+  "pallets_click-task2800-feature5": {
+   "reference": {
+    "files": 1,
+    "added": 36,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 7,
+    "added": 94
+   }
+  },
+  "pallets_click-task2800-feature6": {
+   "reference": {
+    "files": 1,
+    "added": 74,
+    "removed": 6
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 12,
+    "added": 384
+   }
+  },
+  "pallets_click-task2800-feature7": {
+   "reference": {
+    "files": 2,
+    "added": 63,
+    "removed": 8
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 5,
+    "added": 132
+   }
+  },
+  "pallets_click-task2956-feature1": {
+   "reference": {
+    "files": 1,
+    "added": 99,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 4,
+    "tests": 11,
+    "added": 225
+   }
+  },
+  "pallets_click-task2956-feature2": {
+   "reference": {
+    "files": 1,
+    "added": 22,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 11,
+    "added": 280
+   }
+  },
+  "pallets_click-task2956-feature3": {
+   "reference": {
+    "files": 1,
+    "added": 47,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 6,
+    "added": 147
+   }
+  },
+  "pallets_click-task2956-feature4": {
+   "reference": {
+    "files": 1,
+    "added": 34,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 8,
+    "added": 201
+   }
+  },
+  "pallets_click-task2956-feature5": {
+   "reference": {
+    "files": 1,
+    "added": 70,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 10,
+    "added": 322
+   }
+  },
+  "pallets_click-task2956-feature6": {
+   "reference": {
+    "files": 1,
+    "added": 69,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 6,
+    "added": 156
+   }
+  },
+  "pallets_click-task2956-feature7": {
+   "reference": {
+    "files": 1,
+    "added": 40,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 4,
+    "tests": 14,
+    "added": 447
+   }
+  },
+  "pallets_click-task2956-feature8": {
+   "reference": {
+    "files": 1,
+    "added": 64,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 3,
+    "tests": 10,
+    "added": 315
+   }
+  },
+  "pallets_jinja-task1465-feature1": {
+   "reference": {
+    "files": 1,
+    "added": 44,
+    "removed": 6
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 2,
+    "added": 39
+   }
+  },
+  "pallets_jinja-task1465-feature2": {
+   "reference": {
+    "files": 1,
+    "added": 23,
+    "removed": 16
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 6,
+    "added": 99
+   }
+  },
+  "pallets_jinja-task1465-feature3": {
+   "reference": {
+    "files": 1,
+    "added": 28,
+    "removed": 19
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 5,
+    "added": 82
+   }
+  },
+  "pallets_jinja-task1465-feature4": {
+   "reference": {
+    "files": 1,
+    "added": 32,
+    "removed": 16
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 15,
+    "added": 236
+   }
+  },
+  "pallets_jinja-task1465-feature5": {
+   "reference": {
+    "files": 1,
+    "added": 55,
+    "removed": 16
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 10,
+    "added": 265
+   }
+  },
+  "pallets_jinja-task1465-feature6": {
+   "reference": {
+    "files": 1,
+    "added": 31,
+    "removed": 18
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 4,
+    "added": 69
+   }
+  },
+  "pallets_jinja-task1465-feature7": {
+   "reference": {
+    "files": 1,
+    "added": 43,
+    "removed": 11
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 12,
+    "added": 228
+   }
+  },
+  "pallets_jinja-task1465-feature8": {
+   "reference": {
+    "files": 1,
+    "added": 48,
+    "removed": 22
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 9,
+    "added": 135
+   }
+  },
+  "pallets_jinja-task1465-feature9": {
+   "reference": {
+    "files": 1,
+    "added": 75,
+    "removed": 21
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 13,
+    "added": 270
+   }
+  },
+  "pallets_jinja-task1465-feature10": {
+   "reference": {
+    "files": 1,
+    "added": 37,
+    "removed": 16
+   },
+   "hidden_tests": {
+    "files": 2,
+    "tests": 23,
+    "added": 469
+   }
+  },
+  "pallets_jinja-task1559-feature1": {
+   "reference": {
+    "files": 1,
+    "added": 20,
+    "removed": 15
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 3,
+    "added": 13
+   }
+  },
+  "pallets_jinja-task1559-feature2": {
+   "reference": {
+    "files": 1,
+    "added": 70,
+    "removed": 12
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 12,
+    "added": 198
+   }
+  },
+  "pallets_jinja-task1559-feature3": {
+   "reference": {
+    "files": 1,
+    "added": 169,
+    "removed": 40
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 20,
+    "added": 314
+   }
+  },
+  "pallets_jinja-task1559-feature4": {
+   "reference": {
+    "files": 1,
+    "added": 31,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 14,
+    "added": 129
+   }
+  },
+  "pallets_jinja-task1559-feature5": {
+   "reference": {
+    "files": 1,
+    "added": 51,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 10,
+    "added": 147
+   }
+  },
+  "pallets_jinja-task1559-feature6": {
+   "reference": {
+    "files": 1,
+    "added": 51,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 7,
+    "added": 140
+   }
+  },
+  "pallets_jinja-task1559-feature7": {
+   "reference": {
+    "files": 1,
+    "added": 107,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 7,
+    "added": 219
+   }
+  },
+  "pallets_jinja-task1559-feature8": {
+   "reference": {
+    "files": 1,
+    "added": 232,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 8,
+    "added": 131
+   }
+  },
+  "pallets_jinja-task1559-feature9": {
+   "reference": {
+    "files": 1,
+    "added": 98,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 14,
+    "added": 256
+   }
+  },
+  "pallets_jinja-task1559-feature10": {
+   "reference": {
+    "files": 1,
+    "added": 25,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 12,
+    "added": 116
+   }
+  },
+  "pallets_jinja-task1621-feature1": {
+   "reference": {
+    "files": 1,
+    "added": 54,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 7,
+    "added": 116
+   }
+  },
+  "pallets_jinja-task1621-feature2": {
+   "reference": {
+    "files": 1,
+    "added": 2,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 4,
+    "added": 68
+   }
+  },
+  "pallets_jinja-task1621-feature3": {
+   "reference": {
+    "files": 1,
+    "added": 33,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 9,
+    "added": 97
+   }
+  },
+  "pallets_jinja-task1621-feature4": {
+   "reference": {
+    "files": 1,
+    "added": 47,
+    "removed": 3
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 7,
+    "added": 131
+   }
+  },
+  "pallets_jinja-task1621-feature5": {
+   "reference": {
+    "files": 1,
+    "added": 35,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 8,
+    "added": 164
+   }
+  },
+  "pallets_jinja-task1621-feature6": {
+   "reference": {
+    "files": 1,
+    "added": 43,
+    "removed": 6
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 9,
+    "added": 188
+   }
+  },
+  "pallets_jinja-task1621-feature7": {
+   "reference": {
+    "files": 1,
+    "added": 9,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 9,
+    "added": 186
+   }
+  },
+  "pallets_jinja-task1621-feature8": {
+   "reference": {
+    "files": 1,
+    "added": 111,
+    "removed": 5
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 16,
+    "added": 216
+   }
+  },
+  "pallets_jinja-task1621-feature9": {
+   "reference": {
+    "files": 1,
+    "added": 151,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 10,
+    "added": 238
+   }
+  },
+  "pallets_jinja-task1621-feature10": {
+   "reference": {
+    "files": 1,
+    "added": 37,
+    "removed": 0
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 15,
+    "added": 169
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature1": {
+   "reference": {
+    "files": 2,
+    "added": 62,
+    "removed": 3
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 4,
+    "added": 56
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature2": {
+   "reference": {
+    "files": 2,
+    "added": 54,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 121
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature3": {
+   "reference": {
+    "files": 2,
+    "added": 46,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 81
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature4": {
+   "reference": {
+    "files": 2,
+    "added": 72,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 9,
+    "added": 112
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature5": {
+   "reference": {
+    "files": 2,
+    "added": 69,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 110
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature6": {
+   "reference": {
+    "files": 2,
+    "added": 121,
+    "removed": 2
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 6,
+    "added": 165
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature7": {
+   "reference": {
+    "files": 2,
+    "added": 52,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 9,
+    "added": 127
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature8": {
+   "reference": {
+    "files": 2,
+    "added": 38,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 9,
+    "added": 113
+   }
+  },
+  "samuelcolvin_dirty_equals-task43-feature9": {
+   "reference": {
+    "files": 2,
+    "added": 110,
+    "removed": 1
+   },
+   "hidden_tests": {
+    "files": 1,
+    "tests": 7,
+    "added": 157
+   }
+  }
+ }
+}

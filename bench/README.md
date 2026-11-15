@@ -87,6 +87,21 @@ as above. Results go to `external/<name>/results.json`; a task with no patch is
 unsolved. `--ids` limits either command to named tasks.
 [Guide](../BENCHMARKS.md#grade-your-own-setup).
 
+### Task sizes and the critics' probes
+
+```bash
+python3 -m bench.features sizes --work ~/klp-bench --out task-sizes.json
+python3 -m bench.probes collect --work ~/klp-bench --out probes.json
+python3 -m bench.probes reference --work ~/klp-bench --pack probes.json
+```
+
+`sizes` measures each task's reference solution and hidden tests from the
+dataset's own patches. `collect` reruns every probe your critic arms recorded,
+first on the candidate it was written for and then on the reference solution,
+in the sandbox with no network. `reference` repeats the second half from a
+published `probes.json`, so it needs only `prepare`.
+[What the published probes show](../case-studies/feature-benchmark-2026-11-10/ANALYSIS.md#4-what-the-critics-found).
+
 ## Paired features: `bench.pairs`
 
 ```bash

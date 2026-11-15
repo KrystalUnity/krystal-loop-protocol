@@ -50,6 +50,10 @@ candidates.
 Five of the 66 tasks were failed by every arm; their hidden tests check
 behaviour the written specification does not state.
 
+A [second look](case-studies/feature-benchmark-2026-11-10/ANALYSIS.md) tests
+these results by task size, chance and tokens per solved task, and reruns
+every surviving critic probe against the dataset's reference solution.
+
 Read the [case study](case-studies/feature-benchmark-2026-11-10/README.md),
 recompute it with the [offline checker](case-studies/feature-benchmark-2026-11-10/verify.py),
 or [run it yourself](bench/README.md).

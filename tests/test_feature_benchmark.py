@@ -162,5 +162,74 @@ class GradeYourOwn(unittest.TestCase):
             features.grade(self.work, self.source, "../elsewhere", 1, None, None, grader=None)
 
 
+class TaskSize(unittest.TestCase):
+    def test_counts_hunk_lines_files_and_new_tests_but_not_headers(self):
+        diff = ("diff --git a/src/a.py b/src/a.py\nindex 1..2 100644\n--- a/src/a.py\n+++ b/src/a.py\n"
+                "@@ -1,2 +1,3 @@\n context\n-old\n+new\n++x = 1\n"
+                "diff --git a/tests/test_a.py b/tests/test_a.py\n--- /dev/null\n+++ b/tests/test_a.py\n"
+                "@@ -0,0 +1,4 @@\n+def test_one():\n+    pass\n+async def test_two():\n+    pass\n")
+        self.assertEqual(features.patch_size(diff), dict(files=2, added=6, removed=1, tests_added=2))
+
+
+class Probes(unittest.TestCase):
+    @staticmethod
+    def finding(fid, file, disposition="confirmed", **extra):
+        return dict(id=fid, claim=fid, disposition=disposition,
+                    probe=dict(file=f"/workspace/probes/{file}", command="python -m pytest -q /workspace/probes/" + file,
+                               returncode=1, timed_out=False), **extra)
+
+    def test_a_reused_file_name_keeps_only_the_last_probe_and_acceptance_findings_share_one_file(self):
+        from bench import probes
+        receipt = dict(reviews=[
+            dict(reviewed_revision="r1", findings=[self.finding("F1", "test_f1.py"), self.finding("F2", "test_f2.py"),
+                                                   self.finding("A1", "test_acceptance.py", source="acceptance"),
+                                                   self.finding("A2", "test_acceptance.py", source="acceptance")]),
+            dict(reviewed_revision="r2", findings=[self.finding("R2-F1", "test_f1.py"),
+                                                   dict(self.finding("F2", "test_f2.py"), carried=True)]),
+        ])
+        kept = {(row["review"], row["finding"]["id"]): row["retained"] for row in probes.probed_findings(receipt)}
+        self.assertEqual(kept, {(1, "F1"): False, (1, "F2"): True, (1, "A1"): True, (1, "A2"): True, (2, "R2-F1"): True})
+
+    def test_outcome_on_the_reference(self):
+        from bench import probes
+        run = lambda rc, output="", stage="probe", timed_out=False: dict(stage=stage, returncode=rc, timed_out=timed_out,
+                                                                         output=output)
+        command = "python -m pytest -q /workspace/probes/test_f1.py"
+        self.assertEqual(probes.outcome(run(0), command)[0], "agrees")
+        self.assertEqual(probes.outcome(run(1, "E   AssertionError: still running\nFAILED x::t"), command),
+                         ("asks_more", "AssertionError: still running"))
+        for output in ("E   ImportError: cannot import name 'helper'", "E   AttributeError: 'Context' object has no attribute '_x'",
+                       "E   TypeError: edit() got an unexpected keyword argument 'wait'"):
+            self.assertEqual(probes.outcome(run(1, output), command)[0], "inconclusive")
+        self.assertEqual(probes.outcome(run(2, "ERROR collecting"), command)[0], "inconclusive")
+        self.assertEqual(probes.outcome(run(None, timed_out=True), command)[0], "inconclusive")
+        self.assertEqual(probes.outcome(run(None, stage="apply"), command)[0], "inconclusive")
+        self.assertTrue(probes.reproduced(dict(returncode=1, timed_out=False), run(1)))
+        self.assertFalse(probes.reproduced(dict(returncode=1, timed_out=False), run(0)))
+        self.assertFalse(probes.reproduced(dict(returncode=1, timed_out=False), run(None, stage="apply")))
+
+
+class Statistics(unittest.TestCase):
+    def setUp(self):
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "case-studies" / "feature-benchmark-2026-11-10"))
+        import analysis
+        self.analysis = analysis
+
+    def test_wilson_matches_published_values(self):
+        for (k, n), expected in {(5, 10): (0.2366, 0.7634), (0, 10): (0.0, 0.2775), (81, 263): (0.2553, 0.3662)}.items():
+            low, high = self.analysis.wilson(k, n)
+            self.assertAlmostEqual(low, expected[0], places=4)
+            self.assertAlmostEqual(high, expected[1], places=4)
+
+    def test_exact_mcnemar_and_the_split_a_gap_needs(self):
+        self.assertEqual(self.analysis.mcnemar(5, 2), 58 / 128)
+        self.assertEqual(self.analysis.mcnemar(6, 0), 2 / 64)
+        self.assertEqual(self.analysis.mcnemar(5, 0), 2 / 32)
+        self.assertEqual(self.analysis.mcnemar(0, 0), 1.0)
+        self.assertEqual(self.analysis.lopsided_enough(7), 0)
+        self.assertEqual(self.analysis.lopsided_enough(10), 1)
+        self.assertIsNone(self.analysis.lopsided_enough(5))
+
+
 if __name__ == "__main__":
     unittest.main()

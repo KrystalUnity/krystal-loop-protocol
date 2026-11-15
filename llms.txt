@@ -14,6 +14,7 @@
 - [EVIDENCE.md](EVIDENCE.md): every measurement with its method and receipts
 - [VERIFY.md](VERIFY.md): what each offline check proves
 - [Feature benchmark case study](case-studies/feature-benchmark-2026-11-10/README.md): 66 tasks, three KLP runs, five critics, receipts and ledger
+- [Second look at the feature benchmark](case-studies/feature-benchmark-2026-11-10/ANALYSIS.md): chance, task size, tokens per solved task, and the critics' findings rerun against the reference solution
 - [Paired-features case study](case-studies/paired-features-2026-11-10/README.md): 30 conflicting pairs, Semio against agent chat and a frontier model alone
 - [Benchmark harness guide](bench/README.md): arms, options and outputs
 

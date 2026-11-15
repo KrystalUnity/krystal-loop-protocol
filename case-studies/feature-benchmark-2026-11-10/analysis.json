@@ -1,0 +1,1012 @@
+{
+ "tasks": 66,
+ "chance": {
+  "intervals": {
+   "astra-solo": {
+    "solved": 56,
+    "tasks": 66,
+    "low": 0.7431,
+    "high": 0.9156
+   },
+   "frontier-solo": {
+    "solved": 56,
+    "tasks": 66,
+    "low": 0.7431,
+    "high": 0.9156
+   },
+   "klp:first": {
+    "solved": 56,
+    "tasks": 66,
+    "low": 0.7431,
+    "high": 0.9156
+   },
+   "worker": {
+    "solved": 54,
+    "tasks": 66,
+    "low": 0.7085,
+    "high": 0.8928
+   },
+   "worker-3": {
+    "solved": 57,
+    "tasks": 66,
+    "low": 0.7607,
+    "high": 0.9266
+   },
+   "klp": {
+    "solved": 57,
+    "tasks": 66,
+    "low": 0.7607,
+    "high": 0.9266
+   },
+   "klp-sol": {
+    "solved": 54,
+    "tasks": 66,
+    "low": 0.7085,
+    "high": 0.8928
+   },
+   "klp-3": {
+    "solved": 59,
+    "tasks": 66,
+    "low": 0.7969,
+    "high": 0.9477
+   }
+  },
+  "comparisons": [
+   {
+    "run": "Run 1",
+    "loop": "klp",
+    "other": "astra-solo",
+    "loop_only": 2,
+    "other_only": 1,
+    "p": 1.0,
+    "significant_if_other_at_most": null
+   },
+   {
+    "run": "Run 1",
+    "loop": "klp",
+    "other": "frontier-solo",
+    "loop_only": 3,
+    "other_only": 2,
+    "p": 1.0,
+    "significant_if_other_at_most": null
+   },
+   {
+    "run": "Run 1",
+    "loop": "klp",
+    "other": "klp:first",
+    "loop_only": 1,
+    "other_only": 0,
+    "p": 1.0,
+    "significant_if_other_at_most": null
+   },
+   {
+    "run": "Run 2",
+    "loop": "klp-sol",
+    "other": "astra-solo",
+    "loop_only": 3,
+    "other_only": 5,
+    "p": 0.7266,
+    "significant_if_other_at_most": 0
+   },
+   {
+    "run": "Run 2",
+    "loop": "klp-sol",
+    "other": "frontier-solo",
+    "loop_only": 2,
+    "other_only": 4,
+    "p": 0.6875,
+    "significant_if_other_at_most": 0
+   },
+   {
+    "run": "Run 2",
+    "loop": "klp-sol",
+    "other": "worker",
+    "loop_only": 0,
+    "other_only": 0,
+    "p": 1.0,
+    "significant_if_other_at_most": null
+   },
+   {
+    "run": "Run 3",
+    "loop": "klp-3",
+    "other": "astra-solo",
+    "loop_only": 5,
+    "other_only": 2,
+    "p": 0.4531,
+    "significant_if_other_at_most": 0
+   },
+   {
+    "run": "Run 3",
+    "loop": "klp-3",
+    "other": "frontier-solo",
+    "loop_only": 5,
+    "other_only": 2,
+    "p": 0.4531,
+    "significant_if_other_at_most": 0
+   },
+   {
+    "run": "Run 3",
+    "loop": "klp-3",
+    "other": "worker-3",
+    "loop_only": 2,
+    "other_only": 0,
+    "p": 0.5,
+    "significant_if_other_at_most": null
+   }
+  ]
+ },
+ "size": {
+  "rule": "reference solution lines added plus removed; ranked, ties by task id, three equal groups",
+  "groups": {
+   "small": {
+    "tasks": 22,
+    "lines": [
+     2,
+     40
+    ]
+   },
+   "medium": {
+    "tasks": 22,
+    "lines": [
+     43,
+     70
+    ]
+   },
+   "large": {
+    "tasks": 22,
+    "lines": [
+     70,
+     232
+    ]
+   },
+   "one file": {
+    "tasks": 42,
+    "lines": [
+     2,
+     232
+    ]
+   },
+   "two or more files": {
+    "tasks": 24,
+    "lines": [
+     9,
+     131
+    ]
+   },
+   "Click": {
+    "tasks": 27,
+    "lines": [
+     9,
+     131
+    ]
+   },
+   "Jinja": {
+    "tasks": 30,
+    "lines": [
+     2,
+     232
+    ]
+   },
+   "dirty-equals": {
+    "tasks": 9,
+    "lines": [
+     39,
+     123
+    ]
+   }
+  },
+  "solved": {
+   "astra-solo": {
+    "small": 20,
+    "medium": 19,
+    "large": 17,
+    "one file": 34,
+    "two or more files": 22,
+    "Click": 22,
+    "Jinja": 27,
+    "dirty-equals": 7
+   },
+   "frontier-solo": {
+    "small": 20,
+    "medium": 18,
+    "large": 18,
+    "one file": 34,
+    "two or more files": 22,
+    "Click": 22,
+    "Jinja": 27,
+    "dirty-equals": 7
+   },
+   "klp:first": {
+    "small": 19,
+    "medium": 20,
+    "large": 17,
+    "one file": 34,
+    "two or more files": 22,
+    "Click": 21,
+    "Jinja": 27,
+    "dirty-equals": 8
+   },
+   "worker": {
+    "small": 19,
+    "medium": 19,
+    "large": 16,
+    "one file": 35,
+    "two or more files": 19,
+    "Click": 20,
+    "Jinja": 27,
+    "dirty-equals": 7
+   },
+   "worker-3": {
+    "small": 19,
+    "medium": 20,
+    "large": 18,
+    "one file": 37,
+    "two or more files": 20,
+    "Click": 23,
+    "Jinja": 28,
+    "dirty-equals": 6
+   },
+   "klp": {
+    "small": 19,
+    "medium": 21,
+    "large": 17,
+    "one file": 35,
+    "two or more files": 22,
+    "Click": 22,
+    "Jinja": 27,
+    "dirty-equals": 8
+   },
+   "klp-sol": {
+    "small": 19,
+    "medium": 19,
+    "large": 16,
+    "one file": 35,
+    "two or more files": 19,
+    "Click": 20,
+    "Jinja": 27,
+    "dirty-equals": 7
+   },
+   "klp-3": {
+    "small": 21,
+    "medium": 20,
+    "large": 18,
+    "one file": 38,
+    "two or more files": 21,
+    "Click": 25,
+    "Jinja": 28,
+    "dirty-equals": 6
+   }
+  },
+  "missed_by_every_arm": [
+   {
+    "task": "pallets_click-task2800-feature4",
+    "lines": 74,
+    "files": 1
+   },
+   {
+    "task": "pallets_click-task2956-feature7",
+    "lines": 40,
+    "files": 1
+   },
+   {
+    "task": "pallets_jinja-task1465-feature5",
+    "lines": 71,
+    "files": 1
+   },
+   {
+    "task": "pallets_jinja-task1621-feature4",
+    "lines": 50,
+    "files": 1
+   },
+   {
+    "task": "samuelcolvin_dirty_equals-task43-feature6",
+    "lines": 123,
+    "files": 2
+   }
+  ]
+ },
+ "tokens": {
+  "astra-solo": {
+   "solved": 56,
+   "calls": 660,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 0,
+    "input": 0,
+    "cached": 0,
+    "output": 0
+   },
+   "frontier": {
+    "calls": 660,
+    "input": 8813250,
+    "cached": 7400464,
+    "output": 452256
+   },
+   "usd": "47.5680890",
+   "per_solved": {
+    "tokens": 165455,
+    "frontier": 165455,
+    "low_cost": 0,
+    "fresh_input": 25228,
+    "usd": "0.8494301607142857142857142857"
+   },
+   "cached_share_of_input": 0.8397
+  },
+  "frontier-solo": {
+   "solved": 56,
+   "calls": 636,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 0,
+    "input": 0,
+    "cached": 0,
+    "output": 0
+   },
+   "frontier": {
+    "calls": 636,
+    "input": 7961497,
+    "cached": 6619600,
+    "output": 415516
+   },
+   "usd": "8.1498465",
+   "per_solved": {
+    "tokens": 149590,
+    "frontier": 149590,
+    "low_cost": 0,
+    "fresh_input": 23962,
+    "usd": "0.1455329732142857142857142857"
+   },
+   "cached_share_of_input": 0.8315
+  },
+  "klp:first": {
+   "solved": 56,
+   "calls": 1331,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 1331,
+    "input": 30060540,
+    "cached": 28793083,
+    "output": 863078
+   },
+   "frontier": {
+    "calls": 0,
+    "input": 0,
+    "cached": 0,
+    "output": 0
+   },
+   "usd": "1.588689198",
+   "per_solved": {
+    "tokens": 552207,
+    "frontier": 0,
+    "low_cost": 552207,
+    "fresh_input": 22633,
+    "usd": "0.02836944996428571428571428571"
+   },
+   "cached_share_of_input": 0.9578
+  },
+  "worker": {
+   "solved": 54,
+   "calls": 1492,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 1492,
+    "input": 40178540,
+    "cached": 38848247,
+    "output": 982541
+   },
+   "frontier": {
+    "calls": 0,
+    "input": 0,
+    "cached": 0,
+    "output": 0
+   },
+   "usd": "1.811226582",
+   "per_solved": {
+    "tokens": 762242,
+    "frontier": 0,
+    "low_cost": 762242,
+    "fresh_input": 24635,
+    "usd": "0.033541233"
+   },
+   "cached_share_of_input": 0.9669
+  },
+  "worker-3": {
+   "solved": 57,
+   "calls": 1508,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 1508,
+    "input": 39917906,
+    "cached": 38553207,
+    "output": 1009810
+   },
+   "frontier": {
+    "calls": 0,
+    "input": 0,
+    "cached": 0,
+    "output": 0
+   },
+   "usd": "0.926250471",
+   "per_solved": {
+    "tokens": 718030,
+    "frontier": 0,
+    "low_cost": 718030,
+    "fresh_input": 23942,
+    "usd": "0.01625000826315789473684210526"
+   },
+   "cached_share_of_input": 0.9658
+  },
+  "klp": {
+   "solved": 57,
+   "calls": 1685,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 1583,
+    "input": 42785093,
+    "cached": 41380603,
+    "output": 1034725
+   },
+   "frontier": {
+    "calls": 102,
+    "input": 473181,
+    "cached": 0,
+    "output": 54904
+   },
+   "usd": "3.643140118",
+   "per_solved": {
+    "tokens": 778033,
+    "frontier": 9265,
+    "low_cost": 768769,
+    "fresh_input": 32942,
+    "usd": "0.06391473891228070175438596491"
+   },
+   "cached_share_of_input": 0.9566
+  },
+  "klp-sol": {
+   "solved": 54,
+   "calls": 1911,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 1794,
+    "input": 58674904,
+    "cached": 57178871,
+    "output": 1229079
+   },
+   "frontier": {
+    "calls": 117,
+    "input": 544836,
+    "cached": 0,
+    "output": 64784
+   },
+   "usd": "4.004289926",
+   "per_solved": {
+    "tokens": 1120622,
+    "frontier": 11289,
+    "low_cost": 1109333,
+    "fresh_input": 37794,
+    "usd": "0.07415351714814814814814814815"
+   },
+   "cached_share_of_input": 0.9655
+  },
+  "klp-3": {
+   "solved": 59,
+   "calls": 1979,
+   "unmetered_calls": 0,
+   "low_cost": {
+    "calls": 1860,
+    "input": 61990776,
+    "cached": 60412535,
+    "output": 1263888
+   },
+   "frontier": {
+    "calls": 119,
+    "input": 573677,
+    "cached": 0,
+    "output": 69872
+   },
+   "usd": "3.022380555",
+   "per_solved": {
+    "tokens": 1083021,
+    "frontier": 10908,
+    "low_cost": 1072113,
+    "fresh_input": 36473,
+    "usd": "0.05122678906779661016949152542"
+   },
+   "cached_share_of_input": 0.9656
+  }
+ },
+ "findings": {
+  "klp-3": {
+   "dispositions": {
+    "confirmed": 77,
+    "refuted": 3,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 0,
+   "confirmation_rate": 0.9625,
+   "first_review": {
+    "failing": 9,
+    "failing_flagged": 5,
+    "rescued": 2,
+    "passing": 57,
+    "passing_flagged": 30,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 80,
+    "retained": 80,
+    "reproduced": 80,
+    "confirmed_checked": 77,
+    "confirmed_recorded": 77
+   },
+   "reference": {
+    "agrees": 29,
+    "asks_more": 46,
+    "inconclusive": 2
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 24,
+    "asks_more": 40,
+    "inconclusive": 2
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 5,
+    "asks_more": 6,
+    "inconclusive": 0
+   }
+  },
+  "klp-sol": {
+   "dispositions": {
+    "confirmed": 78,
+    "refuted": 2,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 0,
+   "confirmation_rate": 0.975,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 9,
+    "rescued": 0,
+    "passing": 54,
+    "passing_flagged": 26,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 80,
+    "retained": 76,
+    "reproduced": 76,
+    "confirmed_checked": 74,
+    "confirmed_recorded": 78
+   },
+   "reference": {
+    "agrees": 28,
+    "asks_more": 42,
+    "inconclusive": 4
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 19,
+    "asks_more": 29,
+    "inconclusive": 3
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 9,
+    "asks_more": 13,
+    "inconclusive": 1
+   }
+  },
+  "klp": {
+   "dispositions": {
+    "confirmed": 64,
+    "refuted": 3,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 0,
+   "confirmation_rate": 0.9552,
+   "first_review": {
+    "failing": 10,
+    "failing_flagged": 7,
+    "rescued": 1,
+    "passing": 56,
+    "passing_flagged": 29,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 67,
+    "retained": 64,
+    "reproduced": 64,
+    "confirmed_checked": 61,
+    "confirmed_recorded": 64
+   },
+   "reference": {
+    "agrees": 18,
+    "asks_more": 40,
+    "inconclusive": 3
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 13,
+    "asks_more": 31,
+    "inconclusive": 2
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 5,
+    "asks_more": 9,
+    "inconclusive": 1
+   }
+  },
+  "v2-sol": {
+   "dispositions": {
+    "confirmed": 86,
+    "refuted": 3,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 2,
+   "confirmation_rate": 0.9663,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 10,
+    "rescued": 2,
+    "passing": 54,
+    "passing_flagged": 29,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 89,
+    "retained": 89,
+    "reproduced": 89,
+    "confirmed_checked": 86,
+    "confirmed_recorded": 86
+   },
+   "reference": {
+    "agrees": 40,
+    "asks_more": 38,
+    "inconclusive": 8
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 28,
+    "asks_more": 27,
+    "inconclusive": 7
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 12,
+    "asks_more": 11,
+    "inconclusive": 1
+   }
+  },
+  "klp-astra": {
+   "dispositions": {
+    "confirmed": 81,
+    "refuted": 1,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 0,
+   "confirmation_rate": 0.9878,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 8,
+    "rescued": 1,
+    "passing": 54,
+    "passing_flagged": 27,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 82,
+    "retained": 79,
+    "reproduced": 79,
+    "confirmed_checked": 78,
+    "confirmed_recorded": 81
+   },
+   "reference": {
+    "agrees": 33,
+    "asks_more": 42,
+    "inconclusive": 3
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 24,
+    "asks_more": 29,
+    "inconclusive": 3
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 9,
+    "asks_more": 13,
+    "inconclusive": 0
+   }
+  },
+  "klp-terra": {
+   "dispositions": {
+    "confirmed": 222,
+    "refuted": 6,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 0,
+   "confirmation_rate": 0.9737,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 10,
+    "rescued": 1,
+    "passing": 54,
+    "passing_flagged": 41,
+    "broken": 3,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 228,
+    "retained": 110,
+    "reproduced": 110,
+    "confirmed_checked": 106,
+    "confirmed_recorded": 222
+   },
+   "reference": {
+    "agrees": 42,
+    "asks_more": 56,
+    "inconclusive": 8
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 33,
+    "asks_more": 39,
+    "inconclusive": 8
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 9,
+    "asks_more": 17,
+    "inconclusive": 0
+   }
+  },
+  "v2-grok": {
+   "dispositions": {
+    "confirmed": 4,
+    "refuted": 6,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 1,
+   "confirmation_rate": 0.4,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 2,
+    "rescued": 0,
+    "passing": 54,
+    "passing_flagged": 2,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 10,
+    "retained": 10,
+    "reproduced": 10,
+    "confirmed_checked": 4,
+    "confirmed_recorded": 4
+   },
+   "reference": {
+    "agrees": 1,
+    "asks_more": 3,
+    "inconclusive": 0
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 1,
+    "asks_more": 1,
+    "inconclusive": 0
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 0,
+    "asks_more": 2,
+    "inconclusive": 0
+   }
+  },
+  "v2-kimi": {
+   "dispositions": {
+    "confirmed": 16,
+    "refuted": 11,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 1,
+   "confirmation_rate": 0.5926,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 4,
+    "rescued": 1,
+    "passing": 54,
+    "passing_flagged": 5,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 27,
+    "retained": 26,
+    "reproduced": 26,
+    "confirmed_checked": 15,
+    "confirmed_recorded": 16
+   },
+   "reference": {
+    "agrees": 9,
+    "asks_more": 6,
+    "inconclusive": 0
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 5,
+    "asks_more": 4,
+    "inconclusive": 0
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 4,
+    "asks_more": 2,
+    "inconclusive": 0
+   }
+  },
+  "v2-argon": {
+   "dispositions": {
+    "confirmed": 5,
+    "refuted": 0,
+    "unverified": 0,
+    "advisory": 1
+   },
+   "withdrawn": 2,
+   "confirmation_rate": 1.0,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 3,
+    "rescued": 2,
+    "passing": 54,
+    "passing_flagged": 1,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 5,
+    "retained": 5,
+    "reproduced": 5,
+    "confirmed_checked": 5,
+    "confirmed_recorded": 5
+   },
+   "reference": {
+    "agrees": 1,
+    "asks_more": 3,
+    "inconclusive": 1
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 0,
+    "asks_more": 1,
+    "inconclusive": 1
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 1,
+    "asks_more": 2,
+    "inconclusive": 0
+   }
+  },
+  "v2-qwen": {
+   "dispositions": {
+    "confirmed": 3,
+    "refuted": 4,
+    "unverified": 0,
+    "advisory": 138
+   },
+   "withdrawn": 2,
+   "confirmation_rate": 0.4286,
+   "first_review": {
+    "failing": 11,
+    "failing_flagged": 0,
+    "rescued": 0,
+    "passing": 52,
+    "passing_flagged": 3,
+    "broken": 0,
+    "not_reviewed": 3
+   },
+   "probes": {
+    "recorded": 7,
+    "retained": 7,
+    "reproduced": 7,
+    "confirmed_checked": 3,
+    "confirmed_recorded": 3
+   },
+   "reference": {
+    "agrees": 1,
+    "asks_more": 2,
+    "inconclusive": 0
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 1,
+    "asks_more": 2,
+    "inconclusive": 0
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 0,
+    "asks_more": 0,
+    "inconclusive": 0
+   }
+  },
+  "v2a-sol": {
+   "dispositions": {
+    "confirmed": 69,
+    "refuted": 2,
+    "unverified": 0,
+    "advisory": 0
+   },
+   "withdrawn": 1,
+   "confirmation_rate": 0.9718,
+   "first_review": {
+    "failing": 12,
+    "failing_flagged": 7,
+    "rescued": 3,
+    "passing": 54,
+    "passing_flagged": 22,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 71,
+    "retained": 71,
+    "reproduced": 71,
+    "confirmed_checked": 69,
+    "confirmed_recorded": 69
+   },
+   "reference": {
+    "agrees": 29,
+    "asks_more": 37,
+    "inconclusive": 3
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 19,
+    "asks_more": 26,
+    "inconclusive": 2
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 10,
+    "asks_more": 11,
+    "inconclusive": 1
+   }
+  },
+  "klp-3a": {
+   "dispositions": {
+    "confirmed": 59,
+    "refuted": 2,
+    "unverified": 1,
+    "advisory": 1
+   },
+   "withdrawn": 0,
+   "confirmation_rate": 0.9672,
+   "first_review": {
+    "failing": 9,
+    "failing_flagged": 4,
+    "rescued": 0,
+    "passing": 57,
+    "passing_flagged": 27,
+    "broken": 0,
+    "not_reviewed": 0
+   },
+   "probes": {
+    "recorded": 62,
+    "retained": 62,
+    "reproduced": 62,
+    "confirmed_checked": 59,
+    "confirmed_recorded": 59
+   },
+   "reference": {
+    "agrees": 19,
+    "asks_more": 38,
+    "inconclusive": 2
+   },
+   "reference_on_passing_candidates": {
+    "agrees": 15,
+    "asks_more": 30,
+    "inconclusive": 1
+   },
+   "reference_on_failing_candidates": {
+    "agrees": 4,
+    "asks_more": 8,
+    "inconclusive": 1
+   }
+  }
+ }
+}

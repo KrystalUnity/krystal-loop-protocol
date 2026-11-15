@@ -106,6 +106,10 @@ Antigravity, Kimi and Qwen CLIs installed and signed in; leave an arm out of
   in force when it ran and records the tier.
 - **Prices are in [`klp/prices.json`](klp/prices.json),** taken from the
   providers' pricing pages on 10 November 2026. Edit the file if yours differ.
+- **A gap of a few tasks is within chance.** Run 3 and the heavy model
+  disagree on 7 tasks, 5 to 2. The [second look](case-studies/feature-benchmark-2026-11-10/ANALYSIS.md)
+  breaks the results down by task size, with intervals, tokens per solved task
+  and the critics' findings checked against the reference solution.
 
 ### Grade your own setup
 

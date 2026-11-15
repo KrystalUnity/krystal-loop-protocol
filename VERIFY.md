@@ -136,7 +136,16 @@ env -i PATH="$PATH" LANG=C.UTF-8 python3 case-studies/paired-features-2026-11-10
 
 The checker reprices every recorded model call from its token usage, sums the
 calls for each run, and rebuilds the published table from the per-run results.
-It prints the table and `All figures recompute from the receipts.`
+The feature benchmark's checker also recomputes every table in its
+[second look](case-studies/feature-benchmark-2026-11-10/ANALYSIS.md). It prints
+the table and `All figures recompute from the receipts.`
+
+To rerun the critics' probes against the dataset's reference solution, after
+`python3 -m bench.features prepare --work ~/klp-bench`:
+
+```bash
+python3 -m bench.probes reference --work ~/klp-bench --pack case-studies/feature-benchmark-2026-11-10/probes.json
+```
 
 ## 6. Rerun the Feature Benchmark
 

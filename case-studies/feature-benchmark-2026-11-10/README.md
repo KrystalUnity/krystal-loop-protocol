@@ -173,6 +173,23 @@ and by every KLP arm. Their hidden tests check behaviour the written
 specification does not state. On the other 61 tasks, KLP Standard run 3 solved
 59.
 
+## A second look
+
+[ANALYSIS.md](ANALYSIS.md) tests these results four ways, from the same
+receipts:
+
+- **Chance.** Run 3 and the heavy model disagree on 7 tasks, 5 to 2, which is
+  within chance: the loop matches a frontier model's pass rate, and the cost is
+  the difference.
+- **Task size.** Every arm drops a little on the largest third of tasks, and
+  the loop is weakest where the reference solution changes two files.
+- **Tokens.** The loop reads more tokens than a frontier model alone, nearly
+  all of them the low-cost model's and 97% from cache. It reads 11 thousand
+  frontier-model tokens per solved task, against 150 thousand.
+- **Findings.** Every probe we could rerun reproduced its result. On the
+  dataset's reference solution, about four in ten of the Sol critic's
+  confirmed findings pass and the rest ask for more than the reference does.
+
 ## Method
 
 - **Tasks.** 66 single-feature tasks from the public
@@ -239,6 +256,8 @@ calls for each run in [`results.json`](results.json) and rebuilds the table in
 validation result, and [`models.json`](models.json) holds the model settings.
 
 A receipt for each of the 66 runs of run 3 is in [`receipts/run-3`](receipts/run-3).
+The checker also recomputes every table in [ANALYSIS.md](ANALYSIS.md) from
+[`task-sizes.json`](task-sizes.json) and [`probes.json`](probes.json).
 
 To rerun it with your own keys or your own models, follow
 [BENCHMARKS.md](../../BENCHMARKS.md). The KLP arm alone costs about $3.

@@ -8,6 +8,9 @@ commit, with a written specification and a test patch the models never see.
     python -m bench.features run --work ~/klp-bench --cap 60     # spend, with a hard cap
     python -m bench.features report --work ~/klp-bench
 
+How big each task is (reference solution and hidden tests), from the dataset's own patches:
+    python -m bench.features sizes --work ~/klp-bench --out task-sizes.json
+
 Grade a coding tool of your own on the same tasks and hidden tests:
     python -m bench.features tasks --work ~/klp-bench --out ~/my-run      # clean checkouts and task statements
     python -m bench.features grade --work ~/klp-bench --patches ~/my-run --name my-setup
@@ -149,6 +152,41 @@ def hidden_grade(env_dir: Path, scratch: Path, task: dict, candidate: bytes | No
     run = sandbox.run(f"{PYTEST} {' '.join(task['test_files'])}", timeout=1200, limit=3000)
     shutil.rmtree(ws, ignore_errors=True)
     return dict(passed=run["returncode"] == 0, stage="tests", returncode=run["returncode"], output=run["output"][-1500:])
+
+
+def patch_size(text: str) -> dict:
+    """Files, added lines and removed lines in a unified diff, counting hunk lines only."""
+    files, added, removed, tests, in_hunk = [], 0, 0, 0, False
+    for line in text.splitlines():
+        if line.startswith("diff --git "):
+            files.append(line.split(" b/", 1)[-1])
+            in_hunk = False
+        elif line.startswith("@@"):
+            in_hunk = True
+        elif in_hunk and line.startswith("+"):
+            added += 1
+            tests += bool(re.match(r"\+\s*(?:async\s+)?def test_\w+", line))
+        elif in_hunk and line.startswith("-"):
+            removed += 1
+    return dict(files=len(files), added=added, removed=removed, tests_added=tests)
+
+
+def task_sizes(work: Path) -> dict:
+    """How big each task is: its reference solution and its hidden tests, from the dataset's own patches."""
+    tasks = [t for t in json.loads((work / "tasks.json").read_text())["tasks"] if t["valid"]]
+    sizes = {}
+    for task in tasks:
+        reference, hidden = (patch_size(Path(task[k]).read_text()) for k in ("gold_patch", "tests_patch"))
+        sizes[task["id"]] = dict(reference=dict(files=reference["files"], added=reference["added"],
+                                                removed=reference["removed"]),
+                                 hidden_tests=dict(files=hidden["files"], tests=hidden["tests_added"],
+                                                   added=hidden["added"]))
+    return dict(dataset=DATASET_URL, revision=DATASET_REVISION,
+                measures=dict(reference="the dataset's reference solution (feature.patch): files changed and "
+                                        "lines added and removed",
+                              hidden_tests="the hidden test patch (tests.patch): files, test functions added and "
+                                           "lines added"),
+                tasks=sizes)
 
 
 def prepare(work: Path, jobs: int) -> None:
@@ -421,6 +459,7 @@ def export(work: Path, out: Path, examples: list[str], arms_filter: list[str] | 
                     commit=t["commit"], test_files=t["test_files"], validation=t["validation"]) for t in tasks["tasks"]]),
         indent=1) + "\n")
     (out / "models.json").write_text(json.dumps(MODELS, indent=1) + "\n")
+    (out / "task-sizes.json").write_text(json.dumps(task_sizes(work), indent=1) + "\n")
     shutil.copy(Path(__file__).resolve().parents[1] / "klp" / "prices.json", out / "prices.json")
     for name in examples:  # "arm/task-id"
         source = work / "runs" / name / "receipt.md"
@@ -524,7 +563,7 @@ def grade(work: Path, source: Path, name: str, jobs: int, ids: list[str] | None,
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice", "tasks", "grade"))
+    parser.add_argument("command", choices=("prepare", "run", "report", "export", "reprice", "tasks", "grade", "sizes"))
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--arms", default=PRESETS["headline"], help="comma-separated: " + ", ".join(ARMS))
     parser.add_argument("--preset", choices=sorted(PRESETS), help="a named set of arms: "
@@ -536,7 +575,7 @@ def main() -> None:
     parser.add_argument("--max-steps", type=int, default=100)
     parser.add_argument("--task-cap", type=float, default=2.0)
     parser.add_argument("--repair-rounds", type=int, default=2)
-    parser.add_argument("--out", type=Path, help="export, tasks: destination folder")
+    parser.add_argument("--out", type=Path, help="export, tasks: destination folder; sizes: destination file")
     parser.add_argument("--patches", type=Path, help="grade: folder holding <task-id>.patch files or <task-id>/repo checkouts")
     parser.add_argument("--name", default="my-setup", help="grade: a label for your setup")
     parser.add_argument("--usd", type=float, help="grade: what the whole run cost you, recorded as self-reported")
@@ -552,6 +591,13 @@ def main() -> None:
             [i for i in args.ids.split(",") if i], Limits(max_steps=args.max_steps, cost_usd=args.task_cap, repair_rounds=args.repair_rounds))
     elif args.command == "reprice":
         reprice(args.work)
+    elif args.command == "sizes":
+        sizes = json.dumps(task_sizes(args.work), indent=1) + "\n"
+        if args.out:
+            args.out.write_text(sizes)
+            print(f"sizes of {len(json.loads(sizes)['tasks'])} tasks -> {args.out}")
+        else:
+            print(sizes, end="")
     elif args.command in ("tasks", "grade"):
         ids = [i for i in args.ids.split(",") if i]
         if args.command == "tasks":
