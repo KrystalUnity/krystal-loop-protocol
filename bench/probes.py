@@ -1,15 +1,20 @@
 """Re-run the critics' probes from a feature benchmark run against the dataset's reference solution.
 
 A probe is the test a critic writes to back a finding: it fails on the candidate if the finding is real.
-Each recorded probe runs twice in the sandbox, with no network:
+Each recorded probe whose file still holds the content it ran with runs twice in the sandbox, with no
+network, using the command the runner recorded for it:
 
-  1. on the candidate the critic reviewed, to show the rerun reproduces the recorded outcome;
+  1. on the candidate the critic reviewed, to show the rerun reproduces the recorded exit code;
   2. on the reference solution the dataset ships with the task.
+
+A probe whose file a later review overwrote cannot be rerun; it is listed without reruns.
 
 A probe that passes on the reference asks for behaviour the reference solution has. One that fails there
 asks for more than the reference does: a requirement the task statement leaves open, or a defect the
-reference shares. A probe that cannot run against the reference (it uses a name only the candidate
-defines, it times out, or pytest cannot collect it) proves nothing either way.
+reference shares. A probe that cannot run against the reference (its output names a missing import,
+name, attribute or keyword, it times out, or pytest cannot collect it) proves nothing either way. The
+missing-name test is a text match on the output, so it files a few probes in the wrong one of the last
+two groups; it never moves a probe into or out of "agrees".
 
     python3 -m bench.probes collect --work ~/klp-bench --out probes.json        # needs the recorded runs
     python3 -m bench.probes reference --work ~/klp-bench --pack probes.json     # needs only `prepare`
@@ -23,56 +28,120 @@ import argparse
 import concurrent.futures
 import hashlib
 import json
+import os
 import re
 import shutil
+import stat
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from bench.features import ARMS, DATASET_REVISION, DATASET_URL, box, sh  # noqa: E402
+from klp.sandbox import identity_dir  # noqa: E402
 from klp.snapshot import GIT_SAFE as GIT, Snapshots  # noqa: E402
 
 PROBE_TIMEOUT = 180  # what the runner allows a probe
+PROBE_MAX_BYTES = 1 << 20
 MISSING_NAME = re.compile(r"\b(?:ImportError|ModuleNotFoundError|NameError)\b|cannot import name|has no attribute"
                           r"|unexpected keyword argument")
+STAGING_FAILED = "could not write "  # how the runner records a probe file it could not write
 
 
-def write_events(receipt: dict) -> list[tuple[str, int, str]]:
-    """Every time a review wrote a file into /workspace/probes, in order: (file, review number, finding id).
+def staged(probe: dict) -> bool:
+    """False when the runner could not write the probe file, so the finding never ran its own content."""
+    return not (probe.get("returncode") is None and str(probe.get("output") or "").startswith(STAGING_FAILED))
 
-    A review writes one file per probed finding, then its acceptance file, which all of its acceptance
-    findings share. A later write to the same file name replaces the earlier content.
+
+def write_events(receipt: dict) -> list[tuple[str, int, int | str | None]]:
+    """Every write a review made into /workspace/probes, in order: (file, review number, writer).
+
+    A review writes one file per probed finding, in the order of its findings, then its acceptance file,
+    whether or not that file produced findings; its acceptance findings all share it. The writer is the
+    finding's position in the review, "acceptance", or None for a write that failed: the old file may
+    already be gone, and the finding never ran its own content. A later write to a file name replaces
+    the earlier content.
     """
     events = []
     for number, review in enumerate(receipt.get("reviews", []), 1):
-        acceptance_written = False
-        for finding in review["findings"]:
-            if finding.get("carried") or not (finding.get("probe") or {}).get("file"):
+        acceptance = (review.get("acceptance") or {}).get("file")
+        for position, finding in enumerate(review["findings"]):
+            probe = finding.get("probe") or {}
+            if finding.get("carried") or not probe.get("file"):
                 continue
             if finding.get("source") == "acceptance":
-                if not acceptance_written:
-                    events.append((finding["probe"]["file"], number, "acceptance"))
-                    acceptance_written = True
-            else:
-                events.append((finding["probe"]["file"], number, finding["id"]))
+                acceptance = acceptance or probe["file"]
+                continue
+            events.append((probe["file"], number, position if staged(probe) else None))
+        if acceptance:
+            events.append((acceptance, number, "acceptance"))
     return events
 
 
 def probed_findings(receipt: dict) -> list[dict]:
     """Each finding that ran a probe, with whether its probe file still holds the content it ran with."""
-    events = write_events(receipt)
-    owner = {file: (number, writer) for file, number, writer in events}  # the last write wins
+    owner = {file: (number, writer) for file, number, writer in write_events(receipt)}  # the last write wins
     rows = []
     for number, review in enumerate(receipt.get("reviews", []), 1):
-        for finding in review["findings"]:
+        for position, finding in enumerate(review["findings"]):
             probe = finding.get("probe") or {}
             if finding.get("carried") or not probe.get("file"):
                 continue
-            writer = "acceptance" if finding.get("source") == "acceptance" else finding["id"]
+            writer = "acceptance" if finding.get("source") == "acceptance" else position
             rows.append(dict(review=number, finding=finding, reviewed_revision=review["reviewed_revision"],
                              retained=owner.get(probe["file"]) == (number, writer)))
     return rows
+
+
+def probe_name(file: str) -> str | None:
+    """The probe's file name, if it is one the runner could have written; None for anything else."""
+    name = Path(str(file)).name
+    return name if re.fullmatch(r"[A-Za-z0-9_.-]+", name) and name not in (".", "..") else None
+
+
+def read_probe(ws: Path, name: str) -> str | None:
+    """The text of ws/probes/<name>, or None unless it is a small regular file reached without a link.
+
+    The run's workspace was writable by the models' code, so a link planted there could name any file on
+    the host. Each part of the path is opened on its own with O_NOFOLLOW; O_NONBLOCK keeps a planted FIFO
+    from blocking the open.
+    """
+    if probe_name(name) != name:
+        return None
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC
+    fds: list[int] = []
+    try:
+        fds.append(os.open(ws, flags | os.O_DIRECTORY))
+        fds.append(os.open("probes", flags | os.O_DIRECTORY, dir_fd=fds[-1]))
+        fds.append(os.open(name, flags | os.O_NONBLOCK, dir_fd=fds[-1]))
+        info = os.fstat(fds[-1])
+        if not stat.S_ISREG(info.st_mode) or info.st_size > PROBE_MAX_BYTES:
+            return None
+        with open(fds[-1], "rb", closefd=False) as f:
+            data = f.read(PROBE_MAX_BYTES + 1)
+        return None if len(data) > PROBE_MAX_BYTES else data.decode("utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+    finally:
+        for fd in fds:
+            os.close(fd)
+
+
+def scratch_root(work: Path, kind: str) -> Path:
+    """A scratch folder of this invocation's own under --work/scratch, so concurrent runs never share one."""
+    base = work / "scratch"
+    base.mkdir(parents=True, exist_ok=True)
+    return Path(tempfile.mkdtemp(prefix=f"{kind}-", dir=base)).resolve()
+
+
+def scratch_dir(root: Path, index: int) -> Path:
+    """The numbered folder for one probe under an invocation's scratch root. Never built from recorded text."""
+    root = root.resolve()
+    path = (root / str(int(index))).resolve()
+    if path.parent != root:
+        raise ValueError(f"scratch folder {path} is outside {root}")
+    return path
 
 
 def checkout(env_dir: Path, ws: Path, *, candidate: bytes | None = None, reference: Path | None = None) -> dict:
@@ -97,9 +166,12 @@ def run_probe(env_dir: Path, ws: Path, file: str, content: str, command: str, **
         setup = checkout(env_dir, ws, **patch)
         if setup["returncode"] != 0:
             return dict(stage="apply", returncode=None, timed_out=False, output=setup["output"][-600:])
+        name = probe_name(file)
+        if name is None:
+            return dict(stage="apply", returncode=None, timed_out=False, output=f"unsafe probe file name: {file!r}")
         probes = ws / "probes"
         probes.mkdir()
-        (probes / Path(file).name).write_text(content)
+        (probes / name).write_text(content)
         done = box(ws, env_dir).run(command, timeout=PROBE_TIMEOUT, limit=3000)
         return dict(stage="probe", returncode=done["returncode"], timed_out=done["timed_out"], output=done["output"])
     finally:
@@ -149,7 +221,8 @@ def review_arms(work: Path, arms: list[str] | None) -> list[str]:
 
 
 def collect(work: Path, out: Path, arms: list[str] | None, ids: list[str] | None, jobs: int) -> dict:
-    """Rerun every recorded probe on its reviewed candidate and on the reference solution."""
+    """Rerun every recorded probe whose file a later review did not overwrite, on its reviewed candidate
+    and on the reference solution. Overwritten probes are listed without reruns."""
     tasks = {t["id"]: t for t in json.loads((work / "tasks.json").read_text())["tasks"] if t["valid"]}
     jobs_list = []
     for arm in review_arms(work, arms):
@@ -174,24 +247,23 @@ def collect(work: Path, out: Path, arms: list[str] | None, ids: list[str] | None
             patches[key] = store.patch(receipt["base_revision"], revision)
         return patches[key]
 
-    def one(item) -> dict:
-        arm, task_id, run_dir, receipt, grades, row = item
+    def one(numbered) -> dict:
+        index, (arm, task_id, run_dir, receipt, grades, row) = numbered
         task, finding = tasks[task_id], row["finding"]
         probe, env_dir = finding["probe"], work / "envs" / tasks[task_id]["env"]
-        local = run_dir / "ws" / Path(probe["file"]).relative_to("/workspace")
+        name = probe_name(probe["file"])
+        content = read_probe(run_dir / "ws", name) if name and row["retained"] else None
         entry = dict(arm=arm, task=task_id, review=row["review"], id=finding["id"],
                      source=finding.get("source", "critic"), claim=finding["claim"],
                      disposition=finding["disposition"], reviewed_revision=row["reviewed_revision"],
                      candidate_passed_hidden_tests=bool(grades.get(row["reviewed_revision"], {}).get("passed")),
-                     retained=row["retained"] and local.is_file(),
+                     retained=content is not None,
                      recorded=dict(returncode=probe.get("returncode"), timed_out=bool(probe.get("timed_out"))))
-        if not entry["retained"]:
+        if content is None:
             return entry
-        content = local.read_text()
-        entry["probe"] = dict(file=Path(probe["file"]).name, command=probe["command"],
+        entry["probe"] = dict(file=name, command=probe["command"],
                               sha256=hashlib.sha256(content.encode()).hexdigest(), content=content)
-        # Runners before 0.5 restarted finding ids in every review, so the review number keeps this unique.
-        scratch = work / "scratch" / "probes" / arm / task_id / f"{row['review']}-{re.sub(r'[^A-Za-z0-9_.-]', '_', finding['id'])}"
+        scratch = scratch_dir(root, index)
         patch = candidate_patch(arm, task, run_dir, receipt, row["reviewed_revision"])
         again = run_probe(env_dir, scratch / "candidate", probe["file"], content, probe["command"], candidate=patch)
         entry["candidate"] = dict(returncode=again["returncode"], timed_out=again["timed_out"])
@@ -203,12 +275,16 @@ def collect(work: Path, out: Path, arms: list[str] | None, ids: list[str] | None
         return entry
 
     rows = []
-    with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
-        for n, entry in enumerate(pool.map(one, jobs_list), 1):
-            rows.append(entry)
-            if n % 50 == 0 or n == len(jobs_list):
-                print(f"  {n}/{len(jobs_list)}", flush=True)
-    shutil.rmtree(work / "scratch" / "probes", ignore_errors=True)
+    identity_dir()  # the sandbox's passwd and group, made once before the threads start
+    root = scratch_root(work, "probes")
+    try:
+        with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
+            for n, entry in enumerate(pool.map(one, enumerate(jobs_list)), 1):
+                rows.append(entry)
+                if n % 50 == 0 or n == len(jobs_list):
+                    print(f"  {n}/{len(jobs_list)}", flush=True)
+    finally:
+        shutil.rmtree(root, ignore_errors=True)
     pack = dict(dataset=DATASET_URL, revision=DATASET_REVISION, probe_timeout_seconds=PROBE_TIMEOUT,
                 outcomes=dict(agrees="the probe passes on the reference solution",
                               asks_more="the probe fails on the reference solution too",
@@ -224,23 +300,34 @@ def reference(work: Path, pack_file: Path, jobs: int) -> int:
     """Repeat the reference half of a published probes.json on a prepared benchmark folder."""
     tasks = {t["id"]: t for t in json.loads((work / "tasks.json").read_text())["tasks"] if t["valid"]}
     pack = json.loads(pack_file.read_text())
-    rows = [r for r in pack["findings"] if r.get("probe")]
+    rows = [r for r in pack["findings"] if isinstance(r, dict) and r.get("probe")]
+    unknown = [r for r in rows if r.get("task") not in tasks]
+    if unknown:
+        raise SystemExit(f"{len(unknown)} probes name tasks this benchmark folder does not have")
+    malformed = [r for r in rows if not isinstance(r["probe"], dict) or not isinstance(r.get("reference"), dict)
+                 or not all(isinstance(r["probe"].get(k), str) for k in ("file", "content", "command"))]
+    if malformed:
+        raise SystemExit(f"{len(malformed)} probes lack a file name, content, command or published outcome")
 
-    def one(row: dict) -> tuple[dict, str]:
+    def one(numbered) -> tuple[dict, str]:
+        index, row = numbered
         task, probe = tasks[row["task"]], row["probe"]
-        scratch = (work / "scratch" / "probes-reference" / row["arm"] / row["task"]
-                   / f"{row['review']}-{re.sub(r'[^A-Za-z0-9_.-]', '_', row['id'])}")
-        ref = run_probe(work / "envs" / task["env"], scratch, probe["file"], probe["content"], probe["command"],
-                        reference=Path(task["gold_patch"]))
+        ref = run_probe(work / "envs" / task["env"], scratch_dir(root, index), probe["file"],
+                        probe["content"], probe["command"], reference=Path(task["gold_patch"]))
         return row, outcome(ref, probe["command"])[0]
 
     differ = 0
-    with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
-        for row, got in pool.map(one, rows):
-            if got != row["reference"]["outcome"]:
-                differ += 1
-                print(f"  {row['arm']}/{row['task']} {row['id']}: published {row['reference']['outcome']}, now {got}")
-    shutil.rmtree(work / "scratch" / "probes-reference", ignore_errors=True)
+    identity_dir()  # the sandbox's passwd and group, made once before the threads start
+    root = scratch_root(work, "probes-reference")
+    try:
+        with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
+            for row, got in pool.map(one, enumerate(rows)):
+                if got != row["reference"].get("outcome"):
+                    differ += 1
+                    print(f"  {row.get('arm')}/{row['task']} {row.get('id')}: published "
+                          f"{row['reference'].get('outcome')}, now {got}")
+    finally:
+        shutil.rmtree(root, ignore_errors=True)
     print(f"{len(rows) - differ} of {len(rows)} probes give the published outcome on the reference solution.")
     return 1 if differ else 0
 

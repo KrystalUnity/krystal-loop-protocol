@@ -190,6 +190,95 @@ class Probes(unittest.TestCase):
         kept = {(row["review"], row["finding"]["id"]): row["retained"] for row in probes.probed_findings(receipt)}
         self.assertEqual(kept, {(1, "F1"): False, (1, "F2"): True, (1, "A1"): True, (1, "A2"): True, (2, "R2-F1"): True})
 
+    def test_retention_follows_each_write_not_the_finding_ids(self):
+        from bench import probes
+        failed = dict(self.finding("F2", "test_a.py"))
+        failed["probe"] = dict(failed["probe"], returncode=None, timed_out=True,
+                               output="could not write /workspace/probes/test_a.py in the sandbox: no space")
+        receipts = {
+            "an acceptance file with no failing test still replaces a probe of the same name": dict(reviews=[dict(
+                reviewed_revision="r1", findings=[self.finding("F1", "test_acceptance.py")],
+                acceptance=dict(file="/workspace/probes/test_acceptance.py", result="passed"))]),
+            "two findings with the same id keep only the later write": dict(reviews=[dict(
+                reviewed_revision="r1", findings=[self.finding("F2", "test_a.py"), self.finding("F2", "test_a.py")])]),
+            "a probe that could not be written owns nothing and spoils the earlier file": dict(reviews=[dict(
+                reviewed_revision="r1", findings=[self.finding("F1", "test_a.py"), failed])]),
+        }
+        expected = {"an acceptance file with no failing test still replaces a probe of the same name": [False],
+                    "two findings with the same id keep only the later write": [False, True],
+                    "a probe that could not be written owns nothing and spoils the earlier file": [False, False]}
+        for title, receipt in receipts.items():
+            with self.subTest(title):
+                self.assertEqual([row["retained"] for row in probes.probed_findings(receipt)], expected[title])
+
+    def test_a_probe_is_read_only_as_a_small_regular_file_reached_without_a_link(self):
+        import os
+        from bench import probes
+        root = Path(tempfile.mkdtemp(prefix="klp-bench-test-"))
+        secret = root / "host-secret.txt"
+        secret.write_text("not for the pack")
+        ws = root / "ws"
+        (ws / "probes").mkdir(parents=True)
+        (ws / "probes" / "test_ok.py").write_text("def test_ok():\n    assert True\n")
+        (ws / "probes" / "test_link.py").symlink_to(secret)
+        os.mkfifo(ws / "probes" / "test_fifo.py")
+        (ws / "probes" / "test_big.py").write_bytes(b"#" * (probes.PROBE_MAX_BYTES + 1))
+        (ws / "probes" / "test_bytes.py").write_bytes(b"\xff\xfe")
+        self.assertEqual(probes.read_probe(ws, "test_ok.py"), "def test_ok():\n    assert True\n")
+        for name in ("test_link.py", "test_fifo.py", "test_big.py", "test_bytes.py", "missing.py", "..", "../ws"):
+            with self.subTest(name):
+                self.assertIsNone(probes.read_probe(ws, name))
+        linked = root / "linked-ws"
+        linked.mkdir()
+        (linked / "probes").symlink_to(ws / "probes")
+        self.assertIsNone(probes.read_probe(linked, "test_ok.py"))
+
+    def test_names_from_a_published_pack_never_leave_the_scratch_folder(self):
+        from bench import probes
+        self.assertEqual(probes.probe_name("/workspace/probes/test_f1.py"), "test_f1.py")
+        for unsafe in ("..", ".", "", "/workspace/probes/..", "a b.py"):
+            self.assertIsNone(probes.probe_name(unsafe))
+        work = Path(tempfile.mkdtemp(prefix="klp-bench-test-"))
+        first, second = probes.scratch_root(work, "probes-reference"), probes.scratch_root(work, "probes-reference")
+        self.assertNotEqual(first, second)  # two runs at once never share a folder
+        self.assertEqual(probes.scratch_dir(first, 7), first / "7")
+        for index in ("../../..", "", "7/../.."):
+            with self.assertRaises(ValueError):
+                probes.scratch_dir(first, index)
+
+    def test_reference_builds_no_path_from_a_published_pack(self):
+        from bench import probes
+        work = Path(tempfile.mkdtemp(prefix="klp-bench-test-"))
+        victim = work.parent / (work.name + "-victim")
+        victim.mkdir()
+        (work / "tasks.json").write_text(json.dumps(dict(tasks=[dict(
+            id="t1", valid=True, env="t1-env", gold_patch=str(work / "feature.patch"))])))
+        row = lambda **over: dict(dict(arm="klp-3", task="t1", review=1, id="F1", reference=dict(outcome="agrees"),
+                                       probe=dict(file="test_f1.py", content="", command="true")), **over)
+        pack = work / "probes.json"
+        pack.write_text(json.dumps(dict(findings=[
+            row(review=str(victim.parent / work.name)), row(arm="../../..", id="victim"), row(id="../../x"),
+            row(probe=dict(file="..", content="", command="true"))])))
+        seen = []
+
+        def fake_run_probe(env_dir, ws, file, content, command, **patch):
+            seen.append(ws)
+            return dict(stage="probe", returncode=0, timed_out=False, output="")
+
+        original, probes.run_probe = probes.run_probe, fake_run_probe
+        try:
+            self.assertEqual(probes.reference(work, pack, jobs=4), 0)
+        finally:
+            probes.run_probe = original
+        self.assertEqual(len(seen), 4)
+        for ws in seen:
+            self.assertTrue(ws.resolve().is_relative_to((work / "scratch").resolve()), ws)
+        self.assertTrue(victim.is_dir())
+        self.assertEqual(list((work / "scratch").iterdir()), [])  # only its own scratch, and it is gone
+        pack.write_text(json.dumps(dict(findings=[row(task="not-in-this-folder")])))
+        with self.assertRaises(SystemExit):
+            probes.reference(work, pack, jobs=1)
+
     def test_outcome_on_the_reference(self):
         from bench import probes
         run = lambda rc, output="", stage="probe", timed_out=False: dict(stage=stage, returncode=rc, timed_out=timed_out,

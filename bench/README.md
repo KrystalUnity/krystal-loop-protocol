@@ -96,10 +96,13 @@ python3 -m bench.probes reference --work ~/klp-bench --pack probes.json
 ```
 
 `sizes` measures each task's reference solution and hidden tests from the
-dataset's own patches. `collect` reruns every probe your critic arms recorded,
-first on the candidate it was written for and then on the reference solution,
-in the sandbox with no network. `reference` repeats the second half from a
-published `probes.json`, so it needs only `prepare`.
+dataset's own patches. `collect` reruns every probe your critic arms recorded
+whose file a later review did not overwrite, with the command it first ran
+with: first on the candidate it was written for, then on the reference
+solution, in the sandbox with no network. It reads each probe without
+following links and lists overwritten probes without reruns. `reference`
+repeats the second half from a published `probes.json`, so it needs only
+`prepare`; it builds no path from the pack's text.
 [What the published probes show](../case-studies/feature-benchmark-2026-11-10/ANALYSIS.md#4-what-the-critics-found).
 
 ## Paired features: `bench.pairs`
