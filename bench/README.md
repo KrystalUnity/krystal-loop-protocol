@@ -97,7 +97,7 @@ python3 -m bench.probes reference --work ~/klp-bench --pack probes.json
 
 `sizes` measures each task's reference solution and hidden tests from the
 dataset's own patches. `collect` reruns every probe your critic arms recorded
-whose file a later review did not overwrite, with the command it first ran
+whose file was not written again later, with the command it first ran
 with: first on the candidate it was written for, then on the reference
 solution, in the sandbox with no network. It reads each probe without
 following links and lists overwritten probes without reruns. `reference`

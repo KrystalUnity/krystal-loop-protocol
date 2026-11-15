@@ -7,7 +7,8 @@ network, using the command the runner recorded for it:
   1. on the candidate the critic reviewed, to show the rerun reproduces the recorded exit code;
   2. on the reference solution the dataset ships with the task.
 
-A probe whose file a later review overwrote cannot be rerun; it is listed without reruns.
+A probe whose file was written again later (by a later review, or a later probe in the same review) cannot
+be rerun; it is listed without reruns.
 
 A probe that passes on the reference asks for behaviour the reference solution has. One that fails there
 asks for more than the reference does: a requirement the task statement leaves open, or a defect the
@@ -97,7 +98,7 @@ def probed_findings(receipt: dict) -> list[dict]:
 def probe_name(file: str) -> str | None:
     """The probe's file name, if it is one the runner could have written; None for anything else."""
     name = Path(str(file)).name
-    return name if re.fullmatch(r"[A-Za-z0-9_.-]+", name) and name not in (".", "..") else None
+    return name if re.fullmatch(r"[A-Za-z0-9_.-]{1,255}", name) and name not in (".", "..") else None
 
 
 def read_probe(ws: Path, name: str) -> str | None:
@@ -221,7 +222,7 @@ def review_arms(work: Path, arms: list[str] | None) -> list[str]:
 
 
 def collect(work: Path, out: Path, arms: list[str] | None, ids: list[str] | None, jobs: int) -> dict:
-    """Rerun every recorded probe whose file a later review did not overwrite, on its reviewed candidate
+    """Rerun every recorded probe whose file was not written again later, on its reviewed candidate
     and on the reference solution. Overwritten probes are listed without reruns."""
     tasks = {t["id"]: t for t in json.loads((work / "tasks.json").read_text())["tasks"] if t["valid"]}
     jobs_list = []
@@ -300,7 +301,10 @@ def reference(work: Path, pack_file: Path, jobs: int) -> int:
     """Repeat the reference half of a published probes.json on a prepared benchmark folder."""
     tasks = {t["id"]: t for t in json.loads((work / "tasks.json").read_text())["tasks"] if t["valid"]}
     pack = json.loads(pack_file.read_text())
-    rows = [r for r in pack["findings"] if isinstance(r, dict) and r.get("probe")]
+    findings = pack.get("findings") if isinstance(pack, dict) else None
+    rows = [r for r in findings if isinstance(r, dict) and r.get("probe")] if isinstance(findings, list) else []
+    if not rows:
+        raise SystemExit(f"{pack_file} lists no probes to rerun")
     unknown = [r for r in rows if r.get("task") not in tasks]
     if unknown:
         raise SystemExit(f"{len(unknown)} probes name tasks this benchmark folder does not have")

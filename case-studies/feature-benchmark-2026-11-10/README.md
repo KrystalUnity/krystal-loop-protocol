@@ -144,7 +144,8 @@ every failing test becomes a confirmed finding.
 
 Of 132 acceptance files, 120 passed outright and 10 exposed a gap. The option
 is there for work where a written specification must be covered line by line.
-The default review reached the higher solve count at the lower cost.
+The default review cost less on both sets of candidates and solved two more
+on run 3's; the acceptance file solved one more on run 2's.
 
 ## Where the money went
 
@@ -169,26 +170,34 @@ half cents.
 ## The tasks every arm missed
 
 Five tasks were failed by both models working alone, by all three worker runs
-and by every KLP arm. Their hidden tests check behaviour the written
-specification does not state. On the other 61 tasks, KLP Standard run 3 solved
-59.
+and by every KLP arm. For four of them, the hidden tests check behaviour the
+written specification does not state; the fifth states it and every arm missed
+it ([details](ANALYSIS.md#2-does-it-hold-on-bigger-tasks)). On the other 61
+tasks, KLP Standard run 3 solved 59 and each model alone 56.
 
 ## A second look
 
-[ANALYSIS.md](ANALYSIS.md) tests these results four ways, from the same
+[ANALYSIS.md](ANALYSIS.md) tests these results again, from the same
 receipts:
 
 - **Chance.** Run 3 and the heavy model disagree on 7 tasks, 5 to 2, which is
-  within chance: the loop matches a frontier model's pass rate, and the cost is
-  the difference.
-- **Task size.** Every arm drops a little on the largest third of tasks, and
-  the loop is weakest where the reference solution changes two files.
-- **Tokens.** The loop reads more tokens than a frontier model alone, nearly
-  all of them the low-cost model's and 97% from cache. It reads 11 thousand
+  within chance: 66 tasks show no detectable difference in pass rate between
+  KLP Standard, its worker alone and either model alone. The cost is the
+  difference, and most of it comes from the worker model.
+- **Price tier.** Run 3 ran in DeepSeek's off-peak hours. At its standard
+  rate, which runs 1 and 2 paid, the three runs cost 11 to 13 times less per
+  task than the heavy model and about half as much as the frontier model.
+- **Task size.** No two arms differ by more than chance in any size,
+  file-count or repository group, and no reference solution here is longer
+  than 232 lines.
+- **Tokens.** The loop uses five to seven and a half times as many tokens per
+  solved task as a frontier model alone, nearly all of them the low-cost
+  model's, with 97% of its input from cache. It uses 11 thousand
   frontier-model tokens per solved task, against 150 thousand.
-- **Findings.** Every probe we could rerun reproduced its result. On the
-  dataset's reference solution, about four in ten of the Sol critic's
-  confirmed findings pass and the rest ask for more than the reference does.
+- **Findings.** Every confirmed finding we could rerun failed again on its
+  candidate, though a few probes fail on their own mistake. On the dataset's
+  reference solution, about four in ten of the Sol critic's confirmed findings
+  pass, 57% fail there too and 5% cannot run on it.
 
 ## Method
 

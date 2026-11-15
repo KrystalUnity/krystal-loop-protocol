@@ -4,11 +4,13 @@
     python3 case-studies/feature-benchmark-2026-11-10/verify.py
 
 Checks, in order:
-1. each model call's cost equals its reported token usage times the recorded price for the hour it ran in;
+1. each model call's cost equals its reported token usage times the price for the tier recorded with it
+   (the runner sets DeepSeek's off-peak tier from the call's start time, which the ledger does not carry);
 2. each run's cost equals the sum of its calls;
 3. the report's solve counts and totals equal what the per-run results add up to;
-4. analysis.json and every table in ANALYSIS.md equal what results.json, ledger.jsonl, task-sizes.json and
-   probes.json give, and probes.json agrees with results.json on every finding and grade.
+4. analysis.json and every table in ANALYSIS.md equal what results.json, ledger.jsonl, report.json,
+   prices.json, task-sizes.json and probes.json give, and probes.json agrees with results.json on every
+   finding and grade.
 
 A review arm works on candidates built by another arm (`candidates_from` in the report), so its cost is its
 own critic and repair calls plus the worker calls that built the candidate. A critic reached through a

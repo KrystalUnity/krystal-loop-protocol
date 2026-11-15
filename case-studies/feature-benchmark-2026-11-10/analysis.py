@@ -4,16 +4,19 @@
     python3 case-studies/feature-benchmark-2026-11-10/analysis.py           # recompute and compare
     python3 case-studies/feature-benchmark-2026-11-10/analysis.py --write   # rewrite analysis.json and ANALYSIS.md tables
 
-Offline, standard library only. Reads results.json, ledger.jsonl, report.json, task-sizes.json and probes.json
-from this folder. verify.py runs the comparison as its last check.
+Offline, standard library only. Reads results.json, ledger.jsonl, report.json, prices.json, task-sizes.json
+and probes.json from this folder. verify.py runs the comparison as its last check.
 
 - Intervals are Wilson score intervals at 95%. Paired comparisons use the exact McNemar test: only the tasks
   where two arms disagree carry information, and the p-value is the two-sided binomial probability of a
-  split at least that uneven if both arms were equally good.
+  split at least that uneven if both arms were equally good. The interval for the difference between two
+  arms is Newcombe's hybrid score interval for paired outcomes (method 10, with his correction to the
+  correlation term).
 - Task size is the dataset's reference solution: lines added plus lines removed. Tasks are ranked by it
   (ties by task id) and split into three groups of equal size.
 - Tokens are the provider-reported usage in ledger.jsonl. A review arm carries the tokens of the worker
-  run whose candidate it reviewed, the same way its cost does. Output includes reasoning tokens.
+  run whose candidate it reviewed, the same way its cost does. Output includes reasoning tokens. The cost
+  at DeepSeek's standard rate reprices every call billed at its off-peak rate, using prices.json.
 - Findings come from results.json; their probes' reruns on the reference solution from probes.json.
 """
 from __future__ import annotations
@@ -24,6 +27,7 @@ import math
 import re
 import sys
 from decimal import ROUND_HALF_UP, Decimal as D
+from itertools import combinations
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -59,7 +63,9 @@ CRITICS = {
     "klp-3a": "`gpt-6.1-sol` + acceptance file, run 3 candidates",
 }
 REPOSITORIES = (("pallets_click", "Click"), ("pallets_jinja", "Jinja"), ("samuelcolvin_dirty_equals", "dirty-equals"))
+THIRDS = ("small", "medium", "large")
 OUTCOMES = ("agrees", "asks_more", "inconclusive")
+RATES = ("input", "cached", "write", "output")
 
 
 # ---------------------------------------------------------------- statistics
@@ -90,6 +96,35 @@ def lopsided_enough(n: int) -> int | None:
     return best
 
 
+def paired_interval(both: int, first_only: int, second_only: int, neither: int) -> tuple[float, float, float]:
+    """The first arm's solve rate minus the second's, with a 95% interval, for two arms graded on the same tasks.
+
+    Newcombe's hybrid score interval (method 10 in Newcombe 1998): it combines each arm's Wilson interval and
+    allows for the correlation between paired outcomes, with his continuity correction to that correlation.
+    """
+    n = both + first_only + second_only + neither
+    p1, p2 = (both + first_only) / n, (both + second_only) / n
+    l1, u1 = wilson(both + first_only, n)
+    l2, u2 = wilson(both + second_only, n)
+    margins = (both + first_only) * (second_only + neither) * (both + second_only) * (first_only + neither)
+    product = both * neither - first_only * second_only
+    if product > 0:
+        product = max(product - n / 2, 0)
+    phi = product / math.sqrt(margins) if margins else 0.0
+    difference = p1 - p2
+    low = difference - math.sqrt(max((p1 - l1) ** 2 - 2 * phi * (p1 - l1) * (u2 - p2) + (u2 - p2) ** 2, 0.0))
+    high = difference + math.sqrt(max((u1 - p1) ** 2 - 2 * phi * (u1 - p1) * (p2 - l2) + (p2 - l2) ** 2, 0.0))
+    return difference, low, high
+
+
+def price(usage: dict, rates: dict) -> D:
+    """A call's cost at the given rates, the way verify.py checks every recorded cost."""
+    r = {k: D(str(rates[k])) for k in RATES}
+    fresh = usage["input"] - usage["cached"] - usage["write"]
+    return (D(fresh) * r["input"] + D(usage["cached"]) * r["cached"] + D(usage["write"]) * r["write"]
+            + D(usage["output"]) * r["output"]) / D(1_000_000)
+
+
 # ---------------------------------------------------------------- data
 
 def load() -> dict:
@@ -100,6 +135,7 @@ def load() -> dict:
     report = json.loads((HERE / "report.json").read_text())
     return dict(by=by, report=report, tasks=sorted(by["klp-3"]),
                 source={v["arm"]: v.get("candidates_from") for v in report["arms"].values()},
+                prices=json.loads((HERE / "prices.json").read_text())["usd_per_million_tokens"],
                 sizes=json.loads((HERE / "task-sizes.json").read_text())["tasks"],
                 probes=json.loads((HERE / "probes.json").read_text())["findings"],
                 calls=[json.loads(line) for line in (HERE / "ledger.jsonl").read_text().splitlines()])
@@ -113,6 +149,16 @@ def solved(by: dict, arm: str, task: str) -> bool:
 
 # ---------------------------------------------------------------- sections
 
+def compare(by: dict, tasks: list[str], arm: str, other: str) -> dict:
+    both = sum(solved(by, arm, t) and solved(by, other, t) for t in tasks)
+    arm_only = sum(solved(by, arm, t) and not solved(by, other, t) for t in tasks)
+    other_only = sum(solved(by, other, t) and not solved(by, arm, t) for t in tasks)
+    difference, low, high = paired_interval(both, arm_only, other_only, len(tasks) - both - arm_only - other_only)
+    return dict(arm=arm, other=other, arm_only=arm_only, other_only=other_only, p=round(mcnemar(arm_only, other_only), 4),
+                significant_if_losing_side_at_most=lopsided_enough(arm_only + other_only),
+                difference=round(difference, 6), low=round(low, 6), high=round(high, 6))
+
+
 def chance(d: dict) -> dict:
     by, tasks = d["by"], d["tasks"]
     intervals = {}
@@ -120,14 +166,9 @@ def chance(d: dict) -> dict:
         k = sum(solved(by, arm, t) for t in tasks)
         low, high = wilson(k, len(tasks))
         intervals[arm] = dict(solved=k, tasks=len(tasks), low=round(low, 4), high=round(high, 4))
-    comparisons = []
-    for run, worker, loop in RUNS:
-        for other in (*SOLO, worker):
-            loop_only = sum(solved(by, loop, t) and not solved(by, other, t) for t in tasks)
-            other_only = sum(solved(by, other, t) and not solved(by, loop, t) for t in tasks)
-            comparisons.append(dict(run=run, loop=loop, other=other, loop_only=loop_only, other_only=other_only,
-                                    p=round(mcnemar(loop_only, other_only), 4),
-                                    significant_if_other_at_most=lopsided_enough(loop_only + other_only)))
+    comparisons = [dict(run=run, **compare(by, tasks, loop, other))
+                   for run, worker, loop in RUNS for other in (*SOLO, worker)]
+    comparisons += [dict(run=run, **compare(by, tasks, worker, other)) for run, worker, _ in RUNS for other in SOLO]
     return dict(intervals=intervals, comparisons=comparisons)
 
 
@@ -146,14 +187,25 @@ def size(d: dict) -> dict:
     table = {arm: {name: sum(solved(by, arm, t) for t in ids) for name, ids in members.items()} for arm in LABELS}
     every_arm_missed = sorted(t for t in tasks if not any(solved(by, a, t) for a in by if a in LABELS or a in CRITICS)
                               and not solved(by, "klp:first", t))
+    smallest = {}
+    for name, ids in members.items():
+        for a, b in combinations(LABELS, 2):
+            a_only = sum(solved(by, a, t) and not solved(by, b, t) for t in ids)
+            b_only = sum(solved(by, b, t) and not solved(by, a, t) for t in ids)
+            p = round(mcnemar(a_only, b_only), 4)
+            if name not in smallest or p < smallest[name]["p"]:
+                smallest[name] = dict(p=p, arms=[a, b], split=[a_only, b_only])
     return dict(rule="reference solution lines added plus removed; ranked, ties by task id, three equal groups",
                 groups=groups, solved=table,
-                missed_by_every_arm=[dict(task=t, lines=lines[t], files=sizes[t]["reference"]["files"])
+                solved_by_no_arm={name: sum(t in ids for t in every_arm_missed) for name, ids in members.items()},
+                smallest_p_between_two_arms=smallest,
+                missed_by_every_arm=[dict(task=t, lines=lines[t], files=sizes[t]["reference"]["files"],
+                                          third=next(n for n in THIRDS if t in members[n]))
                                      for t in every_arm_missed])
 
 
 def tokens(d: dict) -> dict:
-    by, tasks, source = d["by"], set(d["tasks"]), d["source"]
+    by, tasks, source, prices = d["by"], set(d["tasks"]), d["source"], d["prices"]
     usage: dict = {}  # (arm, task, role) -> kind -> totals
     for call in d["calls"]:
         if call["status"] != "completed":
@@ -163,34 +215,39 @@ def tokens(d: dict) -> dict:
             continue
         kind = "unmetered" if call.get("metered") is False else "low_cost" if call["model"] in LOW_COST else "frontier"
         slot = usage.setdefault((arm, task, call["role"]), {}).setdefault(
-            kind, dict(calls=0, input=0, cached=0, output=0, usd=D(0)))
+            kind, dict(calls=0, input=0, cached=0, output=0, usd=D(0), usd_standard=D(0)))
         slot["calls"] += 1
         for key in ("input", "cached", "output"):
             slot[key] += (call.get("usage") or {}).get(key, 0)
-        slot["usd"] += D(call["usd"]) if call.get("usd") is not None else D(0)
+        usd = D(call["usd"]) if call.get("usd") is not None else D(0)
+        slot["usd"] += usd
+        slot["usd_standard"] += price(call["usage"], prices[call["model"]]) if call.get("tier") == "off_peak" else usd
     out = {}
     for arm in LABELS:
         own, roles = ("klp", ("worker",)) if arm == "klp:first" else (arm, None)
         arms = {own} | ({source[own]} if source.get(own) and arm != "klp:first" else set())
-        total = {k: dict(calls=0, input=0, cached=0, output=0, usd=D(0)) for k in ("low_cost", "frontier", "unmetered")}
+        total = {k: dict(calls=0, input=0, cached=0, output=0, usd=D(0), usd_standard=D(0))
+                 for k in ("low_cost", "frontier", "unmetered")}
         for (a, task, role), kinds in usage.items():
             if a in arms and (roles is None or role in roles):
                 for kind, slot in kinds.items():
                     for key in slot:
                         total[kind][key] += slot[key]
-        k = sum(solved(by, arm, t) for t in tasks)
+        k, n = sum(solved(by, arm, t) for t in tasks), len(tasks)
         every = sum(total[x]["input"] + total[x]["output"] for x in ("low_cost", "frontier"))
         inputs = sum(total[x]["input"] for x in ("low_cost", "frontier"))
         usd = sum((total[x]["usd"] for x in total), D(0))
+        standard = sum((total[x]["usd_standard"] for x in total), D(0))
         out[arm] = dict(
             solved=k, calls=sum(total[x]["calls"] for x in total), unmetered_calls=total["unmetered"]["calls"],
             low_cost={key: total["low_cost"][key] for key in ("calls", "input", "cached", "output")},
             frontier={key: total["frontier"][key] for key in ("calls", "input", "cached", "output")},
-            usd=str(usd),
+            usd=str(usd), usd_at_standard_rate=str(standard),
+            per_task=dict(usd=str(usd / n), usd_at_standard_rate=str(standard / n)),
             per_solved=dict(tokens=round(every / k), frontier=round((total["frontier"]["input"] + total["frontier"]["output"]) / k),
                             low_cost=round((total["low_cost"]["input"] + total["low_cost"]["output"]) / k),
-                            fresh_input=round(sum(total[x]["input"] - total[x]["cached"] for x in ("low_cost", "frontier")) / k),
-                            usd=str(usd / k)),
+                            not_from_cache=round(sum(total[x]["input"] - total[x]["cached"] for x in ("low_cost", "frontier")) / k),
+                            usd=str(usd / k), usd_at_standard_rate=str(standard / k)),
             cached_share_of_input=round(sum(total[x]["cached"] for x in ("low_cost", "frontier")) / inputs, 4) if inputs else None)
     return out
 
@@ -264,6 +321,20 @@ def pct(x: float) -> str:
     return f"{round(100 * x)}%"
 
 
+def points(x: float) -> str:
+    return f"{100 * x:+.1f}".replace("-", "−")
+
+
+def two_places(p: float) -> str:
+    return str(D(str(p)).quantize(D("0.01"), rounding=ROUND_HALF_UP))
+
+
+def exact_p(p: float) -> str:
+    """0.0625, 0.125, 0.25, 0.50, 1.00: these p-values are exact fractions, so show them whole."""
+    whole, frac = f"{p:.4f}".rstrip("0").split(".")
+    return f"{whole}.{frac.ljust(2, '0')}"
+
+
 def count(n: int) -> str:
     if n >= 1_000_000:
         return f"{n / 1e6:.1f}M"
@@ -289,32 +360,46 @@ def render(a: dict) -> dict[str, str]:
         ["66 tasks", "Tasks solved", "95% interval"],
         [[LABELS[arm], f"{v['solved']} ({pct(v['solved'] / v['tasks'])})", f"{pct(v['low'])} to {pct(v['high'])}"]
          for arm, v in c["intervals"].items()], "lrr")
+    solved_n = {arm: v["solved"] for arm, v in c["intervals"].items()}
     blocks["comparisons"] = table(
-        ["KLP Standard", "Against", "Only the loop solved", "Only the other solved", "p", "Needed for p < 0.05"],
-        [[f"{x['run']} ({c['intervals'][x['loop']]['solved']})",
-          f"{SHORT[x['other']]} ({c['intervals'][x['other']]['solved']})", x["loop_only"], x["other_only"],
-          f"{x['p']:.2f}",
-          "no split" if x["significant_if_other_at_most"] is None else
-          f"{x['loop_only'] + x['other_only'] - x['significant_if_other_at_most']} to {x['significant_if_other_at_most']}"]
-         for x in c["comparisons"]], "llrrrr")
+        ["Arm", "Against", "Only the arm solved", "Only the other solved", "p", "Needed for p < 0.05",
+         "Difference in points, 95% interval"],
+        [[f"{LABELS[x['arm']]} ({solved_n[x['arm']]})", f"{SHORT[x['other']]} ({solved_n[x['other']]})",
+          x["arm_only"], x["other_only"], two_places(x["p"]),
+          "no split" if x["significant_if_losing_side_at_most"] is None else
+          f"{x['arm_only'] + x['other_only'] - x['significant_if_losing_side_at_most']} to "
+          f"{x['significant_if_losing_side_at_most']}",
+          f"{points(x['difference'])} ({points(x['low'])} to {points(x['high'])})"]
+         for x in c["comparisons"]], "llrrrrr")
     g = s["groups"]
     names = ["small", "medium", "large", "one file", "two or more files"]
     head = [f"Small, {g['small']['lines'][0]}–{g['small']['lines'][1]} lines",
             f"Medium, {g['medium']['lines'][0]}–{g['medium']['lines'][1]}",
             f"Large, {g['large']['lines'][0]}–{g['large']['lines'][1]}", "One file", "Two files"]
+    tail = lambda group_names: [["Tasks no arm solved"] + [s["solved_by_no_arm"][n] for n in group_names],
+                                ["Smallest p between any two arms above"]
+                                + [exact_p(s["smallest_p_between_two_arms"][n]["p"]) for n in group_names]]
     blocks["size"] = table(["Tasks solved"] + head,
                            [[LABELS[arm]] + [s["solved"][arm][n] for n in names] for arm in LABELS]
-                           + [["Tasks in the group"] + [g[n]["tasks"] for n in names]], "lrrrrr")
+                           + [["Tasks in the group"] + [g[n]["tasks"] for n in names]] + tail(names), "lrrrrr")
     repos = [name for _, name in REPOSITORIES]
     blocks["repositories"] = table(["Tasks solved"] + [f"{r} ({g[r]['tasks']})" for r in repos],
-                                   [[LABELS[arm]] + [s["solved"][arm][r] for r in repos] for arm in LABELS], "lrrr")
+                                   [[LABELS[arm]] + [s["solved"][arm][r] for r in repos] for arm in LABELS] + tail(repos),
+                                   "lrrr")
     blocks["tokens"] = table(
-        ["66 tasks", "Solved", "Tokens per solved task", "Frontier-model tokens", "Low-cost-model tokens",
-         "Fresh input", "Input read from cache", "Cost per solved task"],
+        ["Per solved task", "Solved", "All tokens", "Frontier-model tokens", "Low-cost-model tokens",
+         "Input not read from cache", "Share of input read from cache"],
         [[LABELS[arm], v["solved"], count(v["per_solved"]["tokens"]), count(v["per_solved"]["frontier"]),
-          count(v["per_solved"]["low_cost"]), count(v["per_solved"]["fresh_input"]),
-          pct(v["cached_share_of_input"]), dollars(v["per_solved"]["usd"])] for arm, v in t.items()],
-        "lrrrrrrr")
+          count(v["per_solved"]["low_cost"]), count(v["per_solved"]["not_from_cache"]),
+          pct(v["cached_share_of_input"])] for arm, v in t.items()],
+        "lrrrrrr")
+    blocks["cost"] = table(
+        ["66 tasks", "Solved", "Cost per task", "Cost per solved task", "At DeepSeek's standard rate: per task",
+         "Per solved task"],
+        [[LABELS[arm], v["solved"], dollars(v["per_task"]["usd"]), dollars(v["per_solved"]["usd"]),
+          dollars(v["per_task"]["usd_at_standard_rate"]), dollars(v["per_solved"]["usd_at_standard_rate"])]
+         for arm, v in t.items()],
+        "lrrrrr")
     blocks["dispositions"] = table(
         ["Critic", "Settled by a probe", "Confirmed: probe failed", "Discarded: probe passed", "Confirmed share",
          "Advisory or unproven", "Withdrawn"],
@@ -329,8 +414,8 @@ def render(a: dict) -> dict[str, str]:
           v["first_review"]["passing"], v["first_review"]["passing_flagged"], v["first_review"]["broken"]]
          for arm, v in f.items()], "lrrrrrr")
     blocks["reference"] = table(
-        ["Critic", "Confirmed findings rerun", "Reference agrees", "Asks for more", "Cannot run on it",
-         "On candidates passing the hidden tests: agrees / asks for more / cannot run"],
+        ["Critic", "Confirmed findings rerun", "Passes on the reference", "Fails there too", "Cannot run on it",
+         "On candidates passing the hidden tests: passes / fails too / cannot run"],
         [[CRITICS[arm], f"{v['probes']['confirmed_checked']} of {v['probes']['confirmed_recorded']}",
           v["reference"]["agrees"], v["reference"]["asks_more"], v["reference"]["inconclusive"],
           " / ".join(str(v["reference_on_passing_candidates"][k]) for k in OUTCOMES)]

@@ -236,7 +236,7 @@ class Probes(unittest.TestCase):
     def test_names_from_a_published_pack_never_leave_the_scratch_folder(self):
         from bench import probes
         self.assertEqual(probes.probe_name("/workspace/probes/test_f1.py"), "test_f1.py")
-        for unsafe in ("..", ".", "", "/workspace/probes/..", "a b.py"):
+        for unsafe in ("..", ".", "", "/workspace/probes/..", "a b.py", "t" * 253 + ".py"):
             self.assertIsNone(probes.probe_name(unsafe))
         work = Path(tempfile.mkdtemp(prefix="klp-bench-test-"))
         first, second = probes.scratch_root(work, "probes-reference"), probes.scratch_root(work, "probes-reference")
@@ -275,9 +275,10 @@ class Probes(unittest.TestCase):
             self.assertTrue(ws.resolve().is_relative_to((work / "scratch").resolve()), ws)
         self.assertTrue(victim.is_dir())
         self.assertEqual(list((work / "scratch").iterdir()), [])  # only its own scratch, and it is gone
-        pack.write_text(json.dumps(dict(findings=[row(task="not-in-this-folder")])))
-        with self.assertRaises(SystemExit):
-            probes.reference(work, pack, jobs=1)
+        for bad in (dict(findings=[row(task="not-in-this-folder")]), dict(findings={}), dict(findings=[]), []):
+            pack.write_text(json.dumps(bad))
+            with self.assertRaises(SystemExit):
+                probes.reference(work, pack, jobs=1)
 
     def test_outcome_on_the_reference(self):
         from bench import probes
@@ -318,6 +319,18 @@ class Statistics(unittest.TestCase):
         self.assertEqual(self.analysis.lopsided_enough(7), 0)
         self.assertEqual(self.analysis.lopsided_enough(10), 1)
         self.assertIsNone(self.analysis.lopsided_enough(5))
+        self.assertLess(self.analysis.mcnemar(8, 1), 0.05)  # a gap can count with a loss on the other side
+        self.assertGreater(self.analysis.mcnemar(7, 1), 0.05)
+
+    def test_paired_difference_interval_is_newcombes_method_10_with_his_correction(self):
+        # both solved, only the first, only the second, neither; then the difference and its 95% interval in points
+        for cells, expected in {(54, 5, 2, 5): (4.5, -4.3, 13.8), (51, 3, 5, 7): (-3.0, -12.5, 6.2),
+                                (52, 2, 4, 8): (-3.0, -11.6, 5.3), (55, 2, 1, 8): (1.5, -5.3, 8.6)}.items():
+            got = tuple(round(100 * x, 1) for x in self.analysis.paired_interval(*cells))
+            self.assertEqual(got, expected, cells)
+        difference, low, high = self.analysis.paired_interval(60, 0, 0, 6)
+        self.assertEqual(difference, 0.0)
+        self.assertAlmostEqual(low, -high)
 
 
 if __name__ == "__main__":

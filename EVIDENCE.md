@@ -47,8 +47,8 @@ the earlier runner the heavier `gpt-6-astra` solved 55 at $0.165, and the
 lighter `gpt-6.1-terra` solved 52 at $0.075 and broke three passing
 candidates.
 
-Five of the 66 tasks were failed by every arm; their hidden tests check
-behaviour the written specification does not state.
+Five of the 66 tasks were failed by every arm; for four of them, the hidden
+tests check behaviour the written specification does not state.
 
 A [second look](case-studies/feature-benchmark-2026-11-10/ANALYSIS.md) tests
 these results by task size, chance and tokens per solved task, and reruns
