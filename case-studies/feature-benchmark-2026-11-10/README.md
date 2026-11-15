@@ -1,4 +1,4 @@
-# Feature Benchmark: More Tasks Solved Than the Heavy Model, at a Sixteenth of Its Cost
+# Feature Benchmark: As Many Tasks Solved as the Heavy Model, at a Sixteenth of Its Cost
 
 A low-cost worker under KLP Standard solved 59 of 66 real feature tasks for
 $0.046 a task. OpenAI's heaviest model working alone solved 56 for $0.721 a
@@ -18,8 +18,8 @@ calls.
 | Low-cost worker alone, runs 1 / 2 / 3 (`deepseek-flash`) | 56 / 54 / 57 | $0.024 / $0.027 / $0.014 | $0.028 / $0.034 / $0.016 | $1.59 / $1.81 / $0.93 |
 
 Run 3 cost 94% less per task than the heavy model alone and 63% less than the
-frontier model alone, and solved three more tasks than either. It solved five
-tasks the heavy model missed. Over the three runs KLP Standard cost 92% to 94%
+frontier model alone, and solved 59 tasks against their 56. It and the heavy
+model split seven tasks, five to two. Over the three runs KLP Standard cost 92% to 94%
 less than the heavy model and 51% to 63% less than the frontier model.
 
 Run 3 used runner 0.5 and ran in DeepSeek's off-peak hours, when the worker is
@@ -28,8 +28,8 @@ billed at half rate. Each call is priced at the rate in force when it ran.
 ## What runner 0.5 changed
 
 Runs 1 and 2 showed where review was leaving tasks on the table. Runner 0.5
-closes those gaps, and the same critic on the same 66 candidates shows the
-effect:
+goes after those gaps. Run on the same 66 candidates, the same critic solved
+56 instead of 54:
 
 | `gpt-6.1-sol` critic on the identical run 2 candidates | Earlier runner | Runner 0.5 |
 | --- | ---: | ---: |

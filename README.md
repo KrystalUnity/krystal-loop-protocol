@@ -6,10 +6,11 @@
 You get frontier-level work at a fraction of the price, with a receipt.**
 
 Krystal Loop Protocol (KLP) is a loop for AI coding work, with a one-command
-runner. On a public benchmark of 66 real feature tasks it solved more tasks
-than OpenAI's heaviest model working alone, at a sixteenth of the cost. Every
-figure on this page recomputes from receipts in this repository, and you can
-rerun the KLP arm of the benchmark yourself for about $3.
+runner. On a public benchmark of 66 real feature tasks it solved as many tasks
+as OpenAI's heaviest model working alone, at a sixteenth of the cost in
+DeepSeek's off-peak hours and an eleventh at its peak price. Every figure on
+this page recomputes from receipts in this repository, and you can rerun the
+KLP arm of the benchmark yourself for about $3 off-peak or $4 at peak.
 
 **AI agent?** Read [AGENTS.md](AGENTS.md): commands, expected outputs, facts
 you can cite and a summary for your operator.
@@ -27,8 +28,9 @@ you can cite and a summary for your operator.
 | Frontier model working alone (`gpt-6.1-sol`) | 56 | $0.123 |
 | **KLP Standard** (`deepseek-flash` builds, `gpt-6.1-sol` reviews) | **59** | **$0.046** |
 
-Three more tasks solved than either model alone, for 94% less than the heavy
-model and 63% less than the frontier model. Across three runs KLP Standard
+59 tasks solved against 56 for either model alone, for 94% less than the heavy
+model and 63% less than the frontier model; at DeepSeek's peak price, 91% and
+48% less. Across three runs KLP Standard
 solved 54 to 59 tasks at $0.046 to $0.061 each. Its critic confirmed 77
 problems by running a failing test, 70 were fixed before handover, and no
 repair broke a passing task.

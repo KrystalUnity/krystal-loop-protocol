@@ -6,7 +6,7 @@ and links to receipts you can recompute with `python3 -m bench.verify`. The two
 benchmarks can be rerun from this repository with your own keys:
 [BENCHMARKS.md](BENCHMARKS.md).
 
-## Feature Benchmark: More Tasks Solved Than the Heavy Model, at a Sixteenth of Its Cost
+## Feature Benchmark: As Many Tasks Solved as the Heavy Model, at a Sixteenth of Its Cost
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see. Every arm had the same task statement, sandbox and shell
@@ -21,8 +21,9 @@ tool. 1,056 runs and 9,788 model calls.
 | KLP Standard, run 1 (one repair round) | 57 of 66 | $0.055 | $0.064 | $3.64 |
 | Low-cost worker alone, runs 1 / 2 / 3 | 56 / 54 / 57 of 66 | $0.024 / $0.027 / $0.014 | $0.028 / $0.034 / $0.016 | $1.59 / $1.81 / $0.93 |
 
-Run 3 solved three more tasks than either model working alone and cost 94%
-less per task than the heavy model and 63% less than the frontier model. Over
+Run 3 solved 59 tasks against 56 for either model working alone and cost 94%
+less per task than the heavy model and 63% less than the frontier model, in
+DeepSeek's off-peak hours; at its peak price, 91% and 48% less. Over
 the three runs KLP Standard cost 92% to 94% less than the heavy model and 51%
 to 63% less than the frontier model. Each KLP row is the same worker runs as
 the worker row, graded before and after review, so the difference is the
