@@ -264,19 +264,33 @@ def run_probe(sandbox: Sandbox, snapshots: Snapshots, finding: dict, head: str, 
                 output=result["output"], disposition=disposition(result, command))
 
 
-def _plain(text: str) -> str:
-    return " ".join(re.sub(r"[`*_\"“”‘’']", "", text).lower().split()).strip(" .:;")
+def _words(text: str) -> list[str]:
+    """Lower-case words and numbers only, so quoting, markdown, dashes and spacing do not decide a match."""
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+def _sentences(task: str) -> list[list[str]]:
+    return [w for part in re.split(r"(?<=[.!?])\s+|\n+", task) if (w := _words(part))]
 
 
 def anchor(requirement: str, task: str) -> str:
     """What a finding's named requirement points to. The runner does not judge whether the finding is right;
-    it records whether the critic tied it to the task statement, to a convention of the code, or to nothing."""
+    it records whether the critic tied it to the task statement, to a convention of the code, or to nothing.
+
+    task_statement needs the quoted words, whole and in order, to be a whole sentence of the task or a run of
+    at least five consecutive words of it; a stray phrase such as "the function" is not a requirement."""
     if not requirement.strip():
         return "none"
     if re.match(r"\s*convention\s*:", requirement, flags=re.I):
         return "convention"
-    quoted = _plain(requirement)
-    return "task_statement" if len(quoted) >= 12 and quoted in _plain(task) else "not_in_statement"
+    quoted, words = _words(requirement), _words(task)
+    if not quoted:
+        return "not_in_statement"
+    if quoted in _sentences(task):
+        return "task_statement"
+    n = len(quoted)
+    found = n >= 5 and any(words[i:i + n] == quoted for i in range(len(words) - n + 1))
+    return "task_statement" if found else "not_in_statement"
 
 
 def adjudicate(sandbox: Sandbox, snapshots: Snapshots, verdict: dict, head: str, *, rules: dict | None = None,

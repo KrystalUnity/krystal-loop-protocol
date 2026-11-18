@@ -223,6 +223,11 @@ ANCHORS = {
 }
 
 
+def _one_line(text: str, limit: int = 240) -> str:
+    text = " ".join(text.replace('"', "'").split())
+    return text if len(text) <= limit else text[:limit - 3] + "..."
+
+
 def render_receipt(receipt: dict) -> str:
     done, effort = receipt["completion"], receipt["completion"]["measured_effort"]
     lines = [f"# KLP Standard receipt: {receipt['task_id']}", "",
@@ -252,7 +257,7 @@ def render_receipt(receipt: dict) -> str:
                          f"{f['id']}: {f['claim']}")
             if f.get("blocking") and f.get("anchor"):
                 lines.append(f"  - holds the candidate to: {ANCHORS[f['anchor']]}"
-                             + (f" \"{clip(f['requirement'], 240)}\"" if f["anchor"] in ("task_statement", "convention",
+                             + (f" \"{_one_line(f['requirement'])}\"" if f["anchor"] in ("task_statement", "convention",
                                                                               "not_in_statement") else ""))
         if item.get("withdrawn"):
             lines.append(f"- withdrawn by the critic: {', '.join(item['withdrawn'])}")

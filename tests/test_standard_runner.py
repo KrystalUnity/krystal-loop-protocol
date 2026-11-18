@@ -129,6 +129,7 @@ class StandardLoop(unittest.TestCase):
         self.assertEqual(receipt["runner"], "0.6.0")
         text = (self.tmp / "out/receipt.md").read_text()
         self.assertIn('holds the candidate to: a sentence of the task statement, "Make `double(x)` return twice x"', text)
+        self.assertEqual(anchor("x",  "x"), "task_statement")  # a one-word task is its own sentence
 
     def test_open_finding_stays_open_until_its_probe_passes(self):
         wrong = bash("printf 'def double(x):\\n    return x + 2\\n' > calc.py")
@@ -386,6 +387,12 @@ class Parsing(unittest.TestCase):
         self.assertEqual(anchor("Convention: close what you open, as load() does", task), "convention")
         self.assertEqual(anchor("Raise TypeError for a string count.", task), "not_in_statement")
         self.assertEqual(anchor("count", task), "not_in_statement")  # too short to tie to one sentence
+        # Whole words in order: a stray phrase is not a requirement, a whole short sentence is.
+        self.assertEqual(anchor("the function", "Make the function faster."), "not_in_statement")
+        self.assertEqual(anchor("Return None.", "Add a flag.\nReturn None.\nKeep the rest."), "task_statement")
+        self.assertEqual(anchor("ount is negative. Keep the default", task), "not_in_statement")
+        self.assertEqual(anchor("returns x - the list of items", "It returns x — the list of items."), "task_statement")
+        self.assertEqual(anchor("keep list_item_2 as the key name", "Keep list-item 2 as the key name."), "task_statement")
         self.assertIn('"requirement"', critic_system())
 
     def test_probe_dispositions(self):
