@@ -14,8 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from klp.llm import Ledger, Model, ProviderError, price, rates_at, read_usage, reply_from  # noqa: E402
-from klp.review import (critic_system, disposition, parse_verdict, probe_command, project_test_rules,  # noqa: E402
-                        run_acceptance, under_project_rules)
+from klp.review import (anchor, critic_system, disposition, parse_verdict, probe_command,  # noqa: E402
+                        project_test_rules, run_acceptance, under_project_rules)
 from klp.sandbox import Sandbox  # noqa: E402
 from klp.standard import Limits, run_standard  # noqa: E402
 
@@ -111,10 +111,24 @@ class StandardLoop(unittest.TestCase):
         self.assertEqual(receipt["reviews"][0]["findings"][0]["disposition"], "confirmed")
         self.assertTrue(receipt["repairs"][0]["probes"][0]["closed"])
         self.assertIn("x * 2", self.source())
+        # The finding named no requirement, and the receipt says so.
+        self.assertEqual(receipt["reviews"][0]["findings"][0]["anchor"], "none")
         self.assertEqual(receipt["completion"]["final_revision"], receipt["candidates"][-1]["revision"])
         # The review is bound to the exact commit it judged, and the repair was reviewed too.
         self.assertEqual([r["reviewed_revision"] for r in receipt["reviews"]], [c["revision"] for c in receipt["candidates"]])
         self.assertTrue((self.tmp / "out/receipt.md").read_text().startswith("# KLP Standard receipt"))
+
+    def test_finding_records_the_task_sentence_it_holds_the_candidate_to(self):
+        wrong = bash("printf 'def double(x):\\n    return x + 2\\n' > calc.py")
+        right = bash("printf 'def double(x):\\n    return x * 2\\n' > calc.py")
+        probe = "import sys; sys.path.insert(0, '/workspace/repo'); import calc; assert calc.double(5) == 10"
+        stated = {**finding("double(5) is 7", probe), "requirement": "Make `double(x)` return twice x"}
+        receipt, _, _ = self.run_loop([wrong, say("done"), right, say("fixed")], [verdict(stated), verdict()])
+        first = receipt["reviews"][0]["findings"][0]
+        self.assertEqual((first["disposition"], first["anchor"]), ("confirmed", "task_statement"))
+        self.assertEqual(receipt["runner"], "0.6.0")
+        text = (self.tmp / "out/receipt.md").read_text()
+        self.assertIn('holds the candidate to: a sentence of the task statement, "Make `double(x)` return twice x"', text)
 
     def test_open_finding_stays_open_until_its_probe_passes(self):
         wrong = bash("printf 'def double(x):\\n    return x + 2\\n' > calc.py")
@@ -359,6 +373,20 @@ class Parsing(unittest.TestCase):
         self.assertEqual(parse_verdict(json.dumps({"verdict": "FAIL", "findings": []}), open_earlier=True)["verdict"], "FAIL")
         with self.assertRaises(ValueError):
             parse_verdict(json.dumps({"verdict": "PASS", "findings": [{"claim": "x", "blocking": True}]}), open_earlier=True)
+
+    def test_requirement_is_optional_and_anchored_to_the_task(self):
+        reply = {"verdict": "FAIL", "findings": [
+            {"claim": "a", "blocking": True, "requirement": "  Raise ValueError when count is negative. "},
+            {"claim": "b", "blocking": True}]}
+        got = parse_verdict(json.dumps(reply))["findings"]
+        self.assertEqual([f["requirement"] for f in got], ["Raise ValueError when count is negative.", ""])
+        task = "Add a `count` option.\nRaise `ValueError` when count\nis negative. Keep the default at 1."
+        self.assertEqual(anchor(got[0]["requirement"], task), "task_statement")
+        self.assertEqual(anchor("", task), "none")
+        self.assertEqual(anchor("Convention: close what you open, as load() does", task), "convention")
+        self.assertEqual(anchor("Raise TypeError for a string count.", task), "not_in_statement")
+        self.assertEqual(anchor("count", task), "not_in_statement")  # too short to tie to one sentence
+        self.assertIn('"requirement"', critic_system())
 
     def test_probe_dispositions(self):
         run = lambda rc, timed_out=False: dict(returncode=rc, timed_out=timed_out)  # noqa: E731

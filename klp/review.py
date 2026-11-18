@@ -37,6 +37,10 @@ Judge the candidate diff against the task statement and the recorded check resul
   shown in the diff?
 Do not invent requirements. Style preferences are not findings.
 
+Every blocking finding names the requirement it holds the candidate to, in "requirement": copy the sentence
+of the task statement it breaks, word for word, or write "convention: " and name the convention of the
+surrounding code it breaks. If you can point to neither, the finding is not blocking.
+
 Every blocking finding needs a probe: a small self-contained test the runner will execute against the
 candidate. The probe must FAIL on this candidate if your finding is real and PASS once it is fixed.
 A finding whose probe passes is discarded, so only write probes for behaviour the task statement or the
@@ -52,6 +56,7 @@ Reply with one JSON object and nothing else:
 {{"verdict": "PASS" | "FAIL",
  "profile_assessment": "eligible" | "critical_trigger" | "insufficient_evidence",
  "findings": [{{"id": "F1", "claim": "...", "blocking": true, "evidence": "exact quote or line from the packet",
+               "requirement": "the task sentence, word for word, or convention: ...",
                "probe": {{"filename": "test_f1.py", "content": "...", "command": "..."}}}}]{keys}}}
 verdict is FAIL if and only if at least one finding is blocking. At most three blocking findings.
 Non-blocking notes use "blocking": false and "probe": null. Be brief."""
@@ -181,7 +186,8 @@ def parse_verdict(text: str, *, open_earlier: bool = False) -> dict:
         if not isinstance(raw, dict) or not isinstance(raw.get("claim"), str) or type(raw.get("blocking")) is not bool:
             raise ValueError("malformed finding")
         findings.append(dict(id=str(raw.get("id") or f"F{index + 1}"), claim=raw["claim"], blocking=raw["blocking"],
-                             evidence=str(raw.get("evidence") or ""), probe=_probe(raw.get("probe"))))
+                             evidence=str(raw.get("evidence") or ""), probe=_probe(raw.get("probe")),
+                             requirement=str(raw.get("requirement") or "").strip()))
     blocking = any(f["blocking"] for f in findings)
     if (data["verdict"] == "PASS" and blocking) or (data["verdict"] == "FAIL" and not blocking and not open_earlier):
         raise ValueError("verdict inconsistent with findings")
@@ -258,11 +264,30 @@ def run_probe(sandbox: Sandbox, snapshots: Snapshots, finding: dict, head: str, 
                 output=result["output"], disposition=disposition(result, command))
 
 
-def adjudicate(sandbox: Sandbox, snapshots: Snapshots, verdict: dict, head: str, *, rules: dict | None = None) -> list:
+def _plain(text: str) -> str:
+    return " ".join(re.sub(r"[`*_\"“”‘’']", "", text).lower().split()).strip(" .:;")
+
+
+def anchor(requirement: str, task: str) -> str:
+    """What a finding's named requirement points to. The runner does not judge whether the finding is right;
+    it records whether the critic tied it to the task statement, to a convention of the code, or to nothing."""
+    if not requirement.strip():
+        return "none"
+    if re.match(r"\s*convention\s*:", requirement, flags=re.I):
+        return "convention"
+    quoted = _plain(requirement)
+    return "task_statement" if len(quoted) >= 12 and quoted in _plain(task) else "not_in_statement"
+
+
+def adjudicate(sandbox: Sandbox, snapshots: Snapshots, verdict: dict, head: str, *, rules: dict | None = None,
+               task: str | None = None) -> list:
     """Run every blocking finding's probe and record what the evidence showed."""
     settled = []
     for finding in verdict["findings"]:
         entry = dict(id=finding["id"], claim=finding["claim"], blocking=finding["blocking"], evidence=finding["evidence"])
+        if task is not None:
+            requirement = finding.get("requirement", "")
+            entry.update(requirement=requirement, anchor=anchor(requirement, task))
         if not finding["blocking"]:
             entry.update(disposition="advisory", probe=None)
         elif not finding["probe"]:
@@ -289,6 +314,7 @@ def run_acceptance(sandbox: Sandbox, snapshots: Snapshots, acceptance: dict, hea
 
     def finding(number: int, claim: str, run: dict, single: str) -> dict:
         return dict(id=f"A{number}", claim=claim, blocking=True, evidence=path, source="acceptance", disposition="confirmed",
+                    requirement="quoted in the comment above the test", anchor="acceptance_file",
                     probe=dict(command=single, file=path, returncode=run["returncode"], timed_out=run["timed_out"],
                                output=run["output"], disposition="confirmed"))
 

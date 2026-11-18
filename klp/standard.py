@@ -23,7 +23,7 @@ from .snapshot import Snapshots
 from .worker import run_worker
 
 PROTOCOL = "klp-standard/v0.1"
-RUNNER = "0.5.0"  # this implementation of the profile; receipts carry both
+RUNNER = "0.6.0"  # this implementation of the profile; receipts carry both
 
 
 @dataclass
@@ -106,7 +106,7 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
         (out_dir / f"review-packet-{number}.md").write_text(packet)
         verdict = review(ledger, critic, packet, scope=scope, acceptance=acceptance and number == 1, rereview=number > 1,
                          open_earlier=bool(still_open))
-        settled = adjudicate(sandbox, snapshots, verdict, entry["revision"], rules=rules)
+        settled = adjudicate(sandbox, snapshots, verdict, entry["revision"], rules=rules, task=task)
         ran = None
         if verdict["acceptance"]:
             ran, found = run_acceptance(sandbox, snapshots, verdict["acceptance"], entry["revision"], rules=rules)
@@ -214,6 +214,15 @@ def run_standard(*, ledger: Ledger, worker: Model, critic: Model | None, sandbox
     return receipt
 
 
+ANCHORS = {
+    "task_statement": "a sentence of the task statement,",
+    "convention": "a convention of the surrounding code,",
+    "not_in_statement": "a requirement the task statement does not contain word for word,",
+    "none": "no named requirement",
+    "acceptance_file": "the task sentence quoted above its acceptance test",
+}
+
+
 def render_receipt(receipt: dict) -> str:
     done, effort = receipt["completion"], receipt["completion"]["measured_effort"]
     lines = [f"# KLP Standard receipt: {receipt['task_id']}", "",
@@ -241,6 +250,10 @@ def render_receipt(receipt: dict) -> str:
         for f in item["findings"]:
             lines.append(f"- [{f['disposition']}{', still open from an earlier review' if f.get('carried') else ''}] "
                          f"{f['id']}: {f['claim']}")
+            if f.get("blocking") and f.get("anchor"):
+                lines.append(f"  - holds the candidate to: {ANCHORS[f['anchor']]}"
+                             + (f" \"{clip(f['requirement'], 240)}\"" if f["anchor"] in ("task_statement", "convention",
+                                                                              "not_in_statement") else ""))
         if item.get("withdrawn"):
             lines.append(f"- withdrawn by the critic: {', '.join(item['withdrawn'])}")
     for repair in receipt["repairs"]:

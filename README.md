@@ -241,8 +241,9 @@ working across many changes.
 
 ## Project Status
 
-Release **0.5.0**. Standard (`klp-standard/v0.1`) has the one-command runner,
-`klp run`, and two public benchmarks. Critical keeps `klp-core/v0.3` with its
+Release **0.6.0**. Standard (`klp-standard/v0.1`) has the one-command runner,
+`klp run`, and two public benchmarks, measured with runner 0.5.0. Runner 0.6.0
+adds the requirement each blocking finding names, recorded on the receipt. Critical keeps `klp-core/v0.3` with its
 capability gate, sealed critic harness and offline lifecycle fixtures; its
 protocol document is at version 0.3.3 draft.
 

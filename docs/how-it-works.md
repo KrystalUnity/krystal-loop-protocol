@@ -66,6 +66,11 @@ broke a task that had passed.
 | `blocked` | A model or provider error stopped the run. Run it again when the provider is healthy. | 2 |
 | `critical_trigger` | The change matches a critical trigger your project declared. It goes to the Critical path. | 2 |
 
+`completed` means your checks and the critic's probes pass. It does not mean
+the work is right: in the benchmark's latest run, 6 of the 7 tasks that failed
+the hidden tests ended `completed`
+([what the receipt said at handover](../case-studies/feature-benchmark-2026-11-10/ANALYSIS.md#what-the-receipt-said-at-handover)).
+
 ## What the receipt holds
 
 ```text
@@ -93,6 +98,13 @@ broke a task that had passed.
 
 Still yours to decide: merge, push and deploy.
 ```
+
+From runner 0.6.0 each blocking finding also names the requirement it holds
+the candidate to: a sentence of the task statement, copied word for word, or a
+convention of the surrounding code. The receipt shows it under the finding and
+records whether the sentence really is in the task statement, so you can tell
+a broken stated requirement from a stricter reading of the task. The receipt
+above was made with runner 0.5.0, before this field existed.
 
 Every review is bound to the exact snapshot it judged. The same record is in
 `receipt.json` with each probe's command and output, and `ledger.jsonl` has
