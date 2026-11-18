@@ -3,8 +3,9 @@
 KLP Standard's best run solved 59 of 66 tasks. OpenAI's heaviest model working
 alone solved 56, at sixteen times the cost per task. Readers pushed on that
 result with four questions: is the gap more than chance, does it hold on bigger
-tasks, how many tokens does it burn, and are the critic's findings real? This
-page answers each one from the published receipts, with no new model calls.
+tasks, how many tokens does it burn, and are the critic's findings real? We
+added a fifth: does the receipt tell you when the work is wrong? This page
+answers each one from the published receipts, with no new model calls.
 Every table recomputes offline:
 
 ```bash
@@ -44,6 +45,13 @@ python3 case-studies/feature-benchmark-2026-11-10/verify.py
   dataset's reference solution, about four in ten of the Sol critic's
   confirmed findings pass, 57% fail there too and 5% cannot run. No repair
   under a Sol critic broke a passing task.
+- **The receipt does not yet tell you when the work is wrong.** In run 3, 6
+  of the 7 tasks that failed the hidden tests ended with a clean receipt, and
+  7 of the 8 receipts that ended with something unresolved had passed. When
+  the Sol critic flagged a failing candidate and the loop did not rescue it,
+  the worker usually closed every confirmed finding and the hidden tests still
+  failed: the critic's probes and the hidden tests checked different things.
+  Tying every finding to a sentence of the task is the next change to test.
 
 ## The arms
 
@@ -302,6 +310,64 @@ The table counts each critic's first review of the worker's candidate. In run
 problem on 5 of them and the loop rescued 2. On the 57 candidates that already
 passed, the critic still confirmed a problem on 30. The repairs that followed
 broke none of them.
+
+### What the receipt said at handover
+
+A run ends `completed` when its last review left no confirmed finding open and
+the declared checks passed. A finding still open, a failed check, the time or
+spend limit, or a repair rolled back for breaking a check ends it
+`budget_exhausted`, and a critic that could not answer ends it `blocked`. The
+table counts both of those as ended with something unresolved.
+
+<!-- table:handover -->
+| Critic | Ended clean | Solved | Not solved | Ended with something unresolved | Solved | Not solved | Not solved, receipt unresolved |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `gpt-6.1-sol`, run 3 | 58 | 52 | 6 | 8 | 7 | 1 | 1 of 7 |
+| `gpt-6.1-sol`, run 2 | 56 | 48 | 8 | 10 | 6 | 4 | 4 of 12 |
+| `gpt-6.1-sol`, run 1 | 48 | 43 | 5 | 18 | 14 | 4 | 4 of 9 |
+| `gpt-6.1-sol`, runner 0.5, run 2 candidates | 58 | 49 | 9 | 8 | 7 | 1 | 1 of 10 |
+| `gpt-6-astra`, earlier runner, run 2 candidates | 57 | 49 | 8 | 9 | 6 | 3 | 3 of 11 |
+| `gpt-6.1-terra`, earlier runner, run 2 candidates | 34 | 28 | 6 | 32 | 24 | 8 | 8 of 14 |
+| `grok-4.7`, run 2 candidates | 64 | 54 | 10 | 2 | 0 | 2 | 2 of 12 |
+| Kimi K3.1 Pro (CLI), run 2 candidates | 65 | 54 | 11 | 1 | 1 | 0 | 0 of 11 |
+| Gemini 4 Argon (CLI), run 2 candidates | 66 | 56 | 10 | 0 | 0 | 0 | 0 of 10 |
+| Qwen 3.8 Max (CLI), run 2 candidates | 63 | 52 | 11 | 3 | 2 | 1 | 1 of 12 |
+| `gpt-6.1-sol` + acceptance file, run 2 candidates | 56 | 50 | 6 | 10 | 7 | 3 | 3 of 9 |
+| `gpt-6.1-sol` + acceptance file, run 3 candidates | 60 | 54 | 6 | 6 | 3 | 3 | 3 of 9 |
+<!-- /table:handover -->
+
+In run 3 the loop handed over 7 tasks that fail the hidden tests. The receipt
+marked 1 of them unresolved; the other 6 ended clean. Of the 8 runs that ended
+with something unresolved, 7 passed the hidden tests. On these tasks a clean
+receipt means the critic's probes and the declared checks pass, and no more.
+The Qwen CLI timed out on 3 reviews, the `blocked` runs in its row; 2 of
+those candidates passed the hidden tests.
+
+<!-- table:not_rescued -->
+| Critic | Failing candidates flagged | Rescued | Not rescued: every confirmed finding closed | Not rescued: something left unresolved |
+| --- | ---: | ---: | ---: | ---: |
+| `gpt-6.1-sol`, run 3 | 5 | 2 | 2 | 1 |
+| `gpt-6.1-sol`, run 2 | 9 | 0 | 5 | 4 |
+| `gpt-6.1-sol`, run 1 | 7 | 1 | 2 | 4 |
+| `gpt-6.1-sol`, runner 0.5, run 2 candidates | 10 | 2 | 7 | 1 |
+| `gpt-6-astra`, earlier runner, run 2 candidates | 8 | 1 | 4 | 3 |
+| `gpt-6.1-terra`, earlier runner, run 2 candidates | 10 | 1 | 3 | 6 |
+| `grok-4.7`, run 2 candidates | 2 | 0 | 0 | 2 |
+| Kimi K3.1 Pro (CLI), run 2 candidates | 4 | 1 | 3 | 0 |
+| Gemini 4 Argon (CLI), run 2 candidates | 3 | 2 | 1 | 0 |
+| Qwen 3.8 Max (CLI), run 2 candidates | 0 | 0 | 0 | 0 |
+| `gpt-6.1-sol` + acceptance file, run 2 candidates | 7 | 3 | 1 | 3 |
+| `gpt-6.1-sol` + acceptance file, run 3 candidates | 4 | 0 | 1 | 3 |
+<!-- /table:not_rescued -->
+
+When the critic flagged a candidate that failed the hidden tests and the loop
+did not rescue it, the repair had usually done its job. Under the runner 0.5
+Sol critic, 7 of the 8 such runs ended with every confirmed finding closed:
+the worker fixed what the critic's probes showed, and the hidden tests still
+failed. The critic's probes and the hidden tests were checking different
+things. Four of the five tasks no arm solved test behaviour the task statement
+does not state, so on those a critic would have had to guess what the hidden
+tests check.
 
 ### Against the reference solution
 

@@ -62,7 +62,9 @@ adds no metered cost.
 
 [`bench/models.json`](../bench/models.json) has working entries for the
 Antigravity, Kimi and Qwen CLIs. On the benchmark, Gemini 4 Argon through the
-Antigravity CLI matched the metered frontier critic's solve count.
+Antigravity CLI matched the metered frontier critic's solve count while
+flagging far fewer candidates, failing or passing; see the
+[critic tables](../case-studies/feature-benchmark-2026-11-10/ANALYSIS.md#4-what-the-critics-found).
 
 ## The repository's `klp.json`
 

@@ -257,6 +257,21 @@ class V03DocumentationTests(unittest.TestCase):
                 self.assertEqual(row["review"]["findings_confirmed_by_probe"], reviews[row["arm"]]["findings"]["confirmed"])
                 self.assertEqual(row["review"]["findings_fixed_and_verified"], reviews[row["arm"]]["findings_closed"])
                 self.assertEqual(row["review"]["passing_tasks_broken_by_review"], len(reviews[row["arm"]]["broken_by_review"]))
+        flags = json.loads(self.text("case-studies/feature-benchmark-2026-11-10/analysis.json"))["findings"]
+        benchmarks = self.text("BENCHMARKS.md")
+        for row in bench["arms"]:
+            if "first_review_flagged_failing_candidates" in row.get("review", {}):
+                first = flags[row["arm"]]["first_review"]
+                self.assertEqual(row["review"]["first_review_flagged_failing_candidates"],
+                                 [first["failing_flagged"], first["failing"]], row["label"])
+                self.assertEqual(row["review"]["first_review_flagged_passing_candidates"],
+                                 [first["passing_flagged"], first["passing"]], row["label"])
+        for arm, label in (("v2-sol", "`gpt-6.1-sol` (API)"), ("v2-argon", "Gemini 4 Argon"), ("v2-kimi", "Kimi K3.1 Pro"),
+                           ("v2-grok", "`grok-4.7` (API)"), ("v2-qwen", "Qwen 3.8 Max")):
+            first = flags[arm]["first_review"]
+            line = next(l for l in benchmarks.splitlines() if l.startswith(f"| {label}") and " of " in l)
+            self.assertIn(f"| {first['failing_flagged']} of {first['failing']} | {first['passing_flagged']} of "
+                          f"{first['passing']} |", line, arm)
         agents = self.text("AGENTS.md")
         for required in ("evidence.json", "--json", "What to tell your operator", "verify.py"):
             self.assertIn(required, agents)

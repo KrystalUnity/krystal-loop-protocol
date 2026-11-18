@@ -786,6 +786,24 @@
     "broken": 0,
     "not_reviewed": 0
    },
+   "flagged_not_rescued": {
+    "closed_still_failing": 2,
+    "unresolved": 1
+   },
+   "handover": {
+    "completed": {
+     "tasks": 58,
+     "solved": 52
+    },
+    "unresolved": {
+     "tasks": 8,
+     "solved": 7
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
+   },
    "probes": {
     "recorded": 80,
     "retained": 80,
@@ -826,6 +844,24 @@
     "passing_flagged": 26,
     "broken": 0,
     "not_reviewed": 0
+   },
+   "flagged_not_rescued": {
+    "closed_still_failing": 5,
+    "unresolved": 4
+   },
+   "handover": {
+    "completed": {
+     "tasks": 56,
+     "solved": 48
+    },
+    "unresolved": {
+     "tasks": 10,
+     "solved": 6
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
    },
    "probes": {
     "recorded": 80,
@@ -868,6 +904,24 @@
     "broken": 0,
     "not_reviewed": 0
    },
+   "flagged_not_rescued": {
+    "closed_still_failing": 2,
+    "unresolved": 4
+   },
+   "handover": {
+    "completed": {
+     "tasks": 48,
+     "solved": 43
+    },
+    "unresolved": {
+     "tasks": 18,
+     "solved": 14
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
+   },
    "probes": {
     "recorded": 67,
     "retained": 64,
@@ -908,6 +962,24 @@
     "passing_flagged": 29,
     "broken": 0,
     "not_reviewed": 0
+   },
+   "flagged_not_rescued": {
+    "closed_still_failing": 7,
+    "unresolved": 1
+   },
+   "handover": {
+    "completed": {
+     "tasks": 58,
+     "solved": 49
+    },
+    "unresolved": {
+     "tasks": 8,
+     "solved": 7
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
    },
    "probes": {
     "recorded": 89,
@@ -950,6 +1022,24 @@
     "broken": 0,
     "not_reviewed": 0
    },
+   "flagged_not_rescued": {
+    "closed_still_failing": 4,
+    "unresolved": 3
+   },
+   "handover": {
+    "completed": {
+     "tasks": 57,
+     "solved": 49
+    },
+    "unresolved": {
+     "tasks": 9,
+     "solved": 6
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
+   },
    "probes": {
     "recorded": 82,
     "retained": 79,
@@ -990,6 +1080,24 @@
     "passing_flagged": 41,
     "broken": 3,
     "not_reviewed": 0
+   },
+   "flagged_not_rescued": {
+    "closed_still_failing": 3,
+    "unresolved": 6
+   },
+   "handover": {
+    "completed": {
+     "tasks": 34,
+     "solved": 28
+    },
+    "unresolved": {
+     "tasks": 32,
+     "solved": 24
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
    },
    "probes": {
     "recorded": 228,
@@ -1032,6 +1140,24 @@
     "broken": 0,
     "not_reviewed": 0
    },
+   "flagged_not_rescued": {
+    "closed_still_failing": 0,
+    "unresolved": 2
+   },
+   "handover": {
+    "completed": {
+     "tasks": 64,
+     "solved": 54
+    },
+    "unresolved": {
+     "tasks": 2,
+     "solved": 0
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
+   },
    "probes": {
     "recorded": 10,
     "retained": 10,
@@ -1072,6 +1198,24 @@
     "passing_flagged": 5,
     "broken": 0,
     "not_reviewed": 0
+   },
+   "flagged_not_rescued": {
+    "closed_still_failing": 3,
+    "unresolved": 0
+   },
+   "handover": {
+    "completed": {
+     "tasks": 65,
+     "solved": 54
+    },
+    "unresolved": {
+     "tasks": 1,
+     "solved": 1
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
    },
    "probes": {
     "recorded": 27,
@@ -1114,6 +1258,24 @@
     "broken": 0,
     "not_reviewed": 0
    },
+   "flagged_not_rescued": {
+    "closed_still_failing": 1,
+    "unresolved": 0
+   },
+   "handover": {
+    "completed": {
+     "tasks": 66,
+     "solved": 56
+    },
+    "unresolved": {
+     "tasks": 0,
+     "solved": 0
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
+   },
    "probes": {
     "recorded": 5,
     "retained": 5,
@@ -1154,6 +1316,24 @@
     "passing_flagged": 3,
     "broken": 0,
     "not_reviewed": 3
+   },
+   "flagged_not_rescued": {
+    "closed_still_failing": 0,
+    "unresolved": 0
+   },
+   "handover": {
+    "completed": {
+     "tasks": 63,
+     "solved": 52
+    },
+    "unresolved": {
+     "tasks": 0,
+     "solved": 0
+    },
+    "blocked": {
+     "tasks": 3,
+     "solved": 2
+    }
    },
    "probes": {
     "recorded": 7,
@@ -1196,6 +1376,24 @@
     "broken": 0,
     "not_reviewed": 0
    },
+   "flagged_not_rescued": {
+    "closed_still_failing": 1,
+    "unresolved": 3
+   },
+   "handover": {
+    "completed": {
+     "tasks": 56,
+     "solved": 50
+    },
+    "unresolved": {
+     "tasks": 10,
+     "solved": 7
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
+   },
    "probes": {
     "recorded": 71,
     "retained": 71,
@@ -1236,6 +1434,24 @@
     "passing_flagged": 27,
     "broken": 0,
     "not_reviewed": 0
+   },
+   "flagged_not_rescued": {
+    "closed_still_failing": 1,
+    "unresolved": 3
+   },
+   "handover": {
+    "completed": {
+     "tasks": 60,
+     "solved": 54
+    },
+    "unresolved": {
+     "tasks": 6,
+     "solved": 3
+    },
+    "blocked": {
+     "tasks": 0,
+     "solved": 0
+    }
    },
    "probes": {
     "recorded": 62,

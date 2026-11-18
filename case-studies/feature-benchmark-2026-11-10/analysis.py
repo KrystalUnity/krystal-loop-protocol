@@ -261,6 +261,7 @@ def findings(d: dict) -> dict:
                         for k in ("confirmed", "refuted", "unverified", "advisory")}
         probed = dispositions["confirmed"] + dispositions["refuted"]
         first = dict(failing=0, failing_flagged=0, rescued=0, passing=0, passing_flagged=0, broken=0, not_reviewed=0)
+        caught = dict(closed_still_failing=0, unresolved=0)  # flagged on a failing candidate and not rescued
         for r in rows:
             if not r["reviews"]:
                 first["not_reviewed"] += 1
@@ -271,6 +272,13 @@ def findings(d: dict) -> dict:
             first[side + "_flagged"] += flagged
             first["rescued"] += bool(r["solved"] and not r["first_candidate_solved"])
             first["broken"] += bool(r["first_candidate_solved"] and not r["solved"])
+            if flagged and not r["first_candidate_solved"] and not r["solved"]:
+                caught["closed_still_failing" if r["state"] == "completed" else "unresolved"] += 1
+        handover = {k: dict(tasks=0, solved=0) for k in ("completed", "unresolved", "blocked")}
+        for r in rows:  # "completed": final review left nothing confirmed open and the declared checks passed
+            side = handover[r["state"] if r["state"] in ("completed", "blocked") else "unresolved"]
+            side["tasks"] += 1
+            side["solved"] += bool(r["solved"])
         mine = [p for p in probes if p["arm"] == arm]
         kept = [p for p in mine if p["retained"]]
         same = [p for p in kept if p.get("reproduced")]
@@ -283,7 +291,7 @@ def findings(d: dict) -> dict:
         out[arm] = dict(
             dispositions=dispositions, withdrawn=sum(v.get("withdrawn", 0) for r in rows for v in r["reviews"]),
             confirmation_rate=round(dispositions["confirmed"] / probed, 4) if probed else None,
-            first_review=first,
+            first_review=first, flagged_not_rescued=caught, handover=handover,
             probes=dict(recorded=len(mine), retained=len(kept), reproduced=len(same),
                         confirmed_checked=len(confirmed),
                         confirmed_recorded=sum(p["disposition"] == "confirmed" for p in mine)),
@@ -353,6 +361,14 @@ def table(header: list[str], rows: list[list], align: str) -> str:
     return "\n".join(lines)
 
 
+def unsolved(v: dict) -> int:
+    return sum(side["tasks"] - side["solved"] for side in v["handover"].values())
+
+
+def unsolved_flagged(v: dict) -> int:
+    return sum(v["handover"][k]["tasks"] - v["handover"][k]["solved"] for k in ("unresolved", "blocked"))
+
+
 def render(a: dict) -> dict[str, str]:
     c, s, t, f = a["chance"], a["size"], a["tokens"], a["findings"]
     blocks = {}
@@ -413,6 +429,23 @@ def render(a: dict) -> dict[str, str]:
         [[CRITICS[arm], v["first_review"]["failing"], v["first_review"]["failing_flagged"], v["first_review"]["rescued"],
           v["first_review"]["passing"], v["first_review"]["passing_flagged"], v["first_review"]["broken"]]
          for arm, v in f.items()], "lrrrrrr")
+    blocks["handover"] = table(
+        ["Critic", "Ended clean", "Solved", "Not solved", "Ended with something unresolved", "Solved", "Not solved",
+         "Not solved, receipt unresolved"],
+        [[CRITICS[arm], v["handover"]["completed"]["tasks"], v["handover"]["completed"]["solved"],
+          v["handover"]["completed"]["tasks"] - v["handover"]["completed"]["solved"],
+          v["handover"]["unresolved"]["tasks"] + v["handover"]["blocked"]["tasks"],
+          v["handover"]["unresolved"]["solved"] + v["handover"]["blocked"]["solved"],
+          v["handover"]["unresolved"]["tasks"] + v["handover"]["blocked"]["tasks"]
+          - v["handover"]["unresolved"]["solved"] - v["handover"]["blocked"]["solved"],
+          f"{unsolved_flagged(v)} of {unsolved(v)}"] for arm, v in f.items()], "lrrrrrrr")
+    blocks["not_rescued"] = table(
+        ["Critic", "Failing candidates flagged", "Rescued", "Not rescued: every confirmed finding closed",
+         "Not rescued: something left unresolved"],
+        [[CRITICS[arm], v["first_review"]["failing_flagged"], v["first_review"]["failing_flagged"]
+          - v["flagged_not_rescued"]["closed_still_failing"] - v["flagged_not_rescued"]["unresolved"],
+          v["flagged_not_rescued"]["closed_still_failing"], v["flagged_not_rescued"]["unresolved"]]
+         for arm, v in f.items()], "lrrrr")
     blocks["reference"] = table(
         ["Critic", "Confirmed findings rerun", "Passes on the reference", "Fails there too", "Cannot run on it",
          "On candidates passing the hidden tests: passes / fails too / cannot run"],

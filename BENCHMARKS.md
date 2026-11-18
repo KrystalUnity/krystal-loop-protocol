@@ -53,13 +53,17 @@ statement, the same sandbox with no network, and one shell tool.
 
 Critics compared on identical worker output:
 
-| Critic | Tasks solved after review | Metered cost per task | Findings confirmed | Passing tasks broken |
-| --- | ---: | ---: | ---: | ---: |
-| `gpt-6.1-sol` (API) | 56 | $0.060 | 86 | 0 |
-| Gemini 4 Argon (Antigravity CLI subscription) | 56 | $0.028 | 5 | 0 |
-| Kimi K3.1 Pro (Kimi CLI subscription) | 55 | $0.028 | 16 | 0 |
-| `grok-4.7` (API) | 54 | $0.058 | 4 | 0 |
-| Qwen 3.8 Max (Qwen CLI subscription), 63 of 66 reviewed | 54 | $0.028 | 3 | 0 |
+| Critic | Tasks solved after review | Metered cost per task | Findings confirmed | Failing candidates flagged | Passing candidates flagged | Passing tasks broken |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `gpt-6.1-sol` (API) | 56 | $0.060 | 86 | 10 of 12 | 29 of 54 | 0 |
+| Gemini 4 Argon (Antigravity CLI subscription) | 56 | $0.028 | 5 | 3 of 12 | 1 of 54 | 0 |
+| Kimi K3.1 Pro (Kimi CLI subscription) | 55 | $0.028 | 16 | 4 of 12 | 5 of 54 | 0 |
+| `grok-4.7` (API) | 54 | $0.058 | 4 | 2 of 12 | 2 of 54 | 0 |
+| Qwen 3.8 Max (Qwen CLI subscription), 63 of 66 reviewed | 54 | $0.028 | 3 | 0 of 11 | 3 of 52 | 0 |
+
+A flagged candidate is one whose first review confirmed a finding with a
+failing probe; failing and passing are by the hidden tests. No failing
+candidate that the first review left unflagged was rescued.
 
 [Full results, method and receipts](case-studies/feature-benchmark-2026-11-10/README.md),
 including a receipt for each of the 66 runs of run 3.

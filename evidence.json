@@ -27,7 +27,15 @@
             "tasks_fixed_by_review": 2,
             "passing_tasks_broken_by_review": 0,
             "runs_completed": 58,
-            "runs_with_open_finding": 8
+            "runs_with_open_finding": 8,
+            "first_review_flagged_failing_candidates": [
+              5,
+              9
+            ],
+            "first_review_flagged_passing_candidates": [
+              30,
+              57
+            ]
           }
         },
         {
@@ -48,7 +56,15 @@
             "tasks_fixed_by_review": 1,
             "passing_tasks_broken_by_review": 0,
             "runs_completed": 48,
-            "runs_with_open_finding": 18
+            "runs_with_open_finding": 18,
+            "first_review_flagged_failing_candidates": [
+              7,
+              10
+            ],
+            "first_review_flagged_passing_candidates": [
+              29,
+              56
+            ]
           }
         },
         {
@@ -69,7 +85,15 @@
             "tasks_fixed_by_review": 0,
             "passing_tasks_broken_by_review": 0,
             "runs_completed": 56,
-            "runs_with_open_finding": 10
+            "runs_with_open_finding": 10,
+            "first_review_flagged_failing_candidates": [
+              9,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              26,
+              54
+            ]
           }
         },
         {
@@ -127,7 +151,15 @@
             "findings_confirmed_by_probe": 81,
             "findings_fixed_and_verified": 72,
             "passing_tasks_broken_by_review": 0,
-            "runs_with_open_finding": 9
+            "runs_with_open_finding": 9,
+            "first_review_flagged_failing_candidates": [
+              8,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              27,
+              54
+            ]
           }
         },
         {
@@ -145,7 +177,15 @@
             "findings_confirmed_by_probe": 222,
             "findings_fixed_and_verified": 167,
             "passing_tasks_broken_by_review": 3,
-            "runs_with_open_finding": 32
+            "runs_with_open_finding": 32,
+            "first_review_flagged_failing_candidates": [
+              10,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              41,
+              54
+            ]
           }
         },
         {
@@ -175,7 +215,15 @@
             "findings_fixed_and_verified": 76,
             "tasks_fixed_by_review": 2,
             "passing_tasks_broken_by_review": 0,
-            "runs_with_open_finding": 8
+            "runs_with_open_finding": 8,
+            "first_review_flagged_failing_candidates": [
+              10,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              29,
+              54
+            ]
           }
         },
         {
@@ -195,7 +243,15 @@
             "tasks_fixed_by_review": 2,
             "passing_tasks_broken_by_review": 0,
             "runs_with_open_finding": 0,
-            "findings_fixed_and_verified": 3
+            "findings_fixed_and_verified": 3,
+            "first_review_flagged_failing_candidates": [
+              3,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              1,
+              54
+            ]
           }
         },
         {
@@ -214,7 +270,15 @@
             "tasks_fixed_by_review": 0,
             "passing_tasks_broken_by_review": 0,
             "runs_with_open_finding": 2,
-            "findings_fixed_and_verified": 1
+            "findings_fixed_and_verified": 1,
+            "first_review_flagged_failing_candidates": [
+              2,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              2,
+              54
+            ]
           }
         },
         {
@@ -237,7 +301,15 @@
               "passed": 59,
               "failed": 6,
               "did not run": 1
-            }
+            },
+            "first_review_flagged_failing_candidates": [
+              7,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              22,
+              54
+            ]
           }
         },
         {
@@ -260,7 +332,15 @@
               "passed": 61,
               "failed": 4,
               "did not run": 1
-            }
+            },
+            "first_review_flagged_failing_candidates": [
+              4,
+              9
+            ],
+            "first_review_flagged_passing_candidates": [
+              27,
+              57
+            ]
           }
         },
         {
@@ -278,7 +358,15 @@
             "findings_confirmed_by_probe": 16,
             "findings_fixed_and_verified": 14,
             "tasks_fixed_by_review": 1,
-            "passing_tasks_broken_by_review": 0
+            "passing_tasks_broken_by_review": 0,
+            "first_review_flagged_failing_candidates": [
+              4,
+              12
+            ],
+            "first_review_flagged_passing_candidates": [
+              5,
+              54
+            ]
           }
         }
       ],

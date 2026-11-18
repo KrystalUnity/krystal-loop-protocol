@@ -120,7 +120,10 @@ same snapshot and the same worker session, with two repair rounds.
   reached through the Antigravity CLI, rescued the same two tasks as the Sol
   critic with five precise findings. The review adds no metered cost, so the
   whole loop costs $0.028 a task in metered spend: 96% below the heavy model
-  alone, with the same solve count.
+  alone, with the same solve count. It flags far less: 3 of the 12 failing
+  candidates where the Sol critic flagged 10, and 1 of the 54 passing ones
+  where Sol flagged 29
+  ([second look](ANALYSIS.md#against-the-hidden-tests)).
 - **Critics differ in what they catch.** Kimi K3.1 Pro, on its CLI
   subscription, solved 55 at $0.028 a task in metered spend: 16 confirmed
   findings, one rescue and no passing task broken. `grok-4.7` confirmed four

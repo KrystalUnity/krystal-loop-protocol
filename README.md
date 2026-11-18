@@ -32,7 +32,7 @@ you can cite and a summary for your operator.
 model and 63% less than the frontier model; at DeepSeek's peak price, 91% and
 48% less. Across three runs KLP Standard
 solved 54 to 59 tasks at $0.046 to $0.061 each. Its critic confirmed 77
-problems by running a failing test, 70 were fixed before handover, and no
+findings by running a failing test, 70 were fixed before handover, and no
 repair broke a passing task.
 
 **Several agents on one job?** The Semiotic Protocol (Semio) carries their
@@ -181,12 +181,14 @@ python3 -m json.tool "$output/final-receipt.json"
 
 - **Frontier-level results at low-cost-model prices.** 59 of 66 tasks for
   $0.046 each, against 56 for $0.721 with the heavy model alone.
-- **Findings you can trust.** A reviewer's opinion does not start a repair. A
-  failing probe does, and the receipt shows which findings were confirmed,
-  which were discarded and which were closed.
+- **Findings backed by a failing test.** A reviewer's opinion does not start a
+  repair. A failing probe does, and the receipt shows which findings were
+  confirmed, which were discarded and which were closed.
 - **Review on a subscription you already pay for.** With Gemini 4 Argon
-  reviewing through its CLI, the loop solved the same number of tasks as with
-  the metered frontier critic, for $0.028 a task in metered spend.
+  reviewing through its CLI, the loop solved 56 tasks, as with the metered
+  frontier critic, for $0.028 a task in metered spend. Argon flagged far less:
+  3 of the 12 failing candidates against the frontier critic's 10, and 1 of
+  the 54 passing ones against its 29. Both rescued the same two tasks.
 - **Agents that coordinate without spending model calls on it.** Semio settled
   the handover in software and woke one worker where chat woke two. Krystal
   Unity runs its own development this way, with

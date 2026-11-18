@@ -42,8 +42,10 @@ candidates, the same critic went from 54 solved to 56 at the same cost.
 
 Critics compared on identical candidates: `gpt-6.1-sol` solved 56 at $0.060 a
 task. Gemini 4 Argon, reached through a CLI subscription, also solved 56, with
-no metered review cost: $0.028 a task. Kimi K3.1 Pro on its CLI subscription
-solved 55. `grok-4.7` solved 54 at $0.058. With
+no metered review cost: $0.028 a task. It flagged 3 of the 12 failing
+candidates where `gpt-6.1-sol` flagged 10, and 1 of the 54 passing ones where
+`gpt-6.1-sol` flagged 29; both rescued the same two tasks. Kimi K3.1 Pro on its
+CLI subscription solved 55. `grok-4.7` solved 54 at $0.058. With
 the earlier runner the heavier `gpt-6-astra` solved 55 at $0.165, and the
 lighter `gpt-6.1-terra` solved 52 at $0.075 and broke three passing
 candidates.
@@ -202,7 +204,7 @@ reopening their retained receipts. The bridge is in
 
 ## How the Savings Work
 
-- **Model routing with a safety net.** The low-cost model does the many turns
+- **Model routing.** The low-cost model does the many turns
   of reading, editing and testing. The frontier model reads one compact packet
   per task.
 - **Evidence instead of debate.** A finding is confirmed or discarded by
