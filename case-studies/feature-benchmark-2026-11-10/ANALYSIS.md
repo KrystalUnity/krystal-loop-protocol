@@ -1,7 +1,8 @@
 # A Second Look at the 66-Task Benchmark
 
 KLP Standard's best run solved 59 of 66 tasks. OpenAI's heaviest model working
-alone solved 56, at sixteen times the cost per task. Readers pushed on that
+alone solved 56, at sixteen times the cost per task while KLP's DeepSeek calls
+ran off-peak, and about eleven times at DeepSeek's peak price. Readers pushed on that
 result with four questions: is the gap more than chance, does it hold on bigger
 tasks, how many tokens does it burn, and are the critic's findings real? We
 added a fifth: does the receipt tell you when the work is wrong? This page
@@ -48,9 +49,10 @@ python3 case-studies/feature-benchmark-2026-11-10/verify.py
 - **The receipt does not yet tell you when the work is wrong.** In run 3, 6
   of the 7 tasks that failed the hidden tests ended with a clean receipt, and
   7 of the 8 receipts that ended with something unresolved had passed. When
-  the Sol critic flagged a failing candidate and the loop did not rescue it,
-  the worker usually closed every confirmed finding and the hidden tests still
-  failed: the critic's probes and the hidden tests checked different things.
+  a Sol critic flagged a failing candidate and the loop did not rescue it, the
+  worker had closed every confirmed finding and the hidden tests still failed
+  in 18 of 34 cases across the six Sol arms, and in 7 of 8 under runner 0.5:
+  there the critic's probes and the hidden tests checked different things.
   Tying every finding to a sentence of the task is the next change to test.
 
 ## The arms
@@ -243,7 +245,7 @@ paid its standard rate. The last two columns reprice every off-peak call at
 the standard rate. On that footing:
 
 - KLP Standard costs 11 to 13 times less per task than the heavy model and
-  about half as much as the frontier model. As billed, run 3 costs a sixteenth
+  about half as much as the frontier model. As billed, off-peak, run 3 costs a sixteenth
   of the heavy model and 63% less than the frontier model.
 - The worker alone costs a twenty-sixth to a thirtieth of the heavy model per
   task, with no detectable difference in pass rate. With review and repair,
@@ -361,11 +363,12 @@ those candidates passed the hidden tests.
 <!-- /table:not_rescued -->
 
 When the critic flagged a candidate that failed the hidden tests and the loop
-did not rescue it, the repair had usually done its job. Under the runner 0.5
-Sol critic, 7 of the 8 such runs ended with every confirmed finding closed:
-the worker fixed what the critic's probes showed, and the hidden tests still
-failed. The critic's probes and the hidden tests were checking different
-things. Four of the five tasks no arm solved test behaviour the task statement
+did not rescue it, the repair often had done what it was asked. Under the
+runner 0.5 Sol critic, 7 of the 8 such runs ended with every confirmed finding
+closed: the worker fixed what the critic's probes showed, and the hidden tests
+still failed. Across the six Sol arms it was 18 of 34; run 1, which allowed one
+repair round, left 4 of its 6 unresolved. Where every finding was closed, the
+critic's probes and the hidden tests were checking different things. Four of the five tasks no arm solved test behaviour the task statement
 does not state, so on those a critic would have had to guess what the hidden
 tests check.
 

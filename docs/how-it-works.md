@@ -102,7 +102,7 @@ Still yours to decide: merge, push and deploy.
 From runner 0.6.0 each blocking finding also names the requirement it holds
 the candidate to: a sentence of the task statement, copied word for word, or a
 convention of the surrounding code. The receipt shows it under the finding and
-records whether the sentence really is in the task statement, so you can tell
+records whether those words appear in the task statement, so you can tell
 a broken stated requirement from a stricter reading of the task. The receipt
 above was made with runner 0.5.0, before this field existed.
 

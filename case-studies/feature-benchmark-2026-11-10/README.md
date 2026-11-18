@@ -1,4 +1,4 @@
-# Feature Benchmark: As Many Tasks Solved as the Heavy Model, at a Sixteenth of Its Cost
+# Feature Benchmark: As Many Tasks Solved as the Heavy Model, at a Sixteenth of Its Cost Off-Peak
 
 A low-cost worker under KLP Standard solved 59 of 66 real feature tasks for
 $0.046 a task. OpenAI's heaviest model working alone solved 56 for $0.721 a

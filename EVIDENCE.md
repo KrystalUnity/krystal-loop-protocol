@@ -6,7 +6,7 @@ and links to receipts you can recompute with `python3 -m bench.verify`. The two
 benchmarks can be rerun from this repository with your own keys:
 [BENCHMARKS.md](BENCHMARKS.md).
 
-## Feature Benchmark: As Many Tasks Solved as the Heavy Model, at a Sixteenth of Its Cost
+## Feature Benchmark: As Many Tasks Solved as the Heavy Model, at a Sixteenth of Its Cost Off-Peak
 
 Sixty-six feature tasks in Click, Jinja and dirty-equals, each graded by tests
 the models never see. Every arm had the same task statement, sandbox and shell
